@@ -17,12 +17,12 @@ public class PopsicleItem extends Item {
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack p_41452_) {
+    public UseAnim getUseAnimation(ItemStack itemStack) {
         return UseAnim.DRINK;
     }
 
     @Override
-    public int getUseDuration(ItemStack p_41454_) {
+    public int getUseDuration(ItemStack itemStack) {
         return 64;
     }
 

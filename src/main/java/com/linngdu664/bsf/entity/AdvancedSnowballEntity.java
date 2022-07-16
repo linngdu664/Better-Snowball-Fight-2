@@ -6,15 +6,15 @@ import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.Level;
 
 public class AdvancedSnowballEntity extends Snowball {
-    public AdvancedSnowballEntity(EntityType<? extends Snowball> p_37391_, Level p_37392_) {
-        super(p_37391_, p_37392_);
+    public AdvancedSnowballEntity(EntityType<? extends Snowball> entityType, Level level) {
+        super(entityType, level);
     }
 
-    public AdvancedSnowballEntity(Level p_37399_, LivingEntity p_37400_) {
-        super(p_37399_, p_37400_);
+    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity) {
+        super(level, livingEntity);
     }
 
-    public AdvancedSnowballEntity(Level p_37394_, double p_37395_, double p_37396_, double p_37397_) {
-        super(p_37394_, p_37395_, p_37396_, p_37397_);
+    public AdvancedSnowballEntity(Level level, double x, double y, double z) {
+        super(level, x, y, z);
     }
 }
