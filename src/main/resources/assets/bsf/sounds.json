@@ -1,0 +1,12 @@
+{
+  "snowball_cannon_shoot": {
+    "sounds": [
+      "bsf:snowball_cannon_shoot"
+    ]
+  },
+  "snowball_machine_gun_shoot": {
+    "sounds": [
+      "bsf:snowball_machine_gun_shoot"
+    ]
+  }
+}
