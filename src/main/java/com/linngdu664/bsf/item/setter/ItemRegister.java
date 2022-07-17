@@ -27,20 +27,20 @@ public class ItemRegister {
     public static final RegistryObject<Item> SNOWBALL_CANNON=ITEMS.register("snowball_cannon",SnowballCannonItem::new);
     public static final RegistryObject<Item> POWERFUL_SNOWBALL_CANNON=ITEMS.register("powerful_snowball_cannon",SnowballCannonItem::new);
     public static final RegistryObject<Item> FREEZING_SNOWBALL_CANNON=ITEMS.register("freezing_snowball_cannon",SnowballCannonItem::new);
-    public static final RegistryObject<Item> SUPER_POWER_CORE=ITEMS.register("super_power_core",()->{return new Item(new Item.Properties());});
-    public static final RegistryObject<Item> SUPER_FROZEN_CORE=ITEMS.register("super_frozen_core",()->{return new Item(new Item.Properties());});
+    public static final RegistryObject<Item> SUPER_POWER_CORE=ITEMS.register("super_power_core", SuperFrozenCoreItem::new);
+    public static final RegistryObject<Item> SUPER_FROZEN_CORE=ITEMS.register("super_frozen_core", SuperPowerCoreItem::new);
     public static final RegistryObject<Item> GLOVE=ITEMS.register("glove",GloveItem::new);
     public static final RegistryObject<Item> POPSICLE=ITEMS.register("popsicle", PopsicleItem::new);
     public static final RegistryObject<Item> MILK_POPSICLE=ITEMS.register("milk_popsicle",MilkPopsicleItem::new);
     public static final RegistryObject<Item> SNOWBALL_MACHINE_GUN=ITEMS.register("snowball_machine_gun",SnowballMachineGunItem::new);
-    public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK=ITEMS.register("empty_snowball_storage_tank",SnowballStorageTankItem::new);
-    public static final RegistryObject<Item> COMPACTED_SNOWBALL_STORAGE_TANK=ITEMS.register("compacted_snowball_storage_tank",SnowballStorageTankItem::new);
-    public static final RegistryObject<Item> STONE_SNOWBALL_STORAGE_TANK=ITEMS.register("stone_snowball_storage_tank",SnowballStorageTankItem::new);
-    public static final RegistryObject<Item> GLASS_SNOWBALL_STORAGE_TANK=ITEMS.register("glass_snowball_storage_tank",SnowballStorageTankItem::new);
-    public static final RegistryObject<Item> ICE_SNOWBALL_STORAGE_TANK=ITEMS.register("iron_snowball_storage_tank",SnowballStorageTankItem::new);
-    public static final RegistryObject<Item> IRON_SNOWBALL_STORAGE_TANK=ITEMS.register("gold_snowball_storage_tank",SnowballStorageTankItem::new);
-    public static final RegistryObject<Item> GOLD_SNOWBALL_STORAGE_TANK=ITEMS.register("obsidian_snowball_storage_tank",SnowballStorageTankItem::new);
-    public static final RegistryObject<Item> OBSIDIAN_SNOWBALL_STORAGE_TANK=ITEMS.register("explosive_snowball_storage_tank",SnowballStorageTankItem::new);
-    public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL_STORAGE_TANK=ITEMS.register("ice_snowball_storage_tank",SnowballStorageTankItem::new);
+    public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_storage_tank", EmptySnowballStorageTankItem::new);
+    public static final RegistryObject<Item> COMPACTED_SNOWBALL_STORAGE_TANK = ITEMS.register("compacted_snowball_storage_tank", ()->{return new SnowballStorageTankItem(1);});
+    public static final RegistryObject<Item> STONE_SNOWBALL_STORAGE_TANK = ITEMS.register("stone_snowball_storage_tank", ()->{return new SnowballStorageTankItem(2);});
+    public static final RegistryObject<Item> GLASS_SNOWBALL_STORAGE_TANK = ITEMS.register("glass_snowball_storage_tank", ()->{return new SnowballStorageTankItem(3);});
+    public static final RegistryObject<Item> ICE_SNOWBALL_STORAGE_TANK = ITEMS.register("iron_snowball_storage_tank", ()->{return new SnowballStorageTankItem(4);});
+    public static final RegistryObject<Item> IRON_SNOWBALL_STORAGE_TANK = ITEMS.register("gold_snowball_storage_tank", ()->{return new SnowballStorageTankItem(5);});
+    public static final RegistryObject<Item> GOLD_SNOWBALL_STORAGE_TANK = ITEMS.register("obsidian_snowball_storage_tank", ()->{return new SnowballStorageTankItem(6);});
+    public static final RegistryObject<Item> OBSIDIAN_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_snowball_storage_tank", ()->{return new SnowballStorageTankItem(7);});
+    public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL_STORAGE_TANK = ITEMS.register("ice_snowball_storage_tank", ()->{return new SnowballStorageTankItem(9);});
 
 }

@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.entity;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -9,13 +8,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Snowball;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
@@ -45,9 +42,9 @@ public class AdvancedSnowballEntity extends Snowball {
         this.blazeDamage = blazeDamage;
     }
 
-    public AdvancedSnowballEntity(Level level, double x, double y, double z,SnowballType type) {
+    public AdvancedSnowballEntity(Level level, double x, double y, double z, SnowballType type) {
         super(level, x, y, z);
-        this.type=type;
+        this.type = type;
     }
     public AdvancedSnowballEntity(Level level, double x, double y, double z,SnowballType type,float damage,float blazeDamage) {
         super(level, x, y, z);
@@ -57,7 +54,7 @@ public class AdvancedSnowballEntity extends Snowball {
     }
 
     private boolean isHeadingToEntity(Player player) {
-        float pitch = player.getXRot()*0.01745329F;
+        float pitch = player.getXRot() * 0.01745329F;
         float yaw = player.getYRot() * 0.01745329F;
         Vec3 speedVec = this.getDeltaMovement().normalize();
         Vec3 cameraVec = new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
@@ -121,10 +118,10 @@ public class AdvancedSnowballEntity extends Snowball {
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
-        if(explode){
-            if(level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))){
+        if (explode){
+            if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))){
                 level.explode(null,this.getX(),this.getY(),this.getZ(),1.5F, Explosion.BlockInteraction.DESTROY);
-            }else {
+            } else {
                 level.explode(null,this.getX(),this.getY(),this.getZ(),1.5F, Explosion.BlockInteraction.NONE);
             }
         }
