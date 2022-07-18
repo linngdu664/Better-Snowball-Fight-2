@@ -5,6 +5,6 @@ import net.minecraft.world.item.BowItem;
 
 public class SnowballCannonItem extends BowItem {
     public SnowballCannonItem() {
-        super(new Properties().tab(ModGroup.group));
+        super(new Properties().tab(ModGroup.group).stacksTo(1).durability(256));
     }
 }

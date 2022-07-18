@@ -5,6 +5,6 @@ import net.minecraft.world.item.Item;
 
 public class SnowballMachineGunItem extends Item {
     public SnowballMachineGunItem() {
-        super(new Properties().tab(ModGroup.group));
+        super(new Properties().tab(ModGroup.group).stacksTo(1).durability(512));
     }
 }

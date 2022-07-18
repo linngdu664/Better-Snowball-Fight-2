@@ -31,13 +31,14 @@ public class AdvancedSnowballEntity extends Snowball {
     public boolean explode = false;
     public SnowballType type;
 
-    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity,SnowballType type) {
+    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
         super(level, livingEntity);
-        this.type=type;
+        this.type = type;
     }
-    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity,SnowballType type,float damage,float blazeDamage) {
+
+    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type, float damage, float blazeDamage) {
         super(level, livingEntity);
-        this.type=type;
+        this.type = type;
         this.damage = damage;
         this.blazeDamage = blazeDamage;
     }
@@ -46,9 +47,10 @@ public class AdvancedSnowballEntity extends Snowball {
         super(level, x, y, z);
         this.type = type;
     }
-    public AdvancedSnowballEntity(Level level, double x, double y, double z,SnowballType type,float damage,float blazeDamage) {
+
+    public AdvancedSnowballEntity(Level level, double x, double y, double z, SnowballType type, float damage, float blazeDamage) {
         super(level, x, y, z);
-        this.type=type;
+        this.type = type;
         this.damage = damage;
         this.blazeDamage = blazeDamage;
     }
@@ -58,58 +60,52 @@ public class AdvancedSnowballEntity extends Snowball {
         float yaw = player.getYRot() * 0.01745329F;
         Vec3 speedVec = this.getDeltaMovement().normalize();
         Vec3 cameraVec = new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
-        return Mth.abs((float) (cameraVec.dot(speedVec)+1.0F))<0.2F;
+        return Mth.abs((float) (cameraVec.dot(speedVec) + 1.0F)) < 0.2F;
     }
 
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
-        if(entityHitResult.getEntity() instanceof LivingEntity entity){
-            if(
-                    entity instanceof Player player &&(
-                            player.getOffhandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get())) &&
-                            player.getUsedItemHand()== InteractionHand.OFF_HAND ||
-                            player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get())) &&
-                            player.getUsedItemHand()== InteractionHand.MAIN_HAND)&&
-                    player.isUsingItem() &&
-                    isHeadingToEntity(player)
-            ){
-                switch (type){
-                    case SMOOTH ->player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(),1),true);
-                    case COMPACTED ->player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get(),1),true);
-                    case STONE ->player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.STONE_SNOWBALL.get(),1),true);
-                    case GLASS ->player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GLASS_SNOWBALL.get(),1),true);
-                    case IRON ->player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.IRON_SNOWBALL.get(),1),true);
-                    case GOLD ->player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GOLD_SNOWBALL.get(),1),true);
-                    case OBSIDIAN ->player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get(),1),true);
-                    case EXPLOSIVE ->player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get(),1),true);
-                    case VANILLA ->player.getInventory().placeItemBackInInventory(new ItemStack(Items.SNOWBALL,1),true);
-                    case ICE ->player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.ICE_SNOWBALL.get(),1),true);
+        if (entityHitResult.getEntity() instanceof LivingEntity entity) {
+            if (entity instanceof Player player && (player.getOffhandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get())) &&
+                    player.getUsedItemHand() == InteractionHand.OFF_HAND || player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get())) &&
+                    player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && isHeadingToEntity(player)) {
+                switch (type) {
+                    case SMOOTH -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
+                    case COMPACTED -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get(), 1), true);
+                    case STONE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.STONE_SNOWBALL.get(), 1), true);
+                    case GLASS -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GLASS_SNOWBALL.get(), 1), true);
+                    case IRON -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.IRON_SNOWBALL.get(), 1), true);
+                    case GOLD -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GOLD_SNOWBALL.get(), 1), true);
+                    case OBSIDIAN -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get(), 1), true);
+                    case EXPLOSIVE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get(), 1), true);
+                    case VANILLA -> player.getInventory().placeItemBackInInventory(new ItemStack(Items.SNOWBALL, 1), true);
+                    case ICE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.ICE_SNOWBALL.get(), 1), true);
                 }
-                if(player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))){
-                    player.getMainHandItem().hurtAndBreak(1,player,(e)->e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-                }else if(player.getOffhandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))){
-                    player.getMainHandItem().hurtAndBreak(1,player,(e)->e.broadcastBreakEvent(EquipmentSlot.OFFHAND));
+                if (player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {
+                    player.getMainHandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+                } else if (player.getOffhandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {
+                    player.getMainHandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.OFFHAND));
                 }
-                level.playSound(null,player.getX(),player.getY(),player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL,3F,0.4F/level.getRandom().nextFloat() * 0.4F + 0.8F);
+                level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL, 3F, 0.4F / level.getRandom().nextFloat() * 0.4F + 0.8F);
                 return;
             }
             float i = entity instanceof Blaze ? blazeDamage : damage;
-            entity.hurt(DamageSource.thrown(this,this.getOwner()),i);
-            if(frozenTicks>0){
+            entity.hurt(DamageSource.thrown(this, this.getOwner()), i);
+            if (frozenTicks > 0) {
                 entity.setTicksFrozen(frozenTicks);
-                entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,20,1));
+                entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1));
             }
-            if(weaknessTicks>0){
-                entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,weaknessTicks,1));
+            if (weaknessTicks > 0) {
+                entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weaknessTicks, 1));
             }
             Vec3 vec3d = this.getDeltaMovement().multiply(0.1 * punch, 0.0, 0.1 * punch);
-            entity.push(vec3d.x,0.0,vec3d.z);
-            if(explode){
-                if(level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))){
-                    level.explode(null,this.getX(),this.getY(),this.getZ(),1.5F, Explosion.BlockInteraction.DESTROY);
-                }else {
-                    level.explode(null,this.getX(),this.getY(),this.getZ(),1.5F, Explosion.BlockInteraction.NONE);
+            entity.push(vec3d.x, 0.0, vec3d.z);
+            if (explode) {
+                if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
+                    level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
+                } else {
+                    level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
                 }
             }
         }
@@ -118,11 +114,11 @@ public class AdvancedSnowballEntity extends Snowball {
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
-        if (explode){
-            if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))){
-                level.explode(null,this.getX(),this.getY(),this.getZ(),1.5F, Explosion.BlockInteraction.DESTROY);
+        if (explode) {
+            if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
+                level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
             } else {
-                level.explode(null,this.getX(),this.getY(),this.getZ(),1.5F, Explosion.BlockInteraction.NONE);
+                level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
             }
         }
     }

@@ -6,8 +6,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod("bsf")
 public class Register {
-    public Register(){
-
+    public Register() {
         ItemRegister.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 }
