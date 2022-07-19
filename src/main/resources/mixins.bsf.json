@@ -1,8 +1,9 @@
 {
+  "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
   "package": "com.linngdu664.bsf.mixin",
   "refmap": "refmap.bsf.json",
-  "mixins": ["SnowballItemMixin"],
+  "mixins": ["SnowballItemMixin", "SolidBucketItemMixin"],
   "client": [],
   "server": []
 }

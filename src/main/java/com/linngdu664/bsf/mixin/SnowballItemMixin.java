@@ -36,7 +36,7 @@ public class SnowballItemMixin extends Item {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!pLevel.isClientSide) {
-            float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.2F : 1.0F;
+            float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
             AdvancedSnowballEntity snowballEntity = new AdvancedSnowballEntity(pLevel, pPlayer, SnowballType.VANILLA);
             snowballEntity.setItem(itemStack);
             snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F * i, 1.0F);
@@ -48,21 +48,22 @@ public class SnowballItemMixin extends Item {
         }
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
     }
-/*
+
     @Override
     public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
         pTarget.setTicksFrozen(180);
         pTarget.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1));
         pTarget.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 1));
-        if (!((Player) pAttacker).getAbilities().instabuild) {
+        Player player = (Player) pAttacker;
+        if (!player.getAbilities().instabuild) {
             pAttacker.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
         }
         for (int i = 0; i < 16; i++) {
-            pAttacker.getLevel().addParticle(ParticleTypes.ITEM_SNOWBALL, pTarget.getX(), pTarget.getEyeY(), pTarget.getZ(), 0, 0, 0);
+            pTarget.level.addParticle(ParticleTypes.ITEM_SNOWBALL, pTarget.getX(), pTarget.getEyeY(), pTarget.getZ(), 0, 0, 0);
         }
         if (pTarget instanceof Blaze) {
-            pTarget.hurt(DamageSource.playerAttack((Player) pAttacker), 4);
+            pTarget.hurt(DamageSource.playerAttack(player), 4);
         }
         return true;
-    }*/
+    }
 }
