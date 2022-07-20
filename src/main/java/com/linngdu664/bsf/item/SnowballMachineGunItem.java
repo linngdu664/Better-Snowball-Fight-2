@@ -4,7 +4,7 @@ import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.entity.SnowballType;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.setter.ModGroup;
-import com.linngdu664.bsf.sound.SoundRegister;
+import com.linngdu664.bsf.SoundRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;

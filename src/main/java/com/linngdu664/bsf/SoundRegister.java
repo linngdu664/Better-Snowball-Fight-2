@@ -1,4 +1,4 @@
-package com.linngdu664.bsf.sound;
+package com.linngdu664.bsf;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
