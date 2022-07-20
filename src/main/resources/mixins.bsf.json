@@ -4,6 +4,6 @@
   "package": "com.linngdu664.bsf.mixin",
   "refmap": "refmap.bsf.json",
   "mixins": ["SnowballItemMixin", "SolidBucketItemMixin"],
-  "client": [],
+  "client": ["AbstractClientPlayerMixin"],
   "server": []
 }
