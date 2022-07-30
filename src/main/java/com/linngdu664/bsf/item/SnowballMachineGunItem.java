@@ -25,7 +25,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class SnowballMachineGunItem extends Item {
-    public static int timer;
+    private static int timer;
+    private static float j;
 
     public SnowballMachineGunItem() {
         super(new Properties().tab(ModGroup.group).stacksTo(1).durability(512));
@@ -61,7 +62,6 @@ public class SnowballMachineGunItem extends Item {
         Player player = (Player) pLivingEntity;
         float pitch = player.getXRot();
         float yaw = player.getYRot();
-        float j = 0;
         if (timer % 3 == 0) {
             ItemStack itemStack = findAmmo(player);
             if (itemStack.getItem() != Items.AIR) {
@@ -69,43 +69,43 @@ public class SnowballMachineGunItem extends Item {
                 if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.COMPACTED);
                     snowballEntity.setItem(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get()));
-                    j = 0.18F;
+                    j = 0.08F;
                 } else if (itemStack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.STONE, 3.0F, 4.0F);
                     snowballEntity.setItem(new ItemStack(ItemRegister.STONE_SNOWBALL.get()));
-                    j = 0.25F;
+                    j = 0.1F;
                 } else if (itemStack.getItem() == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.GLASS, 4.0F, 5.0F);
                     snowballEntity.setItem(new ItemStack(ItemRegister.GLASS_SNOWBALL.get()));
-                    j = 0.25F;
+                    j = 0.1F;
                 } else if (itemStack.getItem() == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.IRON, 5.0F, 7.0F);
                     snowballEntity.setItem(new ItemStack(ItemRegister.IRON_SNOWBALL.get()));
-                    j = 0.28F;
+                    j = 0.12F;
                 } else if (itemStack.getItem() == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.ICE, 4.0F, 6.0F);
                     snowballEntity.frozenTicks = 60;
                     snowballEntity.setItem(new ItemStack(ItemRegister.ICE_SNOWBALL.get()));
-                    j = 0.25F;
+                    j = 0.1F;
                 } else if (itemStack.getItem() == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.GOLD, 6.0F, 7.0F);
                     snowballEntity.setItem(new ItemStack(ItemRegister.GOLD_SNOWBALL.get()));
-                    j = 0.33F;
+                    j = 0.14F;
                 } else if (itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.OBSIDIAN, 7.0F, 8.0F);
                     snowballEntity.setItem(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get()));
-                    j = 0.4F;
+                    j = 0.17F;
                 } else {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.EXPLOSIVE, 3.0F, 5.0F);
                     snowballEntity.explode = true;
                     snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get()));
-                    j = 0.31F;
+                    j = 0.12F;
                 }
                 snowballEntity.punch = 1.2;
                 snowballEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);
                 pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);pLevel.addFreshEntity(snowballEntity);
                 Vec3 cameraVec = new Vec3(-Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.sin(yaw * Mth.DEG_TO_RAD), -Mth.sin(pitch * Mth.DEG_TO_RAD), Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.cos(yaw * Mth.DEG_TO_RAD));
-                player.push(-0.1 * j * cameraVec.x, -0.1 * j * cameraVec.y, -0.1 * j * cameraVec.z);
+                player.push(-0.24 * j * cameraVec.x, -0.24 * j * cameraVec.y, -0.24 * j * cameraVec.z);
                 if (!player.getAbilities().instabuild) {
                     itemStack.hurtAndBreak(1, player, (p) -> {
                         itemStack.shrink(1);
