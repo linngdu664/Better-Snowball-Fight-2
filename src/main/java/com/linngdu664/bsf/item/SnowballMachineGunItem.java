@@ -69,7 +69,7 @@ public class SnowballMachineGunItem extends Item {
                 if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.COMPACTED);
                     snowballEntity.setItem(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get()));
-                    j = 0.08F;
+                    j = 0.075F;
                 } else if (itemStack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.STONE, 3.0F, 4.0F);
                     snowballEntity.setItem(new ItemStack(ItemRegister.STONE_SNOWBALL.get()));
