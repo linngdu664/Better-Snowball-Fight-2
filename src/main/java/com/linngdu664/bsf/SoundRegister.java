@@ -14,5 +14,4 @@ public class SoundRegister {
     private static RegistryObject<SoundEvent> build (String id) {
         return SOUNDS.register(id, () -> new SoundEvent(new ResourceLocation("bsf", id)));
     }
-
 }

@@ -22,7 +22,7 @@ public abstract class AbstractClientPlayerMixin extends Player {
     }
 
     @Inject(method = "getFieldOfViewModifier", at = @At("HEAD"), cancellable = true)
-    public void getFieldOfViewModifier(CallbackInfoReturnable<Float> cir) {
+    private void getFieldOfViewModifier(CallbackInfoReturnable<Float> cir) {
         ItemStack itemstack = this.getUseItem();
         float f = 1.0F;
         if (itemstack.is(ItemRegister.SNOWBALL_CANNON.get()) || itemstack.is(ItemRegister.FREEZING_SNOWBALL_CANNON.get()) || itemstack.is(ItemRegister.POWERFUL_SNOWBALL_CANNON.get())) {

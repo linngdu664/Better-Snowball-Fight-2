@@ -16,11 +16,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -28,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -36,17 +33,20 @@ public class SmoothSnowballItem extends Item {
     public SmoothSnowballItem() {
         super(new Properties().tab(ModGroup.group).stacksTo(16));
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
-            protected Projectile getProjectile(Level p_123476_, Position p_123477_, ItemStack p_123478_) {
-                return Util.make(new AdvancedSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z(), SnowballType.SMOOTH), (p_123474_) -> {
-                    p_123474_.setItem(p_123478_);
-                });
+            protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
+                return Util.make(new AdvancedSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z(), SnowballType.SMOOTH), (p_123474_) -> p_123474_.setItem(p_123478_));
             }
         });
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
+
+        for (int i = 0; i < 16; i++) {
+            pPlayer.getLevel().addParticle(ParticleTypes.ITEM_SNOWBALL, pPlayer.getX(), pPlayer.getEyeY(), pPlayer.getZ(), 0, 0, 0);
+        }
+
         if (pUsedHand == InteractionHand.MAIN_HAND) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
@@ -70,24 +70,7 @@ public class SmoothSnowballItem extends Item {
     }
 
     @Override
-    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
-        pTarget.setTicksFrozen(180);
-        pTarget.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1));
-        pTarget.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 1));
-        if (!((Player) pAttacker).getAbilities().instabuild) {
-            pAttacker.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
-        }
-        for (int i = 0; i < 16; i++) {
-            pAttacker.getLevel().addParticle(ParticleTypes.ITEM_SNOWBALL, pTarget.getX(), pTarget.getEyeY(), pTarget.getZ(), 0, 0, 0);
-        }
-        if (pTarget instanceof Blaze) {
-            pTarget.hurt(DamageSource.playerAttack((Player) pAttacker), 4);
-        }
-        return true;
-    }
-
-    @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("smooth_snowball.tooltip").withStyle(ChatFormatting.GRAY));
     }
 }

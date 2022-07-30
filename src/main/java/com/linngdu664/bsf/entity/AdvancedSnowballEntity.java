@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 public class AdvancedSnowballEntity extends Snowball {
     public int weaknessTicks = 0;
@@ -64,7 +65,7 @@ public class AdvancedSnowballEntity extends Snowball {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult) {
+    protected void onHitEntity(@NotNull EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
         if (entityHitResult.getEntity() instanceof LivingEntity entity) {
             if (entity instanceof Player player && (player.getOffhandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get())) &&
@@ -112,7 +113,7 @@ public class AdvancedSnowballEntity extends Snowball {
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult) {
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
         if (explode) {
             if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {

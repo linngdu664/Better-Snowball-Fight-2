@@ -1,10 +1,10 @@
 package com.linngdu664.bsf.item;
 
+import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.entity.SnowballType;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.setter.ModGroup;
-import com.linngdu664.bsf.SoundRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -19,13 +19,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class SnowballMachineGunItem extends Item {
     public static int timer;
-    public static float j;
 
     public SnowballMachineGunItem() {
         super(new Properties().tab(ModGroup.group).stacksTo(1).durability(512));
@@ -37,6 +37,7 @@ public class SnowballMachineGunItem extends Item {
                 stack.getItem() == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
                 stack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get();
     }
+
     protected ItemStack findAmmo(Player player) {
         for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
             if (isAmmoTank(player.getInventory().getItem(j))) {
@@ -47,7 +48,7 @@ public class SnowballMachineGunItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         timer = 0;
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         pPlayer.startUsingItem(pUsedHand);
@@ -56,10 +57,11 @@ public class SnowballMachineGunItem extends Item {
     }
 
     @Override
-    public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
+    public void onUseTick(@NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, @NotNull ItemStack pStack, int pRemainingUseDuration) {
         Player player = (Player) pLivingEntity;
         float pitch = player.getXRot();
         float yaw = player.getYRot();
+        float j = 0;
         if (timer % 3 == 0) {
             ItemStack itemStack = findAmmo(player);
             if (itemStack.getItem() != Items.AIR) {
@@ -105,12 +107,11 @@ public class SnowballMachineGunItem extends Item {
                 Vec3 cameraVec = new Vec3(-Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.sin(yaw * Mth.DEG_TO_RAD), -Mth.sin(pitch * Mth.DEG_TO_RAD), Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.cos(yaw * Mth.DEG_TO_RAD));
                 player.push(-0.1 * j * cameraVec.x, -0.1 * j * cameraVec.y, -0.1 * j * cameraVec.z);
                 if (!player.getAbilities().instabuild) {
-                    pStack.setDamageValue(pStack.getDamageValue() + 1);
-                    itemStack.setDamageValue(itemStack.getDamageValue() + 1);
-                    if (itemStack.getDamageValue() == 96) {
+                    itemStack.hurtAndBreak(1, player, (p) -> {
                         itemStack.shrink(1);
-                        player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get(), 1), true);
-                    }
+                        p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true);
+                    });
+                    pStack.setDamageValue(pStack.getDamageValue() + 1);
                     if (pStack.getDamageValue() == 512) {
                         pStack.shrink(1);
                         pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
@@ -127,22 +128,22 @@ public class SnowballMachineGunItem extends Item {
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack pStack) {
+    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack pStack) {
         return UseAnim.BOW;
     }
 
     @Override
-    public int getUseDuration(ItemStack pStack) {
+    public int getUseDuration(@NotNull ItemStack pStack) {
         return Integer.MAX_VALUE;
     }
 
     @Override
-    public boolean isValidRepairItem(ItemStack pStack, ItemStack pRepairCandidate) {
+    public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
         return pRepairCandidate.is(Items.IRON_INGOT);
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("snowball_machine_gun.tooltip").withStyle(ChatFormatting.GRAY));
     }
 }
