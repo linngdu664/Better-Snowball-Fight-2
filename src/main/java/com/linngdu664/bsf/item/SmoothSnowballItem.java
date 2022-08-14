@@ -42,11 +42,6 @@ public class SmoothSnowballItem extends Item {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-
-        for (int i = 0; i < 16; i++) {
-            pPlayer.getLevel().addParticle(ParticleTypes.ITEM_SNOWBALL, pPlayer.getX(), pPlayer.getEyeY(), pPlayer.getZ(), 0, 0, 0);
-        }
-
         if (pUsedHand == InteractionHand.MAIN_HAND) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
