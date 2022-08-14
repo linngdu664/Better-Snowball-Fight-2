@@ -28,10 +28,10 @@
 下载 Download
 ==
 ---
-* [CurseForge](https://www.curseforge.com/minecraft/mc-mods/better-snowball-fight)
-* [Gitee](https://gitee.com/Linngdu664/better-snowball-fight-mod/attach_files/1020669/download/better-snowball-fight-1.18.2-v1.0.1.jar)
-* [GitHub](https://github.com/linngdu664/Better-Snowball-Fight/releases/tag/v1.0.1-1.18.2-fabric)
-* [百度网盘](https://pan.baidu.com/s/1Ou5lxaSM6CoSVjEf8JoKkQ?pwd=9ygl)
+* [CurseForge](https://www.curseforge.com/minecraft/mc-mods/better-snowball-fight)（待更新）
+* [Gitee](https://gitee.com/Linngdu664/better-snowball-fight-mod-forge/releases/download/1.18-forge/better-snowball-fight-1.18-1.2.0.jar)
+* [GitHub](https://github.com/linngdu664/Better-Snowball-Fight/releases/tag/v1.0.1-1.18.2-fabric)（待更新）
+* [百度网盘](https://pan.baidu.com/s/1Ou5lxaSM6CoSVjEf8JoKkQ?pwd=9ygl)（待更新）
 
 怎么玩 How to play
 ==
