@@ -7,6 +7,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,10 +39,13 @@ public class MilkPopsicleItem extends Item {
     @Override
     public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, Level level, @NotNull LivingEntity user) {
         if (!level.isClientSide) {
-            user.setSecondsOnFire(0);
+            user.setRemainingFireTicks(0);
             user.removeAllEffects();
             user.setTicksFrozen(40);
             user.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
+        }
+        if (!((Player) user).getAbilities().instabuild) {
+            stack.shrink(1);
         }
         return stack;
     }
