@@ -2,7 +2,7 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
   "package": "com.linngdu664.bsf.mixin",
-  "refmap": "refmap.bsf.json",
+  "refmap": "mixins.bsf.refmap.json",
   "mixins": ["SnowballItemMixin"],
   "client": ["AbstractClientPlayerMixin"],
   "server": []
