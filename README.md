@@ -19,7 +19,7 @@
 ---
 * mod version: 1.2
 * minecraft version: 1.18.x
-* forge version: >=38
+* forge version: ≥38
 * compatibility level: JAVA_17
   
 1.2更新日志：
