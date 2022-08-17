@@ -3,14 +3,21 @@ package com.linngdu664.bsf.item;
 import com.linngdu664.bsf.entity.SnowballType;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.setter.ModGroup;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class SnowballStorageTankItem extends Item {
     public SnowballType type;
@@ -54,5 +61,10 @@ public class SnowballStorageTankItem extends Item {
             pPlayer.awardStat(Stats.ITEM_USED.get(this));
         }
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
+    }
+
+    @Override
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
+        pTooltipComponents.add(new TranslatableComponent("snowball_storage_tank.tooltip").withStyle(ChatFormatting.GRAY));
     }
 }
