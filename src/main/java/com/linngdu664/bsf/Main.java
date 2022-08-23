@@ -1,6 +1,7 @@
 package com.linngdu664.bsf;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.particle.ParticleRegister;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,9 +15,10 @@ public class Main {
     public Main() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ItemRegister.ITEMS.register(bus);
-        bus.addListener(this::initClient);
         SoundRegister.SOUNDS.register(bus);
+        ParticleRegister.PARTICLE_TYPES.register(bus);
         MinecraftForge.EVENT_BUS.register(new EventHandler());
+        bus.addListener(this::initClient);
     }
 
     private void initClient(final FMLClientSetupEvent event) {
