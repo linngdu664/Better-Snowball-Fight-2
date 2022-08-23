@@ -1,6 +1,8 @@
 package com.linngdu664.bsf.entity;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -31,6 +33,7 @@ public class AdvancedSnowballEntity extends Snowball {
     public float blazeDamage = 3.0F;
     public boolean explode = false;
     public SnowballType type;
+    private int timer;
 
     public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
         super(level, livingEntity);
@@ -109,6 +112,10 @@ public class AdvancedSnowballEntity extends Snowball {
                     level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
                 }
             }
+            if (type != SnowballType.VANILLA) {
+                ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
+            }
+            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
         }
     }
 
@@ -122,5 +129,18 @@ public class AdvancedSnowballEntity extends Snowball {
                 level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
             }
         }
+        if (type != SnowballType.VANILLA) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
+        }
+        ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if ((timer & 3) == 0) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+        }
+        timer++;
     }
 }
