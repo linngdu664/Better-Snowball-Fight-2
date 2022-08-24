@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.entity;
 
 public enum SnowballType {
-    VANILLA,
     SMOOTH,
     COMPACTED,
     STONE,
