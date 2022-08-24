@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.item;
 
 import com.linngdu664.bsf.SoundRegister;
+import com.linngdu664.bsf.Util;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.entity.SnowballType;
 import com.linngdu664.bsf.item.setter.ItemRegister;
@@ -32,22 +33,6 @@ public class SnowballMachineGunItem extends Item {
         super(new Properties().tab(ModGroup.group).stacksTo(1).durability(512));
     }
 
-    protected boolean isAmmoTank(ItemStack stack) {
-        return stack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get();
-    }
-
-    protected ItemStack findAmmo(Player player) {
-        for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-            if (isAmmoTank(player.getInventory().getItem(j))) {
-                return player.getInventory().getItem(j);
-            }
-        }
-        return new ItemStack(Items.AIR);
-    }
-
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         timer = 0;
@@ -63,7 +48,7 @@ public class SnowballMachineGunItem extends Item {
         float pitch = player.getXRot();
         float yaw = player.getYRot();
         if (timer % 3 == 0) {
-            ItemStack itemStack = findAmmo(player);
+            ItemStack itemStack = Util.findAmmo(player, true);
             if (itemStack.getItem() != Items.AIR) {
                 AdvancedSnowballEntity snowballEntity;
                 if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {

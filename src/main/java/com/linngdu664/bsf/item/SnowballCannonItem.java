@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.item;
 
 import com.linngdu664.bsf.SoundRegister;
+import com.linngdu664.bsf.Util;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.entity.SnowballType;
 import com.linngdu664.bsf.item.setter.ItemRegister;
@@ -32,34 +33,6 @@ public class SnowballCannonItem extends BowItem {
         this.coreType = type;
     }
 
-    protected boolean isAmmoTank(ItemStack stack) {
-        return stack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get();
-    }
-
-    protected boolean isAmmo(ItemStack stack) {
-        return stack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || stack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL.get() ||
-                stack.getItem() == ItemRegister.GLASS_SNOWBALL.get() || stack.getItem() == ItemRegister.GOLD_SNOWBALL.get() ||
-                stack.getItem() == ItemRegister.ICE_SNOWBALL.get() || stack.getItem() == ItemRegister.IRON_SNOWBALL.get() ||
-                stack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL.get() || stack.getItem() == ItemRegister.STONE_SNOWBALL.get();
-    }
-
-    protected ItemStack findAmmo(Player player) {
-        for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-            if (isAmmoTank(player.getInventory().getItem(j))) {
-                return player.getInventory().getItem(j);
-            }
-        }
-        for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-            if (isAmmo(player.getInventory().getItem(j))) {
-                return player.getInventory().getItem(j);
-            }
-        }
-        return new ItemStack(Items.AIR, 0);
-    }
-
     @Override
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pEntityLiving, int pTimeLeft) {
         if (pEntityLiving instanceof Player player) {
@@ -67,9 +40,9 @@ public class SnowballCannonItem extends BowItem {
             float f = getPowerForTime(i);
             if (f >= 0.1F) {
                 boolean k = false;
-                ItemStack itemStack = findAmmo(player);
+                ItemStack itemStack = Util.findAmmo(player, false);
                 if (itemStack.getItem() != Items.AIR && !pLevel.isClientSide) {
-                    if (isAmmoTank(itemStack)) {
+                    if (Util.isAmmoTank(itemStack)) {
                         k = true;
                     }
                     AdvancedSnowballEntity snowballEntity;
@@ -163,7 +136,7 @@ public class SnowballCannonItem extends BowItem {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("snowball_cannon.tooltip").withStyle(ChatFormatting.GRAY));
     }
 }

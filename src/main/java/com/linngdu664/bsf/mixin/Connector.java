@@ -1,4 +1,4 @@
-package com.linngdu664.bsf;
+package com.linngdu664.bsf.mixin;
 
 import org.spongepowered.asm.mixin.Mixins;
 import org.spongepowered.asm.mixin.connect.IMixinConnector;
