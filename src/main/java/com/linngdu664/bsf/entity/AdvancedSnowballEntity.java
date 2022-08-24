@@ -1,21 +1,23 @@
 package com.linngdu664.bsf.entity;
 
+import com.linngdu664.bsf.Util;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.particle.ParticleRegister;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
@@ -26,7 +28,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public class AdvancedSnowballEntity extends Snowball {
+public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public int weaknessTicks = 0;
     public int frozenTicks = 0;
     public double punch = 0.0;
@@ -36,44 +38,36 @@ public class AdvancedSnowballEntity extends Snowball {
     public SnowballType type;
 
     public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
-        super(level, livingEntity);
+        super(EntityType.EGG, livingEntity, level);
         this.type = type;
     }
 
     public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type, float damage, float blazeDamage) {
-        super(level, livingEntity);
+        super(EntityType.EGG, livingEntity, level);
         this.type = type;
         this.damage = damage;
         this.blazeDamage = blazeDamage;
     }
 
     public AdvancedSnowballEntity(Level level, double x, double y, double z, SnowballType type) {
-        super(level, x, y, z);
+        super(EntityType.EGG, x, y, z, level);
         this.type = type;
     }
 
     public AdvancedSnowballEntity(Level level, double x, double y, double z, SnowballType type, float damage, float blazeDamage) {
-        super(level, x, y, z);
+        super(EntityType.EGG, x, y, z, level);
         this.type = type;
         this.damage = damage;
         this.blazeDamage = blazeDamage;
-    }
-
-    private boolean isHeadingToEntity(Player player) {
-        float pitch = player.getXRot() * 0.01745329F;
-        float yaw = player.getYRot() * 0.01745329F;
-        Vec3 speedVec = this.getDeltaMovement().normalize();
-        Vec3 cameraVec = new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
-        return Mth.abs((float) (cameraVec.dot(speedVec) + 1.0F)) < 0.2F;
     }
 
     @Override
     protected void onHitEntity(@NotNull EntityHitResult entityHitResult) {
         super.onHitEntity(entityHitResult);
         if (entityHitResult.getEntity() instanceof LivingEntity entity) {
-            if (entity instanceof Player player && (player.getOffhandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get())) &&
-                    player.getUsedItemHand() == InteractionHand.OFF_HAND || player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get())) &&
-                    player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && isHeadingToEntity(player)) {
+            if (entity instanceof Player player && (player.getOffhandItem().is(ItemRegister.GLOVE.get()) &&
+                    player.getUsedItemHand() == InteractionHand.OFF_HAND || player.getMainHandItem().is(ItemRegister.GLOVE.get()) &&
+                    player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && Util.isHeadingToSnowball(player, this)) {
                 switch (type) {
                     case SMOOTH -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
                     case COMPACTED -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get(), 1), true);
@@ -83,15 +77,15 @@ public class AdvancedSnowballEntity extends Snowball {
                     case GOLD -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GOLD_SNOWBALL.get(), 1), true);
                     case OBSIDIAN -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get(), 1), true);
                     case EXPLOSIVE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get(), 1), true);
-                    case VANILLA -> player.getInventory().placeItemBackInInventory(new ItemStack(Items.SNOWBALL, 1), true);
                     case ICE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.ICE_SNOWBALL.get(), 1), true);
                 }
                 if (player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {
                     player.getMainHandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
                 } else if (player.getOffhandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {
-                    player.getMainHandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.OFFHAND));
+                    player.getOffhandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.OFFHAND));
                 }
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL, 3F, 0.4F / level.getRandom().nextFloat() * 0.4F + 0.8F);
+                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);
                 return;
             }
             float i = entity instanceof Blaze ? blazeDamage : damage;
@@ -112,9 +106,7 @@ public class AdvancedSnowballEntity extends Snowball {
                     level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
                 }
             }
-            if (type != SnowballType.VANILLA) {
-                ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
-            }
+            ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
         }
     }
@@ -129,9 +121,7 @@ public class AdvancedSnowballEntity extends Snowball {
                 level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
             }
         }
-        if (type != SnowballType.VANILLA) {
-            ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
-        }
+        ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
         ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
     }
 
@@ -139,5 +129,10 @@ public class AdvancedSnowballEntity extends Snowball {
     public void tick() {
         super.tick();
         ((ServerLevel) level).sendParticles(ParticleRegister.SNOW_PARTICLE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+    }
+
+    @Override
+    protected @NotNull Item getDefaultItem() {
+        return Items.SNOWBALL;
     }
 }
