@@ -1,4 +1,4 @@
-package com.linngdu664.bsf.entity;
+package com.linngdu664.bsf.util;
 
 public enum SnowballType {
     SMOOTH,
