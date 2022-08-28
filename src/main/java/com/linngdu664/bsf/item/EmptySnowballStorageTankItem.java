@@ -5,6 +5,6 @@ import net.minecraft.world.item.Item;
 
 public class EmptySnowballStorageTankItem extends Item {
     public EmptySnowballStorageTankItem() {
-        super(new Properties().tab(ItemRegister.group).stacksTo(1));
+        super(new Properties().tab(ItemRegister.GROUP).stacksTo(1));
     }
 }

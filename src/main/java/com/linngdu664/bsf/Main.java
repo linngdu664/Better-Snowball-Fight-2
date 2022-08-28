@@ -16,7 +16,7 @@ public class Main {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ItemRegister.ITEMS.register(bus);
         SoundRegister.SOUNDS.register(bus);
-        ParticleRegister.PARTICLE_TYPES.register(bus);
+        ParticleRegister.PARTICLES.register(bus);
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         bus.addListener(this::initClient);
     }

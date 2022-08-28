@@ -1,8 +1,8 @@
 package com.linngdu664.bsf.item;
 
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
-import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.SnowballType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.Position;
@@ -29,7 +29,7 @@ import java.util.List;
 
 public class SmoothSnowballItem extends Item {
     public SmoothSnowballItem() {
-        super(new Properties().tab(ItemRegister.group).stacksTo(16));
+        super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
                 return Util.make(new AdvancedSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z(), SnowballType.SMOOTH), (p_123474_) -> p_123474_.setItem(p_123478_));

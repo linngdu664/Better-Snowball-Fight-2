@@ -1,10 +1,10 @@
 package com.linngdu664.bsf.item;
 
 import com.linngdu664.bsf.SoundRegister;
-import com.linngdu664.bsf.util.Util;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
-import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.SnowballType;
+import com.linngdu664.bsf.util.Util;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -29,7 +29,7 @@ public class SnowballMachineGunItem extends Item {
     private static float j;
 
     public SnowballMachineGunItem() {
-        super(new Properties().tab(ItemRegister.group).stacksTo(1).durability(512));
+        super(new Properties().tab(ItemRegister.GROUP).stacksTo(1).durability(512));
     }
 
     @Override

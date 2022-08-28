@@ -5,6 +5,6 @@ import net.minecraft.world.item.Item;
 
 public class SuperFrozenCoreItem extends Item {
     public SuperFrozenCoreItem() {
-        super(new Properties().tab(ItemRegister.group));
+        super(new Properties().tab(ItemRegister.GROUP));
     }
 }

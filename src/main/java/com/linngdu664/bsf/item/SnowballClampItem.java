@@ -23,7 +23,7 @@ import java.util.List;
 
 public class SnowballClampItem extends TieredItem {
     public SnowballClampItem(Tier pTier) {
-        super(pTier, new Properties().tab(ItemRegister.group).stacksTo(1));
+        super(pTier, new Properties().tab(ItemRegister.GROUP).stacksTo(1));
     }
 
     @Override

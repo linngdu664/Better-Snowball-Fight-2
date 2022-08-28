@@ -17,7 +17,7 @@ import java.util.List;
 
 public class GloveItem extends ShieldItem {
     public GloveItem() {
-        super(new Properties().tab(ItemRegister.group).durability(128));
+        super(new Properties().tab(ItemRegister.GROUP).durability(128));
     }
 
     @Override

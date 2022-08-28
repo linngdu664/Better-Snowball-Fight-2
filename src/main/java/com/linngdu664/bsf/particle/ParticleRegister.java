@@ -7,6 +7,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ParticleRegister {
-    public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, "bsf");
-    public static final RegistryObject<SimpleParticleType> SHORT_TIME_SNOWFLAKE = PARTICLE_TYPES.register("short_time_snowflake", new ShortTimeSnowflake.Delegate());
+    public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, "bsf");
+    public static final RegistryObject<SimpleParticleType> SHORT_TIME_SNOWFLAKE = PARTICLES.register("short_time_snowflake", new ShortTimeSnowflake.Delegate());
 }

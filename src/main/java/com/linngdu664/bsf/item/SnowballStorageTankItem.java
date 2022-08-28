@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item;
 
-import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.SnowballType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -22,7 +22,7 @@ public class SnowballStorageTankItem extends Item {
     public SnowballType type;
 
     public SnowballStorageTankItem(SnowballType type) {
-        super(new Properties().tab(ItemRegister.group).stacksTo(1).durability(96));
+        super(new Properties().tab(ItemRegister.GROUP).stacksTo(1).durability(96));
         this.type = type;
     }
 

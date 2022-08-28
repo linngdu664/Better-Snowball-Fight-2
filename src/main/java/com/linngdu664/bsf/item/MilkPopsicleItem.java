@@ -23,7 +23,7 @@ public class MilkPopsicleItem extends Item {
     private static final FoodProperties food = new FoodProperties.Builder().alwaysEat().build();
 
     public MilkPopsicleItem() {
-        super(new Properties().food(food).tab(ItemRegister.group));
+        super(new Properties().food(food).tab(ItemRegister.GROUP));
     }
 
     @Override
