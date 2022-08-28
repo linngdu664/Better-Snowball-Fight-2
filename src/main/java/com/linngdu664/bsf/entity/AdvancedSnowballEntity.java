@@ -1,8 +1,9 @@
 package com.linngdu664.bsf.entity;
 
-import com.linngdu664.bsf.Util;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.particle.ParticleRegister;
+import com.linngdu664.bsf.util.SnowballType;
+import com.linngdu664.bsf.util.Util;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,7 +65,6 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
 
     @Override
     protected void onHitEntity(@NotNull EntityHitResult entityHitResult) {
-        super.onHitEntity(entityHitResult);
         if (entityHitResult.getEntity() instanceof LivingEntity entity) {
             if (entity instanceof Player player && (player.getOffhandItem().is(ItemRegister.GLOVE.get()) &&
                     player.getUsedItemHand() == InteractionHand.OFF_HAND || player.getMainHandItem().is(ItemRegister.GLOVE.get()) &&
@@ -128,7 +129,15 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     @Override
     public void tick() {
         super.tick();
-        ((ServerLevel) level).sendParticles(ParticleRegister.SNOW_PARTICLE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+    }
+
+    @Override
+    protected void onHit(@NotNull HitResult pResult) {
+        super.onHit(pResult);
+        if (!level.isClientSide) {
+            this.discard();
+        }
     }
 
     @Override
