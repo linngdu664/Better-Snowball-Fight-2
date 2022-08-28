@@ -12,6 +12,6 @@ public class ParticleProviderRegister {
     @SubscribeEvent
     public static void ParticleProviderRegistry(final ParticleFactoryRegisterEvent event) {
         ParticleEngine particleEngine = Minecraft.getInstance().particleEngine;
-        particleEngine.register(ParticleRegister.SNOW_PARTICLE.get(), SnowParticle.Provider::new);
+        particleEngine.register(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), ShortTimeSnowflake.Provider::new);
     }
 }

@@ -46,7 +46,7 @@ public class SnowballMixin extends ThrowableItemProjectile {
     public void tick() {
         super.tick();
         if (!level.isClientSide) {
-            ((ServerLevel) level).sendParticles(ParticleRegister.SNOW_PARTICLE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+            ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         }
     }
 
