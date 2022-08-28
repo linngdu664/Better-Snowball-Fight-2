@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item;
 
-import com.linngdu664.bsf.item.setter.ModGroup;
+import com.linngdu664.bsf.item.setter.ItemRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class GloveItem extends ShieldItem {
     public GloveItem() {
-        super(new Properties().tab(ModGroup.group).durability(128));
+        super(new Properties().tab(ItemRegister.group).durability(128));
     }
 
     @Override

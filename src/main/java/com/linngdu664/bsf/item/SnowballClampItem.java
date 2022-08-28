@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.item;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
-import com.linngdu664.bsf.item.setter.ModGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -24,7 +23,7 @@ import java.util.List;
 
 public class SnowballClampItem extends TieredItem {
     public SnowballClampItem(Tier pTier) {
-        super(pTier, new Properties().tab(ModGroup.group).stacksTo(1));
+        super(pTier, new Properties().tab(ItemRegister.group).stacksTo(1));
     }
 
     @Override

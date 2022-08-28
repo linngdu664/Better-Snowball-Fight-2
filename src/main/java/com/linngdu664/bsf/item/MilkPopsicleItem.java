@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item;
 
-import com.linngdu664.bsf.item.setter.ModGroup;
+import com.linngdu664.bsf.item.setter.ItemRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -23,7 +23,7 @@ public class MilkPopsicleItem extends Item {
     private static final FoodProperties food = new FoodProperties.Builder().alwaysEat().build();
 
     public MilkPopsicleItem() {
-        super(new Properties().food(food).tab(ModGroup.group));
+        super(new Properties().food(food).tab(ItemRegister.group));
     }
 
     @Override

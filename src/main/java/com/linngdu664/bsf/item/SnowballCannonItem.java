@@ -1,11 +1,10 @@
 package com.linngdu664.bsf.item;
 
 import com.linngdu664.bsf.SoundRegister;
-import com.linngdu664.bsf.Util;
+import com.linngdu664.bsf.util.Util;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
-import com.linngdu664.bsf.entity.SnowballType;
+import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.item.setter.ItemRegister;
-import com.linngdu664.bsf.item.setter.ModGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -29,7 +28,7 @@ public class SnowballCannonItem extends BowItem {
     public final int coreType;
 
     public SnowballCannonItem(int type) {
-        super(new Properties().tab(ModGroup.group).stacksTo(1).durability(256));
+        super(new Properties().tab(ItemRegister.group).stacksTo(1).durability(256));
         this.coreType = type;
     }
 
