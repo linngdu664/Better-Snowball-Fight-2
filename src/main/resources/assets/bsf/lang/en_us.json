@@ -51,5 +51,8 @@
   "milk_popsicle.tooltip": "Cool down 2.0",
   "ice_snowball.tooltip": "It doesn't matter, it's all H2O",
   "snowball_machine_gun.tooltip": "RRRA TA TA TA RRAA TTA TTA TA TA",
-  "snowball_storage_tank.tooltip": "Snowball Baby Spaceman"
+  "snowball_storage_tank.tooltip": "Snowball Baby Spaceman",
+
+  "advancements.bsf.root.title": "Better snowball fight",
+  "advancements.bsf.root.description": "Enjoy and have fun"
 }

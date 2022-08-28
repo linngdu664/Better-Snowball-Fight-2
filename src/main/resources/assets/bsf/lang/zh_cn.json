@@ -51,5 +51,8 @@
   "milk_popsicle.tooltip": "降降温2.0",
   "ice_snowball.tooltip": "没关系，都是H2O",
   "snowball_machine_gun.tooltip": "RRRA TA TA TA RRAA TTA TTA TA TA",
-  "snowball_storage_tank.tooltip": "雪球宝宝太空人"
+  "snowball_storage_tank.tooltip": "雪球宝宝太空人",
+
+  "advancements.bsf.root.title": "更好的打雪仗",
+  "advancements.bsf.root.description": "享受乐趣，玩得开心"
 }
