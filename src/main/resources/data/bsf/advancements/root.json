@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "bsf:explosive_snowball"
+      "item": "bsf:smooth_snowball"
     },
     "title": {
       "translate": "advancements.bsf.root.title"

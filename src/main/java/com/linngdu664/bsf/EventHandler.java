@@ -28,15 +28,15 @@ public class EventHandler {
                 target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
                 target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
                 target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 150, 1));
-                if (!player.getAbilities().instabuild) {
-                    player.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
-                    player.getInventory().placeItemBackInInventory(new ItemStack(Items.BUCKET), true);
-                }
                 for (int i = 0; i < 32; i++) {
                     level.addParticle(ParticleTypes.ITEM_SNOWBALL, target.getX(), target.getEyeY(), target.getZ(), 0, 0, 0);
                 }
                 if (target instanceof Blaze) {
                     target.hurt(DamageSource.playerAttack(player), 8);
+                }
+                if (!player.getAbilities().instabuild) {
+                    player.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
+                    player.getInventory().placeItemBackInInventory(new ItemStack(Items.BUCKET), true);
                 }
             } else if (item instanceof SnowballItem || item instanceof SmoothSnowballItem) {
                 target.setTicksFrozen(180);

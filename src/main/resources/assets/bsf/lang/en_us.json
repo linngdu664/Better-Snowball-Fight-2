@@ -53,6 +53,20 @@
   "snowball_machine_gun.tooltip": "RRRA TA TA TA RRAA TTA TTA TA TA",
   "snowball_storage_tank.tooltip": "Snowball Baby Spaceman",
 
-  "advancements.bsf.root.title": "Better snowball fight",
-  "advancements.bsf.root.description": "Enjoy and have fun"
+  "advancements.bsf.root.title": "Better Snowball Fight",
+  "advancements.bsf.root.description": "Enjoy and have fun",
+  "advancements.bsf.powder_snow_bucket_combat.title": "Ice Bucket Challenge II",
+  "advancements.bsf.powder_snow_bucket_combat.description": "Use powder snow bucket to attack a blaze",
+  "advancements.bsf.snowball_clamp_use.title": "Make a Snowball",
+  "advancements.bsf.snowball_clamp_use.description": "Make a smooth snowball with your snowball clamp",
+  "advancements.bsf.glove_use.title": "Not Today, Thank You II",
+  "advancements.bsf.glove_use.description": "Catch a snowball with your glove",
+  "advancements.bsf.explosive_snowball.title": "Fire in the Hole",
+  "advancements.bsf.explosive_snowball.description": "Make some explosive snowballs to defend yourself",
+  "advancements.bsf.popsicle_consume.title": "Cool Down",
+  "advancements.bsf.popsicle_consume.description": "Eat a popsicle or milk popsicle",
+  "advancements.bsf.snowball_cannon.title": "Did You Find It in a Frozen Chest?",
+  "advancements.bsf.snowball_cannon.description": "Make a snowball cannon",
+  "advancements.bsf.snowball_machine_gun.title": "Power, You're on Denji's Side!",
+  "advancements.bsf.snowball_machine_gun.description": "Make a snowball machine gun"
 }

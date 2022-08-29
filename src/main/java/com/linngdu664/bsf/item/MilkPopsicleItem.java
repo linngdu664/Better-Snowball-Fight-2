@@ -2,8 +2,10 @@ package com.linngdu664.bsf.item;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import net.minecraft.ChatFormatting;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -44,6 +46,7 @@ public class MilkPopsicleItem extends Item {
             user.setTicksFrozen(40);
             user.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
         }
+        CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) user, stack);
         if (!((Player) user).getAbilities().instabuild) {
             stack.shrink(1);
         }

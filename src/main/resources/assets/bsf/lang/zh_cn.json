@@ -54,5 +54,19 @@
   "snowball_storage_tank.tooltip": "雪球宝宝太空人",
 
   "advancements.bsf.root.title": "更好的打雪仗",
-  "advancements.bsf.root.description": "享受乐趣，玩得开心"
+  "advancements.bsf.root.description": "享受乐趣，玩得开心",
+  "advancements.bsf.powder_snow_bucket_combat.title": "冰桶挑战II",
+  "advancements.bsf.powder_snow_bucket_combat.description": "用细雪桶攻击烈焰人",
+  "advancements.bsf.snowball_clamp_use.title": "搓雪球",
+  "advancements.bsf.snowball_clamp_use.description": "用雪球夹做一个光滑雪球",
+  "advancements.bsf.glove_use.title": "不吃这套，谢谢II",
+  "advancements.bsf.glove_use.description": "用手套接中雪球",
+  "advancements.bsf.explosive_snowball.title": "小心手雷",
+  "advancements.bsf.explosive_snowball.description": "制作一些爆炸雪球来保护自己",
+  "advancements.bsf.popsicle_consume.title": "降降温",
+  "advancements.bsf.popsicle_consume.description": "吃根冰棍或牛奶冰棍",
+  "advancements.bsf.snowball_cannon.title": "你是在冰冻箱中找到的吗？",
+  "advancements.bsf.snowball_cannon.description": "制作一个雪球炮",
+  "advancements.bsf.snowball_machine_gun.title": "那帕瓦就和电次一队吧！",
+  "advancements.bsf.snowball_machine_gun.description": "制作一挺雪球机枪"
 }
