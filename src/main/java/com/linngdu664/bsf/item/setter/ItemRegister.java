@@ -2,6 +2,7 @@ package com.linngdu664.bsf.item.setter;
 
 import com.linngdu664.bsf.item.*;
 import com.linngdu664.bsf.util.SnowballType;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.registries.DeferredRegister;
@@ -44,5 +45,6 @@ public class ItemRegister {
     public static final RegistryObject<Item> GOLD_SNOWBALL_STORAGE_TANK = ITEMS.register("gold_snowball_storage_tank", () -> new SnowballStorageTankItem(SnowballType.GOLD));
     public static final RegistryObject<Item> OBSIDIAN_SNOWBALL_STORAGE_TANK = ITEMS.register("obsidian_snowball_storage_tank", () -> new SnowballStorageTankItem(SnowballType.OBSIDIAN));
     public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_snowball_storage_tank", () -> new SnowballStorageTankItem(SnowballType.EXPLOSIVE));
+    public static final RegistryObject<Item> ICE_SKATES_ITEM = ITEMS.register("ice_skates", IceSkatesItem::new);
     public static final Group GROUP = new Group();
 }

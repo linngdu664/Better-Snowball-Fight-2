@@ -2,10 +2,12 @@ package com.linngdu664.bsf.util;
 
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class Util {
@@ -45,5 +47,12 @@ public class Util {
             }
         }
         return new ItemStack(Items.AIR, 0);
+    }
+    public static BlockPos getSolidBlockUnderFeet(Level level, BlockPos blockPos) {
+        for (BlockPos pos = blockPos.below(); pos.getY() > 0; pos = pos.below())
+            if (level.getBlockState(pos).getMaterial().blocksMotion())
+                return pos;
+
+        return null;
     }
 }
