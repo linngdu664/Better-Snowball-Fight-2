@@ -16,6 +16,7 @@
   "item.bsf.glass_snowball": "玻璃雪球",
   "item.bsf.ice_snowball": "冰雪球",
   "item.bsf.obsidian_snowball": "黑曜石雪球",
+  "item.bsf.spectral_snowball": "光灵雪球",
   "item.bsf.powerful_snowball_cannon": "强力雪球炮",
   "item.bsf.freezing_snowball_cannon": "冰冻雪球炮",
   "item.bsf.super_power_core": "超级力量核心",
@@ -34,6 +35,8 @@
   "item.bsf.obsidian_snowball_storage_tank": "黑曜石雪球储罐",
   "item.bsf.explosive_snowball_storage_tank": "爆炸雪球储罐",
   "item.bsf.ice_snowball_storage_tank": "冰雪球储罐",
+  "item.bsf.spectral_snowball_storage_tank": "光灵雪球储罐",
+  "item.bsf.ice_skates": "溜冰鞋",
 
   "stone_snowball.tooltip": "真过分！",
   "snowball_clamp.tooltip": "高效率的搓雪球工具",
@@ -47,9 +50,10 @@
   "explosive_snowball.tooltip": "热兵器",
   "compacted_snowball_set.tooltip": "躲弹幕",
   "compacted_snowball.tooltip": "伤害不大，但侮辱性极强",
+  "ice_snowball.tooltip": "没关系，都是H2O",
+  "spectral_snowball.tooltip": "他变成了光",
   "popsicle.tooltip": "降降温",
   "milk_popsicle.tooltip": "降降温2.0",
-  "ice_snowball.tooltip": "没关系，都是H2O",
   "snowball_machine_gun.tooltip": "RRRA TA TA TA RRAA TTA TTA TA TA",
   "snowball_storage_tank.tooltip": "雪球宝宝太空人",
 

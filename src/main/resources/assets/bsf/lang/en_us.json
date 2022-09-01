@@ -16,6 +16,7 @@
   "item.bsf.glass_snowball": "Glass Snowball",
   "item.bsf.ice_snowball": "Ice Snowball",
   "item.bsf.obsidian_snowball": "Obsidian Snowball",
+  "item.bsf.spectral_snowball": "Spectral Snowball",
   "item.bsf.powerful_snowball_cannon": "Powerful Snowball Cannon",
   "item.bsf.freezing_snowball_cannon": "Freezing Snowball Cannon",
   "item.bsf.super_power_core": "Super Power Core",
@@ -34,6 +35,8 @@
   "item.bsf.obsidian_snowball_storage_tank": "Obsidian Snowball Storage Tank",
   "item.bsf.explosive_snowball_storage_tank": "Explosive Snowball Storage Tank",
   "item.bsf.ice_snowball_storage_tank": "Ice Snowball Storage Tank",
+  "item.bsf.spectral_snowball_storage_tank": "Spectral Snowball Storage Tank",
+  "item.bsf.ice_skates": "Ice Skates",
 
   "stone_snowball.tooltip": "This is outrageous!",
   "snowball_clamp.tooltip": "Highly efficient snowballing tool",
@@ -47,9 +50,10 @@
   "explosive_snowball.tooltip": "Fire in the hole",
   "compacted_snowball_set.tooltip": "Take cover",
   "compacted_snowball.tooltip": "Not very damaging, but extremely insulting",
+  "ice_snowball.tooltip": "It doesn't matter, it's all H2O",
+  "spectral_snowball.tooltip": "He became light",
   "popsicle.tooltip": "Cool down",
   "milk_popsicle.tooltip": "Cool down 2.0",
-  "ice_snowball.tooltip": "It doesn't matter, it's all H2O",
   "snowball_machine_gun.tooltip": "RRRA TA TA TA RRAA TTA TTA TA TA",
   "snowball_storage_tank.tooltip": "Snowball Baby Spaceman",
 
