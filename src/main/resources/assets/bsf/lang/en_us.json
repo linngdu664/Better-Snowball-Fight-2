@@ -37,6 +37,7 @@
   "item.bsf.ice_snowball_storage_tank": "Ice Snowball Storage Tank",
   "item.bsf.spectral_snowball_storage_tank": "Spectral Snowball Storage Tank",
   "item.bsf.ice_skates": "Ice Skates",
+  "item.bsf.snowball_shotgun": "Snowball Shotgun",
 
   "stone_snowball.tooltip": "This is outrageous!",
   "snowball_clamp.tooltip": "Highly efficient snowballing tool",
@@ -56,6 +57,7 @@
   "milk_popsicle.tooltip": "Cool down 2.0",
   "snowball_machine_gun.tooltip": "RRRA TA TA TA RRAA TTA TTA TA TA",
   "snowball_storage_tank.tooltip": "Snowball Baby Spaceman",
+  "ice_skates.tooltip": "dance dance dance",
 
   "advancements.bsf.root.title": "Better Snowball Fight",
   "advancements.bsf.root.description": "Enjoy and have fun",

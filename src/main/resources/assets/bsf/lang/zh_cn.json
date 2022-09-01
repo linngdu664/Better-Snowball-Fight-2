@@ -37,6 +37,7 @@
   "item.bsf.ice_snowball_storage_tank": "冰雪球储罐",
   "item.bsf.spectral_snowball_storage_tank": "光灵雪球储罐",
   "item.bsf.ice_skates": "溜冰鞋",
+  "item.bsf.snowball_shotgun": "雪球散弹枪",
 
   "stone_snowball.tooltip": "真过分！",
   "snowball_clamp.tooltip": "高效率的搓雪球工具",
@@ -56,6 +57,7 @@
   "milk_popsicle.tooltip": "降降温2.0",
   "snowball_machine_gun.tooltip": "RRRA TA TA TA RRAA TTA TTA TA TA",
   "snowball_storage_tank.tooltip": "雪球宝宝太空人",
+  "ice_skates.tooltip": "转起来了",
 
   "advancements.bsf.root.title": "更好的打雪仗",
   "advancements.bsf.root.description": "享受乐趣，玩得开心",
