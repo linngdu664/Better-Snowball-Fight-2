@@ -15,6 +15,7 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.client.IItemRenderProperties;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -25,12 +26,12 @@ public class IceSkatesItem extends ArmorItem {
     public IceSkatesItem() {
         super(new ArmorMaterial() {
             @Override
-            public int getDurabilityForSlot(EquipmentSlot pSlot) {
+            public int getDurabilityForSlot(@NotNull EquipmentSlot pSlot) {
                 return 256;
             }
 
             @Override
-            public int getDefenseForSlot(EquipmentSlot pSlot) {
+            public int getDefenseForSlot(@NotNull EquipmentSlot pSlot) {
                 return 1;
             }
 
@@ -40,7 +41,7 @@ public class IceSkatesItem extends ArmorItem {
             }
 
             @Override
-            public SoundEvent getEquipSound() {
+            public @NotNull SoundEvent getEquipSound() {
                 return SoundEvents.ARMOR_EQUIP_LEATHER;
             }
 
@@ -50,7 +51,7 @@ public class IceSkatesItem extends ArmorItem {
             }
 
             @Override
-            public String getName() {
+            public @NotNull String getName() {
                 return "skates";
             }
 
@@ -67,19 +68,20 @@ public class IceSkatesItem extends ArmorItem {
         }, EquipmentSlot.FEET, new Properties().tab(ItemRegister.GROUP).stacksTo(1));
 
     }
+
     @Nullable
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         return "bsf:textures/models/armor/ice_skates_layer.png";
     }
-    public void initializeClient(Consumer<IItemRenderProperties> consumer){
+
+    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         consumer.accept(new IItemRenderProperties() {
-            @Nullable
             @Override
-            public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
+            public @NotNull HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
                 HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(), Map.of(
-                        "left_leg",new IceSkatesModel(Minecraft.getInstance().getEntityModels().bakeLayer(IceSkatesModel.LAYER_LOCATION)).bone,
-                        "right_leg",new IceSkatesModel(Minecraft.getInstance().getEntityModels().bakeLayer(IceSkatesModel.LAYER_LOCATION)).bone,
+                        "left_leg", new IceSkatesModel(Minecraft.getInstance().getEntityModels().bakeLayer(IceSkatesModel.LAYER_LOCATION)).bone,
+                        "right_leg", new IceSkatesModel(Minecraft.getInstance().getEntityModels().bakeLayer(IceSkatesModel.LAYER_LOCATION)).bone,
                         "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
                         "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
                         "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()),

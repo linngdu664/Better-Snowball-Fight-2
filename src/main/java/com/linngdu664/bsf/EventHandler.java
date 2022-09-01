@@ -2,11 +2,8 @@ package com.linngdu664.bsf;
 
 import com.linngdu664.bsf.item.IceSkatesItem;
 import com.linngdu664.bsf.item.SmoothSnowballItem;
-import com.linngdu664.bsf.item.setter.ItemRegister;
-import com.linngdu664.bsf.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,53 +21,57 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.apache.commons.lang3.tuple.MutablePair;
 
 import java.util.UUID;
 
 public class EventHandler {
-    public static final UUID SKATES_SPEED_ID=UUID.fromString("00a3641b-33e0-4022-8d92-1c7b74c380b0");
-    private void clearSpeedEffect(Player player){
-        if(player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).getModifier(SKATES_SPEED_ID) != null) {
+    public static final UUID SKATES_SPEED_ID = UUID.fromString("00a3641b-33e0-4022-8d92-1c7b74c380b0");
+
+    private void clearSpeedEffect(Player player) {
+        if (player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).getModifier(SKATES_SPEED_ID) != null) {
             player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).removeModifier(SKATES_SPEED_ID);
             player.maxUpStep = 0.6f;
         }
     }
-    private void addSpeedGoodEffect(Player player){
-        AttributeModifier skatesSpeed = new AttributeModifier(SKATES_SPEED_ID,"skates_speed",0.15,AttributeModifier.Operation.ADDITION);
-        if(!player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).hasModifier(skatesSpeed)){
+
+    private void addSpeedGoodEffect(Player player) {
+        AttributeModifier skatesSpeed = new AttributeModifier(SKATES_SPEED_ID, "skates_speed", 0.15, AttributeModifier.Operation.ADDITION);
+        if (!player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).hasModifier(skatesSpeed)) {
             player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).addPermanentModifier(skatesSpeed);
-            player.maxUpStep=2;
+            player.maxUpStep = 2;
         }
     }
-    private void addSpeedBadEffect(Player player){
-        AttributeModifier skatesSpeed = new AttributeModifier(SKATES_SPEED_ID,"skates_speed",-0.25,AttributeModifier.Operation.MULTIPLY_BASE);
-        if(!player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).hasModifier(skatesSpeed)){
+
+    private void addSpeedBadEffect(Player player) {
+        AttributeModifier skatesSpeed = new AttributeModifier(SKATES_SPEED_ID, "skates_speed", -0.25, AttributeModifier.Operation.MULTIPLY_BASE);
+        if (!player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).hasModifier(skatesSpeed)) {
             player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).addPermanentModifier(skatesSpeed);
-            player.maxUpStep=0.5f;
+            player.maxUpStep = 0.5f;
         }
     }
+
     @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event){
-        if(event.phase==TickEvent.Phase.START){
-            Player player=event.player;
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            Player player = event.player;
             ItemStack shoes = player.getItemBySlot(EquipmentSlot.FEET);
-            if(!shoes.isEmpty()){
+            if (!shoes.isEmpty()) {
                 if (shoes.getItem() instanceof IceSkatesItem && player.isSprinting() && player.isOnGround()) {
-                    Level level=player.getLevel();
-                    BlockPos pos = Util.getSolidBlockUnderFeet(level, player.blockPosition());
-                    if(pos!=null && level.getBlockState(pos).is(BlockTags.ICE)){
-                        level.addParticle(ParticleTypes.SNOWFLAKE, player.getX(), player.getEyeY()-1.4, player.getZ(), 0, 0, 0);
+                    Level level = player.getLevel();
+                    BlockPos pos = player.blockPosition().below();
+                    if (level.getBlockState(pos).is(BlockTags.ICE)) {
+                        level.addParticle(ParticleTypes.SNOWFLAKE, player.getX(), player.getEyeY() - 1.4, player.getZ(), 0, 0, 0);
                         addSpeedGoodEffect(player);
-                    }else{
+                    } else {
                         addSpeedBadEffect(player);
                     }
-                }else {
+                } else {
                     clearSpeedEffect(player);
                 }
             }
         }
     }
+
     @SubscribeEvent
     public void attackEntity(AttackEntityEvent event) {
         Player player = event.getPlayer();
