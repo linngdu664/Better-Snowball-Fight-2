@@ -5,21 +5,17 @@ import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.util.Util;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
-public class SnowballShotgun extends Item {
-    public SnowballShotgun() {
+public class SnowballShotgunItem extends Item {
+    public SnowballShotgunItem() {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(1).durability(256));
     }
 
