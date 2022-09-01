@@ -64,10 +64,12 @@ public class SnowballCannonItem extends BowItem {
                     } else if (itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL.get() || itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
                         snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.OBSIDIAN, f * 7.0F, f * 8.0F);
                         snowballEntity.setItem(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get()));
-                    } else {
+                    } else if (itemStack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL.get() || itemStack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()){
                         snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.EXPLOSIVE, f * 3.0F, f * 5.0F);
-                        snowballEntity.explode = true;
                         snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get()));
+                    } else {
+                        snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.SPECTRAL);
+                        snowballEntity.setItem(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get()));
                     }
                     snowballEntity.punch = f * 1.51F;
                     snowballEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);

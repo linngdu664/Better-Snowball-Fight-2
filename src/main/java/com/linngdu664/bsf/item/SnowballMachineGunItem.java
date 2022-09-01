@@ -79,11 +79,14 @@ public class SnowballMachineGunItem extends Item {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.OBSIDIAN, 7.0F, 8.0F);
                     snowballEntity.setItem(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get()));
                     j = 0.17F;
-                } else {
+                } else if (itemStack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.EXPLOSIVE, 3.0F, 5.0F);
-                    snowballEntity.explode = true;
                     snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get()));
                     j = 0.12F;
+                } else {
+                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.SPECTRAL);
+                    snowballEntity.setItem(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get()));
+                    j = 0.075F;
                 }
                 snowballEntity.punch = 1.2;
                 snowballEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);

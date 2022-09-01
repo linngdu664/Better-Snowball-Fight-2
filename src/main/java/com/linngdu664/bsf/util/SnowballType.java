@@ -9,5 +9,6 @@ public enum SnowballType {
     GOLD,
     OBSIDIAN,
     EXPLOSIVE,
-    ICE
+    ICE,
+    SPECTRAL
 }

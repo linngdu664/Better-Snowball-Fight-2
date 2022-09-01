@@ -40,6 +40,7 @@ public class SnowballStorageTankItem extends Item {
                     case GOLD -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GOLD_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                     case OBSIDIAN -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                     case EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
+                    case SPECTRAL -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                 }
                 if (!pPlayer.getAbilities().instabuild) {
                     pPlayer.setItemInHand(pUsedHand, new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));
@@ -54,6 +55,7 @@ public class SnowballStorageTankItem extends Item {
                     case GOLD -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GOLD_SNOWBALL.get(), 16), true);
                     case OBSIDIAN -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get(), 16), true);
                     case EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get(), 16), true);
+                    case SPECTRAL -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get(), 16), true);
                 }
                 itemStack.hurt(16, pLevel.getRandom(), null);
             }

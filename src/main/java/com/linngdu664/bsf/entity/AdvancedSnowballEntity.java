@@ -16,6 +16,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
@@ -24,11 +25,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.entity.projectile.SpectralArrow;
+import net.minecraft.world.entity.projectile.Arrow;
+
+import java.util.List;
+import java.util.UUID;
 
 public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public int weaknessTicks = 0;
@@ -36,8 +39,11 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public double punch = 0.0;
     public float damage = Float.MIN_VALUE;
     public float blazeDamage = 3.0F;
-    public boolean explode = false;
     public SnowballType type;
+    public UUID masterUUID = null;
+    public int trackingType = 0;
+    public int trackingTarget = 0;
+    private Monster target = null;
 
     public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
         super(EntityType.EGG, livingEntity, level);
@@ -79,6 +85,7 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                     case OBSIDIAN -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get(), 1), true);
                     case EXPLOSIVE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get(), 1), true);
                     case ICE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.ICE_SNOWBALL.get(), 1), true);
+                    case SPECTRAL -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get(), 1), true);
                 }
                 if (player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {
                     player.getMainHandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
@@ -100,12 +107,15 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
             }
             Vec3 vec3d = this.getDeltaMovement().multiply(0.1 * punch, 0.0, 0.1 * punch);
             entity.push(vec3d.x, 0.0, vec3d.z);
-            if (explode) {
+            if (type == SnowballType.EXPLOSIVE) {
                 if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
                     level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
                 } else {
                     level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
                 }
+            }
+            if (type == SnowballType.SPECTRAL) {
+                entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200, 0));
             }
             ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
@@ -115,7 +125,7 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     @Override
     protected void onHitBlock(@NotNull BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
-        if (explode) {
+        if (type == SnowballType.EXPLOSIVE) {
             if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
                 level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
             } else {
@@ -126,10 +136,81 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
     }
 
+    /*
+    private Monster getMonster() {
+        List<Monster> list = level.getEntitiesOfClass(Monster.class, this.getBoundingBox().inflate(20.0, 20.0, 20.0), (p_186450_) -> true);
+        if (!list.isEmpty()) {
+            Vec3 vec3 = this.getDeltaMovement();
+            Monster monster = list.get(0);
+            double d1 = Mth.fastInvSqrt(vec3.x * vec3.x + vec3.z * vec3.z);
+            double maxCosTheta = Mth.fastInvSqrt(monster.getX() * monster.getX() + monster.getZ() * monster.getZ()) * d1 * (monster.getX() * vec3.x + monster.getZ() * vec3.z);
+            for (Monster entity : list) {
+                double cosTheta = Mth.fastInvSqrt(entity.getX() * entity.getX() + entity.getZ() * entity.getZ()) * d1 * (entity.getX() * vec3.x + entity.getZ() * vec3.z);
+                if (cosTheta > maxCosTheta) {
+                    monster = entity;
+                    maxCosTheta = cosTheta;
+                }
+            }
+            return monster;
+        }
+        return null;
+    }
+    */
+
     @Override
     public void tick() {
         super.tick();
         ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+        if (type == SnowballType.SPECTRAL) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+        }
+        /*
+        if (trackingTarget == 0) {
+            if (target == null) {
+                target = getMonster();
+                //this.setNoGravity(false);
+            } else {
+                //this.setNoGravity(true);
+                //System.out.println("target:" + target.getX() + "," + target.getY() + "," + target.getZ());
+                Vec3 delta = new Vec3(target.getX() - this.getX(), target.getY() - this.getY(), target.getZ() - this.getZ());
+                Vec3 velocity = this.getDeltaMovement();
+                if (!level.isClientSide) {
+                    double d1 = delta.x * delta.x + delta.z * delta.z;
+                    double vx, vy, vz;
+                    double cosTheta = Mth.fastInvSqrt(d1) * Mth.fastInvSqrt(velocity.x * velocity.x + velocity.z * velocity.z) * (delta.x * velocity.x + delta.z * velocity.z);
+                    double sinTheta;
+                    if (cosTheta < 0.9876883405951377) {
+                        cosTheta = 0.9876883405951377;
+                        sinTheta = 0.1564344650402309;
+                    } else {
+                        sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
+                    }
+                    double d2 = velocity.x * cosTheta - velocity.z * sinTheta;
+                    double d3 = velocity.x * sinTheta + velocity.z * cosTheta;
+                    double d4 = velocity.x * cosTheta + velocity.z * sinTheta;
+                    double d5 = -velocity.x * sinTheta + velocity.z * cosTheta;
+                    if (d2 * delta.x + d3 * delta.z > d4 * delta.x + d5 * delta.z) {
+                        vx = d2;
+                        vz = d3;
+                    } else {
+                        vx = d4;
+                        vz = d5;
+                    }
+                    vy = velocity.y;
+                    double d6 = Math.sqrt(d1);
+                    double d7 = Math.sqrt(vx * vx + vz * vz);
+                    double t = d7 / d6;
+                    System.out.println(this.getY() + (vy * t - 0.015 * t * t));
+                    if (this.getY() + (vy * t - 0.015 * t * t) > target.getY()) {
+                        vy -= 0.01;
+                    }
+                    //System.out.println(vx + "," + vy + "," + vz);
+                    this.setDeltaMovement(vx, vy, vz);
+
+                }
+            }
+        }
+        */
     }
 
     @Override
