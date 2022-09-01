@@ -48,7 +48,7 @@ public class SnowballMachineGunItem extends Item {
         float yaw = player.getYRot();
         if (timer % 3 == 0) {
             ItemStack itemStack = Util.findAmmo(player, true);
-            if (itemStack.getItem() != Items.AIR) {
+            if (itemStack != null) {
                 AdvancedSnowballEntity snowballEntity;
                 if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
                     snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.COMPACTED);

@@ -39,7 +39,7 @@ public class SnowballCannonItem extends BowItem {
             float f = getPowerForTime(i);
             if (f >= 0.1F) {
                 ItemStack itemStack = Util.findAmmo(player, false);
-                if (itemStack.getItem() != Items.AIR && !pLevel.isClientSide) {
+                if (itemStack != null && !pLevel.isClientSide) {
                     boolean k = Util.isAmmoTank(itemStack);
                     AdvancedSnowballEntity snowballEntity;
                     if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {

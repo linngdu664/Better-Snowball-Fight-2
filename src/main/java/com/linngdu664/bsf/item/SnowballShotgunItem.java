@@ -6,6 +6,7 @@ import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.util.Util;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class SnowballShotgunItem extends Item {
     public SnowballShotgunItem() {
@@ -20,12 +22,11 @@ public class SnowballShotgunItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        ItemStack stack = player.getUseItem();
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
+        ItemStack stack = player.getItemInHand(usedHand);
         ItemStack itemStack = Util.findAmmo(player, false);
-
         for (int i=0;i<4;i++) {
-            if (itemStack.getItem() != Items.AIR && !level.isClientSide) {
+            if (itemStack != null && !level.isClientSide) {
                 boolean k = Util.isAmmoTank(itemStack);
                 AdvancedSnowballEntity snowballEntity;
                 if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
@@ -56,8 +57,6 @@ public class SnowballShotgunItem extends Item {
                 }
                 snowballEntity.punch = 1.51F;
                 snowballEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.0F, 10.0F);
-
-                stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                 level.addFreshEntity(snowballEntity);
                 if (!player.getAbilities().instabuild) {
@@ -76,15 +75,9 @@ public class SnowballShotgunItem extends Item {
                 }
             }
         }
-//        stack.setDamageValue(stack.getDamageValue() + 1);
-//        if (stack.getDamageValue() == 512) {
-//            stack.shrink(1);
-//            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
-//        }
+        stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
         player.getCooldowns().addCooldown(this,20);
-
-//        player.awardStat(Stats.ITEM_USED.get(this));
-        return super.use(level,player,usedHand);
+        player.awardStat(Stats.ITEM_USED.get(this));
+        return InteractionResultHolder.pass(stack);
     }
-
 }

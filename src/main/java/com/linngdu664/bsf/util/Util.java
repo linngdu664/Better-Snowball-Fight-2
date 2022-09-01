@@ -5,7 +5,6 @@ import com.linngdu664.bsf.item.setter.ItemRegister;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
 
 public class Util {
@@ -46,6 +45,6 @@ public class Util {
                 }
             }
         }
-        return new ItemStack(Items.AIR, 0);
+        return null;
     }
 }

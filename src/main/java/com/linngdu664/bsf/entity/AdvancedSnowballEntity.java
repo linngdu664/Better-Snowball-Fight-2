@@ -8,6 +8,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -27,8 +28,6 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 import org.jetbrains.annotations.NotNull;
-import net.minecraft.world.entity.projectile.SpectralArrow;
-import net.minecraft.world.entity.projectile.Arrow;
 
 import java.util.List;
 import java.util.UUID;
@@ -44,6 +43,7 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public int trackingType = 0;
     public int trackingTarget = 0;
     private Monster target = null;
+    private int timer = 0;
 
     public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
         super(EntityType.EGG, livingEntity, level);
@@ -136,41 +136,32 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
     }
 
-    /*
     private Monster getMonster() {
-        List<Monster> list = level.getEntitiesOfClass(Monster.class, this.getBoundingBox().inflate(20.0, 20.0, 20.0), (p_186450_) -> true);
+        List<Monster> list = level.getEntitiesOfClass(Monster.class, this.getBoundingBox().inflate(10.0, 10.0, 10.0), (p_186450_) -> true);
         if (!list.isEmpty()) {
-            Vec3 vec3 = this.getDeltaMovement();
             Monster monster = list.get(0);
-            double d1 = Mth.fastInvSqrt(vec3.x * vec3.x + vec3.z * vec3.z);
-            double maxCosTheta = Mth.fastInvSqrt(monster.getX() * monster.getX() + monster.getZ() * monster.getZ()) * d1 * (monster.getX() * vec3.x + monster.getZ() * vec3.z);
             for (Monster entity : list) {
-                double cosTheta = Mth.fastInvSqrt(entity.getX() * entity.getX() + entity.getZ() * entity.getZ()) * d1 * (entity.getX() * vec3.x + entity.getZ() * vec3.z);
-                if (cosTheta > maxCosTheta) {
+                if (this.distanceToSqr(entity) < this.distanceToSqr(monster)) {
                     monster = entity;
-                    maxCosTheta = cosTheta;
                 }
             }
             return monster;
         }
         return null;
     }
-    */
 
     @Override
     public void tick() {
         super.tick();
+        timer++;
         ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         if (type == SnowballType.SPECTRAL) {
             ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         }
-        /*
-        if (trackingTarget == 0) {
+        if (trackingTarget == 0 && timer > 10) {
             if (target == null) {
                 target = getMonster();
-                //this.setNoGravity(false);
             } else {
-                //this.setNoGravity(true);
                 //System.out.println("target:" + target.getX() + "," + target.getY() + "," + target.getZ());
                 Vec3 delta = new Vec3(target.getX() - this.getX(), target.getY() - this.getY(), target.getZ() - this.getZ());
                 Vec3 velocity = this.getDeltaMovement();
@@ -202,15 +193,15 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                     double t = d7 / d6;
                     System.out.println(this.getY() + (vy * t - 0.015 * t * t));
                     if (this.getY() + (vy * t - 0.015 * t * t) > target.getY()) {
-                        vy -= 0.01;
+                        System.out.println("too high");
+                        vy -= 0.05;
                     }
-                    //System.out.println(vx + "," + vy + "," + vz);
+                    System.out.println("velocity:" + vx + "," + vy + "," + vz);
                     this.setDeltaMovement(vx, vy, vz);
-
+                    this.lerpMotion(vx, vy, vz);
                 }
             }
         }
-        */
     }
 
     @Override
