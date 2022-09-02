@@ -8,5 +8,15 @@
     "sounds": [
       "bsf:snowball_machine_gun_shoot"
     ]
+  },
+  "shotgun_fire1": {
+    "sounds": [
+      "bsf:shotgun_fire1"
+    ]
+  },
+  "shotgun_fire2": {
+    "sounds": [
+      "bsf:shotgun_fire2"
+    ]
   }
 }
