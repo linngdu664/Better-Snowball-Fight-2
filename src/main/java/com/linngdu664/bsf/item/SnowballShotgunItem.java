@@ -12,7 +12,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +24,7 @@ public class SnowballShotgunItem extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         ItemStack itemStack = Util.findAmmo(player, false);
-        for (int i=0;i<4;i++) {
+        for (int i = 0; i < 4; i++) {
             if (itemStack != null && !level.isClientSide) {
                 boolean k = Util.isAmmoTank(itemStack);
                 AdvancedSnowballEntity snowballEntity;
@@ -76,7 +75,7 @@ public class SnowballShotgunItem extends Item {
             }
         }
         stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
-        player.getCooldowns().addCooldown(this,20);
+        player.getCooldowns().addCooldown(this, 20);
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.pass(stack);
     }
