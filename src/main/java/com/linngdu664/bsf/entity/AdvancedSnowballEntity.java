@@ -175,11 +175,15 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
 
     @Override
     public void tick() {
-        super.tick();
         ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         if (type == SnowballType.SPECTRAL) {
             ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         }
+        tracking();
+        super.tick();
+    }
+    private void tracking(){
+
         if (!init) {
             Vec3 vec3 = this.getDeltaMovement();
             v0 = Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z + vec3.y * vec3.y);
