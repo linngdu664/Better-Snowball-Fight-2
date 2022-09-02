@@ -57,6 +57,9 @@ public class SnowballShotgunItem extends Item {
                     } else if (itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL.get() || itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
                         snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.OBSIDIAN, 7.0F, 8.0F);
                         snowballEntity.setItem(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get()));
+                    }else if (itemStack.getItem() == ItemRegister.SPECTRAL_SNOWBALL.get() || itemStack.getItem() == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()) {
+                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.SPECTRAL);
+                        snowballEntity.setItem(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get()));
                     } else {
                         snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.EXPLOSIVE, 3.0F, 5.0F);
                         snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get()));
@@ -119,6 +122,8 @@ public class SnowballShotgunItem extends Item {
                         pushRank+=0.18;
                     } else if (itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL.get() || itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
                         pushRank+=0.18;
+                    } else if (itemStack.getItem() == ItemRegister.SPECTRAL_SNOWBALL.get() || itemStack.getItem() == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()) {
+                        pushRank+=0.10;
                     } else {
                         pushRank+=0.42;
                     }
