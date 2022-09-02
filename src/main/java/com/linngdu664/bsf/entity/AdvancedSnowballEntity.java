@@ -13,6 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,11 +27,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.UUID;
 
 public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public int weaknessTicks = 0;
@@ -39,11 +42,10 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public float damage = Float.MIN_VALUE;
     public float blazeDamage = 3.0F;
     public SnowballType type;
-    public UUID masterUUID = null;
-    public int trackingType = 0;
     public int trackingTarget = 0;
-    private Monster target = null;
-    private int timer = 0;
+    private Entity target = null;
+    private double v0;
+    private boolean init = false;
 
     public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
         super(EntityType.EGG, livingEntity, level);
@@ -136,16 +138,37 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
     }
 
-    private Monster getMonster() {
-        List<Monster> list = level.getEntitiesOfClass(Monster.class, this.getBoundingBox().inflate(10.0, 10.0, 10.0), (p_186450_) -> true);
-        if (!list.isEmpty()) {
-            Monster monster = list.get(0);
-            for (Monster entity : list) {
-                if (this.distanceToSqr(entity) < this.distanceToSqr(monster)) {
-                    monster = entity;
+    private Entity getTarget() {
+        Entity entity1 = null;
+        if (trackingTarget == 1) {
+            List<Monster> list = level.getEntitiesOfClass(Monster.class, this.getBoundingBox().inflate(10.0, 10.0, 10.0), (p_186450_) -> true);
+            if (!list.isEmpty()) {
+                entity1 = list.get(0);
+                for (Monster entity : list) {
+                    if (this.distanceToSqr(entity) < this.distanceToSqr(entity1)) {
+                        entity1 = entity;
+                    }
                 }
             }
-            return monster;
+        } else {
+            List<Player> list = level.getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(10.0, 10.0, 10.0), (p_186450_) -> true);
+            if (!list.isEmpty()) {
+                entity1 = list.get(0);
+                for (Player entity : list) {
+                    if (this.distanceToSqr(entity) < this.distanceToSqr(entity1)) {
+                        entity1 = entity;
+                    }
+                }
+            }
+        }
+        if (entity1 != null) {
+            double d1 = entity1.getX() - this.getX();
+            double d2 = entity1.getZ() - this.getZ();
+            double d3 = this.getDeltaMovement().x;
+            double d4 = this.getDeltaMovement().z;
+            if (Mth.fastInvSqrt(d1 * d1 + d2 * d2) * Mth.fastInvSqrt(d3 * d3 + d4 * d4) * (d1 * d3 + d2 * d4) > 0.5) {
+                return entity1;
+            }
         }
         return null;
     }
@@ -153,29 +176,34 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     @Override
     public void tick() {
         super.tick();
-        timer++;
         ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         if (type == SnowballType.SPECTRAL) {
             ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         }
-        if (trackingTarget == 0 && timer > 10) {
+        if (!init) {
+            Vec3 vec3 = this.getDeltaMovement();
+            v0 = Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z + vec3.y * vec3.y);
+            System.out.println(v0);
+            init = true;
+        }
+        if (trackingTarget != 0) {
             if (target == null) {
-                target = getMonster();
+                target = getTarget();
             } else {
-                //System.out.println("target:" + target.getX() + "," + target.getY() + "," + target.getZ());
                 Vec3 delta = new Vec3(target.getX() - this.getX(), target.getY() - this.getY(), target.getZ() - this.getZ());
                 Vec3 velocity = this.getDeltaMovement();
+                delta.add(target.getDeltaMovement().scale(5));
                 if (!level.isClientSide) {
                     double d1 = delta.x * delta.x + delta.z * delta.z;
-                    double vx, vy, vz;
                     double cosTheta = Mth.fastInvSqrt(d1) * Mth.fastInvSqrt(velocity.x * velocity.x + velocity.z * velocity.z) * (delta.x * velocity.x + delta.z * velocity.z);
                     double sinTheta;
-                    if (cosTheta < 0.9876883405951377) {
-                        cosTheta = 0.9876883405951377;
-                        sinTheta = 0.1564344650402309;
+                    if (cosTheta < Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD))) {
+                        cosTheta = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
+                        sinTheta = Mth.sin((float) (8 * v0 * Mth.DEG_TO_RAD));
                     } else {
                         sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
                     }
+                    double vx, vy, vz;
                     double d2 = velocity.x * cosTheta - velocity.z * sinTheta;
                     double d3 = velocity.x * sinTheta + velocity.z * cosTheta;
                     double d4 = velocity.x * cosTheta + velocity.z * sinTheta;
@@ -188,16 +216,16 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                         vz = d5;
                     }
                     vy = velocity.y;
-                    double d6 = Math.sqrt(d1);
-                    double d7 = Math.sqrt(vx * vx + vz * vz);
-                    double t = d7 / d6;
-                    System.out.println(this.getY() + (vy * t - 0.015 * t * t));
-                    if (this.getY() + (vy * t - 0.015 * t * t) > target.getY()) {
-                        System.out.println("too high");
-                        vy -= 0.05;
+                    double d6 = vx * vx + vz * vz;
+                    double t2 = d1 / d6;
+                    double d7 = this.getY() + vy * Math.sqrt(t2) - 0.015 * t2 - target.getEyeY();
+                    if (d7 > 0.1) {
+                        if (d6 > 1) {
+                            vy -= d7 * (1.5 * d6 - 0.5) * 0.02;
+                        } else {
+                            vy -= d7 * Math.sqrt(d6) * 0.02;
+                        }
                     }
-                    System.out.println("velocity:" + vx + "," + vy + "," + vz);
-                    this.setDeltaMovement(vx, vy, vz);
                     this.lerpMotion(vx, vy, vz);
                 }
             }
