@@ -32,7 +32,7 @@ public class SnowballShotgunItem extends Item {
             for (i = 0; i < 4; i++) {
                 ItemStack itemStack = Util.findAmmo(player, false);
                 if (itemStack != null) {
-                    boolean k = Util.isAmmoTank(itemStack);
+                    boolean k = Util.isAmmoTank(itemStack, true);
                     AdvancedSnowballEntity snowballEntity;
                     if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
                         snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.COMPACTED);
@@ -106,7 +106,7 @@ public class SnowballShotgunItem extends Item {
             for (i = 0; i < 4; i++) {
                 ItemStack itemStack = Util.findAmmo(player, false);
                 if (itemStack != null) {
-                    boolean k = Util.isAmmoTank(itemStack);
+                    boolean k = Util.isAmmoTank(itemStack, true);
                     if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
                         pushRank += 0.10;
                     } else if (itemStack.getItem() == ItemRegister.STONE_SNOWBALL.get() || itemStack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {

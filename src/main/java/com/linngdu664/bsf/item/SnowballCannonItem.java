@@ -13,6 +13,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
@@ -40,7 +41,7 @@ public class SnowballCannonItem extends BowItem {
             if (f >= 0.1F) {
                 ItemStack itemStack = Util.findAmmo(player, false);
                 if (itemStack != null && !pLevel.isClientSide) {
-                    boolean k = Util.isAmmoTank(itemStack);
+                    boolean k = Util.isAmmoTank(itemStack, true);
                     AdvancedSnowballEntity snowballEntity;
                     if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
                         snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.COMPACTED);
@@ -67,22 +68,43 @@ public class SnowballCannonItem extends BowItem {
                     } else if (itemStack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL.get() || itemStack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()){
                         snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.EXPLOSIVE, f * 3.0F, f * 5.0F);
                         snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get()));
+                    } else if (itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL.get() || itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+                        snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.TRACKING_MONSTER);
+                        snowballEntity.setMissilesTracking(Monster.class, 20, true);
+                        snowballEntity.setItem(new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL.get()));
+                    } else if (itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get() || itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get()) {
+                        snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.TRACKING_MONSTER_DAMAGE, f * 4.0F, f * 6.0F);
+                        snowballEntity.setMissilesTracking(Monster.class, 20, true);
+                        snowballEntity.setItem(new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get()));
+                    } else if (itemStack.getItem() == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get() || itemStack.getItem() == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+                        snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.TRACKING_MONSTER_EXPLOSIVE, f * 3.0F, f * 5.0F);
+                        snowballEntity.setMissilesTracking(Monster.class, 20, true);
+                        snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()));
+                    } else if (itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL.get() || itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+                        snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.TRACKING_PLAYER);
+                        snowballEntity.setMissilesTracking(Player.class, 20, true);
+                        snowballEntity.setItem(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL.get()));
+                    } else if (itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get() || itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get()) {
+                        snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.TRACKING_PLAYER_DAMAGE, f * 4.0F, f * 6.0F);
+                        snowballEntity.setMissilesTracking(Player.class, 20, true);
+                        snowballEntity.setItem(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get()));
                     } else {
-                        snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.SPECTRAL);
-                        snowballEntity.setItem(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get()));
+                        snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.TRACKING_PLAYER_EXPLOSIVE, f * 3.0F, f * 5.0F);
+                        snowballEntity.setMissilesTracking(Player.class, 20, true);
+                        snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()));
                     }
                     snowballEntity.punch = f * 1.51F;
                     snowballEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
                     if (coreType == 1) {
                         snowballEntity.frozenTicks += 140;
                         switch (snowballEntity.type) {
-                            case COMPACTED -> snowballEntity.blazeDamage = f * 4.0F;
+                            case COMPACTED, TRACKING_MONSTER, TRACKING_PLAYER -> snowballEntity.blazeDamage = f * 4.0F;
                             case STONE -> snowballEntity.blazeDamage = f * 5.0F;
                             case GLASS -> snowballEntity.blazeDamage = f * 6.0F;
-                            case IRON -> snowballEntity.blazeDamage = f * 7.0F;
+                            case IRON, TRACKING_MONSTER_DAMAGE, TRACKING_PLAYER_DAMAGE -> snowballEntity.blazeDamage = f * 7.0F;
                             case GOLD -> snowballEntity.blazeDamage = f * 8.0F;
                             case OBSIDIAN -> snowballEntity.blazeDamage = f * 9.0F;
-                            case EXPLOSIVE -> snowballEntity.blazeDamage = 5.0F;
+                            case EXPLOSIVE, TRACKING_PLAYER_EXPLOSIVE, TRACKING_MONSTER_EXPLOSIVE -> snowballEntity.blazeDamage = 5.0F;
                             case ICE -> {
                                 snowballEntity.blazeDamage = f * 10.0F;
                                 snowballEntity.frozenTicks = 200;

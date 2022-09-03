@@ -4,8 +4,6 @@ import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.EggItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
@@ -18,15 +16,15 @@ public class Util {
         return Mth.abs((float) (cameraVec.dot(speedVec) + 1.0F)) < 0.2F;
     }
 
-    public static boolean isAmmoTank(ItemStack stack) {
+    public static boolean isAmmoTank(ItemStack stack, boolean allowTracking) {
         return stack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
                 stack.getItem() == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
                 stack.getItem() == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
                 stack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
+                stack.getItem() == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() || (stack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
                 stack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get() || stack.getItem() == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
                 stack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get();
+                stack.getItem() == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) && allowTracking;
     }
 
     public static boolean isAmmo(ItemStack stack) {
@@ -42,7 +40,7 @@ public class Util {
 
     public static ItemStack findAmmo(Player player, boolean onlyTank) {
         for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-            if (isAmmoTank(player.getInventory().getItem(j))) {
+            if (isAmmoTank(player.getInventory().getItem(j), !onlyTank)) {
                 return player.getInventory().getItem(j);
             }
         }
