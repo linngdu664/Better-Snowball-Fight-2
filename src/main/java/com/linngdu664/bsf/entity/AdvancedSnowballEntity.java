@@ -18,7 +18,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
@@ -42,10 +41,18 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public float damage = Float.MIN_VALUE;
     public float blazeDamage = 3.0F;
     public SnowballType type;
-    public int trackingTarget = 0;
     private Entity target = null;
     private double v0;
-    private boolean init = false;
+    private int timer = 0;
+
+    private int trackingMode = 0;
+    private Class<? extends Entity> targetClass;
+    private double trackingRange;
+    private boolean angleRestriction;
+    private double GM;
+    private boolean trackingMultipleTargets;
+    private boolean selfAttraction;
+    private boolean attraction;
 
     public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
         super(EntityType.EGG, livingEntity, level);
@@ -69,6 +76,22 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         this.type = type;
         this.damage = damage;
         this.blazeDamage = blazeDamage;
+    }
+    public <T extends Entity> void setGravityTracking(Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction , boolean attraction){
+        trackingMode=2;
+        this.targetClass=targetClass;
+        this.trackingRange=trackingRange;
+        this.GM=GM;
+        this.angleRestriction=angleRestriction;
+        this.trackingMultipleTargets=trackingMultipleTargets;
+        this.selfAttraction=selfAttraction;
+        this.attraction=attraction;
+    }
+    public <T extends Entity> void setMissilesTracking(Class<T> targetClass, double trackingRange, boolean angleRestriction){
+        trackingMode=1;
+        this.targetClass=targetClass;
+        this.trackingRange=trackingRange;
+        this.angleRestriction=angleRestriction;
     }
 
     @Override
@@ -138,102 +161,196 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
     }
 
-    private Entity getTarget() {
+    private <T extends Entity> Entity getTarget(Class<T> t, boolean angleRestriction, double trackingRange) {
         Entity entity1 = null;
-        if (trackingTarget == 1) {
-            List<Monster> list = level.getEntitiesOfClass(Monster.class, this.getBoundingBox().inflate(10.0, 10.0, 10.0), (p_186450_) -> true);
-            if (!list.isEmpty()) {
-                entity1 = list.get(0);
-                for (Monster entity : list) {
-                    if (this.distanceToSqr(entity) < this.distanceToSqr(entity1)) {
-                        entity1 = entity;
-                    }
-                }
-            }
-        } else {
-            List<Player> list = level.getEntitiesOfClass(Player.class, this.getBoundingBox().inflate(10.0, 10.0, 10.0), (p_186450_) -> true);
-            if (!list.isEmpty()) {
-                entity1 = list.get(0);
-                for (Player entity : list) {
-                    if (this.distanceToSqr(entity) < this.distanceToSqr(entity1)) {
-                        entity1 = entity;
-                    }
+
+        List<T> list = level.getEntitiesOfClass(t, this.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
+        if(t == AdvancedSnowballEntity.class){
+            list.remove(this);
+        }
+        if (!list.isEmpty()) {
+            entity1 = list.get(0);
+            for (T entity : list) {
+                if (this.distanceToSqr(entity) < this.distanceToSqr(entity1)) {
+                    entity1 = entity;
                 }
             }
         }
+
         if (entity1 != null) {
-            double d1 = entity1.getX() - this.getX();
-            double d2 = entity1.getZ() - this.getZ();
-            double d3 = this.getDeltaMovement().x;
-            double d4 = this.getDeltaMovement().z;
-            if (Mth.fastInvSqrt(d1 * d1 + d2 * d2) * Mth.fastInvSqrt(d3 * d3 + d4 * d4) * (d1 * d3 + d2 * d4) > 0.5) {
+            if(angleRestriction) {
+                double d1 = entity1.getX() - this.getX();
+                double d2 = entity1.getZ() - this.getZ();
+                double d3 = this.getDeltaMovement().x;
+                double d4 = this.getDeltaMovement().z;
+                if (Mth.fastInvSqrt(d1 * d1 + d2 * d2) * Mth.fastInvSqrt(d3 * d3 + d4 * d4) * (d1 * d3 + d2 * d4) > 0.5) {
+                    return entity1;
+                }
+            }else{
                 return entity1;
             }
+
         }
         return null;
     }
 
+    private <T extends Entity> List<T> getTargetList(Class<T> t,double trackingRange) {
+        List<T> list = level.getEntitiesOfClass(t, this.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
+        if(t == AdvancedSnowballEntity.class){
+            list.remove(this);
+        }
+        if (!list.isEmpty()) {
+            return list;
+        }else{
+            return null;
+        }
+
+    }
     @Override
     public void tick() {
         ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         if (type == SnowballType.SPECTRAL) {
             ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         }
-        tracking();
+        if(trackingMode>0){
+            tracking();
+        }
+        timer++;
         super.tick();
     }
-    private void tracking(){
 
-        if (!init) {
-            Vec3 vec3 = this.getDeltaMovement();
-            v0 = Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z + vec3.y * vec3.y);
-            System.out.println(v0);
-            init = true;
+    private void tracking(){
+        switch (trackingMode){
+            case 1 -> missilesTracking(targetClass,trackingRange,angleRestriction);
+            case 2 -> gravityTracking(targetClass,trackingRange,GM,angleRestriction,trackingMultipleTargets,selfAttraction,attraction);
         }
-        if (trackingTarget != 0) {
-            if (target == null) {
-                target = getTarget();
-            } else {
-                Vec3 delta = new Vec3(target.getX() - this.getX(), target.getY() - this.getY(), target.getZ() - this.getZ());
-                Vec3 velocity = this.getDeltaMovement();
-                delta.add(target.getDeltaMovement().scale(5));
-                if (!level.isClientSide) {
-                    double d1 = delta.x * delta.x + delta.z * delta.z;
-                    double cosTheta = Mth.fastInvSqrt(d1) * Mth.fastInvSqrt(velocity.x * velocity.x + velocity.z * velocity.z) * (delta.x * velocity.x + delta.z * velocity.z);
-                    double sinTheta;
-                    if (cosTheta < Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD))) {
-                        cosTheta = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
-                        sinTheta = Mth.sin((float) (8 * v0 * Mth.DEG_TO_RAD));
-                    } else {
-                        sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
-                    }
-                    double vx, vy, vz;
-                    double d2 = velocity.x * cosTheta - velocity.z * sinTheta;
-                    double d3 = velocity.x * sinTheta + velocity.z * cosTheta;
-                    double d4 = velocity.x * cosTheta + velocity.z * sinTheta;
-                    double d5 = -velocity.x * sinTheta + velocity.z * cosTheta;
-                    if (d2 * delta.x + d3 * delta.z > d4 * delta.x + d5 * delta.z) {
-                        vx = d2;
-                        vz = d3;
-                    } else {
-                        vx = d4;
-                        vz = d5;
-                    }
-                    vy = velocity.y;
-                    double d6 = vx * vx + vz * vz;
-                    double t2 = d1 / d6;
-                    double d7 = this.getY() + vy * Math.sqrt(t2) - 0.015 * t2 - target.getEyeY();
-                    if (d7 > 0.1) {
-                        if (d6 > 1) {
-                            vy -= d7 * (1.5 * d6 - 0.5) * 0.02;
-                        } else {
-                            vy -= d7 * Math.sqrt(d6) * 0.02;
+    }
+    private <T extends Entity> void gravityTracking(Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction , boolean attraction){
+        if(trackingMultipleTargets){
+            List<T> list = getTargetList(targetClass,trackingRange);
+            if (list!=null && !list.isEmpty()) {
+                for (T entity : list) {
+                    if(angleRestriction){
+                        double d1 = entity.getX() - this.getX();
+                        double d2 = entity.getZ() - this.getZ();
+                        double d3 = this.getDeltaMovement().x;
+                        double d4 = this.getDeltaMovement().z;
+                        if (Mth.fastInvSqrt(d1 * d1 + d2 * d2) * Mth.fastInvSqrt(d3 * d3 + d4 * d4) * (d1 * d3 + d2 * d4) < 0.5) {
+                            continue;
                         }
                     }
-                    this.lerpMotion(vx, vy, vz);
+                    Vec3 rVec = new Vec3(entity.getX() - this.getX(), entity.getY()+2 - this.getY(), entity.getZ() - this.getZ());
+                    double r = rVec.length();
+                    double a = GM / (r * r);
+                    Vec3 aVec = new Vec3(a * rVec.x / r, a * rVec.y / r, a * rVec.z / r);
+                    if (selfAttraction){
+                        Vec3 vVec = this.getDeltaMovement();
+                        this.lerpMotion(vVec.x+aVec.x,vVec.y+aVec.y,vVec.z+aVec.z);
+                    }
+                    if (attraction){
+                        Vec3 vVec2 = entity.getDeltaMovement();
+                        entity.lerpMotion(vVec2.x-aVec.x,vVec2.y-aVec.y,vVec2.z-aVec.z);
+                    }
+
+                }
+            }
+        }else{
+            target = getTarget(targetClass,angleRestriction,trackingRange);
+            if(target!=null) {
+                Vec3 rVec = new Vec3(target.getX() - this.getX(), target.getY()+2 - this.getY(), target.getZ() - this.getZ());
+                double r = rVec.length();
+                double a = GM / (r * r);
+                Vec3 aVec = new Vec3(a * rVec.x / r, a * rVec.y / r, a * rVec.z / r);
+                if (selfAttraction){
+                    Vec3 vVec = this.getDeltaMovement();
+                    this.lerpMotion(vVec.x+aVec.x,vVec.y+aVec.y,vVec.z+aVec.z);
+                }
+                if (attraction){
+                    Vec3 vVec2 = target.getDeltaMovement();
+                    target.lerpMotion(vVec2.x-aVec.x,vVec2.y-aVec.y,vVec2.z-aVec.z);
                 }
             }
         }
+
+    }
+    private <T extends Entity> void missilesTracking(Class<T> targetClass, double trackingRange, boolean angleRestriction){
+        if (timer == 0) {
+            Vec3 vec3 = this.getDeltaMovement();
+            v0 = Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z + vec3.y * vec3.y);
+            System.out.println(v0);
+        }
+        if (timer > (int) (5 / v0)) {
+            if (target == null) {
+                target = getTarget(targetClass,angleRestriction,trackingRange);
+                this.setNoGravity(false);
+            } else if (!level.isClientSide) {
+                this.setNoGravity(true);
+                Vec3 delta = new Vec3(target.getX() - this.getX(), target.getY() - this.getY(), target.getZ() - this.getZ());
+                Vec3 velocity = this.getDeltaMovement();
+                //delta.add(target.getDeltaMovement().scale(5));
+                double d1 = delta.x * delta.x + delta.z * delta.z;
+                double cosTheta = Mth.fastInvSqrt(d1) * Mth.fastInvSqrt(velocity.x * velocity.x + velocity.z * velocity.z) * (delta.x * velocity.x + delta.z * velocity.z);
+                double sinTheta;
+                if (cosTheta < Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD))) {
+                    cosTheta = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
+                    sinTheta = Mth.sin((float) (8 * v0 * Mth.DEG_TO_RAD));
+                } else {
+                    sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
+                }
+                double vx, vz;
+                double vy = velocity.y;
+                double d2 = velocity.x * cosTheta - velocity.z * sinTheta;
+                double d3 = velocity.x * sinTheta + velocity.z * cosTheta;
+                double d4 = velocity.x * cosTheta + velocity.z * sinTheta;
+                double d5 = -velocity.x * sinTheta + velocity.z * cosTheta;
+                if (d2 * delta.x + d3 * delta.z > d4 * delta.x + d5 * delta.z) {
+                    vx = d2;
+                    vz = d3;
+                } else {
+                    vx = d4;
+                    vz = d5;
+                }
+                double vNewX = Math.sqrt(vx * vx + vz * vz);
+                double deltaNewX = Math.sqrt(d1);
+                cosTheta = vec2AngleCos(vNewX, vy, deltaNewX, delta.y);
+                if (cosTheta < Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD))) {
+                    cosTheta = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
+                    sinTheta = Mth.sin((float) (8 * v0 * Mth.DEG_TO_RAD));
+                } else {
+                    sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
+                }
+                d2 = vNewX * cosTheta - vy * sinTheta;
+                d3 = vNewX * sinTheta + vy * cosTheta;
+                d4 = vNewX * cosTheta + vy * sinTheta;
+                d5 = -vNewX * sinTheta + vy * cosTheta;
+                double factor;
+                if (d2 * deltaNewX + d3 * delta.y > d4 * deltaNewX + d5 * delta.y) {
+                    factor = d2;
+                    vy = d3;
+                } else {
+                    factor = d4;
+                    vy = d5;
+                }
+                vx *= factor / vNewX;
+                vz *= factor / vNewX;
+                /*
+                double d6 = vx * vx + vz * vz;
+                double t2 = d1 / d6;
+                double d7 = this.getY() + vy * Math.sqrt(t2) - 0.015 * t2 - target.getEyeY();
+                if (d7 > 0.1) {
+                    if (d6 > 1) {
+                        vy -= d7 * (1.5 * d6 - 0.5) * 0.02;
+                    } else {
+                        vy -= d7 * Math.sqrt(d6) * 0.02;
+                    }
+                }*/
+                this.setDeltaMovement(vx, vy, vz);
+            }
+        }
+    }
+
+    public double vec2AngleCos(double x1, double y1, double x2, double y2) {
+        return Mth.fastInvSqrt(x1 * x1 + y1 * y1) * Mth.fastInvSqrt(x2 * x2 + y2 * y2) * (x1 * x2 + y1 * y2);
     }
 
     @Override
