@@ -2,6 +2,8 @@ package com.linngdu664.bsf.item.setter;
 
 import com.linngdu664.bsf.item.*;
 import com.linngdu664.bsf.util.SnowballType;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.registries.DeferredRegister;
@@ -20,6 +22,12 @@ public class ItemRegister {
     public static final RegistryObject<Item> OBSIDIAN_SNOWBALL = ITEMS.register("obsidian_snowball", ObsidianSnowballItem::new);
     public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL = ITEMS.register("explosive_snowball", ExplosiveSnowballItem::new);
     public static final RegistryObject<Item> SPECTRAL_SNOWBALL = ITEMS.register("spectral_snowball", SpectralSnowballItem::new);
+    public static final RegistryObject<Item> MONSTER_TRACKING_SNOWBALL = ITEMS.register("monster_tracking_snowball", () -> new TrackingSnowballItem(Monster.class, 0));
+    public static final RegistryObject<Item> MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE = ITEMS.register("monster_tracking_snowball_with_damage", () -> new TrackingSnowballItem(Monster.class, 1));
+    public static final RegistryObject<Item> EXPLOSIVE_MONSTER_TRACKING_SNOWBALL = ITEMS.register("explosive_monster_tracking_snowball", () -> new TrackingSnowballItem(Monster.class, 2));
+    public static final RegistryObject<Item> PLAYER_TRACKING_SNOWBALL = ITEMS.register("player_tracking_snowball", () -> new TrackingSnowballItem(Player.class, 0));
+    public static final RegistryObject<Item> PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE = ITEMS.register("player_tracking_snowball_with_damage", () -> new TrackingSnowballItem(Player.class, 1));
+    public static final RegistryObject<Item> EXPLOSIVE_PLAYER_TRACKING_SNOWBALL = ITEMS.register("explosive_player_tracking_snowball", () -> new TrackingSnowballItem(Player.class, 2));
     public static final RegistryObject<Item> COMPACTED_SNOWBALL_SET = ITEMS.register("compacted_snowball_set", CompactedSnowballSetItem::new);
     public static final RegistryObject<Item> WOOD_SNOWBALL_CLAMP = ITEMS.register("wood_snowball_clamp", () -> new SnowballClampItem(Tiers.WOOD));
     public static final RegistryObject<Item> STONE_SNOWBALL_CLAMP = ITEMS.register("stone_snowball_clamp", () -> new SnowballClampItem(Tiers.STONE));
@@ -46,6 +54,12 @@ public class ItemRegister {
     public static final RegistryObject<Item> OBSIDIAN_SNOWBALL_STORAGE_TANK = ITEMS.register("obsidian_snowball_storage_tank", () -> new SnowballStorageTankItem(SnowballType.OBSIDIAN));
     public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_snowball_storage_tank", () -> new SnowballStorageTankItem(SnowballType.EXPLOSIVE));
     public static final RegistryObject<Item> SPECTRAL_SNOWBALL_STORAGE_TANK = ITEMS.register("spectral_snowball_storage_tank", () -> new SnowballStorageTankItem(SnowballType.SPECTRAL));
+    public static final RegistryObject<Item> MONSTER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("monster_tracking_snowball_storage_tank", () -> new SnowballStorageTankItem(SnowballType.TRACKING_MONSTER));
+    public static final RegistryObject<Item> MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK = ITEMS.register("monster_tracking_snowball_with_damage_storage_tank", () -> new SnowballStorageTankItem(SnowballType.TRACKING_MONSTER_DAMAGE));
+    public static final RegistryObject<Item> EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_monster_tracking_snowball_storage_tank", () -> new SnowballStorageTankItem(SnowballType.TRACKING_MONSTER_EXPLOSIVE));
+    public static final RegistryObject<Item> PLAYER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("player_tracking_snowball_storage_tank", () -> new SnowballStorageTankItem(SnowballType.TRACKING_PLAYER));
+    public static final RegistryObject<Item> PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK = ITEMS.register("player_tracking_snowball_with_damage_storage_tank", () -> new SnowballStorageTankItem(SnowballType.TRACKING_PLAYER_DAMAGE));
+    public static final RegistryObject<Item> EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_player_tracking_snowball_storage_tank", () -> new SnowballStorageTankItem(SnowballType.TRACKING_PLAYER_EXPLOSIVE));
     public static final RegistryObject<Item> ICE_SKATES_ITEM = ITEMS.register("ice_skates", IceSkatesItem::new);
     public static final RegistryObject<Item> SNOWBALL_SHOTGUN = ITEMS.register("snowball_shotgun", SnowballShotgunItem::new);
     public static final Group GROUP = new Group();

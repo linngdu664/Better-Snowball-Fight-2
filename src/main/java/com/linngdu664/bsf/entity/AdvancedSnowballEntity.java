@@ -18,7 +18,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
@@ -48,12 +47,14 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     private float maxTurningAngleSin;
     private int timer = 0;
     //quick test
-    /*
-    private int trackingMode = 1;
-    private Class<? extends Entity> targetClass = Monster.class;
+    /*private int trackingMode = 2;
+    private Class<? extends Entity> targetClass = AdvancedSnowballEntity.class;
     private double trackingRange = 20;
-    private boolean angleRestriction = true;
-    */
+    private boolean angleRestriction = false;
+    private double GM = 1;
+    private boolean trackingMultipleTargets = true;
+    private boolean attraction = true;
+    private boolean selfAttraction = true;*/
     private int trackingMode;
     private Class<? extends Entity> targetClass;
     private double trackingRange;
@@ -174,10 +175,11 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
 
     private <T extends Entity> Entity getTarget(Class<T> t, boolean angleRestriction, double trackingRange) {
         Entity entity1 = null;
-
         List<T> list = level.getEntitiesOfClass(t, this.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
         if (t == AdvancedSnowballEntity.class) {
             list.remove(this);
+        } else if (t == Player.class) {
+            list.remove(this.getOwner());
         }
         if (!list.isEmpty()) {
             entity1 = list.get(0);
@@ -187,7 +189,6 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                 }
             }
         }
-
         if (entity1 != null) {
             if (angleRestriction) {
                 double d1 = entity1.getX() - this.getX();
@@ -208,13 +209,13 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         List<T> list = level.getEntitiesOfClass(t, this.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
         if (t == AdvancedSnowballEntity.class) {
             list.remove(this);
+        } else if (t == Player.class) {
+            list.remove(this.getOwner());
         }
         if (!list.isEmpty()) {
             return list;
-        } else {
-            return null;
         }
-
+        return null;
     }
 
     @Override
@@ -223,9 +224,7 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         if (type == SnowballType.SPECTRAL) {
             ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         }
-        if (trackingMode > 0) {
-            tracking();
-        }
+        tracking();
         timer++;
         super.tick();
     }
@@ -247,13 +246,13 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                         double d2 = entity.getZ() - this.getZ();
                         double d3 = this.getDeltaMovement().x;
                         double d4 = this.getDeltaMovement().z;
-                        if (Mth.fastInvSqrt(d1 * d1 + d2 * d2) * Mth.fastInvSqrt(d3 * d3 + d4 * d4) * (d1 * d3 + d2 * d4) < 0.5) {
+                        if (Util.vec2AngleCos(d1, d2, d3, d4) < 0.5) {
                             continue;
                         }
                     }
                     Vec3 rVec = new Vec3(entity.getX() - this.getX(), entity.getY() + 2 - this.getY(), entity.getZ() - this.getZ());
                     double r = rVec.length();
-                    double a = GM / (r * r);
+                    double a = GM / r;             //it should be r * r, but the effect is too wierd, so r
                     Vec3 aVec = new Vec3(a * rVec.x / r, a * rVec.y / r, a * rVec.z / r);
                     if (selfAttraction) {
                         Vec3 vVec = this.getDeltaMovement();
@@ -263,13 +262,12 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                         Vec3 vVec2 = entity.getDeltaMovement();
                         entity.lerpMotion(vVec2.x - aVec.x, vVec2.y - aVec.y, vVec2.z - aVec.z);
                     }
-
                 }
             }
         } else {
             target = getTarget(targetClass, angleRestriction, trackingRange);
             if (target != null) {
-                Vec3 rVec = new Vec3(target.getX() - this.getX(), target.getY() + 2 - this.getY(), target.getZ() - this.getZ());
+                Vec3 rVec = new Vec3(target.getX() - this.getX(), target.getEyeY() - this.getY(), target.getZ() - this.getZ());
                 double r = rVec.length();
                 double a = GM / (r * r);
                 Vec3 aVec = new Vec3(a * rVec.x / r, a * rVec.y / r, a * rVec.z / r);
