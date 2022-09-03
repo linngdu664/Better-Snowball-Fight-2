@@ -277,7 +277,6 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         if (timer == 0) {
             Vec3 vec3 = this.getDeltaMovement();
             v0 = Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z + vec3.y * vec3.y);
-            System.out.println(v0);
         }
         if (timer > (int) (5 / v0)) {
             if (target == null) {
@@ -285,11 +284,9 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                 this.setNoGravity(false);
             } else if (!level.isClientSide) {
                 this.setNoGravity(true);
-                Vec3 delta = new Vec3(target.getX() - this.getX(), target.getY() - this.getY(), target.getZ() - this.getZ());
+                Vec3 delta = new Vec3(target.getX() - this.getX(), target.getEyeY() - this.getY(), target.getZ() - this.getZ());
                 Vec3 velocity = this.getDeltaMovement();
-                //delta.add(target.getDeltaMovement().scale(5));
-                double d1 = delta.x * delta.x + delta.z * delta.z;
-                double cosTheta = Mth.fastInvSqrt(d1) * Mth.fastInvSqrt(velocity.x * velocity.x + velocity.z * velocity.z) * (delta.x * velocity.x + delta.z * velocity.z);
+                double cosTheta = vec2AngleCos(delta.x, delta.z, velocity.x, velocity.z);
                 double sinTheta;
                 if (cosTheta < Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD))) {
                     cosTheta = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
@@ -297,53 +294,41 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                 } else {
                     sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
                 }
-                double vx, vz;
-                double vy = velocity.y;
-                double d2 = velocity.x * cosTheta - velocity.z * sinTheta;
-                double d3 = velocity.x * sinTheta + velocity.z * cosTheta;
-                double d4 = velocity.x * cosTheta + velocity.z * sinTheta;
-                double d5 = -velocity.x * sinTheta + velocity.z * cosTheta;
-                if (d2 * delta.x + d3 * delta.z > d4 * delta.x + d5 * delta.z) {
+                double vx, vz, vy;
+                double d0 = velocity.x * cosTheta - velocity.z * sinTheta;
+                double d1 = velocity.x * sinTheta + velocity.z * cosTheta;
+                double d2 = velocity.x * cosTheta + velocity.z * sinTheta;
+                double d3 = -velocity.x * sinTheta + velocity.z * cosTheta;
+                if (d0 * delta.x + d1 * delta.z > d2 * delta.x + d3 * delta.z) {
+                    vx = d0;
+                    vz = d1;
+                } else {
                     vx = d2;
                     vz = d3;
-                } else {
-                    vx = d4;
-                    vz = d5;
                 }
                 double vNewX = Math.sqrt(vx * vx + vz * vz);
-                double deltaNewX = Math.sqrt(d1);
-                cosTheta = vec2AngleCos(vNewX, vy, deltaNewX, delta.y);
+                double deltaNewX = Math.sqrt(delta.x * delta.x + delta.z * delta.z);
+                cosTheta = vec2AngleCos(vNewX, velocity.y, deltaNewX, delta.y);
                 if (cosTheta < Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD))) {
                     cosTheta = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
                     sinTheta = Mth.sin((float) (8 * v0 * Mth.DEG_TO_RAD));
                 } else {
                     sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
                 }
-                d2 = vNewX * cosTheta - vy * sinTheta;
-                d3 = vNewX * sinTheta + vy * cosTheta;
-                d4 = vNewX * cosTheta + vy * sinTheta;
-                d5 = -vNewX * sinTheta + vy * cosTheta;
-                double factor;
-                if (d2 * deltaNewX + d3 * delta.y > d4 * deltaNewX + d5 * delta.y) {
-                    factor = d2;
-                    vy = d3;
+                d0 = vNewX * cosTheta - velocity.y * sinTheta;
+                d1 = vNewX * sinTheta + velocity.y * cosTheta;
+                d2 = vNewX * cosTheta + velocity.y * sinTheta;
+                d3 = -vNewX * sinTheta + velocity.y * cosTheta;
+                double adjusted;
+                if (d0 * deltaNewX + d1 * delta.y > d2 * deltaNewX + d3 * delta.y) {
+                    adjusted = d0;
+                    vy = d1;
                 } else {
-                    factor = d4;
-                    vy = d5;
+                    adjusted = d2;
+                    vy = d3;
                 }
-                vx *= factor / vNewX;
-                vz *= factor / vNewX;
-                /*
-                double d6 = vx * vx + vz * vz;
-                double t2 = d1 / d6;
-                double d7 = this.getY() + vy * Math.sqrt(t2) - 0.015 * t2 - target.getEyeY();
-                if (d7 > 0.1) {
-                    if (d6 > 1) {
-                        vy -= d7 * (1.5 * d6 - 0.5) * 0.02;
-                    } else {
-                        vy -= d7 * Math.sqrt(d6) * 0.02;
-                    }
-                }*/
+                vx *= adjusted / vNewX;
+                vz *= adjusted / vNewX;
                 this.setDeltaMovement(vx, vy, vz);
             }
         }
