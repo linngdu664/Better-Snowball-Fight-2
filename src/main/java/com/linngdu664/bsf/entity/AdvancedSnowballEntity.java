@@ -18,6 +18,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
@@ -43,9 +44,17 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public SnowballType type;
     private Entity target = null;
     private double v0;
+    private float maxTurningAngleCos;
+    private float maxTurningAngleSin;
     private int timer = 0;
-
-    private int trackingMode = 0;
+    //quick test
+    /*
+    private int trackingMode = 1;
+    private Class<? extends Entity> targetClass = Monster.class;
+    private double trackingRange = 20;
+    private boolean angleRestriction = true;
+    */
+    private int trackingMode;
     private Class<? extends Entity> targetClass;
     private double trackingRange;
     private boolean angleRestriction;
@@ -77,21 +86,23 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         this.damage = damage;
         this.blazeDamage = blazeDamage;
     }
-    public <T extends Entity> void setGravityTracking(Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction , boolean attraction){
-        trackingMode=2;
-        this.targetClass=targetClass;
-        this.trackingRange=trackingRange;
-        this.GM=GM;
-        this.angleRestriction=angleRestriction;
-        this.trackingMultipleTargets=trackingMultipleTargets;
-        this.selfAttraction=selfAttraction;
-        this.attraction=attraction;
+
+    public <T extends Entity> void setGravityTracking(Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
+        trackingMode = 2;
+        this.targetClass = targetClass;
+        this.trackingRange = trackingRange;
+        this.GM = GM;
+        this.angleRestriction = angleRestriction;
+        this.trackingMultipleTargets = trackingMultipleTargets;
+        this.selfAttraction = selfAttraction;
+        this.attraction = attraction;
     }
-    public <T extends Entity> void setMissilesTracking(Class<T> targetClass, double trackingRange, boolean angleRestriction){
-        trackingMode=1;
-        this.targetClass=targetClass;
-        this.trackingRange=trackingRange;
-        this.angleRestriction=angleRestriction;
+
+    public <T extends Entity> void setMissilesTracking(Class<T> targetClass, double trackingRange, boolean angleRestriction) {
+        trackingMode = 1;
+        this.targetClass = targetClass;
+        this.trackingRange = trackingRange;
+        this.angleRestriction = angleRestriction;
     }
 
     @Override
@@ -165,7 +176,7 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         Entity entity1 = null;
 
         List<T> list = level.getEntitiesOfClass(t, this.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
-        if(t == AdvancedSnowballEntity.class){
+        if (t == AdvancedSnowballEntity.class) {
             list.remove(this);
         }
         if (!list.isEmpty()) {
@@ -178,59 +189,60 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         }
 
         if (entity1 != null) {
-            if(angleRestriction) {
+            if (angleRestriction) {
                 double d1 = entity1.getX() - this.getX();
                 double d2 = entity1.getZ() - this.getZ();
                 double d3 = this.getDeltaMovement().x;
                 double d4 = this.getDeltaMovement().z;
-                if (Mth.fastInvSqrt(d1 * d1 + d2 * d2) * Mth.fastInvSqrt(d3 * d3 + d4 * d4) * (d1 * d3 + d2 * d4) > 0.5) {
+                if (Util.vec2AngleCos(d1, d2, d3, d4) > 0.5) {
                     return entity1;
                 }
-            }else{
+            } else {
                 return entity1;
             }
-
         }
         return null;
     }
 
-    private <T extends Entity> List<T> getTargetList(Class<T> t,double trackingRange) {
+    private <T extends Entity> List<T> getTargetList(Class<T> t, double trackingRange) {
         List<T> list = level.getEntitiesOfClass(t, this.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
-        if(t == AdvancedSnowballEntity.class){
+        if (t == AdvancedSnowballEntity.class) {
             list.remove(this);
         }
         if (!list.isEmpty()) {
             return list;
-        }else{
+        } else {
             return null;
         }
 
     }
+
     @Override
     public void tick() {
         ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         if (type == SnowballType.SPECTRAL) {
             ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         }
-        if(trackingMode>0){
+        if (trackingMode > 0) {
             tracking();
         }
         timer++;
         super.tick();
     }
 
-    private void tracking(){
-        switch (trackingMode){
-            case 1 -> missilesTracking(targetClass,trackingRange,angleRestriction);
-            case 2 -> gravityTracking(targetClass,trackingRange,GM,angleRestriction,trackingMultipleTargets,selfAttraction,attraction);
+    private void tracking() {
+        switch (trackingMode) {
+            case 1 -> missilesTracking(targetClass, trackingRange, angleRestriction);
+            case 2 -> gravityTracking(targetClass, trackingRange, GM, angleRestriction, trackingMultipleTargets, selfAttraction, attraction);
         }
     }
-    private <T extends Entity> void gravityTracking(Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction , boolean attraction){
-        if(trackingMultipleTargets){
-            List<T> list = getTargetList(targetClass,trackingRange);
-            if (list!=null && !list.isEmpty()) {
+
+    private <T extends Entity> void gravityTracking(Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
+        if (trackingMultipleTargets) {
+            List<T> list = getTargetList(targetClass, trackingRange);
+            if (list != null && !list.isEmpty()) {
                 for (T entity : list) {
-                    if(angleRestriction){
+                    if (angleRestriction) {
                         double d1 = entity.getX() - this.getX();
                         double d2 = entity.getZ() - this.getZ();
                         double d3 = this.getDeltaMovement().x;
@@ -239,58 +251,60 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                             continue;
                         }
                     }
-                    Vec3 rVec = new Vec3(entity.getX() - this.getX(), entity.getY()+2 - this.getY(), entity.getZ() - this.getZ());
+                    Vec3 rVec = new Vec3(entity.getX() - this.getX(), entity.getY() + 2 - this.getY(), entity.getZ() - this.getZ());
                     double r = rVec.length();
                     double a = GM / (r * r);
                     Vec3 aVec = new Vec3(a * rVec.x / r, a * rVec.y / r, a * rVec.z / r);
-                    if (selfAttraction){
+                    if (selfAttraction) {
                         Vec3 vVec = this.getDeltaMovement();
-                        this.lerpMotion(vVec.x+aVec.x,vVec.y+aVec.y,vVec.z+aVec.z);
+                        this.lerpMotion(vVec.x + aVec.x, vVec.y + aVec.y, vVec.z + aVec.z);
                     }
-                    if (attraction){
+                    if (attraction) {
                         Vec3 vVec2 = entity.getDeltaMovement();
-                        entity.lerpMotion(vVec2.x-aVec.x,vVec2.y-aVec.y,vVec2.z-aVec.z);
+                        entity.lerpMotion(vVec2.x - aVec.x, vVec2.y - aVec.y, vVec2.z - aVec.z);
                     }
 
                 }
             }
-        }else{
-            target = getTarget(targetClass,angleRestriction,trackingRange);
-            if(target!=null) {
-                Vec3 rVec = new Vec3(target.getX() - this.getX(), target.getY()+2 - this.getY(), target.getZ() - this.getZ());
+        } else {
+            target = getTarget(targetClass, angleRestriction, trackingRange);
+            if (target != null) {
+                Vec3 rVec = new Vec3(target.getX() - this.getX(), target.getY() + 2 - this.getY(), target.getZ() - this.getZ());
                 double r = rVec.length();
                 double a = GM / (r * r);
                 Vec3 aVec = new Vec3(a * rVec.x / r, a * rVec.y / r, a * rVec.z / r);
-                if (selfAttraction){
+                if (selfAttraction) {
                     Vec3 vVec = this.getDeltaMovement();
-                    this.lerpMotion(vVec.x+aVec.x,vVec.y+aVec.y,vVec.z+aVec.z);
+                    this.lerpMotion(vVec.x + aVec.x, vVec.y + aVec.y, vVec.z + aVec.z);
                 }
-                if (attraction){
+                if (attraction) {
                     Vec3 vVec2 = target.getDeltaMovement();
-                    target.lerpMotion(vVec2.x-aVec.x,vVec2.y-aVec.y,vVec2.z-aVec.z);
+                    target.lerpMotion(vVec2.x - aVec.x, vVec2.y - aVec.y, vVec2.z - aVec.z);
                 }
             }
         }
-
     }
-    private <T extends Entity> void missilesTracking(Class<T> targetClass, double trackingRange, boolean angleRestriction){
+
+    private <T extends Entity> void missilesTracking(Class<T> targetClass, double trackingRange, boolean angleRestriction) {
         if (timer == 0) {
             Vec3 vec3 = this.getDeltaMovement();
             v0 = Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z + vec3.y * vec3.y);
+            maxTurningAngleCos = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
+            maxTurningAngleSin = Mth.sin((float) (8 * v0 * Mth.DEG_TO_RAD));
         }
         if (timer > (int) (5 / v0)) {
-            if (target == null) {
-                target = getTarget(targetClass,angleRestriction,trackingRange);
+            if (target == null || !target.isAlive()) {
                 this.setNoGravity(false);
+                target = getTarget(targetClass, angleRestriction, trackingRange);
             } else if (!level.isClientSide) {
                 this.setNoGravity(true);
                 Vec3 delta = new Vec3(target.getX() - this.getX(), target.getEyeY() - this.getY(), target.getZ() - this.getZ());
                 Vec3 velocity = this.getDeltaMovement();
-                double cosTheta = vec2AngleCos(delta.x, delta.z, velocity.x, velocity.z);
+                double cosTheta = Util.vec2AngleCos(delta.x, delta.z, velocity.x, velocity.z);
                 double sinTheta;
-                if (cosTheta < Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD))) {
-                    cosTheta = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
-                    sinTheta = Mth.sin((float) (8 * v0 * Mth.DEG_TO_RAD));
+                if (cosTheta < maxTurningAngleCos) {
+                    cosTheta = maxTurningAngleCos;
+                    sinTheta = maxTurningAngleSin;
                 } else {
                     sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
                 }
@@ -308,10 +322,10 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                 }
                 double vNewX = Math.sqrt(vx * vx + vz * vz);
                 double deltaNewX = Math.sqrt(delta.x * delta.x + delta.z * delta.z);
-                cosTheta = vec2AngleCos(vNewX, velocity.y, deltaNewX, delta.y);
-                if (cosTheta < Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD))) {
-                    cosTheta = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
-                    sinTheta = Mth.sin((float) (8 * v0 * Mth.DEG_TO_RAD));
+                cosTheta = Util.vec2AngleCos(vNewX, velocity.y, deltaNewX, delta.y);
+                if (cosTheta < maxTurningAngleCos) {
+                    cosTheta = maxTurningAngleCos;
+                    sinTheta = maxTurningAngleSin;
                 } else {
                     sinTheta = Math.sqrt(1 - cosTheta * cosTheta);
                 }
@@ -332,10 +346,6 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                 this.setDeltaMovement(vx, vy, vz);
             }
         }
-    }
-
-    public double vec2AngleCos(double x1, double y1, double x2, double y2) {
-        return Mth.fastInvSqrt(x1 * x1 + y1 * y1) * Mth.fastInvSqrt(x2 * x2 + y2 * y2) * (x1 * x2 + y1 * y2);
     }
 
     @Override
