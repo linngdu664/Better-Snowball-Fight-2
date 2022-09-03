@@ -142,7 +142,7 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
             }
             Vec3 vec3d = this.getDeltaMovement().multiply(0.1 * punch, 0.0, 0.1 * punch);
             entity.push(vec3d.x, 0.0, vec3d.z);
-            if (type == SnowballType.EXPLOSIVE) {
+            if (type == SnowballType.EXPLOSIVE || type == SnowballType.TRACKING_PLAYER_EXPLOSIVE || type == SnowballType.TRACKING_MONSTER_EXPLOSIVE) {
                 if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
                     level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
                 } else {
@@ -160,7 +160,7 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     @Override
     protected void onHitBlock(@NotNull BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
-        if (type == SnowballType.EXPLOSIVE) {
+        if (type == SnowballType.EXPLOSIVE || type == SnowballType.TRACKING_PLAYER_EXPLOSIVE || type == SnowballType.TRACKING_MONSTER_EXPLOSIVE) {
             if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
                 level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
             } else {
