@@ -55,7 +55,7 @@ public class Util {
         return null;
     }
 
-    //High school math
+    //Calculate the cosine of the angle between 2 2D vectors. High school math.
     public static double vec2AngleCos(double x1, double y1, double x2, double y2) {
         return Mth.fastInvSqrt(x1 * x1 + y1 * y1) * Mth.fastInvSqrt(x2 * x2 + y2 * y2) * (x1 * x2 + y1 * y2);
     }
@@ -65,6 +65,6 @@ public class Util {
         float f = -Mth.sin(pY * ((float)Math.PI / 180F)) * Mth.cos(pX * ((float)Math.PI / 180F));
         float f1 = -Mth.sin((pX + pZ) * ((float)Math.PI / 180F));
         float f2 = Mth.cos(pY * ((float)Math.PI / 180F)) * Mth.cos(pX * ((float)Math.PI / 180F));
-        projectile.shoot((double)f, (double)f1, (double)f2, pVelocity, pInaccuracy);
+        projectile.shoot(f, f1, f2, pVelocity, pInaccuracy);
     }
 }

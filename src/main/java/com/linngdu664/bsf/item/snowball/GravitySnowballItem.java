@@ -23,22 +23,22 @@ public class GravitySnowballItem extends Item {
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         if (pPlayer.getOffhandItem().getItem() == ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()) {
             if (target == Target.MONSTER) {
-                if(mode == TrackingSnowballMode.GRAVITY){
+                if (mode == TrackingSnowballMode.GRAVITY) {
                     pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.GRAVITY_SNOWBALL_TO_MONSTER.get()));
-                }else if(mode == TrackingSnowballMode.REPULSION) {
+                } else if (mode == TrackingSnowballMode.REPULSION) {
                     pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.REPULSION_SNOWBALL_TO_MONSTER.get()));
                 }
-            } else if(target == Target.PROJECTILE){
-                if(mode == TrackingSnowballMode.GRAVITY){
+            } else if (target == Target.PROJECTILE) {
+                if (mode == TrackingSnowballMode.GRAVITY) {
                     pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.GRAVITY_SNOWBALL_TO_PROJECTILE.get()));
-                }else if(mode == TrackingSnowballMode.REPULSION) {
+                } else if (mode == TrackingSnowballMode.REPULSION) {
                     pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.REPULSION_SNOWBALL_TO_PROJECTILE.get()));
                 }
-            }else if(target == Target.MIX){
+            } else if (target == Target.MIX) {
                 pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.BLACK_HOLE_SNOWBALL.get()));
             }
             pPlayer.getOffhandItem().setDamageValue(96 - pPlayer.getMainHandItem().getCount());
