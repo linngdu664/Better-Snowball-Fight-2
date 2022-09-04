@@ -28,6 +28,13 @@ public class ItemRegister {
     public static final RegistryObject<Item> PLAYER_TRACKING_SNOWBALL = ITEMS.register("player_tracking_snowball", () -> new TrackingSnowballItem(0, 0));
     public static final RegistryObject<Item> PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE = ITEMS.register("player_tracking_snowball_with_damage", () -> new TrackingSnowballItem(0, 1));
     public static final RegistryObject<Item> EXPLOSIVE_PLAYER_TRACKING_SNOWBALL = ITEMS.register("explosive_player_tracking_snowball", () -> new TrackingSnowballItem(0, 2));
+
+    public static final RegistryObject<Item> GRAVITY_SNOWBALL_TO_MONSTER = ITEMS.register("gravity_snowball_to_monster", () -> new TrackingSnowballItem(0, 2));
+    public static final RegistryObject<Item> GRAVITY_SNOWBALL_TO_THROWABLE = ITEMS.register("gravity_snowball_to_throwable", () -> new TrackingSnowballItem(2, 2));
+    public static final RegistryObject<Item> REPULSION_SNOWBALL_TO_MONSTER = ITEMS.register("repulsion_snowball_to_monster", () -> new TrackingSnowballItem(0, 2));
+    public static final RegistryObject<Item> REPULSION_SNOWBALL_TO_THROWABLE = ITEMS.register("repulsion_snowball_to_throwable", () -> new TrackingSnowballItem(2, 2));
+    public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL = ITEMS.register("black_hole_snowball", () -> new TrackingSnowballItem(3, 2));
+
     public static final RegistryObject<Item> COMPACTED_SNOWBALL_SET = ITEMS.register("compacted_snowball_set", CompactedSnowballSetItem::new);
     public static final RegistryObject<Item> WOOD_SNOWBALL_CLAMP = ITEMS.register("wood_snowball_clamp", () -> new SnowballClampItem(Tiers.WOOD));
     public static final RegistryObject<Item> STONE_SNOWBALL_CLAMP = ITEMS.register("stone_snowball_clamp", () -> new SnowballClampItem(Tiers.STONE));
