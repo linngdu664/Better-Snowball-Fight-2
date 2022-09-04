@@ -120,8 +120,9 @@ public class SnowballShotgunItem extends Item {
                     player.push(-0.24 * cameraVec.x, -0.24 * cameraVec.y, -0.24 * cameraVec.z);
                 }
                 if (!level.isClientSide()) {
+                    //add particles
                     ServerLevel serverLevel = (ServerLevel) level;
-                    serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getY() + cameraVec.y + 1.8, player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.08);
+                    serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y , player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.16);
                 }
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SHOTGUN_FIRE_2.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             }
@@ -183,6 +184,7 @@ public class SnowballShotgunItem extends Item {
                     player.push(-pushRank * cameraVec.x, -pushRank * cameraVec.y, -pushRank * cameraVec.z);
                 }
                 if (!level.isClientSide()) {
+                    //add particles
                     ServerLevel serverLevel = (ServerLevel) level;
                     serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getY() + cameraVec.y + 1.8, player.getZ() + cameraVec.z, (int) (29 * pushRank + 9.04), 0, 0, 0, 0.16);
                 }

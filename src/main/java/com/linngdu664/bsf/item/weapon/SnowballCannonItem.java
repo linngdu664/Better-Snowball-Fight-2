@@ -6,10 +6,13 @@ import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.util.Util;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,7 +44,7 @@ public class SnowballCannonItem extends BowItem {
             float f = getPowerForTime(i);
             if (f >= 0.1F) {
                 ItemStack itemStack = Util.findAmmo(player, false);
-                if (itemStack != null && !pLevel.isClientSide) {
+                if (itemStack != null) {
                     boolean k = Util.isAmmoTank(itemStack, true);
                     AdvancedSnowballEntity snowballEntity;
                     if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
@@ -116,6 +120,22 @@ public class SnowballCannonItem extends BowItem {
                         snowballEntity.weaknessTicks = 180;
                     }
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
+
+
+                    float pitch = player.getXRot();
+                    float yaw = player.getYRot();
+                    Vec3 cameraVec = new Vec3(-Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.sin(yaw * Mth.DEG_TO_RAD), -Mth.sin(pitch * Mth.DEG_TO_RAD), Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.cos(yaw * Mth.DEG_TO_RAD));
+                    //add push
+                    if (pLevel.isClientSide()) {
+                        player.push(-0.12 * cameraVec.x, -0.12 * cameraVec.y, -0.12 * cameraVec.z);
+                    }
+
+                    //add particles
+                    if (!pLevel.isClientSide()) {
+                        ServerLevel serverLevel = (ServerLevel) pLevel;
+                        serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y , player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.16);
+                    }
+
                     pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                     pLevel.addFreshEntity(snowballEntity);
                     if (!player.getAbilities().instabuild) {

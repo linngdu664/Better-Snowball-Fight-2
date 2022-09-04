@@ -66,5 +66,6 @@ public class GravitySnowballItem extends Item {
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
     }
+    //todo function of force effect
 
 }
