@@ -55,10 +55,12 @@ public class Util {
         return null;
     }
 
+    //High school math
     public static double vec2AngleCos(double x1, double y1, double x2, double y2) {
         return Mth.fastInvSqrt(x1 * x1 + y1 * y1) * Mth.fastInvSqrt(x2 * x2 + y2 * y2) * (x1 * x2 + y1 * y2);
     }
 
+    //Rewrite vanilla "shootFromRotation" method to remove the influence of player's velocity.
     public static void shootFromRotation(Projectile projectile, float pX, float pY, float pZ, float pVelocity, float pInaccuracy) {
         float f = -Mth.sin(pY * ((float)Math.PI / 180F)) * Mth.cos(pX * ((float)Math.PI / 180F));
         float f1 = -Mth.sin((pX + pZ) * ((float)Math.PI / 180F));
