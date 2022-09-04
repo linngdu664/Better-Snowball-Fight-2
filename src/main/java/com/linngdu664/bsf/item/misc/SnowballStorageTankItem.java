@@ -1,4 +1,4 @@
-package com.linngdu664.bsf.item;
+package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.SnowballType;

@@ -1,4 +1,4 @@
-package com.linngdu664.bsf.item;
+package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
@@ -94,7 +94,7 @@ public class SnowballCannonItem extends BowItem {
                         snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()));
                     }
                     snowballEntity.punch = f * 1.51F;
-                    snowballEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
+                    Util.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
                     if (coreType == 1) {
                         snowballEntity.frozenTicks += 140;
                         switch (snowballEntity.type) {
@@ -112,7 +112,7 @@ public class SnowballCannonItem extends BowItem {
                         }
                     } else if (coreType == 2) {
                         snowballEntity.punch = f * 2.5;
-                        snowballEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, f * 4.0F, 1.0F);
+                        Util.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 4.0F, 1.0F);
                         snowballEntity.weaknessTicks = 180;
                     }
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));

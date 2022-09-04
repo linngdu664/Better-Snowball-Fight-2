@@ -1,4 +1,4 @@
-package com.linngdu664.bsf.item;
+package com.linngdu664.bsf.item.snowball;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import net.minecraft.stats.Stats;

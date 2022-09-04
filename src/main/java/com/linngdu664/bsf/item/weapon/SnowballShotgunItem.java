@@ -1,4 +1,4 @@
-package com.linngdu664.bsf.item;
+package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;

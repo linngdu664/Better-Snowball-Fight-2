@@ -1,9 +1,11 @@
 package com.linngdu664.bsf.item.setter;
 
-import com.linngdu664.bsf.item.*;
+import com.linngdu664.bsf.item.misc.*;
+import com.linngdu664.bsf.item.snowball.*;
+import com.linngdu664.bsf.item.weapon.SnowballCannonItem;
+import com.linngdu664.bsf.item.weapon.SnowballMachineGunItem;
+import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;
 import com.linngdu664.bsf.util.SnowballType;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.registries.DeferredRegister;

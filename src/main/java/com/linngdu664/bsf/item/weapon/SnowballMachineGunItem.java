@@ -1,4 +1,4 @@
-package com.linngdu664.bsf.item;
+package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
@@ -89,7 +89,7 @@ public class SnowballMachineGunItem extends Item {
                     j = 0.075F;
                 }
                 snowballEntity.punch = 1.2;
-                snowballEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);
+                Util.shootFromRotation(snowballEntity,player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);
                 pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);pLevel.addFreshEntity(snowballEntity);
                 Vec3 cameraVec = new Vec3(-Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.sin(yaw * Mth.DEG_TO_RAD), -Mth.sin(pitch * Mth.DEG_TO_RAD), Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.cos(yaw * Mth.DEG_TO_RAD));
                 player.push(-0.24 * j * cameraVec.x, -0.24 * j * cameraVec.y, -0.24 * j * cameraVec.z);
