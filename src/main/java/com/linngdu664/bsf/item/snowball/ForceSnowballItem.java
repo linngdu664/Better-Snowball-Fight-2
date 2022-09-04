@@ -12,11 +12,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class GravitySnowballItem extends Item {
+public class ForceSnowballItem extends Item {
     private final Target target;
     private final TrackingSnowballMode mode;
 
-    public GravitySnowballItem(Target target, TrackingSnowballMode mode) {
+    public ForceSnowballItem(Target target, TrackingSnowballMode mode) {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
         this.target = target;
         this.mode = mode;

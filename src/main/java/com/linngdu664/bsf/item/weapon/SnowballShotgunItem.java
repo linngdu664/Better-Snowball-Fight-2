@@ -4,7 +4,7 @@ import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.SnowballType;
-import com.linngdu664.bsf.util.Util;
+import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -31,9 +31,9 @@ public class SnowballShotgunItem extends Item {
         if (!player.isShiftKeyDown()) {
             int i;
             for (i = 0; i < 4; i++) {
-                ItemStack itemStack = Util.findAmmo(player, false);
+                ItemStack itemStack = BSFUtil.findAmmo(player, false);
                 if (itemStack != null) {
-                    boolean k = Util.isAmmoTank(itemStack, true);
+                    boolean k = BSFUtil.isAmmoTank(itemStack, true);
                     AdvancedSnowballEntity snowballEntity;
                     if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
                         snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.COMPACTED);
@@ -90,7 +90,7 @@ public class SnowballShotgunItem extends Item {
                     }
                     snowballEntity.punch = 1.51F;
 
-                    Util.shootFromRotation(snowballEntity,player.getXRot(), player.getYRot(), 0.0F, 2.0F, 10.0F);
+                    BSFUtil.shootFromRotation(snowballEntity,player.getXRot(), player.getYRot(), 0.0F, 2.0F, 10.0F);
 
                     stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
                     level.addFreshEntity(snowballEntity);
@@ -130,9 +130,9 @@ public class SnowballShotgunItem extends Item {
             double pushRank = 0.24;
             int i;
             for (i = 0; i < 4; i++) {
-                ItemStack itemStack = Util.findAmmo(player, false);
+                ItemStack itemStack = BSFUtil.findAmmo(player, false);
                 if (itemStack != null) {
-                    boolean k = Util.isAmmoTank(itemStack, true);
+                    boolean k = BSFUtil.isAmmoTank(itemStack, true);
                     if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() ||
                             itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL.get() || itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
                             itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL.get() || itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {

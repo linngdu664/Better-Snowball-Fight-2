@@ -4,7 +4,7 @@ import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.SnowballType;
-import com.linngdu664.bsf.util.Util;
+import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -49,7 +49,7 @@ public class SnowballMachineGunItem extends Item {
         float pitch = player.getXRot();
         float yaw = player.getYRot();
         if (timer % 3 == 0) {
-            ItemStack itemStack = Util.findAmmo(player, true);
+            ItemStack itemStack = BSFUtil.findAmmo(player, true);
             if (itemStack != null) {
                 AdvancedSnowballEntity snowballEntity;
                 if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
@@ -91,7 +91,7 @@ public class SnowballMachineGunItem extends Item {
                     j = 0.075F;
                 }
                 snowballEntity.punch = 1.2;
-                Util.shootFromRotation(snowballEntity,player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);
+                BSFUtil.shootFromRotation(snowballEntity,player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);
                 pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                 pLevel.addFreshEntity(snowballEntity);
 

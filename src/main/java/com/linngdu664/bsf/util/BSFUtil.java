@@ -8,7 +8,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-public class Util {
+public class BSFUtil {
     public static boolean isHeadingToSnowball(Player player, AdvancedSnowballEntity snowballEntity) {
         float pitch = player.getXRot() * 0.01745329F;
         float yaw = player.getYRot() * 0.01745329F;

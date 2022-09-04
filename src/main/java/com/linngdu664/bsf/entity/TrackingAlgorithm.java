@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.entity;
 
-import com.linngdu664.bsf.util.Util;
+import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +36,7 @@ public class TrackingAlgorithm {
                 double d2 = entity1.getZ() - snowball.getZ();
                 double d3 = snowball.getDeltaMovement().x;
                 double d4 = snowball.getDeltaMovement().z;
-                if (Util.vec2AngleCos(d1, d2, d3, d4) > 0.5) {
+                if (BSFUtil.vec2AngleCos(d1, d2, d3, d4) > 0.5) {
                     return entity1;
                 }
             } else {
@@ -71,7 +71,7 @@ public class TrackingAlgorithm {
                         double d2 = entity.getZ() - snowball.getZ();
                         double d3 = snowball.getDeltaMovement().x;
                         double d4 = snowball.getDeltaMovement().z;
-                        if (Util.vec2AngleCos(d1, d2, d3, d4) < 0.5) {
+                        if (BSFUtil.vec2AngleCos(d1, d2, d3, d4) < 0.5) {
                             continue;
                         }
                     }
@@ -119,7 +119,7 @@ public class TrackingAlgorithm {
             snowball.setNoGravity(true);
             Vec3 delta = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());
             Vec3 velocity = snowball.getDeltaMovement();
-            double cosTheta = Util.vec2AngleCos(delta.x, delta.z, velocity.x, velocity.z);
+            double cosTheta = BSFUtil.vec2AngleCos(delta.x, delta.z, velocity.x, velocity.z);
             double sinTheta;
             if (cosTheta < maxTurningAngleCos) {
                 cosTheta = maxTurningAngleCos;
@@ -141,7 +141,7 @@ public class TrackingAlgorithm {
             }
             double vNewX = Math.sqrt(vx * vx + vz * vz);
             double deltaNewX = Math.sqrt(delta.x * delta.x + delta.z * delta.z);
-            cosTheta = Util.vec2AngleCos(vNewX, velocity.y, deltaNewX, delta.y);
+            cosTheta = BSFUtil.vec2AngleCos(vNewX, velocity.y, deltaNewX, delta.y);
             if (cosTheta < maxTurningAngleCos) {
                 cosTheta = maxTurningAngleCos;
                 sinTheta = maxTurningAngleSin;

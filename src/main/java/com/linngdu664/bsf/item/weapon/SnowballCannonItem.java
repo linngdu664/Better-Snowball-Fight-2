@@ -4,7 +4,7 @@ import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.SnowballType;
-import com.linngdu664.bsf.util.Util;
+import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -43,9 +43,9 @@ public class SnowballCannonItem extends BowItem {
             int i = this.getUseDuration(pStack) - pTimeLeft;
             float f = getPowerForTime(i);
             if (f >= 0.1F) {
-                ItemStack itemStack = Util.findAmmo(player, false);
+                ItemStack itemStack = BSFUtil.findAmmo(player, false);
                 if (itemStack != null) {
-                    boolean k = Util.isAmmoTank(itemStack, true);
+                    boolean k = BSFUtil.isAmmoTank(itemStack, true);
                     AdvancedSnowballEntity snowballEntity;
                     if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
                         snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.COMPACTED);
@@ -98,7 +98,7 @@ public class SnowballCannonItem extends BowItem {
                         snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()));
                     }
                     snowballEntity.punch = f * 1.51F;
-                    Util.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
+                    BSFUtil.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
                     if (coreType == 1) {
                         snowballEntity.frozenTicks += 140;
                         switch (snowballEntity.type) {
@@ -116,7 +116,7 @@ public class SnowballCannonItem extends BowItem {
                         }
                     } else if (coreType == 2) {
                         snowballEntity.punch = f * 2.5;
-                        Util.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 4.0F, 1.0F);
+                        BSFUtil.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 4.0F, 1.0F);
                         snowballEntity.weaknessTicks = 180;
                     }
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
