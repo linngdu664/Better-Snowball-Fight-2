@@ -42,7 +42,7 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public float damage = Float.MIN_VALUE;
     public float blazeDamage = 3.0F;
     public SnowballType type;
-    private Entity target = null;
+    //private Entity target = null;
     private double v0;
     private float maxTurningAngleCos;
     private float maxTurningAngleSin;
@@ -190,18 +190,31 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         if (type == SnowballType.SPECTRAL) {
             ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         }
+        if (timer == 0) {
+            Vec3 vec3 = this.getDeltaMovement();
+            v0 = Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z + vec3.y * vec3.y);
+            maxTurningAngleCos = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
+            maxTurningAngleSin = Mth.sin((float) (8 * v0 * Mth.DEG_TO_RAD));
+        }
         tracking();
         timer++;
         super.tick();
     }
 
     private void tracking() {
+        if (trackingMode == 1 && timer > (int) (5 / v0)) {
+            TrackingAlgorithm.missilesTracking(this, targetClass, trackingRange, angleRestriction, maxTurningAngleCos, maxTurningAngleSin);
+        } else if (trackingMode == 2) {
+            TrackingAlgorithm.gravityTracking(this, targetClass, trackingRange, GM, angleRestriction, trackingMultipleTargets, selfAttraction, attraction);
+        }
+        /*
         switch (trackingMode) {
             case 1 -> missilesTracking(targetClass, trackingRange, angleRestriction);
             case 2 -> gravityTracking(targetClass, trackingRange, GM, angleRestriction, trackingMultipleTargets, selfAttraction, attraction);
-        }
+        }*/
     }
-
+}
+/*
     private <T extends Entity> Entity getTarget(Class<T> t, boolean angleRestriction, double trackingRange) {
         Entity entity1 = null;
         List<T> list = level.getEntitiesOfClass(t, this.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
@@ -360,3 +373,4 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         }
     }
 }
+*/
