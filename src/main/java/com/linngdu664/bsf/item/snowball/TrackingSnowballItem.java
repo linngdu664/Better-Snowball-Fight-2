@@ -1,6 +1,8 @@
 package com.linngdu664.bsf.item.snowball;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.Target;
+import com.linngdu664.bsf.util.TrackingSnowballMode;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -11,10 +13,10 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class TrackingSnowballItem extends Item {
-    private final int target;
-    private final int damageMode;
+    private final Target target;
+    private final TrackingSnowballMode damageMode;
 
-    public TrackingSnowballItem(int target, int damageMode) {
+    public TrackingSnowballItem(Target target, TrackingSnowballMode damageMode) {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
         this.target = target;
         this.damageMode = damageMode;
@@ -24,29 +26,29 @@ public class TrackingSnowballItem extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         if (pPlayer.getOffhandItem().getItem() == ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()) {
-            if (target == 0) {
-                switch (damageMode) {
-                    case 0 -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL.get()));
-                    case 1 -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get()));
-                    case 2 -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()));
+            if (target == Target.PLAYER) {
+                switch (TrackingSnowballMode.getByType(damageMode.getType())) {
+                    case NO_DAMAGE -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL.get()));
+                    case HAVE_DAMAGE -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get()));
+                    case EXPLOSIVE -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()));
                 }
             } else {
-                switch (damageMode) {
-                    case 0 -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL.get()));
-                    case 1 -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get()));
-                    case 2 -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()));
+                switch (TrackingSnowballMode.getByType(damageMode.getType())) {
+                    case NO_DAMAGE -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL.get()));
+                    case HAVE_DAMAGE -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get()));
+                    case EXPLOSIVE -> pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()));
                 }
             }
             pPlayer.getOffhandItem().setDamageValue(96 - pPlayer.getMainHandItem().getCount());
             if (!pPlayer.getAbilities().instabuild) {
                 itemStack.shrink(pPlayer.getMainHandItem().getCount());
             }
-        } else if ((pPlayer.getOffhandItem().getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() && target == 0 && damageMode == 0 ||
-                pPlayer.getOffhandItem().getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get() && target == 0 && damageMode == 1 ||
-                pPlayer.getOffhandItem().getItem() == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() && target == 0 && damageMode == 2 ||
-                pPlayer.getOffhandItem().getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() && target == 1 && damageMode == 0 ||
-                pPlayer.getOffhandItem().getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get() && target == 1 && damageMode == 1 ||
-                pPlayer.getOffhandItem().getItem() == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() && target == 1 && damageMode == 2)
+        } else if ((pPlayer.getOffhandItem().getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() && target == Target.PLAYER && damageMode == TrackingSnowballMode.NO_DAMAGE ||
+                pPlayer.getOffhandItem().getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get() && target == Target.PLAYER && damageMode == TrackingSnowballMode.HAVE_DAMAGE ||
+                pPlayer.getOffhandItem().getItem() == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() && target == Target.PLAYER && damageMode == TrackingSnowballMode.EXPLOSIVE ||
+                pPlayer.getOffhandItem().getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() && target == Target.MONSTER && damageMode == TrackingSnowballMode.NO_DAMAGE ||
+                pPlayer.getOffhandItem().getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get() && target == Target.MONSTER && damageMode == TrackingSnowballMode.HAVE_DAMAGE ||
+                pPlayer.getOffhandItem().getItem() == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() && target == Target.MONSTER && damageMode == TrackingSnowballMode.EXPLOSIVE)
                 && pPlayer.getOffhandItem().getDamageValue() != 0) {
             if (pPlayer.getOffhandItem().getDamageValue() >= pPlayer.getMainHandItem().getCount()) {
                 pPlayer.getOffhandItem().setDamageValue(pPlayer.getOffhandItem().getDamageValue() - pPlayer.getMainHandItem().getCount());
