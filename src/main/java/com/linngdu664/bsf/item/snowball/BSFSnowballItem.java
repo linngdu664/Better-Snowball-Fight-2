@@ -22,8 +22,6 @@ public class BSFSnowballItem extends Item {
                 bsfSnowballEntity.blazeDamage *= playerBadEffectRate;
                 bsfSnowballEntity.setting();
             }
-
-
         };
     }
 }

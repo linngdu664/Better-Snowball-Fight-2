@@ -1,9 +1,12 @@
 package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.SoundRegister;
-import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
+import com.linngdu664.bsf.entity.snowball.tracking_snowball.missiles_snowball.*;
 import com.linngdu664.bsf.item.setter.ItemRegister;
-import com.linngdu664.bsf.util.SnowballType;
+import com.linngdu664.bsf.util.LaunchFrom;
+import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,12 +31,26 @@ import java.util.List;
 
 public class SnowballMachineGunItem extends Item {
     private static int timer;
-    private static float j;
+    private static float recoil;
 
     public SnowballMachineGunItem() {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(1).durability(512));
     }
 
+    public LaunchFunc getLaunchFunc(){
+        return new LaunchFunc() {
+            @Override
+            public LaunchFrom getLaunchForm() {
+                return LaunchFrom.MACHINE_GUN;
+            }
+
+            @Override
+            public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
+                bsfSnowballEntity.punch = 1.2;
+                bsfSnowballEntity.setting();
+            }
+        };
+    }
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         timer = 0;
@@ -51,46 +68,47 @@ public class SnowballMachineGunItem extends Item {
         if (timer % 3 == 0) {
             ItemStack itemStack = BSFUtil.findAmmo(player, true);
             if (itemStack != null) {
-                AdvancedSnowballEntity snowballEntity;
-                if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
-                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.COMPACTED);
-                    snowballEntity.setItem(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get()));
-                    j = 0.075F;
-                } else if (itemStack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {
-                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.STONE, 3.0F, 4.0F);
-                    snowballEntity.setItem(new ItemStack(ItemRegister.STONE_SNOWBALL.get()));
-                    j = 0.1F;
-                } else if (itemStack.getItem() == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()) {
-                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.GLASS, 4.0F, 5.0F);
-                    snowballEntity.setItem(new ItemStack(ItemRegister.GLASS_SNOWBALL.get()));
-                    j = 0.1F;
-                } else if (itemStack.getItem() == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()) {
-                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.IRON, 5.0F, 7.0F);
-                    snowballEntity.setItem(new ItemStack(ItemRegister.IRON_SNOWBALL.get()));
-                    j = 0.12F;
-                } else if (itemStack.getItem() == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()) {
-                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.ICE, 4.0F, 6.0F);
-                    snowballEntity.frozenTicks = 60;
-                    snowballEntity.setItem(new ItemStack(ItemRegister.ICE_SNOWBALL.get()));
-                    j = 0.1F;
-                } else if (itemStack.getItem() == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()) {
-                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.GOLD, 6.0F, 7.0F);
-                    snowballEntity.setItem(new ItemStack(ItemRegister.GOLD_SNOWBALL.get()));
-                    j = 0.14F;
-                } else if (itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
-                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.OBSIDIAN, 7.0F, 8.0F);
-                    snowballEntity.setItem(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get()));
-                    j = 0.17F;
-                } else if (itemStack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()) {
-                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.EXPLOSIVE, 3.0F, 5.0F);
-                    snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get()));
-                    j = 0.12F;
-                } else {
-                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.SPECTRAL);
-                    snowballEntity.setItem(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get()));
-                    j = 0.075F;
-                }
-                snowballEntity.punch = 1.2;
+                BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player);
+
+//                if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
+//                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.COMPACTED);
+//                    snowballEntity.setItem(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get()));
+//                    j = 0.075F;
+//                } else if (itemStack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {
+//                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.STONE, 3.0F, 4.0F);
+//                    snowballEntity.setItem(new ItemStack(ItemRegister.STONE_SNOWBALL.get()));
+//                    j = 0.1F;
+//                } else if (itemStack.getItem() == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()) {
+//                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.GLASS, 4.0F, 5.0F);
+//                    snowballEntity.setItem(new ItemStack(ItemRegister.GLASS_SNOWBALL.get()));
+//                    j = 0.1F;
+//                } else if (itemStack.getItem() == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()) {
+//                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.IRON, 5.0F, 7.0F);
+//                    snowballEntity.setItem(new ItemStack(ItemRegister.IRON_SNOWBALL.get()));
+//                    j = 0.12F;
+//                } else if (itemStack.getItem() == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()) {
+//                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.ICE, 4.0F, 6.0F);
+//                    snowballEntity.frozenTicks = 60;
+//                    snowballEntity.setItem(new ItemStack(ItemRegister.ICE_SNOWBALL.get()));
+//                    j = 0.1F;
+//                } else if (itemStack.getItem() == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()) {
+//                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.GOLD, 6.0F, 7.0F);
+//                    snowballEntity.setItem(new ItemStack(ItemRegister.GOLD_SNOWBALL.get()));
+//                    j = 0.14F;
+//                } else if (itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
+//                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.OBSIDIAN, 7.0F, 8.0F);
+//                    snowballEntity.setItem(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get()));
+//                    j = 0.17F;
+//                } else if (itemStack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()) {
+//                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.EXPLOSIVE, 3.0F, 5.0F);
+//                    snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get()));
+//                    j = 0.12F;
+//                } else {
+//                    snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.SPECTRAL);
+//                    snowballEntity.setItem(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get()));
+//                    j = 0.075F;
+//                }
+
                 BSFUtil.shootFromRotation(snowballEntity,player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);
                 pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                 pLevel.addFreshEntity(snowballEntity);
@@ -120,13 +138,46 @@ public class SnowballMachineGunItem extends Item {
                     }
                 }
             } else {
-                j = 0;
+                recoil = 0;
             }
         }
         if (pitch > -90.0F) {
-            player.setXRot(pitch - j);
+            player.setXRot(pitch - recoil);
         }
         timer++;
+    }
+
+    public BSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player){
+        Item item=itemStack.getItem();
+        if(item==ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()){
+            recoil=0.075F;
+            return new CompactedSnowballEntity(player,level,getLaunchFunc());
+        }else if(item==ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()){
+            recoil=0.1F;
+            return new StoneSnowballEntity(player,level,getLaunchFunc());
+        }else if(item==ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()){
+            recoil=0.1F;
+            return new GlassSnowballEntity(player,level,getLaunchFunc());
+        }else if(item==ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()){
+            recoil=0.12F;
+            return new IronSnowballEntity(player,level,getLaunchFunc());
+        }else if(item==ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()){
+            recoil=0.1F;
+            return new IceSnowballEntity(player,level,getLaunchFunc());
+        }else if(item==ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()){
+            recoil=0.14F;
+            return new GoldSnowballEntity(player,level,getLaunchFunc());
+        }else if(item==ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()){
+            recoil=0.17F;
+            return new ObsidianSnowballEntity(player,level,getLaunchFunc());
+        }else if(item==ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()){
+            recoil=0.12F;
+            return new ExplosiveSnowballEntity(player,level,getLaunchFunc());
+        }else if(item==ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()){
+            recoil=0.075F;
+            return new SpectralSnowballEntity(player,level,getLaunchFunc());
+        }
+        return null;
     }
 
     @Override

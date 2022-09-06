@@ -57,9 +57,9 @@ public class ItemRegister {
     public static final RegistryObject<Item> POPSICLE = ITEMS.register("popsicle", PopsicleItem::new);
     public static final RegistryObject<Item> MILK_POPSICLE = ITEMS.register("milk_popsicle", MilkPopsicleItem::new);
 
-    public static final RegistryObject<Item> SNOWBALL_CANNON = ITEMS.register("snowball_cannon", () -> new SnowballCannonItem(0));
-    public static final RegistryObject<Item> POWERFUL_SNOWBALL_CANNON = ITEMS.register("powerful_snowball_cannon", () -> new SnowballCannonItem(2));
-    public static final RegistryObject<Item> FREEZING_SNOWBALL_CANNON = ITEMS.register("freezing_snowball_cannon", () -> new SnowballCannonItem(1));
+    public static final RegistryObject<Item> SNOWBALL_CANNON = ITEMS.register("snowball_cannon", SnowballCannonItem::new);
+    public static final RegistryObject<Item> POWERFUL_SNOWBALL_CANNON = ITEMS.register("powerful_snowball_cannon", SnowballCannonItem::new);
+    public static final RegistryObject<Item> FREEZING_SNOWBALL_CANNON = ITEMS.register("freezing_snowball_cannon", SnowballCannonItem::new);
     public static final RegistryObject<Item> SNOWBALL_MACHINE_GUN = ITEMS.register("snowball_machine_gun", SnowballMachineGunItem::new);
     public static final RegistryObject<Item> SNOWBALL_SHOTGUN = ITEMS.register("snowball_shotgun", SnowballShotgunItem::new);
 
