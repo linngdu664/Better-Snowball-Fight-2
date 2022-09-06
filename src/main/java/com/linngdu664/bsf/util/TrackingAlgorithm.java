@@ -15,10 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class TrackingAlgorithm {
-    public static Entity target = null;
-
     private static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
-        Entity entity1 = null;
         Level level = snowball.level;
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
         if (t == Projectile.class) {
@@ -26,28 +23,23 @@ public class TrackingAlgorithm {
         } else if (t == Player.class) {
             list.remove(snowball.getOwner());
         }
-        if (!list.isEmpty()) {
-            entity1 = list.get(0);
-            for (T entity : list) {
-                if (snowball.distanceToSqr(entity) < snowball.distanceToSqr(entity1)) {
-                    entity1 = entity;
-                }
+        if (list.isEmpty()) {
+            return null;
+        }
+        Entity entity1 = list.get(0);
+        for (T entity : list) {
+            if (snowball.distanceToSqr(entity) < snowball.distanceToSqr(entity1)) {
+                entity1 = entity;
             }
         }
-        if (entity1 != null) {
-            if (angleRestriction) {
-                double d1 = entity1.getX() - snowball.getX();
-                double d2 = entity1.getZ() - snowball.getZ();
-                double d3 = snowball.getDeltaMovement().x;
-                double d4 = snowball.getDeltaMovement().z;
-                if (BSFUtil.vec2AngleCos(d1, d2, d3, d4) > 0.5) {
-                    return entity1;
-                }
-            } else {
-                return entity1;
+        if (angleRestriction) {
+            Vec3 vec3 = new Vec3(entity1.getX() - snowball.getX(), entity1.getY() - snowball.getY(), entity1.getZ() - snowball.getZ());
+            Vec3 velocity = snowball.getDeltaMovement();
+            if (BSFUtil.vec3AngleCos(vec3, velocity) < 0.5 || BSFUtil.modSqr(vec3) > trackingRange * trackingRange) {
+                return null;
             }
         }
-        return null;
+        return entity1;
     }
 
     private static <T extends Entity> List<T> getTargetList(BSFSnowballEntity snowball, Class<T> t, double trackingRange) {
@@ -71,11 +63,9 @@ public class TrackingAlgorithm {
             if (list != null && !list.isEmpty()) {
                 for (T entity : list) {
                     if (angleRestriction) {
-                        double d1 = entity.getX() - snowball.getX();
-                        double d2 = entity.getZ() - snowball.getZ();
-                        double d3 = snowball.getDeltaMovement().x;
-                        double d4 = snowball.getDeltaMovement().z;
-                        if (BSFUtil.vec2AngleCos(d1, d2, d3, d4) < 0.5) {
+                        Vec3 vec3 = new Vec3(entity.getX() - snowball.getX(), entity.getY() - snowball.getY(), entity.getZ() - snowball.getZ());
+                        Vec3 velocity = snowball.getDeltaMovement();
+                        if (BSFUtil.vec3AngleCos(vec3, velocity) < 0.5 || BSFUtil.modSqr(vec3) > trackingRange * trackingRange) {
                             continue;
                         }
                     }
@@ -95,7 +85,7 @@ public class TrackingAlgorithm {
                 }
             }
         } else {
-            target = getTarget(snowball, targetClass, angleRestriction, trackingRange);
+            Entity target = getTarget(snowball, targetClass, angleRestriction, trackingRange);
             if (target != null) {
                 Vec3 rVec = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());
                 double r2 = rVec.x * rVec.x + rVec.y + rVec.y + rVec.z * rVec.z;
@@ -116,9 +106,9 @@ public class TrackingAlgorithm {
 
     public static <T extends Entity> void missilesTracking(MissileSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin) {
         Level level = snowball.level;
+        Entity target = getTarget(snowball, targetClass, angleRestriction, trackingRange);
         if (target == null || !target.isAlive()) {
             snowball.setNoGravity(false);
-            target = getTarget(snowball, targetClass, angleRestriction, trackingRange);
         } else if (!level.isClientSide) {
             snowball.setNoGravity(true);
             Vec3 delta = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());

@@ -1,10 +1,8 @@
 package com.linngdu664.bsf.entity.snowball.tracking_snowball;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.TrackingSnowballEntity;
 import com.linngdu664.bsf.util.BSFUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
-import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.util.TrackingAlgorithm;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -41,5 +39,15 @@ public class MissileSnowballEntity extends BSFSnowballEntity {
         }
         TrackingAlgorithm.missilesTracking(this, targetClass, range, true, maxTurningAngleCos, maxTurningAngleSin);
         timer++;
+    }
+
+    public MissileSnowballEntity setRange(double range) {
+        this.range = range;
+        return this;
+    }
+
+    public MissileSnowballEntity setTargetClass(Class<? extends Entity> targetClass) {
+        this.targetClass = targetClass;
+        return this;
     }
 }

@@ -1,24 +1,31 @@
 package com.linngdu664.bsf.entity.snowball.tracking_snowball.missiles_snowball;
 
 import com.linngdu664.bsf.entity.snowball.tracking_snowball.MissileSnowballEntity;
-import com.linngdu664.bsf.util.SnowballType;
+import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import org.jetbrains.annotations.NotNull;
 
 public class LightMonsterTrackingSnowballEntity extends MissileSnowballEntity {
-    public LightMonsterTrackingSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
-        super(level, livingEntity, type);
+    public LightMonsterTrackingSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
+        super(livingEntity, level);
+        this.setRange(20).setTargetClass(Monster.class);
+        this.setLaunchFrom(launchFunc.getLaunchForm());
+        launchFunc.launchProperties(this);
     }
 
-    public LightMonsterTrackingSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type, float damage, float blazeDamage) {
-        super(level, livingEntity, type, damage, blazeDamage);
+    @Override
+    protected void onHit(@NotNull HitResult pResult) {
+        super.onHit(pResult);
+        this.discard();
     }
 
-    public LightMonsterTrackingSnowballEntity(Level level, double x, double y, double z, SnowballType type) {
-        super(level, x, y, z, type);
-    }
-
-    public LightMonsterTrackingSnowballEntity(Level level, double x, double y, double z, SnowballType type, float damage, float blazeDamage) {
-        super(level, x, y, z, type, damage, blazeDamage);
+    @Override
+    protected @NotNull Item getDefaultItem() {
+        return ItemRegister.MONSTER_TRACKING_SNOWBALL.get();
     }
 }
