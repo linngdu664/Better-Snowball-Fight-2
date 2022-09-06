@@ -100,6 +100,7 @@ public class IceSkatesItem extends ArmorItem {
             }
         });
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("ice_skates.tooltip").withStyle(ChatFormatting.GRAY));

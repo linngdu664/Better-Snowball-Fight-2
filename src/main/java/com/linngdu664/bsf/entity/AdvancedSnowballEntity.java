@@ -33,7 +33,12 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public class AdvancedSnowballEntity extends ThrowableItemProjectile {
+public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
+    public SnowballType type;
+    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
+        super(EntityType.EGG, livingEntity, level);
+        this.type = type;
+    }/*
     public int weaknessTicks = 0;
     public int frozenTicks = 0;
     public double punch = 0.0;
@@ -53,11 +58,6 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     private boolean trackingMultipleTargets;
     private boolean selfAttraction;
     private boolean attraction;
-
-    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
-        super(EntityType.EGG, livingEntity, level);
-        this.type = type;
-    }
 
     public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type, float damage, float blazeDamage) {
         super(EntityType.EGG, livingEntity, level);
@@ -209,13 +209,13 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
             TrackingAlgorithm.missilesTracking(this, targetClass, trackingRange, angleRestriction, maxTurningAngleCos, maxTurningAngleSin);
         } else if (trackingMode == 2) {
             TrackingAlgorithm.gravityTracking(this, targetClass, trackingRange, GM, angleRestriction, trackingMultipleTargets, selfAttraction, attraction);
-        }
+        }*/
         /*
         switch (trackingMode) {
             case 1 -> missilesTracking(targetClass, trackingRange, angleRestriction);
             case 2 -> gravityTracking(targetClass, trackingRange, GM, angleRestriction, trackingMultipleTargets, selfAttraction, attraction);
-        }*/
-    }
+        }
+    }*/
 }
 /*
     private <T extends Entity> Entity getTarget(Class<T> t, boolean angleRestriction, double trackingRange) {
