@@ -2,7 +2,10 @@ package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.LaunchFrom;
+import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.ChatFormatting;
@@ -36,7 +39,20 @@ public class SnowballCannonItem extends BowItem {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(1).durability(256));
         this.coreType = type;
     }
+    public LaunchFunc getLaunchFunc(double damageDropRate){
+        return new LaunchFunc() {
+            @Override
+            public LaunchFrom getLaunchForm() {
+                return LaunchFrom.CANNON;
+            }
 
+            @Override
+            public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
+
+                bsfSnowballEntity.setting();
+            }
+        };
+    }
     @Override
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pEntityLiving, int pTimeLeft) {
         if (pEntityLiving instanceof Player player) {
@@ -47,6 +63,10 @@ public class SnowballCannonItem extends BowItem {
                 if (itemStack != null) {
                     boolean k = BSFUtil.isAmmoTank(itemStack, true);
                     AdvancedSnowballEntity snowballEntity;
+
+                    BSFSnowballEntity snowballEntity1;
+
+
                     if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
                         snowballEntity = new AdvancedSnowballEntity(pLevel, player, SnowballType.COMPACTED);
                         snowballEntity.setItem(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get()));

@@ -1,15 +1,18 @@
 package com.linngdu664.bsf.util;
 
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public class BSFUtil {
-    public static boolean isHeadingToSnowball(Player player, AdvancedSnowballEntity snowballEntity) {
+    public static boolean isHeadingToSnowball(Player player, BSFSnowballEntity snowballEntity) {
         float pitch = player.getXRot() * 0.01745329F;
         float yaw = player.getYRot() * 0.01745329F;
         Vec3 speedVec = snowballEntity.getDeltaMovement().normalize();

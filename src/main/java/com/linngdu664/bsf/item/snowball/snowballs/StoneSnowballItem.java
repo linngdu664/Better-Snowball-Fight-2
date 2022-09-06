@@ -1,7 +1,8 @@
-package com.linngdu664.bsf.item.snowball;
+package com.linngdu664.bsf.item.snowball.snowballs;
 
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.SnowballType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -27,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class StoneSnowballItem extends Item {
+public class StoneSnowballItem extends BSFSnowballItem {
     public StoneSnowballItem() {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {

@@ -4,6 +4,7 @@ import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.util.BSFUtil;
+import com.linngdu664.bsf.util.TrackingAlgorithm;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -100,7 +101,7 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         if (entityHitResult.getEntity() instanceof LivingEntity entity) {
             if (entity instanceof Player player && (player.getOffhandItem().is(ItemRegister.GLOVE.get()) &&
                     player.getUsedItemHand() == InteractionHand.OFF_HAND || player.getMainHandItem().is(ItemRegister.GLOVE.get()) &&
-                    player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && BSFUtil.isHeadingToSnowball(player, this)) {
+                    player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && BSFUtil.isHeadingToSnowball(player, null)) {
                 switch (type) {
                     case SMOOTH -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
                     case COMPACTED -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get(), 1), true);

@@ -1,7 +1,10 @@
-package com.linngdu664.bsf.item.snowball;
+package com.linngdu664.bsf.item.snowball.snowballs;
 
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.nomal_snowball.CompactedSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.SnowballType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -27,12 +30,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ExplosiveSnowballItem extends Item {
-    public ExplosiveSnowballItem() {
+public class CompactedSnowballItem extends BSFSnowballItem {
+    public CompactedSnowballItem() {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
-                return Util.make(new AdvancedSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z(), SnowballType.EXPLOSIVE, 3.0F, 5.0F), (p_123474_) -> p_123474_.setItem(p_123478_));
+                return Util.make(new AdvancedSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z(), SnowballType.COMPACTED), (p_123474_) -> {
+                    p_123474_.setItem(p_123478_);
+                    p_123474_.punch = 2.0;
+                });
             }
         });
     }
@@ -41,12 +47,12 @@ public class ExplosiveSnowballItem extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         if (pPlayer.getOffhandItem().getItem() == ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()) {
-            pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()));
+            pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()));
             pPlayer.getOffhandItem().setDamageValue(96 - pPlayer.getMainHandItem().getCount());
             if (!pPlayer.getAbilities().instabuild) {
                 itemStack.shrink(pPlayer.getMainHandItem().getCount());
             }
-        } else if (pPlayer.getOffhandItem().getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() && pPlayer.getOffhandItem().getDamageValue() != 0) {
+        } else if (pPlayer.getOffhandItem().getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() && pPlayer.getOffhandItem().getDamageValue() != 0) {
             if (pPlayer.getOffhandItem().getDamageValue() >= pPlayer.getMainHandItem().getCount()) {
                 pPlayer.getOffhandItem().setDamageValue(pPlayer.getOffhandItem().getDamageValue() - pPlayer.getMainHandItem().getCount());
                 if (!pPlayer.getAbilities().instabuild) {
@@ -62,9 +68,7 @@ public class ExplosiveSnowballItem extends Item {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
                 float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
-                AdvancedSnowballEntity snowballEntity = new AdvancedSnowballEntity(pLevel, pPlayer, SnowballType.EXPLOSIVE, 3.0F, 5.0F);
-                snowballEntity.setItem(itemStack);
-                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 0.9F * i, 1.0F);
+                BSFSnowballEntity snowballEntity = new CompactedSnowballEntity(pPlayer,pLevel,getLaunchFunc(i));
                 pLevel.addFreshEntity(snowballEntity);
             }
             if (!pPlayer.getAbilities().instabuild) {
@@ -77,6 +81,6 @@ public class ExplosiveSnowballItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(new TranslatableComponent("explosive_snowball.tooltip").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(new TranslatableComponent("compacted_snowball.tooltip").withStyle(ChatFormatting.GRAY));
     }
 }

@@ -1,5 +1,6 @@
-package com.linngdu664.bsf.entity;
+package com.linngdu664.bsf.util;
 
+import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

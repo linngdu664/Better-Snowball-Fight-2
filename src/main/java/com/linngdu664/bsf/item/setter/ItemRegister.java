@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item.setter;
 
 import com.linngdu664.bsf.item.misc.*;
-import com.linngdu664.bsf.item.snowball.*;
+import com.linngdu664.bsf.item.snowball.snowballs.*;
 import com.linngdu664.bsf.item.weapon.SnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.SnowballMachineGunItem;
 import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;

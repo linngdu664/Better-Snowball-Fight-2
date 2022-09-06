@@ -1,6 +1,7 @@
-package com.linngdu664.bsf.item.snowball;
+package com.linngdu664.bsf.item.snowball.snowballs;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.Target;
 import com.linngdu664.bsf.util.TrackingSnowballMode;
 import net.minecraft.stats.Stats;
@@ -12,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class TrackingSnowballItem extends Item {
+public class TrackingSnowballItem extends BSFSnowballItem {
     private final Target target;
     private final TrackingSnowballMode damageMode;
 

@@ -1,7 +1,8 @@
-package com.linngdu664.bsf.item.snowball;
+package com.linngdu664.bsf.item.snowball.snowballs;
 
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.SnowballType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class CompactedSnowballSetItem extends Item {
+public class CompactedSnowballSetItem extends BSFSnowballItem {
     public CompactedSnowballSetItem() {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
     }
