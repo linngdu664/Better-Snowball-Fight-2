@@ -57,7 +57,7 @@ public class TrackingAlgorithm {
     }
 
     //This is not used for tracking in fact, but it has some funny effects.
-    public static <T extends Entity> void gravityTracking(ForceSnowballEntity snowball, Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
+    public static <T extends Entity> void gravityTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
         if (trackingMultipleTargets) {
             List<T> list = getTargetList(snowball, targetClass, trackingRange);
             if (list != null && !list.isEmpty()) {
@@ -104,7 +104,7 @@ public class TrackingAlgorithm {
         }
     }
 
-    public static <T extends Entity> void missilesTracking(MissileSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin) {
+    public static <T extends Entity> void missilesTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin) {
         Level level = snowball.level;
         Entity target = getTarget(snowball, targetClass, angleRestriction, trackingRange);
         if (target == null || !target.isAlive()) {

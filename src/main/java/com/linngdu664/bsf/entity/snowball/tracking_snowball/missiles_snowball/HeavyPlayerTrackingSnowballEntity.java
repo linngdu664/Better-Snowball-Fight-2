@@ -20,7 +20,9 @@ public class HeavyPlayerTrackingSnowballEntity extends MissileSnowballEntity {
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
-        this.discard();
+        if (!level.isClientSide) {
+            this.discard();
+        }
     }
 
     @Override

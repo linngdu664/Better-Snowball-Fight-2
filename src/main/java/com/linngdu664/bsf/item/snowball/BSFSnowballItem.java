@@ -20,7 +20,6 @@ public class BSFSnowballItem extends Item {
             public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.damage *= playerBadEffectRate;
                 bsfSnowballEntity.blazeDamage *= playerBadEffectRate;
-                bsfSnowballEntity.setting();
             }
         };
     }

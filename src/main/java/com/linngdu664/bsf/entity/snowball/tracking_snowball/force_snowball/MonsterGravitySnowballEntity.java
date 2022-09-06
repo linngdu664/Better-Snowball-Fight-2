@@ -21,7 +21,9 @@ public class MonsterGravitySnowballEntity extends ForceSnowballEntity {
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
-        this.discard();
+        if (!level.isClientSide) {
+            this.discard();
+        }
     }
 
     @Override
