@@ -24,7 +24,6 @@ public class FreezingSnowballCannonItem extends SnowballCannonItem{
                 }
                 bsfSnowballEntity.blazeDamage*=damageDropRate;
                 bsfSnowballEntity.punch = damageDropRate * 1.51F;
-                bsfSnowballEntity.setting();
             }
         };
     }

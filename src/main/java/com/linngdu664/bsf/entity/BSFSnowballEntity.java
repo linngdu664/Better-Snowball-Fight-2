@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,8 +20,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,10 +50,11 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
         this.setItem(new ItemStack(getDefaultItem()));
     }
 
-    /**
+    /*
      * Triggered when hit something
      * @param pResult HitResult
      */
+    /*
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         //hit particle
@@ -62,16 +62,20 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
         ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
         super.onHit(pResult);
     }
+*/
 
     /**
-     * Triggered when an entity is encountered
+     * Triggered when an entity hits an entity
+     *
      * @param pResult EntityHitResult
      */
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
-        if(pResult.getEntity() instanceof LivingEntity entity){
+        if (pResult.getEntity() instanceof LivingEntity entity) {
             //Handling the catch
-            if(catchOnGlove(entity)){return;}
+            if (catchOnGlove(entity)) {
+                return;
+            }
 
             //Damage entity
             float hurt = entity instanceof Blaze ? blazeDamage : damage;
@@ -80,7 +84,21 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
             //Push entity
             Vec3 vec3d = this.getDeltaMovement().multiply(0.1 * punch, 0.0, 0.1 * punch);
             entity.push(vec3d.x, 0.0, vec3d.z);
+            ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
+            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
         }
+    }
+
+    /**
+     * Triggered when an entity hits a block
+     *
+     * @param p_37258_ blockHitResult
+     */
+    @Override
+    protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
+        super.onHitBlock(p_37258_);
+        ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
+        ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
     }
 
     /**
@@ -94,21 +112,21 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     }
 
     /**
-     * You must override this fucking function!
+     * You must override this fucking method, or the texture of snowball entities will be vanilla snowball!
      * You need to write the entity's corresponding item in each subclass
+     *
      * @return Bound item
      */
     @Override
     protected @NotNull Item getDefaultItem() {
-        return null;
+        return Items.SNOWBALL;
     }
 
     /**
-     *
      * @param entity Target
      * @return If the glove catches return true
      */
-    protected boolean catchOnGlove(LivingEntity entity){
+    protected boolean catchOnGlove(LivingEntity entity) {
         if (entity instanceof Player player && (player.getOffhandItem().is(ItemRegister.GLOVE.get()) &&
                 player.getUsedItemHand() == InteractionHand.OFF_HAND || player.getMainHandItem().is(ItemRegister.GLOVE.get()) &&
                 player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && BSFUtil.isHeadingToSnowball(player, this)) {
@@ -124,14 +142,6 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
         }
         return false;
     }
-
-
-    /**
-     * This method is used for overriding, there is no need to write anything inside
-     */
-    public void setting() {/*The special properties of the snowball will be set here in subclass*/}
-
-
 
     //Setters with builder style
     //Like this:  snowballEntity.setPunch(2.0).setDamage(2.5f)

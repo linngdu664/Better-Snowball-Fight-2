@@ -8,6 +8,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +32,18 @@ public class ExplosiveSnowballEntity extends BSFSnowballEntity {
     }
 
     @Override
-    public void setting() {
+    protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
+        super.onHitBlock(p_37258_);
+        if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
+            level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
+        } else {
+            level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
+        }
+    }
+
+    @Override
+    protected void onHitEntity(EntityHitResult pResult) {
+        super.onHitEntity(pResult);
         if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
             level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
         } else {

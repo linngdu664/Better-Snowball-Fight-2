@@ -9,14 +9,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class ExplosivePlayerTrackingSnowballEntity extends MissileSnowballEntity {
     public ExplosivePlayerTrackingSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
-        this.setRange(20).setTargetClass(Player.class);
-        this.setDamage(3).setBlazeDamage(5).setLaunchFrom(launchFunc.getLaunchForm());
+        this.setRange(20).setTargetClass(Player.class).setDamage(3).setBlazeDamage(5).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
     }
 
@@ -32,7 +33,18 @@ public class ExplosivePlayerTrackingSnowballEntity extends MissileSnowballEntity
     }
 
     @Override
-    public void setting() {
+    protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
+        super.onHitBlock(p_37258_);
+        if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
+            level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
+        } else {
+            level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
+        }
+    }
+
+    @Override
+    protected void onHitEntity(EntityHitResult pResult) {
+        super.onHitEntity(pResult);
         if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
             level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
         } else {

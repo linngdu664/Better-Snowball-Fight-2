@@ -13,8 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class LightPlayerTrackingSnowballEntity extends MissileSnowballEntity {
     public LightPlayerTrackingSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
-        this.setRange(20).setTargetClass(Player.class);
-        this.setLaunchFrom(launchFunc.getLaunchForm());
+        this.setRange(20).setTargetClass(Player.class).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
     }
 

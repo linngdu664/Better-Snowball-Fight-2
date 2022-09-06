@@ -3,11 +3,10 @@ package com.linngdu664.bsf.item.weapon;
 import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
-import com.linngdu664.bsf.entity.snowball.tracking_snowball.missiles_snowball.*;
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.BSFUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
-import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -37,7 +36,7 @@ public class SnowballMachineGunItem extends Item {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(1).durability(512));
     }
 
-    public LaunchFunc getLaunchFunc(){
+    public LaunchFunc getLaunchFunc() {
         return new LaunchFunc() {
             @Override
             public LaunchFrom getLaunchForm() {
@@ -47,10 +46,10 @@ public class SnowballMachineGunItem extends Item {
             @Override
             public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.punch = 1.2;
-                bsfSnowballEntity.setting();
             }
         };
     }
+
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         timer = 0;
@@ -109,7 +108,7 @@ public class SnowballMachineGunItem extends Item {
 //                    j = 0.075F;
 //                }
 
-                BSFUtil.shootFromRotation(snowballEntity,player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);
+                BSFUtil.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);
                 pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                 pLevel.addFreshEntity(snowballEntity);
 
@@ -123,7 +122,7 @@ public class SnowballMachineGunItem extends Item {
                 //add particles
                 if (!pLevel.isClientSide()) {
                     ServerLevel serverLevel = (ServerLevel) pLevel;
-                    serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y , player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.08);
+                    serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.08);
                 }
 
                 if (!player.getAbilities().instabuild) {
@@ -147,35 +146,35 @@ public class SnowballMachineGunItem extends Item {
         timer++;
     }
 
-    public BSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player){
-        Item item=itemStack.getItem();
-        if(item==ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()){
-            recoil=0.075F;
-            return new CompactedSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()){
-            recoil=0.1F;
-            return new StoneSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()){
-            recoil=0.1F;
-            return new GlassSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()){
-            recoil=0.12F;
-            return new IronSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()){
-            recoil=0.1F;
-            return new IceSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()){
-            recoil=0.14F;
-            return new GoldSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()){
-            recoil=0.17F;
-            return new ObsidianSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()){
-            recoil=0.12F;
-            return new ExplosiveSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()){
-            recoil=0.075F;
-            return new SpectralSnowballEntity(player,level,getLaunchFunc());
+    public BSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player) {
+        Item item = itemStack.getItem();
+        if (item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
+            recoil = 0.075F;
+            return new CompactedSnowballEntity(player, level, getLaunchFunc());
+        } else if (item == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {
+            recoil = 0.1F;
+            return new StoneSnowballEntity(player, level, getLaunchFunc());
+        } else if (item == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()) {
+            recoil = 0.1F;
+            return new GlassSnowballEntity(player, level, getLaunchFunc());
+        } else if (item == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()) {
+            recoil = 0.12F;
+            return new IronSnowballEntity(player, level, getLaunchFunc());
+        } else if (item == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()) {
+            recoil = 0.1F;
+            return new IceSnowballEntity(player, level, getLaunchFunc());
+        } else if (item == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()) {
+            recoil = 0.14F;
+            return new GoldSnowballEntity(player, level, getLaunchFunc());
+        } else if (item == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
+            recoil = 0.17F;
+            return new ObsidianSnowballEntity(player, level, getLaunchFunc());
+        } else if (item == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()) {
+            recoil = 0.12F;
+            return new ExplosiveSnowballEntity(player, level, getLaunchFunc());
+        } else if (item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()) {
+            recoil = 0.075F;
+            return new SpectralSnowballEntity(player, level, getLaunchFunc());
         }
         return null;
     }

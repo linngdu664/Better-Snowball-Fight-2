@@ -16,7 +16,6 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem{
             @Override
             public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.punch = damageDropRate * 2.5F;
-                bsfSnowballEntity.setting();
             }
         };
     }

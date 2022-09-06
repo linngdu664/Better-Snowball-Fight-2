@@ -41,7 +41,6 @@ public class SnowballShotgunItem extends Item {
             @Override
             public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.punch = 1.51F;
-                bsfSnowballEntity.setting();
             }
         };
     }
