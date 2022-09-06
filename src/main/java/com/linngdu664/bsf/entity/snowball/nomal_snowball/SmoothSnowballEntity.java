@@ -16,6 +16,11 @@ public class SmoothSnowballEntity extends BSFSnowballEntity {
         launchFunc.launchProperties(this);
     }
 
+    //This is only used for dispenser
+    public SmoothSnowballEntity(Level level, double x, double y, double z) {
+        super(level, x, y, z);
+    }
+
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);

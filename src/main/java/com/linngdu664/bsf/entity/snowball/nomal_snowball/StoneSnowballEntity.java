@@ -16,6 +16,12 @@ public class StoneSnowballEntity extends BSFSnowballEntity {
         launchFunc.launchProperties(this);
     }
 
+    //This is only used for dispenser
+    public StoneSnowballEntity(Level level, double x, double y, double z) {
+        super(level, x, y, z);
+        this.setDamage(2).setBlazeDamage(4);
+    }
+
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);

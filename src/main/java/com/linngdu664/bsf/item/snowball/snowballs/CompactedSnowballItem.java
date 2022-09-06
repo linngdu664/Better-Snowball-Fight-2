@@ -35,10 +35,7 @@ public class CompactedSnowballItem extends BSFSnowballItem {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
-                return Util.make(new AdvancedSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z(), SnowballType.COMPACTED), (p_123474_) -> {
-                    p_123474_.setItem(p_123478_);
-                    p_123474_.punch = 2.0;
-                });
+                return Util.make(new CompactedSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {});
             }
         });
     }
@@ -68,7 +65,8 @@ public class CompactedSnowballItem extends BSFSnowballItem {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
                 float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
-                BSFSnowballEntity snowballEntity = new CompactedSnowballEntity(pPlayer,pLevel,getLaunchFunc(i));
+                BSFSnowballEntity snowballEntity = new CompactedSnowballEntity(pPlayer,pLevel,getLaunchFunc(1));
+                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F * i, 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }
             if (!pPlayer.getAbilities().instabuild) {

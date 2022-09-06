@@ -16,6 +16,12 @@ public class GoldSnowballEntity extends BSFSnowballEntity {
         launchFunc.launchProperties(this);
     }
 
+    //This is only used for dispenser
+    public GoldSnowballEntity(Level level, double x, double y, double z) {
+        super(level, x, y, z);
+        this.setDamage(5).setBlazeDamage(7);
+    }
+
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);

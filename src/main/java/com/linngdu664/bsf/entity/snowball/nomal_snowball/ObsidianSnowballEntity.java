@@ -16,6 +16,12 @@ public class ObsidianSnowballEntity extends BSFSnowballEntity {
         launchFunc.launchProperties(this);
     }
 
+    //This is only used for dispenser
+    public ObsidianSnowballEntity(Level level, double x, double y, double z) {
+        super(level, x, y, z);
+        this.setDamage(6).setBlazeDamage(8);
+    }
+
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);

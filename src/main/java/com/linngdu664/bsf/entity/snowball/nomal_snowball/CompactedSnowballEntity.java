@@ -10,11 +10,16 @@ import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class CompactedSnowballEntity extends BSFSnowballEntity {
-
     public CompactedSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
         this.setPunch(2.0).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
+    }
+
+    //This is only used for dispenser
+    public CompactedSnowballEntity(Level level, double x, double y, double z) {
+        super(level, x, y, z);
+        this.setPunch(2.0);
     }
 
     @Override

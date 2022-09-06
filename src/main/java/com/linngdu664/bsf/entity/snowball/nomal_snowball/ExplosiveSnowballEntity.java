@@ -20,6 +20,12 @@ public class ExplosiveSnowballEntity extends BSFSnowballEntity {
         launchFunc.launchProperties(this);
     }
 
+    //This is only used for dispenser
+    public ExplosiveSnowballEntity(Level level, double x, double y, double z) {
+        super(level, x, y, z);
+        this.setDamage(3).setBlazeDamage(5);
+    }
+
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);

@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.item.snowball.snowballs;
 
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.nomal_snowball.GlassSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.SnowballType;
@@ -33,7 +34,7 @@ public class GlassSnowballItem extends BSFSnowballItem {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
-                return Util.make(new AdvancedSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z(), SnowballType.GLASS, 3.0F, 5.0F), (p_123474_) -> p_123474_.setItem(p_123478_));
+                return Util.make(new GlassSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {});
             }
         });
     }
@@ -64,8 +65,7 @@ public class GlassSnowballItem extends BSFSnowballItem {
             if (!pLevel.isClientSide) {
                 float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
                 float j = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.5F : 1.0F;
-                AdvancedSnowballEntity snowballEntity = new AdvancedSnowballEntity(pLevel, pPlayer, SnowballType.GLASS, 3.0F * j, 5.0F * j);
-                snowballEntity.setItem(itemStack);
+                GlassSnowballEntity snowballEntity = new GlassSnowballEntity(pPlayer, pLevel, getLaunchFunc(j));
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.125F * i, 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }

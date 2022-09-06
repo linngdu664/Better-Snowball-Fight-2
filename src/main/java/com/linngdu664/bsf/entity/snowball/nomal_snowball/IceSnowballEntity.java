@@ -16,6 +16,12 @@ public class IceSnowballEntity extends BSFSnowballEntity {
         launchFunc.launchProperties(this);
     }
 
+    //This is only used for dispenser
+    public IceSnowballEntity(Level level, double x, double y, double z) {
+        super(level, x, y, z);
+        this.setDamage(3).setBlazeDamage(6).setFrozenTime(60);
+    }
+
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);

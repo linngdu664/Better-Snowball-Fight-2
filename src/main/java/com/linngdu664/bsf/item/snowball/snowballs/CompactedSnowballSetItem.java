@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.item.snowball.snowballs;
 
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.nomal_snowball.CompactedSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.SnowballType;
@@ -34,12 +35,9 @@ public class CompactedSnowballSetItem extends BSFSnowballItem {
         pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!pLevel.isClientSide) {
             float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
-            AdvancedSnowballEntity snowballEntity1 = new AdvancedSnowballEntity(pLevel, pPlayer, SnowballType.COMPACTED);
-            AdvancedSnowballEntity snowballEntity2 = new AdvancedSnowballEntity(pLevel, pPlayer, SnowballType.COMPACTED);
-            AdvancedSnowballEntity snowballEntity3 = new AdvancedSnowballEntity(pLevel, pPlayer, SnowballType.COMPACTED);
-            snowballEntity1.setItem(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get()));
-            snowballEntity2.setItem(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get()));
-            snowballEntity3.setItem(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get()));
+            CompactedSnowballEntity snowballEntity1 = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));
+            CompactedSnowballEntity snowballEntity2 = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));
+            CompactedSnowballEntity snowballEntity3 = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));
             snowballEntity1.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, i, 10.0F);
             snowballEntity2.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, i, 10.0F);
             snowballEntity3.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, i, 10.0F);
