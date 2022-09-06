@@ -3,7 +3,6 @@ package com.linngdu664.bsf.entity.snowball.tracking_snowball.force_snowball;
 import com.linngdu664.bsf.entity.snowball.tracking_snowball.ForceSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
-import com.linngdu664.bsf.util.SnowballType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.Item;
@@ -28,6 +27,6 @@ public class MonsterRepulsionSnowballEntity extends ForceSnowballEntity {
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return ItemRegister.REPULSION_SNOWBALL_TO_MONSTER.get();
+        return ItemRegister.MONSTER_REPULSION_SNOWBALL.get();
     }
 }

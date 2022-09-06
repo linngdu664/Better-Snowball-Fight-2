@@ -27,6 +27,6 @@ public class HeavyPlayerTrackingSnowballEntity extends MissileSnowballEntity {
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get();
+        return ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get();
     }
 }

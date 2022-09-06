@@ -1,14 +1,12 @@
 package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.SoundRegister;
-import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
 import com.linngdu664.bsf.entity.snowball.tracking_snowball.missiles_snowball.*;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
-import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -17,7 +15,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -324,19 +321,19 @@ public class SnowballShotgunItem extends Item {
         }else if(item==ItemRegister.SPECTRAL_SNOWBALL.get()||item==ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()){
             pushRank += 0.10;
             return new SpectralSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.MONSTER_TRACKING_SNOWBALL.get()||item==ItemRegister.MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()){
+        }else if(item==ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get()||item==ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()){
             pushRank += 0.18;
             return new LightMonsterTrackingSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get()||item==ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get()){
+        }else if(item==ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get()||item==ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()){
             pushRank += 0.18;
             return new HeavyMonsterTrackingSnowballEntity(player,level,getLaunchFunc());
         }else if(item==ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()||item==ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()){
             pushRank += 0.42;
             return new ExplosiveMonsterTrackingSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.PLAYER_TRACKING_SNOWBALL.get()||item==ItemRegister.PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()){
+        }else if(item==ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get()||item==ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()){
             pushRank += 0.18;
             return new LightPlayerTrackingSnowballEntity(player,level,getLaunchFunc());
-        }else if(item==ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get()||item==ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get()){
+        }else if(item==ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get()||item==ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()){
             pushRank += 0.18;
             return new HeavyPlayerTrackingSnowballEntity(player,level,getLaunchFunc());
         }else if(item==ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()||item==ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()){

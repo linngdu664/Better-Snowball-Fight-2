@@ -27,6 +27,6 @@ public class HeavyMonsterTrackingSnowballEntity extends MissileSnowballEntity {
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get();
+        return ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get();
     }
 }

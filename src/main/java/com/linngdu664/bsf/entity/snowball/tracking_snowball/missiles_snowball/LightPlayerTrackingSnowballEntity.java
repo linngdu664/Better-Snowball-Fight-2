@@ -27,6 +27,6 @@ public class LightPlayerTrackingSnowballEntity extends MissileSnowballEntity {
 
     @Override
     protected @NotNull Item getDefaultItem() {
-        return ItemRegister.PLAYER_TRACKING_SNOWBALL.get();
+        return ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get();
     }
 }

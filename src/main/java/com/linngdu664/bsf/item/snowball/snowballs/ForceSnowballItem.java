@@ -13,7 +13,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -36,15 +35,15 @@ public class ForceSnowballItem extends BSFSnowballItem {
         if (pPlayer.getOffhandItem().getItem() == ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()) {
             if (target == Target.MONSTER) {
                 if (mode == TrackingSnowballMode.GRAVITY) {
-                    pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.GRAVITY_SNOWBALL_TO_MONSTER.get()));
+                    pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.MONSTER_GRAVITY_SNOWBALL.get()));
                 } else if (mode == TrackingSnowballMode.REPULSION) {
-                    pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.REPULSION_SNOWBALL_TO_MONSTER.get()));
+                    pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.MONSTER_REPULSION_SNOWBALL.get()));
                 }
             } else if (target == Target.PROJECTILE) {
                 if (mode == TrackingSnowballMode.GRAVITY) {
-                    pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.GRAVITY_SNOWBALL_TO_PROJECTILE.get()));
+                    pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.PROJECTILE_GRAVITY_SNOWBALL.get()));
                 } else if (mode == TrackingSnowballMode.REPULSION) {
-                    pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.REPULSION_SNOWBALL_TO_PROJECTILE.get()));
+                    pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.PROJECTILE_REPULSION_SNOWBALL.get()));
                 }
             } else if (target == Target.MIX) {
                 pPlayer.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(ItemRegister.BLACK_HOLE_SNOWBALL.get()));
@@ -55,10 +54,10 @@ public class ForceSnowballItem extends BSFSnowballItem {
             }
         }
         //Putting snowballs into corresponding storage tanks
-        else if ((pPlayer.getOffhandItem().getItem() == ItemRegister.GRAVITY_SNOWBALL_TO_MONSTER_STORAGE_TANK.get() && target == Target.MONSTER && mode == TrackingSnowballMode.GRAVITY ||
-                pPlayer.getOffhandItem().getItem() == ItemRegister.REPULSION_SNOWBALL_TO_MONSTER_STORAGE_TANK.get() && target == Target.MONSTER && mode == TrackingSnowballMode.REPULSION ||
-                pPlayer.getOffhandItem().getItem() == ItemRegister.GRAVITY_SNOWBALL_TO_PROJECTILE_STORAGE_TANK.get() && target == Target.PROJECTILE && mode == TrackingSnowballMode.GRAVITY ||
-                pPlayer.getOffhandItem().getItem() == ItemRegister.REPULSION_SNOWBALL_TO_PROJECTILE_STORAGE_TANK.get() && target == Target.PROJECTILE && mode == TrackingSnowballMode.REPULSION ||
+        else if ((pPlayer.getOffhandItem().getItem() == ItemRegister.MONSTER_GRAVITY_SNOWBALL_STORAGE_TANK.get() && target == Target.MONSTER && mode == TrackingSnowballMode.GRAVITY ||
+                pPlayer.getOffhandItem().getItem() == ItemRegister.MONSTER_REPULSION_SNOWBALL_STORAGE_TANK.get() && target == Target.MONSTER && mode == TrackingSnowballMode.REPULSION ||
+                pPlayer.getOffhandItem().getItem() == ItemRegister.PROJECTILE_GRAVITY_SNOWBALL_STORAGE_TANK.get() && target == Target.PROJECTILE && mode == TrackingSnowballMode.GRAVITY ||
+                pPlayer.getOffhandItem().getItem() == ItemRegister.PROJECTILE_REPULSION_SNOWBALL_STORAGE_TANK.get() && target == Target.PROJECTILE && mode == TrackingSnowballMode.REPULSION ||
                 pPlayer.getOffhandItem().getItem() == ItemRegister.BLACK_HOLE_SNOWBALL_STORAGE_TANK.get() && target == Target.MIX && mode == TrackingSnowballMode.BLACK_HOLE)
                 && pPlayer.getOffhandItem().getDamageValue() != 0) {
             if (pPlayer.getOffhandItem().getDamageValue() >= pPlayer.getMainHandItem().getCount()) {

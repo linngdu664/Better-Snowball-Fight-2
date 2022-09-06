@@ -113,11 +113,11 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
                     case EXPLOSIVE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get(), 1), true);
                     case ICE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.ICE_SNOWBALL.get(), 1), true);
                     case SPECTRAL -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get(), 1), true);
-                    case TRACKING_MONSTER -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL.get(), 1), true);
-                    case TRACKING_MONSTER_DAMAGE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get(), 1), true);
+                    case TRACKING_MONSTER -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get(), 1), true);
+                    case TRACKING_MONSTER_DAMAGE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get(), 1), true);
                     case TRACKING_MONSTER_EXPLOSIVE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get(), 1), true);
-                    case TRACKING_PLAYER -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL.get(), 1), true);
-                    case TRACKING_PLAYER_DAMAGE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get(), 1), true);
+                    case TRACKING_PLAYER -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get(), 1), true);
+                    case TRACKING_PLAYER_DAMAGE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get(), 1), true);
                     case TRACKING_PLAYER_EXPLOSIVE -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get(), 1), true);
                 }
                 if (player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {

@@ -41,11 +41,11 @@ public class SnowballStorageTankItem extends Item {
                     case OBSIDIAN -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                     case EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                     case SPECTRAL -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
-                    case TRACKING_MONSTER -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
-                    case TRACKING_MONSTER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get(), 96 - itemStack.getDamageValue()), true);
+                    case TRACKING_MONSTER -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
+                    case TRACKING_MONSTER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                     case TRACKING_MONSTER_EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
-                    case TRACKING_PLAYER -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
-                    case TRACKING_PLAYER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get(), 96 - itemStack.getDamageValue()), true);
+                    case TRACKING_PLAYER -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
+                    case TRACKING_PLAYER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                     case TRACKING_PLAYER_EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                 }
                 if (!pPlayer.getAbilities().instabuild) {
@@ -62,11 +62,11 @@ public class SnowballStorageTankItem extends Item {
                     case OBSIDIAN -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get(), 16), true);
                     case EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get(), 16), true);
                     case SPECTRAL -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get(), 16), true);
-                    case TRACKING_MONSTER -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL.get(), 16), true);
-                    case TRACKING_MONSTER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get(), 16), true);
+                    case TRACKING_MONSTER -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get(), 16), true);
+                    case TRACKING_MONSTER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get(), 16), true);
                     case TRACKING_MONSTER_EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get(), 16), true);
-                    case TRACKING_PLAYER -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL.get(), 16), true);
-                    case TRACKING_PLAYER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get(), 16), true);
+                    case TRACKING_PLAYER -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get(), 16), true);
+                    case TRACKING_PLAYER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get(), 16), true);
                     case TRACKING_PLAYER_EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get(), 16), true);
                 }
                 //todo: What the fuck? Check creative mode?
