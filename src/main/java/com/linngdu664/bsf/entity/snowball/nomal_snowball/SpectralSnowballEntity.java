@@ -2,6 +2,8 @@ package com.linngdu664.bsf.entity.snowball.nomal_snowball;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.util.LaunchFunc;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -31,5 +33,11 @@ public class SpectralSnowballEntity extends BSFSnowballEntity {
         if (entity instanceof LivingEntity livingEntity) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200, 0));
         }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
     }
 }

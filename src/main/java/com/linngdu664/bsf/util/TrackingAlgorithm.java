@@ -1,6 +1,9 @@
 package com.linngdu664.bsf.util;
 
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.tracking_snowball.ForceSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.tracking_snowball.MissileSnowballEntity;
 import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -14,7 +17,7 @@ import java.util.List;
 public class TrackingAlgorithm {
     public static Entity target = null;
 
-    private static <T extends Entity> Entity getTarget(AdvancedSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
+    private static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
         Entity entity1 = null;
         Level level = snowball.level;
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
@@ -47,7 +50,7 @@ public class TrackingAlgorithm {
         return null;
     }
 
-    private static <T extends Entity> List<T> getTargetList(AdvancedSnowballEntity snowball, Class<T> t, double trackingRange) {
+    private static <T extends Entity> List<T> getTargetList(BSFSnowballEntity snowball, Class<T> t, double trackingRange) {
         Level level = snowball.level;
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
         if (t == Projectile.class) {
@@ -62,7 +65,7 @@ public class TrackingAlgorithm {
     }
 
     //This is not used for tracking in fact, but it has some funny effects.
-    public static <T extends Entity> void gravityTracking(AdvancedSnowballEntity snowball, Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
+    public static <T extends Entity> void gravityTracking(ForceSnowballEntity snowball, Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
         if (trackingMultipleTargets) {
             List<T> list = getTargetList(snowball, targetClass, trackingRange);
             if (list != null && !list.isEmpty()) {
@@ -111,7 +114,7 @@ public class TrackingAlgorithm {
         }
     }
 
-    public static <T extends Entity> void missilesTracking(AdvancedSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin) {
+    public static <T extends Entity> void missilesTracking(MissileSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin) {
         Level level = snowball.level;
         if (target == null || !target.isAlive()) {
             snowball.setNoGravity(false);
