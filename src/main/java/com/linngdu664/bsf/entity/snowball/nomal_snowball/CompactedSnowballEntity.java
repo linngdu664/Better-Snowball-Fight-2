@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class CompactedSnowballEntity extends BSFSnowballEntity {
 
     public CompactedSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(livingEntity,level);
+        super(livingEntity, level);
         this.setPunch(2.0).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
     }

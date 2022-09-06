@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class StoneSnowballEntity extends BSFSnowballEntity {
     public StoneSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(livingEntity,level);
-        this.setPunch(2.0).setLaunchFrom(launchFunc.getLaunchForm());
+        super(livingEntity, level);
+        this.setPunch(2.0).setLaunchFrom(launchFunc.getLaunchForm()).setDamage(2).setBlazeDamage(4);
         launchFunc.launchProperties(this);
     }
 

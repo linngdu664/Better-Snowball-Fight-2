@@ -69,6 +69,7 @@ public class SnowballStorageTankItem extends Item {
                     case TRACKING_PLAYER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get(), 16), true);
                     case TRACKING_PLAYER_EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get(), 16), true);
                 }
+                //todo: What the fuck? Check creative mode?
                 itemStack.hurt(16, pLevel.getRandom(), null);
             }
             pPlayer.awardStat(Stats.ITEM_USED.get(this));

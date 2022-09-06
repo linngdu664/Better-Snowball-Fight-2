@@ -13,8 +13,8 @@ import net.minecraft.world.phys.Vec3;
 
 public class BSFUtil {
     public static boolean isHeadingToSnowball(Player player, BSFSnowballEntity snowballEntity) {
-        float pitch = player.getXRot() * 0.01745329F;
-        float yaw = player.getYRot() * 0.01745329F;
+        float pitch = player.getXRot() * Mth.DEG_TO_RAD;
+        float yaw = player.getYRot() * Mth.DEG_TO_RAD;
         Vec3 speedVec = snowballEntity.getDeltaMovement().normalize();
         Vec3 cameraVec = new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
         return Mth.abs((float) (cameraVec.dot(speedVec) + 1.0F)) < 0.2F;
@@ -60,7 +60,19 @@ public class BSFUtil {
 
     //Calculate the cosine of the angle between 2 2D vectors. High school math.
     public static double vec2AngleCos(double x1, double y1, double x2, double y2) {
-        return Mth.fastInvSqrt(x1 * x1 + y1 * y1) * Mth.fastInvSqrt(x2 * x2 + y2 * y2) * (x1 * x2 + y1 * y2);
+        return Mth.fastInvSqrt(modSqr(x1, y1)) * Mth.fastInvSqrt(modSqr(x2, y2)) * (x1 * x2 + y1 * y2);
+    }
+
+    public static double vec3AngleCos(Vec3 a, Vec3 b) {
+        return Mth.fastInvSqrt(modSqr(a)) * Mth.fastInvSqrt(modSqr(b)) * (a.x * b.x + a.y * b.y + a.z * b.z);
+    }
+
+    public static double modSqr(double x1, double y1) {
+        return x1 * x1 + y1 * y1;
+    }
+
+    public static double modSqr(Vec3 a) {
+        return a.x * a.x + a.y * a.y + a.z * a.z;
     }
 
     //Rewrite vanilla "shootFromRotation" method to remove the influence of player's velocity.

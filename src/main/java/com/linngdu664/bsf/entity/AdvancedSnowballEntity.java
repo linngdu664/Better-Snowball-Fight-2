@@ -164,6 +164,8 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
             } else {
                 level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
             }
+        } else if (type == SnowballType.BLACK_HOLE) {
+            this.discard();
         }
         ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
         ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
@@ -172,7 +174,7 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
-        if (!level.isClientSide) {
+        if (!level.isClientSide && type != SnowballType.BLACK_HOLE) {
             this.discard();
         }
     }
@@ -191,8 +193,11 @@ public class AdvancedSnowballEntity extends ThrowableItemProjectile {
         if (timer == 0) {
             Vec3 vec3 = this.getDeltaMovement();
             v0 = Math.sqrt(vec3.x * vec3.x + vec3.z * vec3.z + vec3.y * vec3.y);
-            maxTurningAngleCos = Mth.cos((float) (8 * v0 * Mth.DEG_TO_RAD));
-            maxTurningAngleSin = Mth.sin((float) (8 * v0 * Mth.DEG_TO_RAD));
+            maxTurningAngleCos = Mth.cos(7.1619724F * (float) v0 * Mth.DEG_TO_RAD);
+            maxTurningAngleSin = Mth.sin(7.1619724F * (float) v0 * Mth.DEG_TO_RAD);
+        }
+        if (timer == 100 && type == SnowballType.BLACK_HOLE) {
+            this.discard();
         }
         tracking();
         timer++;

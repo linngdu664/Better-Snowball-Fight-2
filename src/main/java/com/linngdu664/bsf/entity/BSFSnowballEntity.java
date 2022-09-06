@@ -32,6 +32,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     public float damage = Float.MIN_VALUE;
     public float blazeDamage = 3.0F;
     public LaunchFrom launchFrom;
+    public int frozenTime = 0;
     //You need to distinguish between LaunchFrom and LaunchFunc
     //LaunchFrom is an Enum, LaunchFunc is an Interface
 
@@ -150,6 +151,11 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
 
     public BSFSnowballEntity setLaunchFrom(LaunchFrom launchFrom) {
         this.launchFrom = launchFrom;
+        return this;
+    }
+
+    public BSFSnowballEntity setFrozenTime(int frozenTime) {
+        this.frozenTime = frozenTime;
         return this;
     }
 }
