@@ -1,6 +1,9 @@
 package com.linngdu664.bsf.item.snowball.snowballs;
 
 import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.tracking_snowball.ForceSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.tracking_snowball.force_snowball.*;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.SnowballType;
@@ -13,6 +16,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -72,23 +76,49 @@ public class ForceSnowballItem extends BSFSnowballItem {
                 pPlayer.getOffhandItem().setDamageValue(0);
             }
         }else {
-            //todo this facking shit unfinished
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
+                BSFSnowballEntity snowballEntity = null;
                 float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
-                float j = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.5F : 1.0F;
-                AdvancedSnowballEntity snowballEntity = new AdvancedSnowballEntity(pLevel, pPlayer, SnowballType.ICE, 3.0F * j, 6.0F * j);
-                snowballEntity.setItem(itemStack);
+                float playerBadEffectRate = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.5F : 1.0F;
+                if (target == Target.MONSTER) {
+                    if (mode == TrackingSnowballMode.GRAVITY) {
+                        snowballEntity = new MonsterGravitySnowballEntity(pPlayer, pLevel, getLaunchFunc(playerBadEffectRate));
+                    } else if (mode == TrackingSnowballMode.REPULSION) {
+                        snowballEntity = new MonsterRepulsionSnowballEntity(pPlayer, pLevel, getLaunchFunc(playerBadEffectRate));
+                    }
+                } else if (target == Target.PROJECTILE) {
+                    if (mode == TrackingSnowballMode.GRAVITY) {
+                        snowballEntity = new ProjectileGravitySnowballEntity(pPlayer, pLevel, getLaunchFunc(playerBadEffectRate));
+                    } else if (mode == TrackingSnowballMode.REPULSION) {
+                        snowballEntity = new ProjectileRepulsionSnowballEntity(pPlayer, pLevel, getLaunchFunc(playerBadEffectRate));
+                    }
+                } else if (target == Target.MIX) {
+                    snowballEntity = new BlackHoleSnowballEntity(pPlayer, pLevel, getLaunchFunc(playerBadEffectRate));
+                }
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.125F * i, 1.0F);
-                snowballEntity.frozenTicks = 60;
-
-
-
+                assert snowballEntity != null;
                 pLevel.addFreshEntity(snowballEntity);
             }
             if (!pPlayer.getAbilities().instabuild) {
                 itemStack.shrink(1);
             }
+
+//            if (!pLevel.isClientSide) {
+//                float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
+//                float j = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.5F : 1.0F;
+//                AdvancedSnowballEntity snowballEntity = new AdvancedSnowballEntity(pLevel, pPlayer, SnowballType.ICE, 3.0F * j, 6.0F * j);
+//                snowballEntity.setItem(itemStack);
+//                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.125F * i, 1.0F);
+//                snowballEntity.frozenTicks = 60;
+//
+//
+//
+//                pLevel.addFreshEntity(snowballEntity);
+//            }
+//            if (!pPlayer.getAbilities().instabuild) {
+//                itemStack.shrink(1);
+//            }
         }
 
 
