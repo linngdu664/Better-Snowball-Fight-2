@@ -56,7 +56,7 @@ public class SnowballCannonItem extends BowItem {
             if (f >= 0.1F) {
                 ItemStack itemStack = BSFUtil.findAmmo(player, false);
                 if (itemStack != null) {
-                    boolean k = BSFUtil.isAmmoTank(itemStack, true);
+                    boolean k = BSFUtil.isAmmoTank(itemStack.getItem(), true);
 
                     BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player, f);
 

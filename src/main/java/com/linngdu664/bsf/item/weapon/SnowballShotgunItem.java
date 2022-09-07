@@ -49,7 +49,7 @@ public class SnowballShotgunItem extends Item {
         for (i = 0; i < 4; i++) {
             ItemStack itemStack = BSFUtil.findAmmo(player, false);
             if (itemStack != null) {
-                boolean isAmmoTank = BSFUtil.isAmmoTank(itemStack, true);
+                boolean isAmmoTank = BSFUtil.isAmmoTank(itemStack.getItem(), true);
                 BSFSnowballEntity snowballEntity = itemToEntity(itemStack, level, player);
                 assert snowballEntity != null;
                 BSFUtil.shootFromRotation(snowballEntity,player.getXRot(), player.getYRot(), 0.0F, 2.0F, 10.0F);

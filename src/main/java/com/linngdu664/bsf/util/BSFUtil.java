@@ -5,6 +5,7 @@ import com.linngdu664.bsf.item.setter.ItemRegister;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
@@ -17,37 +18,58 @@ public class BSFUtil {
         return Mth.abs((float) (cameraVec.dot(speedVec) + 1.0F)) < 0.2F;
     }
 
-    public static boolean isAmmoTank(ItemStack stack, boolean allowTracking) {
-        return stack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() || (stack.getItem() == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() || stack.getItem() == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
-                stack.getItem() == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) && allowTracking;
+    public static boolean isAmmoTank(Item stack, boolean allowTracking) {
+        return stack == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || stack == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || stack == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || stack == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || stack == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() || (stack == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || stack == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() || stack == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) && allowTracking;
     }
 
-    public static boolean isAmmo(ItemStack stack) {
-        return stack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || stack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL.get() ||
-                stack.getItem() == ItemRegister.GLASS_SNOWBALL.get() || stack.getItem() == ItemRegister.GOLD_SNOWBALL.get() ||
-                stack.getItem() == ItemRegister.ICE_SNOWBALL.get() || stack.getItem() == ItemRegister.IRON_SNOWBALL.get() ||
-                stack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL.get() || stack.getItem() == ItemRegister.STONE_SNOWBALL.get() ||
-                stack.getItem() == ItemRegister.SPECTRAL_SNOWBALL.get() || stack.getItem() == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get() ||
-                stack.getItem() == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get() || stack.getItem() == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get() ||
-                stack.getItem() == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() || stack.getItem() == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() ||
-                stack.getItem() == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get();
+    public static boolean isAmmo(Item stack) {
+        return stack == ItemRegister.COMPACTED_SNOWBALL.get() || stack == ItemRegister.EXPLOSIVE_SNOWBALL.get() ||
+                stack == ItemRegister.GLASS_SNOWBALL.get() || stack == ItemRegister.GOLD_SNOWBALL.get() ||
+                stack == ItemRegister.ICE_SNOWBALL.get() || stack == ItemRegister.IRON_SNOWBALL.get() ||
+                stack == ItemRegister.OBSIDIAN_SNOWBALL.get() || stack == ItemRegister.STONE_SNOWBALL.get() ||
+                stack == ItemRegister.SPECTRAL_SNOWBALL.get() || stack == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get() ||
+                stack == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get() || stack == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get() ||
+                stack == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() || stack == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() ||
+                stack == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get();
     }
+    public static boolean isAmmoTank2(Item stack, boolean allowTracking) {
+        return stack == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || stack == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || stack == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || stack == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || stack == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get() ||
+                stack == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() && allowTracking;
+    }
+
+//    public static boolean isAmmo2(Item stack) {
+//        return stack == ItemRegister.COMPACTED_SNOWBALL.get() || stack == ItemRegister.EXPLOSIVE_SNOWBALL.get() ||
+//                stack == ItemRegister.GLASS_SNOWBALL.get() || stack == ItemRegister.GOLD_SNOWBALL.get() ||
+//                stack == ItemRegister.ICE_SNOWBALL.get() || stack == ItemRegister.IRON_SNOWBALL.get() ||
+//                stack == ItemRegister.OBSIDIAN_SNOWBALL.get() || stack == ItemRegister.STONE_SNOWBALL.get() ||
+//                stack == ItemRegister.SPECTRAL_SNOWBALL.get();
+//    }
 
     public static ItemStack findAmmo(Player player, boolean onlyTank) {
-        for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-            if (isAmmoTank(player.getInventory().getItem(j), !onlyTank)) {
-                return player.getInventory().getItem(j);
-            }
-        }
-        if (!onlyTank) {
+        if(onlyTank){
             for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-                if (isAmmo(player.getInventory().getItem(j))) {
+                if (isAmmoTank2(player.getInventory().getItem(j).getItem(), false)) {
+                    return player.getInventory().getItem(j);
+                }
+            }
+        }else{
+            for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
+                if (isAmmoTank(player.getInventory().getItem(j).getItem(), true)) {
+                    return player.getInventory().getItem(j);
+                }
+            }
+            for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
+                if (isAmmo(player.getInventory().getItem(j).getItem())) {
                     return player.getInventory().getItem(j);
                 }
             }
