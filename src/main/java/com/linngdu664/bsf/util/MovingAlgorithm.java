@@ -115,9 +115,9 @@ public class MovingAlgorithm {
 
     /**
      * This method uses the "inverse square-const-zero" model to simulate gravity/repulsion. If we only use inverse-square
-     * law, the dt(0.05s) is too long, resulting in huge velocity errors when the distance is short(acceleration is huge),
+     * law, the dt (0.05s) is too long, resulting in huge velocity errors when the distance is short (acceleration is huge),
      * so we limit the acceleration and even force it to be 0 when the distance is shorter than 0.5m to avoid abnormal
-     * movements or crashes.
+     * movements or game crashes.
      * @param snowball The snowball entity.
      * @param targetClass The class of specific targets.
      * @param range Only calculate the velocity of entities within the range.
