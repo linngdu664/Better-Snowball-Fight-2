@@ -122,7 +122,7 @@ public class SnowballMachineGunItem extends Item {
                 //add particles
                 if (!pLevel.isClientSide()) {
                     ServerLevel serverLevel = (ServerLevel) pLevel;
-                    serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.08);
+                    serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 4, 0, 0, 0, 0.32);
                 }
 
                 if (!player.getAbilities().instabuild) {

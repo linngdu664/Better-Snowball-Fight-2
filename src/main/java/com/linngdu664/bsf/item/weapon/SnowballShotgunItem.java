@@ -96,7 +96,7 @@ public class SnowballShotgunItem extends Item {
                 if (!level.isClientSide()) {
                     //add particles
                     ServerLevel serverLevel = (ServerLevel) level;
-                    serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y , player.getZ() + cameraVec.z, (int) (29 * pushRank + 9.04), 0, 0, 0, 0.16);
+                    serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y , player.getZ() + cameraVec.z, (int) (29 * pushRank + 9.04), 0, 0, 0, 0.32);
                 }
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SHOTGUN_FIRE_1.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             }
