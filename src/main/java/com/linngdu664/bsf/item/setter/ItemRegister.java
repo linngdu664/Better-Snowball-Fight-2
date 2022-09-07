@@ -4,9 +4,7 @@ import com.linngdu664.bsf.item.misc.*;
 import com.linngdu664.bsf.item.snowball.force_snowball.*;
 import com.linngdu664.bsf.item.snowball.normal_snowball.*;
 import com.linngdu664.bsf.item.snowball.tracking_snowball.*;
-import com.linngdu664.bsf.item.weapon.SnowballCannonItem;
-import com.linngdu664.bsf.item.weapon.SnowballMachineGunItem;
-import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;
+import com.linngdu664.bsf.item.weapon.*;
 import com.linngdu664.bsf.util.SnowballType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
@@ -58,8 +56,8 @@ public class ItemRegister {
     public static final RegistryObject<Item> MILK_POPSICLE = ITEMS.register("milk_popsicle", MilkPopsicleItem::new);
 
     public static final RegistryObject<Item> SNOWBALL_CANNON = ITEMS.register("snowball_cannon", SnowballCannonItem::new);
-    public static final RegistryObject<Item> POWERFUL_SNOWBALL_CANNON = ITEMS.register("powerful_snowball_cannon", SnowballCannonItem::new);
-    public static final RegistryObject<Item> FREEZING_SNOWBALL_CANNON = ITEMS.register("freezing_snowball_cannon", SnowballCannonItem::new);
+    public static final RegistryObject<Item> POWERFUL_SNOWBALL_CANNON = ITEMS.register("powerful_snowball_cannon", PowerfulSnowballCannonItem::new);
+    public static final RegistryObject<Item> FREEZING_SNOWBALL_CANNON = ITEMS.register("freezing_snowball_cannon", FreezingSnowballCannonItem::new);
     public static final RegistryObject<Item> SNOWBALL_MACHINE_GUN = ITEMS.register("snowball_machine_gun", SnowballMachineGunItem::new);
     public static final RegistryObject<Item> SNOWBALL_SHOTGUN = ITEMS.register("snowball_shotgun", SnowballShotgunItem::new);
 

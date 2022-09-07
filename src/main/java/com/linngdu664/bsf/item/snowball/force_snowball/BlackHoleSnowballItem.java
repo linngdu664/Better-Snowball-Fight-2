@@ -28,6 +28,9 @@ public class BlackHoleSnowballItem extends BSFSnowballItem {
             if (!pLevel.isClientSide) {
                 float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
                 BlackHoleSnowballEntity snowballEntity = new BlackHoleSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));
+                if(pPlayer.isShiftKeyDown()){
+                    snowballEntity.startTime=10;
+                }
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F * i, 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }
