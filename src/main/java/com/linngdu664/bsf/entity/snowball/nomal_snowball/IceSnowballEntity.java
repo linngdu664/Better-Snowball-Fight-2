@@ -4,6 +4,7 @@ import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
@@ -23,6 +24,11 @@ public class IceSnowballEntity extends BSFSnowballEntity {
         super(level, x, y, z);
         this.setDamage(3).setBlazeDamage(6).setFrozenTime(60);
         this.setItem(new ItemStack(ItemRegister.ICE_SNOWBALL.get()));
+    }
+
+    @Override
+    protected Item getRegisterItem() {
+        return ItemRegister.ICE_SNOWBALL.get();
     }
 
     @Override

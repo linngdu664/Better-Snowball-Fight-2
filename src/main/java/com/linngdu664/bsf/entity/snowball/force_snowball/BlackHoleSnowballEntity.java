@@ -10,6 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
@@ -29,6 +30,11 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.BLACK_HOLE_SNOWBALL.get()));
         this.setNoGravity(true);
+    }
+
+    @Override
+    protected Item getRegisterItem() {
+        return ItemRegister.BLACK_HOLE_SNOWBALL.get();
     }
 
     @Override

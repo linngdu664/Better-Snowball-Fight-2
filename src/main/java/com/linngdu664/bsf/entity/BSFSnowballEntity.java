@@ -140,6 +140,12 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     }
 
     /**
+     * You must touch this fucking method.
+     * @return Register corresponding item
+     */
+    protected Item getRegisterItem(){return null;}
+
+    /**
      * @param entity Target
      * @return If the glove catches return true
      */
@@ -147,7 +153,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
         if (entity instanceof Player player && (player.getOffhandItem().is(ItemRegister.GLOVE.get()) &&
                 player.getUsedItemHand() == InteractionHand.OFF_HAND || player.getMainHandItem().is(ItemRegister.GLOVE.get()) &&
                 player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && BSFUtil.isHeadingToSnowball(player, this)) {
-            player.getInventory().placeItemBackInInventory(new ItemStack(getDefaultItem()));
+            player.getInventory().placeItemBackInInventory(new ItemStack(getRegisterItem()));
             if (player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {
                 player.getMainHandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             } else if (player.getOffhandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {

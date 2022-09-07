@@ -4,6 +4,7 @@ import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
@@ -23,7 +24,11 @@ public class ObsidianSnowballEntity extends BSFSnowballEntity {
         super(level, x, y, z);
         this.setDamage(6).setBlazeDamage(8);
         this.setItem(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get()));
+    }
 
+    @Override
+    protected Item getRegisterItem() {
+        return ItemRegister.OBSIDIAN_SNOWBALL.get();
     }
 
     @Override

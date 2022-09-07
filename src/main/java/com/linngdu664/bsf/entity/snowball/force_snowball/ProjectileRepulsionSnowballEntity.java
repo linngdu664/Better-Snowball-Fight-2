@@ -5,6 +5,7 @@ import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
@@ -16,6 +17,11 @@ public class ProjectileRepulsionSnowballEntity extends ForceSnowballEntity {
         this.setRange(20).setTargetClass(Projectile.class).setGM(-0.5).setDamage(4).setBlazeDamage(6).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.PROJECTILE_REPULSION_SNOWBALL.get()));
+    }
+
+    @Override
+    protected Item getRegisterItem() {
+        return ItemRegister.PROJECTILE_REPULSION_SNOWBALL.get();
     }
 
     @Override

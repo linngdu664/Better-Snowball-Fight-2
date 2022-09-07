@@ -5,6 +5,7 @@ import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
@@ -20,6 +21,11 @@ public class ExplosiveMonsterTrackingSnowballEntity extends TrackingSnowballEnti
         this.setRange(20).setTargetClass(Monster.class).setDamage(3).setBlazeDamage(5).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()));
+    }
+
+    @Override
+    protected Item getRegisterItem() {
+        return ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get();
     }
 
     @Override
