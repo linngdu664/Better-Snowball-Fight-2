@@ -1,37 +1,10 @@
 package com.linngdu664.bsf.entity;
 
-import com.linngdu664.bsf.item.setter.ItemRegister;
-import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.SnowballType;
-import com.linngdu664.bsf.util.BSFUtil;
-import com.linngdu664.bsf.util.TrackingAlgorithm;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Blaze;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 
 public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public SnowballType type;
@@ -206,9 +179,9 @@ public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
 
     private void tracking() {
         if (trackingMode == 1 && timer > (int) (5 / v0)) {
-            TrackingAlgorithm.missilesTracking(this, targetClass, trackingRange, angleRestriction, maxTurningAngleCos, maxTurningAngleSin);
+            MovingAlgorithm.missilesTracking(this, targetClass, trackingRange, angleRestriction, maxTurningAngleCos, maxTurningAngleSin);
         } else if (trackingMode == 2) {
-            TrackingAlgorithm.gravityTracking(this, targetClass, trackingRange, GM, angleRestriction, trackingMultipleTargets, selfAttraction, attraction);
+            MovingAlgorithm.gravityTracking(this, targetClass, trackingRange, GM, angleRestriction, trackingMultipleTargets, selfAttraction, attraction);
         }*/
         /*
         switch (trackingMode) {

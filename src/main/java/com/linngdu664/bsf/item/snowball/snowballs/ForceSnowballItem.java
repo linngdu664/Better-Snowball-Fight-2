@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item.snowball.snowballs;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.tracking_snowball.force_snowball.*;
+import com.linngdu664.bsf.entity.snowball.force_snowball.*;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.Target;

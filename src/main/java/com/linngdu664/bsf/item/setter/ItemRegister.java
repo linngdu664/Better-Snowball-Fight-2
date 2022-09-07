@@ -1,13 +1,13 @@
 package com.linngdu664.bsf.item.setter;
 
 import com.linngdu664.bsf.item.misc.*;
-import com.linngdu664.bsf.item.snowball.snowballs.*;
+import com.linngdu664.bsf.item.snowball.force_snowball.*;
+import com.linngdu664.bsf.item.snowball.normal_snowball.*;
+import com.linngdu664.bsf.item.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.item.weapon.SnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.SnowballMachineGunItem;
 import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;
 import com.linngdu664.bsf.util.SnowballType;
-import com.linngdu664.bsf.util.Target;
-import com.linngdu664.bsf.util.TrackingSnowballMode;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.registries.DeferredRegister;
@@ -28,18 +28,18 @@ public class ItemRegister {
     public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL = ITEMS.register("explosive_snowball", ExplosiveSnowballItem::new);
     public static final RegistryObject<Item> SPECTRAL_SNOWBALL = ITEMS.register("spectral_snowball", SpectralSnowballItem::new);
 
-    public static final RegistryObject<Item> LIGHT_MONSTER_TRACKING_SNOWBALL = ITEMS.register("monster_tracking_snowball", () -> new TrackingSnowballItem(Target.MONSTER, TrackingSnowballMode.NO_DAMAGE));
-    public static final RegistryObject<Item> HEAVY_MONSTER_TRACKING_SNOWBALL = ITEMS.register("monster_tracking_snowball_with_damage", () -> new TrackingSnowballItem(Target.MONSTER, TrackingSnowballMode.HAVE_DAMAGE));
-    public static final RegistryObject<Item> EXPLOSIVE_MONSTER_TRACKING_SNOWBALL = ITEMS.register("explosive_monster_tracking_snowball", () -> new TrackingSnowballItem(Target.MONSTER, TrackingSnowballMode.EXPLOSIVE));
-    public static final RegistryObject<Item> LIGHT_PLAYER_TRACKING_SNOWBALL = ITEMS.register("player_tracking_snowball", () -> new TrackingSnowballItem(Target.PLAYER, TrackingSnowballMode.NO_DAMAGE));
-    public static final RegistryObject<Item> HEAVY_PLAYER_TRACKING_SNOWBALL = ITEMS.register("player_tracking_snowball_with_damage", () -> new TrackingSnowballItem(Target.PLAYER, TrackingSnowballMode.HAVE_DAMAGE));
-    public static final RegistryObject<Item> EXPLOSIVE_PLAYER_TRACKING_SNOWBALL = ITEMS.register("explosive_player_tracking_snowball", () -> new TrackingSnowballItem(Target.PLAYER, TrackingSnowballMode.EXPLOSIVE));
+    public static final RegistryObject<Item> LIGHT_MONSTER_TRACKING_SNOWBALL = ITEMS.register("monster_tracking_snowball", LightMonsterTrackingSnowballItem::new);
+    public static final RegistryObject<Item> HEAVY_MONSTER_TRACKING_SNOWBALL = ITEMS.register("monster_tracking_snowball_with_damage", HeavyMonsterTrackingSnowballItem::new);
+    public static final RegistryObject<Item> EXPLOSIVE_MONSTER_TRACKING_SNOWBALL = ITEMS.register("explosive_monster_tracking_snowball", ExplosiveMonsterTrackingSnowballItem::new);
+    public static final RegistryObject<Item> LIGHT_PLAYER_TRACKING_SNOWBALL = ITEMS.register("player_tracking_snowball", LightPlayerTrackingSnowballItem::new);
+    public static final RegistryObject<Item> HEAVY_PLAYER_TRACKING_SNOWBALL = ITEMS.register("player_tracking_snowball_with_damage", HeavyPlayerTrackingSnowballItem::new);
+    public static final RegistryObject<Item> EXPLOSIVE_PLAYER_TRACKING_SNOWBALL = ITEMS.register("explosive_player_tracking_snowball", ExplosivePlayerTrackingSnowballItem::new);
 
-    public static final RegistryObject<Item> MONSTER_GRAVITY_SNOWBALL = ITEMS.register("gravity_snowball_to_monster", () -> new ForceSnowballItem(Target.MONSTER, TrackingSnowballMode.GRAVITY));
-    public static final RegistryObject<Item> PROJECTILE_GRAVITY_SNOWBALL = ITEMS.register("gravity_snowball_to_projectile", () -> new ForceSnowballItem(Target.PROJECTILE, TrackingSnowballMode.GRAVITY));
-    public static final RegistryObject<Item> MONSTER_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_monster", () -> new ForceSnowballItem(Target.MONSTER, TrackingSnowballMode.REPULSION));
-    public static final RegistryObject<Item> PROJECTILE_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_projectile", () -> new ForceSnowballItem(Target.PROJECTILE, TrackingSnowballMode.REPULSION));
-    public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL = ITEMS.register("black_hole_snowball", () -> new ForceSnowballItem(Target.MIX, TrackingSnowballMode.BLACK_HOLE));
+    public static final RegistryObject<Item> MONSTER_GRAVITY_SNOWBALL = ITEMS.register("gravity_snowball_to_monster", MonsterGravitySnowballItem::new);
+    public static final RegistryObject<Item> PROJECTILE_GRAVITY_SNOWBALL = ITEMS.register("gravity_snowball_to_projectile", ProjectileGravitySnowballItem::new);
+    public static final RegistryObject<Item> MONSTER_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_monster", MonsterRepulsionSnowballItem::new);
+    public static final RegistryObject<Item> PROJECTILE_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_projectile", ProjectileRepulsionSnowballItem::new);
+    public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL = ITEMS.register("black_hole_snowball", BlackHoleSnowballItem::new);
 
     public static final RegistryObject<Item> COMPACTED_SNOWBALL_SET = ITEMS.register("compacted_snowball_set", CompactedSnowballSetItem::new);
     public static final RegistryObject<Item> WOOD_SNOWBALL_CLAMP = ITEMS.register("wood_snowball_clamp", () -> new SnowballClampItem(Tiers.WOOD));

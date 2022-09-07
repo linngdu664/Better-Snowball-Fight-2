@@ -2,8 +2,8 @@ package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
-import com.linngdu664.bsf.entity.snowball.tracking_snowball.missiles_snowball.*;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.BSFUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
@@ -54,7 +54,7 @@ public class SnowballCannonItem extends BowItem {
             int i = this.getUseDuration(pStack) - pTimeLeft;
             float f = getPowerForTime(i);
             if (f >= 0.1F) {
-                ItemStack itemStack = BSFUtil.findAmmo(player, false);
+                ItemStack itemStack = BSFUtil.findAmmo(player, false, true);
                 if (itemStack != null) {
                     boolean k = BSFUtil.isAmmoTank(itemStack.getItem(), true);
 
@@ -123,13 +123,13 @@ public class SnowballCannonItem extends BowItem {
         }
     }
 
-    //This horrible method is used to return the specific snowball entity according to item.
     /**
-     * @param itemStack the selected itemstack.
-     * @param level player's level
-     * @param player just player
-     * @param damageDropRate this param(0~1) is associate with the charge time of the snowball cannon. The damage will multiply this param.
-     * @return the
+     * This horrible method is used to return the specific snowball entity according to the item.
+     * @param itemStack The selected itemstack.
+     * @param level Player's level
+     * @param player Just player
+     * @param damageDropRate This param(0~1) is associate with the charge time of the snowball cannon. The damage value will multiply this param.
+     * @return The specific snowball entity with proper characters.
      */
     public BSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player, double damageDropRate) {
         Item item = itemStack.getItem();

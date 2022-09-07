@@ -65,7 +65,7 @@ public class SnowballMachineGunItem extends Item {
         float pitch = player.getXRot();
         float yaw = player.getYRot();
         if (timer % 3 == 0) {
-            ItemStack itemStack = BSFUtil.findAmmo(player, true);
+            ItemStack itemStack = BSFUtil.findAmmo(player, true, false);
             if (itemStack != null) {
                 BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player);
 

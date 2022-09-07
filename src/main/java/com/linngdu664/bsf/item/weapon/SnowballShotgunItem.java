@@ -2,8 +2,8 @@ package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
-import com.linngdu664.bsf.entity.snowball.tracking_snowball.missiles_snowball.*;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
@@ -47,7 +47,7 @@ public class SnowballShotgunItem extends Item {
         pushRank=0.24;
         int i;
         for (i = 0; i < 4; i++) {
-            ItemStack itemStack = BSFUtil.findAmmo(player, false);
+            ItemStack itemStack = BSFUtil.findAmmo(player, false, true);
             if (itemStack != null) {
                 boolean isAmmoTank = BSFUtil.isAmmoTank(itemStack.getItem(), true);
                 BSFSnowballEntity snowballEntity = itemToEntity(itemStack, level, player);

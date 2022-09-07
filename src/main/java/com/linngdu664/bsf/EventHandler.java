@@ -1,7 +1,7 @@
 package com.linngdu664.bsf;
 
 import com.linngdu664.bsf.item.misc.IceSkatesItem;
-import com.linngdu664.bsf.item.snowball.snowballs.SmoothSnowballItem;
+import com.linngdu664.bsf.item.snowball.normal_snowball.SmoothSnowballItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.BlockTags;

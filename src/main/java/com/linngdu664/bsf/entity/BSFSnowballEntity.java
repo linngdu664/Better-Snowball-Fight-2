@@ -10,6 +10,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -86,9 +88,20 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
             float hurt = entity instanceof Blaze ? blazeDamage : damage;
             entity.hurt(DamageSource.thrown(this, this.getOwner()), hurt);
 
+            //Handle frozen and weakness effects
+            if (frozenTime > 0) {
+                entity.setTicksFrozen(frozenTime);
+                entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1));
+            }
+            if (weaknessTime > 0) {
+                entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weaknessTime, 1));
+            }
+
             //Push entity
             Vec3 vec3d = this.getDeltaMovement().multiply(0.1 * punch, 0.0, 0.1 * punch);
             entity.push(vec3d.x, 0.0, vec3d.z);
+
+            //Spawn hit particles
             ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
         }
@@ -102,6 +115,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
+        //Spawn hit particles
         ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
         ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
     }
@@ -111,7 +125,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
      */
     @Override
     public void tick() {
-        //tracks particle
+        //Spawn trace particles
         ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         super.tick();
     }
