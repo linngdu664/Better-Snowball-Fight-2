@@ -14,6 +14,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
+import static com.linngdu664.bsf.util.BSFUtil.modSqr;
+
 public class TrackingAlgorithm {
     private static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
         Level level = snowball.level;
@@ -35,7 +37,7 @@ public class TrackingAlgorithm {
         if (angleRestriction) {
             Vec3 vec3 = new Vec3(entity1.getX() - snowball.getX(), entity1.getY() - snowball.getY(), entity1.getZ() - snowball.getZ());
             Vec3 velocity = snowball.getDeltaMovement();
-            if (BSFUtil.vec3AngleCos(vec3, velocity) < 0.5 || BSFUtil.modSqr(vec3) > trackingRange * trackingRange) {
+            if (BSFUtil.vec3AngleCos(vec3, velocity) < 0.5 || modSqr(vec3) > trackingRange * trackingRange) {
                 return null;
             }
         }
@@ -65,15 +67,20 @@ public class TrackingAlgorithm {
                     if (angleRestriction) {
                         Vec3 vec3 = new Vec3(entity.getX() - snowball.getX(), entity.getY() - snowball.getY(), entity.getZ() - snowball.getZ());
                         Vec3 velocity = snowball.getDeltaMovement();
-                        if (BSFUtil.vec3AngleCos(vec3, velocity) < 0.5 || BSFUtil.modSqr(vec3) > trackingRange * trackingRange) {
+                        if (BSFUtil.vec3AngleCos(vec3, velocity) < 0.5 || modSqr(vec3) > trackingRange * trackingRange) {
                             continue;
                         }
                     }
                     Vec3 rVec = new Vec3(entity.getX() - snowball.getX(), entity.getEyeY() - snowball.getY(), entity.getZ() - snowball.getZ());
                     double r2 = rVec.x * rVec.x + rVec.y + rVec.y + rVec.z * rVec.z;
-                    double ir2 = Mth.fastInvSqrt(r2);
-                    double a = GM / r2;
-                    Vec3 aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
+                    Vec3 aVec;
+                    if (r2 > 0.01) {
+                        double ir2 = Mth.fastInvSqrt(r2);
+                        double a = GM / r2;
+                        aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
+                    } else {
+                        aVec = Vec3.ZERO;
+                    }
                     if (selfAttraction) {
                         Vec3 vVec = snowball.getDeltaMovement();
                         snowball.lerpMotion(vVec.x + aVec.x, vVec.y + aVec.y, vVec.z + aVec.z);
@@ -89,9 +96,14 @@ public class TrackingAlgorithm {
             if (target != null) {
                 Vec3 rVec = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());
                 double r2 = rVec.x * rVec.x + rVec.y + rVec.y + rVec.z * rVec.z;
-                double ir2 = Mth.fastInvSqrt(r2);
-                double a = GM / r2;
-                Vec3 aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
+                Vec3 aVec;
+                if (r2 > 0.01) {
+                    double ir2 = Mth.fastInvSqrt(r2);
+                    double a = GM / r2;
+                    aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
+                } else {
+                    aVec = Vec3.ZERO;
+                }
                 if (selfAttraction) {
                     Vec3 vVec = snowball.getDeltaMovement();
                     snowball.lerpMotion(vVec.x + aVec.x, vVec.y + aVec.y, vVec.z + aVec.z);
@@ -107,12 +119,12 @@ public class TrackingAlgorithm {
     public static <T extends Entity> void missilesTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin) {
         Level level = snowball.level;
         Entity target = getTarget(snowball, targetClass, angleRestriction, trackingRange);
-        if (target == null || !target.isAlive()) {
+        Vec3 velocity = snowball.getDeltaMovement();
+        if (target == null || !target.isAlive() || modSqr(velocity) < 0.25) {
             snowball.setNoGravity(false);
         } else if (!level.isClientSide) {
             snowball.setNoGravity(true);
             Vec3 delta = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());
-            Vec3 velocity = snowball.getDeltaMovement();
             double cosTheta = BSFUtil.vec2AngleCos(delta.x, delta.z, velocity.x, velocity.z);
             double sinTheta;
             if (cosTheta < maxTurningAngleCos) {
