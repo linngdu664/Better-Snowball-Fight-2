@@ -1,9 +1,7 @@
 package com.linngdu664.bsf.entity.snowball;
 
-import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.util.LaunchFrom;
-import com.linngdu664.bsf.util.SnowballType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;

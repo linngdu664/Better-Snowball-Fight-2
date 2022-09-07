@@ -1,18 +1,15 @@
 package com.linngdu664.bsf.entity.snowball.tracking_snowball.force_snowball;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.tracking_snowball.ForceSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
-import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.util.TrackingAlgorithm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class BlackHoleSnowballEntity extends BSFSnowballEntity {
@@ -22,6 +19,8 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
         super(livingEntity, level);
         this.setDamage(4).setBlazeDamage(6).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
+        this.setItem(new ItemStack(ItemRegister.BLACK_HOLE_SNOWBALL.get()));
+        this.setNoGravity(true);
     }
 
     @Override
@@ -42,9 +41,9 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
         }
         timer++;
     }
-
+/*
     @Override
     protected @NotNull Item getDefaultItem() {
         return ItemRegister.BLACK_HOLE_SNOWBALL.get();
-    }
+    }*/
 }

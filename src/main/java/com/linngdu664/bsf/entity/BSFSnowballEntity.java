@@ -4,7 +4,6 @@ import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.BSFUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
-import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -39,12 +38,12 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
 
     public BSFSnowballEntity(LivingEntity livingEntity, Level level) {
         super(EntityType.EGG, livingEntity, level);
-        this.setItem(new ItemStack(getDefaultItem()));
+        //this.setItem(new ItemStack(getDefaultItem()));
     }
 
     public BSFSnowballEntity(Level level, double x, double y, double z) {
         super(EntityType.EGG, x, y, z, level);
-        this.setItem(new ItemStack(getDefaultItem()));
+        //this.setItem(new ItemStack(getDefaultItem()));
     }
 
     public BSFSnowballEntity(LivingEntity livingEntity, Level level, double punch, float damage, float blazeDamage, LaunchFrom launchFrom) {
@@ -53,7 +52,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
         this.damage = damage;
         this.blazeDamage = blazeDamage;
         this.launchFrom = launchFrom;
-        this.setItem(new ItemStack(getDefaultItem()));
+        //this.setItem(new ItemStack(getDefaultItem()));
     }
 
     /*
@@ -118,10 +117,8 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     }
 
     /**
-     * You must override this fucking method, or the texture of snowball entities will be vanilla snowball!
-     * You need to write the entity's corresponding item in each subclass
-     *
-     * @return Bound item
+     * You must not touch this fucking method.
+     * @return I don't understand.
      */
     @Override
     protected @NotNull Item getDefaultItem() {

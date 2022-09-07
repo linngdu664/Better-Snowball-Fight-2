@@ -4,7 +4,7 @@ import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -18,12 +18,16 @@ public class ExplosiveSnowballEntity extends BSFSnowballEntity {
         super(livingEntity, level);
         this.setLaunchFrom(launchFunc.getLaunchForm()).setDamage(3).setBlazeDamage(5);
         launchFunc.launchProperties(this);
+        this.setItem(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get()));
+
     }
 
     //This is only used for dispenser
     public ExplosiveSnowballEntity(Level level, double x, double y, double z) {
         super(level, x, y, z);
         this.setDamage(3).setBlazeDamage(5);
+        this.setItem(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get()));
+
     }
 
     @Override
@@ -33,12 +37,12 @@ public class ExplosiveSnowballEntity extends BSFSnowballEntity {
             this.discard();
         }
     }
-
+/*
     @Override
     protected @NotNull Item getDefaultItem() {
         return ItemRegister.EXPLOSIVE_SNOWBALL.get();
     }
-
+*/
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);

@@ -1,11 +1,8 @@
 package com.linngdu664.bsf.item.snowball.snowballs;
 
-import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.GoldSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.SpectralSnowballEntity;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
-import com.linngdu664.bsf.util.SnowballType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.Position;

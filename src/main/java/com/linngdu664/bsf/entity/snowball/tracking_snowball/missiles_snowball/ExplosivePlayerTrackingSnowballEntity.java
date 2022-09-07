@@ -5,7 +5,7 @@ import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -19,6 +19,7 @@ public class ExplosivePlayerTrackingSnowballEntity extends MissileSnowballEntity
         super(livingEntity, level);
         this.setRange(20).setTargetClass(Player.class).setDamage(3).setBlazeDamage(5).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
+        this.setItem(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()));
     }
 
     @Override
@@ -28,11 +29,11 @@ public class ExplosivePlayerTrackingSnowballEntity extends MissileSnowballEntity
             this.discard();
         }
     }
-
+/*
     @Override
     protected @NotNull Item getDefaultItem() {
         return ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get();
-    }
+    }*/
 
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {

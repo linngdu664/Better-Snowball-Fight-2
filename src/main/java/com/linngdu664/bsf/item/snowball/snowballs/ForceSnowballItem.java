@@ -1,12 +1,9 @@
 package com.linngdu664.bsf.item.snowball.snowballs;
 
-import com.linngdu664.bsf.entity.AdvancedSnowballEntity;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.tracking_snowball.ForceSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.tracking_snowball.force_snowball.*;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
-import com.linngdu664.bsf.util.SnowballType;
 import com.linngdu664.bsf.util.Target;
 import com.linngdu664.bsf.util.TrackingSnowballMode;
 import net.minecraft.sounds.SoundEvents;
@@ -16,7 +13,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -96,8 +92,8 @@ public class ForceSnowballItem extends BSFSnowballItem {
                 } else if (target == Target.MIX) {
                     snowballEntity = new BlackHoleSnowballEntity(pPlayer, pLevel, getLaunchFunc(playerBadEffectRate));
                 }
-                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.125F * i, 1.0F);
                 assert snowballEntity != null;
+                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.125F * i, 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }
             if (!pPlayer.getAbilities().instabuild) {
