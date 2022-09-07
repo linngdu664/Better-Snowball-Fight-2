@@ -114,15 +114,15 @@ public class MovingAlgorithm {
     }
 
     /**
-     * This may be the final version of our gravity/repulsion calculation, which uses an "inverse square-const-zero" model
-     * to simulate force. If we only use inverse-square law, the dt(0.05s) is too long, resulting in huge velocity error
-     * when the distance is short(acceleration is huge), so we limit the acceleration and even force it to be 0 when the
-     * distance is shorter than 0.5m to avoid abnormal movement or crashes.
+     * This method uses the "inverse square-const-zero" model to simulate gravity/repulsion. If we only use inverse-square
+     * law, the dt(0.05s) is too long, resulting in huge velocity errors when the distance is short(acceleration is huge),
+     * so we limit the acceleration and even force it to be 0 when the distance is shorter than 0.5m to avoid abnormal
+     * movements or crashes.
      * @param snowball The snowball entity.
      * @param targetClass The class of specific targets.
      * @param range Only calculate the velocity of entities within the range.
      * @param GM The magnitude of force has direct ratio with this param.
-     * @param boundaryR2 If the distance is smaller than this param, the force will be a const and will not follow an inverse-square law.
+     * @param boundaryR2 If the square of distance is smaller than this param, the force will be a const and will not follow an inverse-square law.
      * @param <T> Extends entity class
      */
     public static <T extends Entity> void forceEffect(BSFSnowballEntity snowball, Class<T> targetClass, double range, double GM, double boundaryR2) {
