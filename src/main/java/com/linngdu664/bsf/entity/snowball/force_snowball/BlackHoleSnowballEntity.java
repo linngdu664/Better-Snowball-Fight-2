@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -59,8 +60,7 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 200, 0, 0, 0, 0.32);
         }
         if (timer > startTime) {
-            MovingAlgorithm.gravityTracking(this, Entity.class, 30, 1, false, true, false, true);
-
+            MovingAlgorithm.forceEffect(this, Creeper.class, 20, 16, 16);
             ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.12);
         }
         if (timer == endTime && !level.isClientSide) {

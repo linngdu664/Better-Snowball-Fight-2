@@ -10,7 +10,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.modSqr;
+import static com.linngdu664.bsf.util.BSFUtil.*;
 
 public class MovingAlgorithm {
     private static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
@@ -45,7 +45,8 @@ public class MovingAlgorithm {
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
         if (list.contains(snowball)) {
             list.remove(snowball);
-        } else if (list.contains(snowball.getOwner())) {
+        }
+        if (list.contains(snowball.getOwner())) {
             list.remove(snowball.getOwner());
         }
         if (!list.isEmpty()) {
@@ -70,7 +71,7 @@ public class MovingAlgorithm {
                     Vec3 rVec = new Vec3(entity.getX() - snowball.getX(), entity.getEyeY() - snowball.getY(), entity.getZ() - snowball.getZ());
                     double r2 = rVec.x * rVec.x + rVec.y + rVec.y + rVec.z * rVec.z;
                     Vec3 aVec;
-                    if (r2 > 0.01) {
+                    if (r2 > 0.1) {
                         double ir2 = Mth.fastInvSqrt(r2);
                         double a = GM / r2;
                         aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
@@ -93,7 +94,7 @@ public class MovingAlgorithm {
                 Vec3 rVec = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());
                 double r2 = rVec.x * rVec.x + rVec.y + rVec.y + rVec.z * rVec.z;
                 Vec3 aVec;
-                if (r2 > 0.01) {
+                if (r2 > 0.1) {
                     double ir2 = Mth.fastInvSqrt(r2);
                     double a = GM / r2;
                     aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
@@ -108,6 +109,40 @@ public class MovingAlgorithm {
                     Vec3 vVec2 = target.getDeltaMovement();
                     target.lerpMotion(vVec2.x - aVec.x, vVec2.y - aVec.y, vVec2.z - aVec.z);
                 }
+            }
+        }
+    }
+
+    /**
+     * This may be the final version of our gravity/repulsion calculation, which uses an "inverse square-const-zero" model
+     * to simulate force. If we only use inverse-square law, the dt(0.05s) is too long, resulting in huge velocity error
+     * when the distance is short(acceleration is huge), so we limit the acceleration and even force it to be 0 when the
+     * distance is shorter than 0.5m to avoid abnormal movement or crashes.
+     * @param snowball The snowball entity.
+     * @param targetClass The class of specific targets.
+     * @param range Only calculate the velocity of entities within the range.
+     * @param GM The magnitude of force has direct ratio with this param.
+     * @param boundaryR2 If the distance is smaller than this param, the force will be a const and will not follow an inverse-square law.
+     * @param <T> Extends entity class
+     */
+    public static <T extends Entity> void forceEffect(BSFSnowballEntity snowball, Class<T> targetClass, double range, double GM, double boundaryR2) {
+        List<T> list = getTargetList(snowball, targetClass, range);
+        if (list != null && !list.isEmpty()) {
+            for (T entity : list) {
+                Vec3 rVec = new Vec3(entity.getX() - snowball.getX(), entity.getEyeY() - snowball.getY(), entity.getZ() - snowball.getZ());
+                double r2 = modSqr(rVec);
+                double ir2 = Mth.fastInvSqrt(r2);
+                double a;
+                if (r2 > boundaryR2) {
+                    a = GM / r2;
+                } else if (r2 > 0.25) {
+                    a = GM / boundaryR2;
+                } else {
+                    a = 0;
+                }
+                Vec3 aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
+                Vec3 vVec = entity.getDeltaMovement();
+                entity.setDeltaMovement(vVec.x - aVec.x, vVec.y - aVec.y, vVec.z - aVec.z);
             }
         }
     }

@@ -11,6 +11,7 @@ public class ForceSnowballEntity extends BSFSnowballEntity {
     public Class <? extends Entity> targetClass;
     public double range;
     public double GM;
+    public double boundaryR2;
 
     public ForceSnowballEntity(LivingEntity livingEntity, Level level) {
         super(livingEntity, level);
@@ -26,7 +27,8 @@ public class ForceSnowballEntity extends BSFSnowballEntity {
     @Override
     public void tick() {
         super.tick();
-        MovingAlgorithm.gravityTracking(this, targetClass, range, GM, false, true, false, true);
+        //MovingAlgorithm.gravityTracking(this, targetClass, range, GM, false, true, false, true);
+        MovingAlgorithm.forceEffect(this, targetClass, range, GM, boundaryR2);
     }
 
     public ForceSnowballEntity setRange(double range) {
@@ -41,6 +43,11 @@ public class ForceSnowballEntity extends BSFSnowballEntity {
 
     public ForceSnowballEntity setGM(double GM) {
         this.GM = GM;
+        return this;
+    }
+
+    public ForceSnowballEntity setBoundaryR2(double boundaryR2) {
+        this.boundaryR2 = boundaryR2;
         return this;
     }
 }

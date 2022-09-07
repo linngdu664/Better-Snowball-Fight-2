@@ -131,8 +131,8 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     }
 
     /**
-     * You must not touch this fucking method.
-     * @return I don't understand.
+     * Do not touch/override this magical fucking method, or the texture of the snowball will become egg!
+     * @return I don't understand it.
      */
     @Override
     protected @NotNull Item getDefaultItem() {
