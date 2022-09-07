@@ -6,6 +6,7 @@ import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.MovingAlgorithm;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -52,8 +53,8 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 200, 0, 0, 0, 0.32);
         }
         if (timer > startTime) {
-            MovingAlgorithm.gravityTracking(this, Mob.class, 30, 1, false, true, false, true);
-            MovingAlgorithm.gravityTracking(this, Projectile.class, 30, 1, false, true, false, true);
+            MovingAlgorithm.gravityTracking(this, Entity.class, 30, 1, false, true, false, true);
+
             ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.12);
         }
         if (timer == endTime && !level.isClientSide) {
