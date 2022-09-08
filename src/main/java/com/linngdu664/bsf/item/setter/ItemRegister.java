@@ -5,7 +5,6 @@ import com.linngdu664.bsf.item.snowball.force_snowball.*;
 import com.linngdu664.bsf.item.snowball.normal_snowball.*;
 import com.linngdu664.bsf.item.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.item.weapon.*;
-import com.linngdu664.bsf.util.TankType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.registries.DeferredRegister;

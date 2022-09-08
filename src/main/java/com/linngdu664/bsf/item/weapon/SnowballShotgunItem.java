@@ -103,7 +103,7 @@ public class SnowballShotgunItem extends Item {
         }
         player.getCooldowns().addCooldown(this, 20);
         player.awardStat(Stats.ITEM_USED.get(this));
-        return super.use(level, player, usedHand);
+        return InteractionResultHolder.pass(stack);
 
 
 

@@ -73,7 +73,6 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
 
     /**
      * Triggered when an entity hits an entity
-     *
      * @param pResult EntityHitResult
      */
     @Override
@@ -81,6 +80,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
         if (pResult.getEntity() instanceof LivingEntity entity) {
             //Handling the catch
             if (catchOnGlove(entity)) {
+                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);
                 return;
             }
 
@@ -108,8 +108,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     }
 
     /**
-     * Triggered when an entity hits a block
-     *
+     * Triggered when an entity hits a block.
      * @param p_37258_ blockHitResult
      */
     @Override
@@ -121,7 +120,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     }
 
     /**
-     * This method will be called every tick
+     * This method will be called every tick.
      */
     @Override
     public void tick() {
@@ -132,7 +131,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
 
     /**
      * Do not touch/override this magical fucking method, or the texture of the snowball will become egg!
-     * @return I don't understand it.
+     * @return I don't understand.
      */
     @Override
     protected @NotNull Item getDefaultItem() {
@@ -140,14 +139,14 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     }
 
     /**
-     * You must touch this fucking method.
-     * @return Register corresponding item
+     * You must override this fucking method, or the glove will not function well!
+     * @return Register corresponding item.
      */
     protected Item getRegisterItem(){return null;}
 
     /**
-     * @param entity Target
-     * @return If the glove catches return true
+     * @param entity The player who is using the glove.
+     * @return If the glove catches return true.
      */
     protected boolean catchOnGlove(LivingEntity entity) {
         if (entity instanceof Player player && (player.getOffhandItem().is(ItemRegister.GLOVE.get()) &&
