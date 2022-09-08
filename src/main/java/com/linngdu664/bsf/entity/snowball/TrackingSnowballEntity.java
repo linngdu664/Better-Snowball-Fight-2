@@ -17,16 +17,17 @@ public class TrackingSnowballEntity extends BSFSnowballEntity {
     public int timer = 0;
     public Class <? extends Entity> targetClass;
     public double range;
+    public boolean lockFeet = false;
 
     public TrackingSnowballEntity(LivingEntity livingEntity, Level level) {
         super(livingEntity, level);
     }
-
+/*
     public TrackingSnowballEntity(LivingEntity livingEntity, Level level, float damage, float blazeDamage, double range, Class<? extends Entity> targetClass, LaunchFrom launchFrom) {
         super(livingEntity, level, 0, damage, blazeDamage, launchFrom);
         this.targetClass = targetClass;
         this.range = range;
-    }
+    }*/
 
     @Override
     public void tick() {
@@ -37,7 +38,7 @@ public class TrackingSnowballEntity extends BSFSnowballEntity {
             maxTurningAngleCos = Mth.cos(7.1619724F * v0 * Mth.DEG_TO_RAD);
             maxTurningAngleSin = Mth.sin(7.1619724F * v0 * Mth.DEG_TO_RAD);
         }
-        MovingAlgorithm.missilesTracking(this, targetClass, range, true, maxTurningAngleCos, maxTurningAngleSin);
+        MovingAlgorithm.missilesTracking(this, targetClass, range, true, maxTurningAngleCos, maxTurningAngleSin, lockFeet);
         timer++;
     }
 
@@ -48,6 +49,11 @@ public class TrackingSnowballEntity extends BSFSnowballEntity {
 
     public TrackingSnowballEntity setTargetClass(Class<? extends Entity> targetClass) {
         this.targetClass = targetClass;
+        return this;
+    }
+
+    public TrackingSnowballEntity setLockFeet(boolean lockFeet) {
+        this.lockFeet = lockFeet;
         return this;
     }
 }
