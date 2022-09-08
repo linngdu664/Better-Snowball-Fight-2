@@ -16,13 +16,13 @@ public class ForceSnowballEntity extends BSFSnowballEntity {
     public ForceSnowballEntity(LivingEntity livingEntity, Level level) {
         super(livingEntity, level);
     }
-
+/*
     public ForceSnowballEntity(LivingEntity livingEntity, Level level, float damage, float blazeDamage, double range, Class<? extends Entity> targetClass, double GM, LaunchFrom launchFrom) {
         super(livingEntity, level, 0, damage, blazeDamage, launchFrom);
         this.targetClass = targetClass;
         this.range = range;
         this.GM = GM;
-    }
+    }*/
 
     @Override
     public void tick() {
