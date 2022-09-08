@@ -7,6 +7,7 @@ import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class MonsterRepulsionSnowballItem extends BSFSnowballItem {
     public MonsterRepulsionSnowballItem() {
-        super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.linngdu664.bsf.util.BSFUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.ChatFormatting;
+import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -32,7 +33,7 @@ import java.util.List;
 public class SnowballShotgunItem extends Item {
     private double pushRank;
     public SnowballShotgunItem() {
-        super(new Properties().tab(ItemRegister.GROUP).stacksTo(1).durability(256));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(256));
     }
 
     public LaunchFunc getLaunchFunc(){

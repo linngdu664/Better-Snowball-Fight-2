@@ -86,5 +86,5 @@ public class ItemRegister {
 
 
 
-    public static final Group GROUP = new Group();
+    //public static final Group GROUP = new Group();
 }

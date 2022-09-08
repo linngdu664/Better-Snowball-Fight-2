@@ -5,6 +5,7 @@ import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class LightMonsterTrackingSnowballItem extends Item {
     public LightMonsterTrackingSnowballItem() {
-        super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
     }
 
     @Override

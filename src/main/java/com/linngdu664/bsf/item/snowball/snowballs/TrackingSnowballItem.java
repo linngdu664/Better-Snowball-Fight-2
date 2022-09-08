@@ -2,6 +2,7 @@ package com.linngdu664.bsf.item.snowball.snowballs;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.Target;
 import com.linngdu664.bsf.util.TrackingSnowballMode;
 import net.minecraft.stats.Stats;
@@ -17,7 +18,7 @@ public class TrackingSnowballItem extends BSFSnowballItem {
     private final TrackingSnowballMode damageMode;
 
     public TrackingSnowballItem(Target target, TrackingSnowballMode damageMode) {
-        super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
         this.target = target;
         this.damageMode = damageMode;
     }

@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.client.model.IceSkatesModel;
-import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -71,7 +71,7 @@ public class IceSkatesItem extends ArmorItem {
                 return 0;
             }
 
-        }, EquipmentSlot.FEET, new Properties().tab(ItemRegister.GROUP).stacksTo(1));
+        }, EquipmentSlot.FEET, new Properties().tab(ItemGroup.MAIN).stacksTo(1));
 
     }
 

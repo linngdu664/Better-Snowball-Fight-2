@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -21,7 +22,7 @@ public class SnowballStorageTankItem extends Item {
     public Item item;
 
     public SnowballStorageTankItem(Item item) {
-        super(new Properties().tab(ItemRegister.GROUP).stacksTo(1).durability(96));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(96));
         this.item = item;
     }
 

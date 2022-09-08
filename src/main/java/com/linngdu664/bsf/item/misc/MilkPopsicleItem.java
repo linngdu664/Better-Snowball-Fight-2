@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.misc;
 
-import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.chat.Component;
@@ -25,7 +25,7 @@ public class MilkPopsicleItem extends Item {
     private static final FoodProperties food = new FoodProperties.Builder().alwaysEat().build();
 
     public MilkPopsicleItem() {
-        super(new Properties().food(food).tab(ItemRegister.GROUP));
+        super(new Properties().food(food).tab(ItemGroup.MAIN));
     }
 
     @Override

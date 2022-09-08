@@ -4,6 +4,7 @@ import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.force_snowball.*;
 import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.Target;
 import com.linngdu664.bsf.util.TrackingSnowballMode;
 import net.minecraft.sounds.SoundEvents;
@@ -22,7 +23,7 @@ public class ForceSnowballItem extends BSFSnowballItem {
     private final TrackingSnowballMode mode;
 
     public ForceSnowballItem(Target target, TrackingSnowballMode mode) {
-        super(new Properties().tab(ItemRegister.GROUP).stacksTo(16));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
         this.target = target;
         this.mode = mode;
     }

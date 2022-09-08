@@ -8,6 +8,7 @@ import com.linngdu664.bsf.item.setter.ItemRegister;
 import com.linngdu664.bsf.util.BSFUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -31,7 +32,7 @@ import java.util.List;
 public class SnowballCannonItem extends BowItem {
 
     public SnowballCannonItem() {
-        super(new Properties().tab(ItemRegister.GROUP).stacksTo(1).durability(256));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(256));
     }
 
     public LaunchFunc getLaunchFunc(double damageDropRate) {
