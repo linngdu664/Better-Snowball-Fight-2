@@ -54,8 +54,8 @@ public class BlackHoleSnowballItem extends BSFSnowballItem {
         pTooltipComponents.add(new TranslatableComponent("lunch_no_cannon.tooltip").withStyle(ChatFormatting.DARK_RED));
         pTooltipComponents.add(new TranslatableComponent("lunch_no_machine_gun.tooltip").withStyle(ChatFormatting.DARK_RED));
         pTooltipComponents.add(new TranslatableComponent("lunch_no_shotgun.tooltip").withStyle(ChatFormatting.DARK_RED));
+        pTooltipComponents.add(new TranslatableComponent("black_hole_snowball1.tooltip").withStyle(ChatFormatting.BLUE));
         pTooltipComponents.add(new TranslatableComponent("black_hole_snowball.tooltip").withStyle(ChatFormatting.OBFUSCATED));
-        pTooltipComponents.add(new TranslatableComponent("black_hole_snowball.tooltip").withStyle(ChatFormatting.BLACK,ChatFormatting.BOLD));
-
+        pTooltipComponents.add(new TranslatableComponent("black_hole_snowball.tooltip").withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

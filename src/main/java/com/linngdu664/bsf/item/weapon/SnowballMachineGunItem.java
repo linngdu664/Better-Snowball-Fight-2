@@ -196,6 +196,8 @@ public class SnowballMachineGunItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(new TranslatableComponent("snowball_machine_gun.tooltip").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(new TranslatableComponent("snowball_machine_gun1.tooltip").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(new TranslatableComponent("snowball_machine_gun2.tooltip").withStyle(ChatFormatting.RED));
+        pTooltipComponents.add(new TranslatableComponent("snowball_machine_gun.tooltip").withStyle(ChatFormatting.DARK_AQUA));
     }
 }

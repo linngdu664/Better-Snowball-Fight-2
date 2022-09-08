@@ -37,6 +37,6 @@ public class GloveItem extends ShieldItem {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(new TranslatableComponent("glove.tooltip").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(new TranslatableComponent("glove.tooltip").withStyle(ChatFormatting.DARK_GREEN));
     }
 }

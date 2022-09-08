@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class HeavyPlayerTrackingSnowballEntity extends TrackingSnowballEntity {
     public HeavyPlayerTrackingSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
-        this.setRange(20).setTargetClass(Player.class).setDamage(4).setBlazeDamage(6).setLaunchFrom(launchFunc.getLaunchForm());
+        this.setRange(10).setTargetClass(Player.class).setDamage(4).setBlazeDamage(6).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get()));
     }

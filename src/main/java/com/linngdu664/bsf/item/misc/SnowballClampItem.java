@@ -54,6 +54,6 @@ public class SnowballClampItem extends TieredItem {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(new TranslatableComponent("snowball_clamp.tooltip").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(new TranslatableComponent("snowball_clamp.tooltip").withStyle(ChatFormatting.DARK_GREEN));
     }
 }

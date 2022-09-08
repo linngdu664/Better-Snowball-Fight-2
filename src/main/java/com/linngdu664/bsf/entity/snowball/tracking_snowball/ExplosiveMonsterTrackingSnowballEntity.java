@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 public class ExplosiveMonsterTrackingSnowballEntity extends TrackingSnowballEntity {
     public ExplosiveMonsterTrackingSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
-        this.setLockFeet(true).setRange(20).setTargetClass(Monster.class).setDamage(3).setBlazeDamage(5).setLaunchFrom(launchFunc.getLaunchForm());
+        this.setLockFeet(true).setRange(10).setTargetClass(Monster.class).setDamage(3).setBlazeDamage(5).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()));
     }
