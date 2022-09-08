@@ -47,7 +47,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
         super(EntityType.EGG, x, y, z, level);
         //this.setItem(new ItemStack(getDefaultItem()));
     }
-
+/*
     public BSFSnowballEntity(LivingEntity livingEntity, Level level, double punch, float damage, float blazeDamage, LaunchFrom launchFrom) {
         super(EntityType.EGG, livingEntity, level);
         this.punch = punch;
@@ -55,7 +55,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
         this.blazeDamage = blazeDamage;
         this.launchFrom = launchFrom;
         //this.setItem(new ItemStack(getDefaultItem()));
-    }
+    }*/
 
     /*
      * Triggered when hit something
