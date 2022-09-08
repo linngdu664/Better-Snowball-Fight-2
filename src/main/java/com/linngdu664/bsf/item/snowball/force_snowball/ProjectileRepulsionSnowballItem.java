@@ -24,7 +24,10 @@ public class ProjectileRepulsionSnowballItem extends BSFSnowballItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if (!BSFUtil.storageInTank(pPlayer, itemStack, ItemRegister.PROJECTILE_REPULSION_SNOWBALL_STORAGE_TANK.get())) {
+        if (pPlayer.isShiftKeyDown()) {
+            ItemStack newStack = new ItemStack(ItemRegister.MONSTER_REPULSION_SNOWBALL.get(), itemStack.getCount());
+            pPlayer.setItemInHand(pUsedHand, newStack);
+        } else if (!BSFUtil.storageInTank(pPlayer, itemStack, ItemRegister.PROJECTILE_REPULSION_SNOWBALL_STORAGE_TANK.get())) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
                 float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;

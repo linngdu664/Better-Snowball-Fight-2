@@ -17,17 +17,12 @@ public class LightMonsterTrackingSnowballItem extends Item {
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if(pPlayer.isShiftKeyDown()){
-            int count = itemStack.getCount();
-            itemStack.shrink(count);
-            ItemStack newStack = new ItemStack(ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get());
-            newStack.setCount(count);
-            if (!pPlayer.getAbilities().instabuild) {
-                pPlayer.setItemInHand(pUsedHand, newStack);
-            }
-        }else{
+        if (pPlayer.isShiftKeyDown()) {
+            ItemStack newStack = new ItemStack(ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get(), itemStack.getCount());
+            pPlayer.setItemInHand(pUsedHand, newStack);
+        } else {
             BSFUtil.storageInTank(pPlayer, itemStack, ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get());
         }
 

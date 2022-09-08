@@ -19,7 +19,12 @@ public class ExplosiveMonsterTrackingSnowballItem extends Item {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        BSFUtil.storageInTank(pPlayer, itemStack, ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get());
+        if (pPlayer.isShiftKeyDown()) {
+            ItemStack newStack = new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get(), itemStack.getCount());
+            pPlayer.setItemInHand(pUsedHand, newStack);
+        } else {
+            BSFUtil.storageInTank(pPlayer, itemStack, ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get());
+        }
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
     }
