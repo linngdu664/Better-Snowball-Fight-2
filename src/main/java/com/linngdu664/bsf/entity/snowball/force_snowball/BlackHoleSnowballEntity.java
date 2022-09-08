@@ -35,7 +35,7 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
 
     @Override
     protected Item getRegisterItem() {
-        return ItemRegister.BLACK_HOLE_SNOWBALL.get();
+        return null;
     }
 
     @Override
