@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 public class MonsterGravitySnowballEntity extends ForceSnowballEntity {
     public MonsterGravitySnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
-        this.setRange(20).setTargetClass(Mob.class).setGM(8).setBoundaryR2(8).setDamage(4).setBlazeDamage(6).setLaunchFrom(launchFunc.getLaunchForm());
+        this.setRange(20).setTargetClass(Monster.class).setGM(8).setBoundaryR2(8).setDamage(4).setBlazeDamage(6).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.MONSTER_GRAVITY_SNOWBALL.get()));
     }
