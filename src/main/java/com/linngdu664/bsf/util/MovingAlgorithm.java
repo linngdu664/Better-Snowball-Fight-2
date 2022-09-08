@@ -10,7 +10,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.*;
+import static com.linngdu664.bsf.util.BSFUtil.modSqr;
+import static com.linngdu664.bsf.util.BSFUtil.vec2AngleCos;
 
 public class MovingAlgorithm {
     private static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {

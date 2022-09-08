@@ -2,12 +2,12 @@ package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
+import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.util.BSFUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
-import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
