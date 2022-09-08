@@ -120,7 +120,7 @@ public class MovingAlgorithm {
      * movements or game crashes.
      * @param snowball The snowball entity.
      * @param targetClass The class of specific targets.
-     * @param range Only calculate the velocity of entities within the range.
+     * @param range Only calculate the velocity of targets within the range.
      * @param GM The magnitude of force has direct ratio with this param.
      * @param boundaryR2 If the square of distance is smaller than this param, the force will be a const and will not follow an inverse-square law.
      * @param <T> Extends entity class
@@ -129,7 +129,7 @@ public class MovingAlgorithm {
         List<T> list = getTargetList(snowball, targetClass, range);
         if (list != null && !list.isEmpty()) {
             for (T entity : list) {
-                Vec3 rVec = new Vec3(entity.getX() - snowball.getX(), entity.getEyeY() - snowball.getY(), entity.getZ() - snowball.getZ());
+                Vec3 rVec = new Vec3(snowball.getX() - entity.getX(), snowball.getY() - entity.getEyeY(), snowball.getZ() - entity.getZ());
                 double r2 = modSqr(rVec);
                 double ir2 = Mth.fastInvSqrt(r2);
                 double a;
@@ -140,14 +140,12 @@ public class MovingAlgorithm {
                 } else {
                     a = 0;
                 }
-                Vec3 aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
-                Vec3 vVec = entity.getDeltaMovement();
-                entity.setDeltaMovement(vVec.x - aVec.x, vVec.y - aVec.y, vVec.z - aVec.z);
+                entity.push(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
             }
         }
     }
 
-    public static <T extends Entity> void missilesTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin) {
+    public static <T extends Entity> void missilesTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin, boolean lockFeet) {
         Level level = snowball.level;
         Entity target = getTarget(snowball, targetClass, angleRestriction, trackingRange);
         Vec3 velocity = snowball.getDeltaMovement();
@@ -155,8 +153,13 @@ public class MovingAlgorithm {
             snowball.setNoGravity(false);
         } else if (!level.isClientSide) {
             snowball.setNoGravity(true);
-            Vec3 delta = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());
-            double cosTheta = BSFUtil.vec2AngleCos(delta.x, delta.z, velocity.x, velocity.z);
+            Vec3 delta;
+            if (lockFeet) {
+                delta = new Vec3(target.getX() - snowball.getX(), target.getY() - snowball.getY(), target.getZ() - snowball.getZ());
+            } else {
+                delta = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());
+            }
+            double cosTheta = vec2AngleCos(delta.x, delta.z, velocity.x, velocity.z);
             double sinTheta;
             if (cosTheta < maxTurningAngleCos) {
                 cosTheta = maxTurningAngleCos;
@@ -178,7 +181,7 @@ public class MovingAlgorithm {
             }
             double vNewX = Math.sqrt(vx * vx + vz * vz);
             double deltaNewX = Math.sqrt(delta.x * delta.x + delta.z * delta.z);
-            cosTheta = BSFUtil.vec2AngleCos(vNewX, velocity.y, deltaNewX, delta.y);
+            cosTheta = vec2AngleCos(vNewX, velocity.y, deltaNewX, delta.y);
             if (cosTheta < maxTurningAngleCos) {
                 cosTheta = maxTurningAngleCos;
                 sinTheta = maxTurningAngleSin;
@@ -199,7 +202,9 @@ public class MovingAlgorithm {
             }
             vx *= adjusted / vNewX;
             vz *= adjusted / vNewX;
-            snowball.setDeltaMovement(vx, vy, vz);
+            //Do not directly use "setDeltaMovement" because it will cause the lagging of texture.
+            //Use "push" may avoid this.
+            snowball.push(vx - velocity.x, vy - velocity.y, vz - velocity.z);
         }
     }
 }
