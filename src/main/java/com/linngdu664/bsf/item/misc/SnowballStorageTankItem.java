@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.item.setter.ItemRegister;
-import com.linngdu664.bsf.util.SnowballType;
+import com.linngdu664.bsf.util.TankType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -15,14 +15,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import net.minecraft.world.entity.raid.Raider;
 
 import java.util.List;
 
 public class SnowballStorageTankItem extends Item {
-    public SnowballType type;
+    public TankType type;
 
-    public SnowballStorageTankItem(SnowballType type) {
+    public SnowballStorageTankItem(TankType type) {
         super(new Properties().tab(ItemRegister.GROUP).stacksTo(1).durability(96));
         this.type = type;
     }
@@ -31,8 +30,30 @@ public class SnowballStorageTankItem extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         if (pPlayer.getOffhandItem().isEmpty()) {
+            Item item = switch (type) {
+                case COMPACTED -> ItemRegister.COMPACTED_SNOWBALL.get();
+                case STONE -> ItemRegister.STONE_SNOWBALL.get();
+                case ICE -> ItemRegister.ICE_SNOWBALL.get();
+                case IRON -> ItemRegister.IRON_SNOWBALL.get();
+                case GLASS -> ItemRegister.GLASS_SNOWBALL.get();
+                case GOLD -> ItemRegister.GOLD_SNOWBALL.get();
+                case OBSIDIAN -> ItemRegister.OBSIDIAN_SNOWBALL.get();
+                case EXPLOSIVE -> ItemRegister.EXPLOSIVE_SNOWBALL.get();
+                case SPECTRAL -> ItemRegister.SPECTRAL_SNOWBALL.get();
+                case TRACKING_MONSTER -> ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get();
+                case TRACKING_MONSTER_DAMAGE -> ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get();
+                case TRACKING_MONSTER_EXPLOSIVE -> ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get();
+                case TRACKING_PLAYER -> ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get();
+                case TRACKING_PLAYER_DAMAGE -> ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get();
+                case TRACKING_PLAYER_EXPLOSIVE -> ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get();
+                case GRAVITY_MONSTER -> ItemRegister.MONSTER_GRAVITY_SNOWBALL.get();
+                case GRAVITY_PROJECTILE -> ItemRegister.PROJECTILE_GRAVITY_SNOWBALL.get();
+                case REPULSION_MONSTER -> ItemRegister.MONSTER_REPULSION_SNOWBALL.get();
+                case REPULSION_PROJECTILE -> ItemRegister.PROJECTILE_REPULSION_SNOWBALL.get();
+                case BLACK_HOLE -> ItemRegister.BLACK_HOLE_SNOWBALL.get();
+            };
             if (pPlayer.isShiftKeyDown() || itemStack.getDamageValue() >= 80) {
-                switch (type) {
+                /*switch (type) {
                     case COMPACTED -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                     case STONE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.STONE_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                     case GLASS -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GLASS_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
@@ -48,11 +69,13 @@ public class SnowballStorageTankItem extends Item {
                     case TRACKING_PLAYER -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                     case TRACKING_PLAYER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
                     case TRACKING_PLAYER_EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get(), 96 - itemStack.getDamageValue()), true);
-                }
+                }*/
+                pPlayer.getInventory().placeItemBackInInventory(new ItemStack(item, 96 - itemStack.getDamageValue()), true);
                 if (!pPlayer.getAbilities().instabuild) {
                     pPlayer.setItemInHand(pUsedHand, new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));
                 }
             } else {
+                /*
                 switch (type) {
                     case COMPACTED -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get(), 16), true);
                     case STONE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.STONE_SNOWBALL.get(), 16), true);
@@ -70,6 +93,8 @@ public class SnowballStorageTankItem extends Item {
                     case TRACKING_PLAYER_DAMAGE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get(), 16), true);
                     case TRACKING_PLAYER_EXPLOSIVE -> pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get(), 16), true);
                 }
+                */
+                pPlayer.getInventory().placeItemBackInInventory(new ItemStack(item, 16), true);
                 //todo: What the fuck? Check creative mode?
                 itemStack.hurt(16, pLevel.getRandom(), null);
             }

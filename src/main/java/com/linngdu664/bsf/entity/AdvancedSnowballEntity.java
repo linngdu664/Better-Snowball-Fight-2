@@ -1,14 +1,14 @@
 package com.linngdu664.bsf.entity;
 
-import com.linngdu664.bsf.util.SnowballType;
+import com.linngdu664.bsf.util.TankType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.level.Level;
 
 public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
-    public SnowballType type;
-    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type) {
+    public TankType type;
+    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, TankType type) {
         super(EntityType.EGG, livingEntity, level);
         this.type = type;
     }/*
@@ -17,7 +17,7 @@ public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
     public double punch = 0.0;
     public float damage = Float.MIN_VALUE;
     public float blazeDamage = 3.0F;
-    public SnowballType type;
+    public TankType type;
     //private Entity target = null;
     private double v0;
     private float maxTurningAngleCos;
@@ -32,19 +32,19 @@ public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
     private boolean selfAttraction;
     private boolean attraction;
 
-    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, SnowballType type, float damage, float blazeDamage) {
+    public AdvancedSnowballEntity(Level level, LivingEntity livingEntity, TankType type, float damage, float blazeDamage) {
         super(EntityType.EGG, livingEntity, level);
         this.type = type;
         this.damage = damage;
         this.blazeDamage = blazeDamage;
     }
 
-    public AdvancedSnowballEntity(Level level, double x, double y, double z, SnowballType type) {
+    public AdvancedSnowballEntity(Level level, double x, double y, double z, TankType type) {
         super(EntityType.EGG, x, y, z, level);
         this.type = type;
     }
 
-    public AdvancedSnowballEntity(Level level, double x, double y, double z, SnowballType type, float damage, float blazeDamage) {
+    public AdvancedSnowballEntity(Level level, double x, double y, double z, TankType type, float damage, float blazeDamage) {
         super(EntityType.EGG, x, y, z, level);
         this.type = type;
         this.damage = damage;
@@ -113,14 +113,14 @@ public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
             }
             Vec3 vec3d = this.getDeltaMovement().multiply(0.1 * punch, 0.0, 0.1 * punch);
             entity.push(vec3d.x, 0.0, vec3d.z);
-            if (type == SnowballType.EXPLOSIVE || type == SnowballType.TRACKING_PLAYER_EXPLOSIVE || type == SnowballType.TRACKING_MONSTER_EXPLOSIVE) {
+            if (type == TankType.EXPLOSIVE || type == TankType.TRACKING_PLAYER_EXPLOSIVE || type == TankType.TRACKING_MONSTER_EXPLOSIVE) {
                 if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
                     level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
                 } else {
                     level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
                 }
             }
-            if (type == SnowballType.SPECTRAL) {
+            if (type == TankType.SPECTRAL) {
                 entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200, 0));
             }
             ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
@@ -131,13 +131,13 @@ public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
     @Override
     protected void onHitBlock(@NotNull BlockHitResult blockHitResult) {
         super.onHitBlock(blockHitResult);
-        if (type == SnowballType.EXPLOSIVE || type == SnowballType.TRACKING_PLAYER_EXPLOSIVE || type == SnowballType.TRACKING_MONSTER_EXPLOSIVE) {
+        if (type == TankType.EXPLOSIVE || type == TankType.TRACKING_PLAYER_EXPLOSIVE || type == TankType.TRACKING_MONSTER_EXPLOSIVE) {
             if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
                 level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
             } else {
                 level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
             }
-        } else if (type == SnowballType.BLACK_HOLE) {
+        } else if (type == TankType.BLACK_HOLE) {
             this.discard();
         }
         ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
@@ -147,7 +147,7 @@ public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
-        if (!level.isClientSide && type != SnowballType.BLACK_HOLE) {
+        if (!level.isClientSide && type != TankType.BLACK_HOLE) {
             this.discard();
         }
     }
@@ -160,7 +160,7 @@ public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
     @Override
     public void tick() {
         ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
-        if (type == SnowballType.SPECTRAL) {
+        if (type == TankType.SPECTRAL) {
             ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         }
         if (timer == 0) {
@@ -169,7 +169,7 @@ public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
             maxTurningAngleCos = Mth.cos(7.1619724F * (float) v0 * Mth.DEG_TO_RAD);
             maxTurningAngleSin = Mth.sin(7.1619724F * (float) v0 * Mth.DEG_TO_RAD);
         }
-        if (timer == 100 && type == SnowballType.BLACK_HOLE) {
+        if (timer == 100 && type == TankType.BLACK_HOLE) {
             this.discard();
         }
         tracking();

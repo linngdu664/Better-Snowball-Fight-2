@@ -122,55 +122,55 @@ public class SnowballShotgunItem extends Item {
 //                    boolean k = BSFUtil.isAmmoTank(itemStack, true);
 //                    AdvancedSnowballEntity snowballEntity;
 //                    if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.COMPACTED);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.COMPACTED);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.STONE_SNOWBALL.get() || itemStack.getItem() == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.STONE, 3.0F, 4.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.STONE, 3.0F, 4.0F);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.STONE_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.GLASS_SNOWBALL.get() || itemStack.getItem() == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.GLASS, 4.0F, 5.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.GLASS, 4.0F, 5.0F);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.GLASS_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.IRON_SNOWBALL.get() || itemStack.getItem() == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.IRON, 5.0F, 7.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.IRON, 5.0F, 7.0F);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.IRON_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.ICE_SNOWBALL.get() || itemStack.getItem() == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.ICE, 4.0F, 6.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.ICE, 4.0F, 6.0F);
 //                        snowballEntity.frozenTicks = 60;
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.ICE_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.GOLD_SNOWBALL.get() || itemStack.getItem() == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.GOLD, 6.0F, 7.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.GOLD, 6.0F, 7.0F);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.GOLD_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL.get() || itemStack.getItem() == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.OBSIDIAN, 7.0F, 8.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.OBSIDIAN, 7.0F, 8.0F);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.OBSIDIAN_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.SPECTRAL_SNOWBALL.get() || itemStack.getItem() == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.SPECTRAL);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.SPECTRAL);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL.get() || itemStack.getItem() == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.EXPLOSIVE, 3.0F, 5.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.EXPLOSIVE, 3.0F, 5.0F);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL.get() || itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.TRACKING_MONSTER);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.TRACKING_MONSTER);
 //                        snowballEntity.setMissilesTracking(Monster.class, 20, true);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get() || itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.TRACKING_MONSTER_DAMAGE, 4.0F, 6.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.TRACKING_MONSTER_DAMAGE, 4.0F, 6.0F);
 //                        snowballEntity.setMissilesTracking(Monster.class, 20, true);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.MONSTER_TRACKING_SNOWBALL_WITH_DAMAGE.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get() || itemStack.getItem() == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.TRACKING_MONSTER_EXPLOSIVE, 3.0F, 5.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.TRACKING_MONSTER_EXPLOSIVE, 3.0F, 5.0F);
 //                        snowballEntity.setMissilesTracking(Monster.class, 20, true);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL.get() || itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.TRACKING_PLAYER);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.TRACKING_PLAYER);
 //                        snowballEntity.setMissilesTracking(Player.class, 20, true);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL.get()));
 //                    } else if (itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get() || itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE_STORAGE_TANK.get()) {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.TRACKING_PLAYER_DAMAGE, 4.0F, 6.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.TRACKING_PLAYER_DAMAGE, 4.0F, 6.0F);
 //                        snowballEntity.setMissilesTracking(Player.class, 20, true);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.PLAYER_TRACKING_SNOWBALL_WITH_DAMAGE.get()));
 //                    } else {
-//                        snowballEntity = new AdvancedSnowballEntity(level, player, SnowballType.TRACKING_PLAYER_EXPLOSIVE, 3.0F, 5.0F);
+//                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.TRACKING_PLAYER_EXPLOSIVE, 3.0F, 5.0F);
 //                        snowballEntity.setMissilesTracking(Player.class, 20, true);
 //                        snowballEntity.setItem(new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()));
 //                    }
