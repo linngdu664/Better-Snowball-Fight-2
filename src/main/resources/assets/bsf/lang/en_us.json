@@ -112,9 +112,9 @@
   "lunch_yes_machine_gun.tooltip": "thrown by machine gun: yes",
   "lunch_yes_shotgun.tooltip": "thrown by shotgun: yes",
   "lunch_no_hand.tooltip": "thrown by hand: yes",
-  "lunch_no_cannon.tooltip": "thrown by cannon: yes",
-  "lunch_no_machine_gun.tooltip": "thrown by machine gun: yes",
-  "lunch_no_shotgun.tooltip": "thrown by shotgun: yes",
+  "lunch_no_cannon.tooltip": "shot by cannon: yes",
+  "lunch_no_machine_gun.tooltip": "shot by machine gun: yes",
+  "lunch_no_shotgun.tooltip": "shot by shotgun: yes",
 
 
   "advancements.bsf.root.title": "Better Snowball Fight",
