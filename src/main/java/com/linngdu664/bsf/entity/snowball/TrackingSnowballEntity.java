@@ -14,10 +14,10 @@ public class TrackingSnowballEntity extends BSFSnowballEntity {
     public float v0;
     public float maxTurningAngleCos;
     public float maxTurningAngleSin;
-    public int timer = 0;
     public Class <? extends Entity> targetClass;
     public double range;
     public boolean lockFeet = false;
+    private boolean init = true;
 
     public TrackingSnowballEntity(LivingEntity livingEntity, Level level) {
         super(livingEntity, level);
@@ -32,14 +32,14 @@ public class TrackingSnowballEntity extends BSFSnowballEntity {
     @Override
     public void tick() {
         super.tick();
-        if (timer == 0) {
+        if (init) {
             Vec3 vec3 = this.getDeltaMovement();
             v0 = (float) Math.sqrt(BSFUtil.modSqr(vec3));
             maxTurningAngleCos = Mth.cos(7.1619724F * v0 * Mth.DEG_TO_RAD);
             maxTurningAngleSin = Mth.sin(7.1619724F * v0 * Mth.DEG_TO_RAD);
+            init = false;
         }
         MovingAlgorithm.missilesTracking(this, targetClass, range, true, maxTurningAngleCos, maxTurningAngleSin, lockFeet);
-        timer++;
     }
 
     public TrackingSnowballEntity setRange(double range) {
