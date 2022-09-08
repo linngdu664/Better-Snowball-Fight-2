@@ -6,13 +6,11 @@ import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
+
+import static com.linngdu664.bsf.util.BSFUtil.handleExplosion;
 
 public class ExplosiveSnowballEntity extends BSFSnowballEntity {
     public ExplosiveSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
@@ -38,6 +36,7 @@ public class ExplosiveSnowballEntity extends BSFSnowballEntity {
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
+        handleExplosion(this, 1.5F);
         if (!level.isClientSide) {
             this.discard();
         }
@@ -47,24 +46,16 @@ public class ExplosiveSnowballEntity extends BSFSnowballEntity {
     protected @NotNull Item getDefaultItem() {
         return ItemRegister.EXPLOSIVE_SNOWBALL.get();
     }
-*/
+
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
-        if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
-            level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
-        } else {
-            level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
-        }
+        handleExplosion(this, 1.5F);
     }
 
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
-        if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
-            level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.DESTROY);
-        } else {
-            level.explode(null, this.getX(), this.getY(), this.getZ(), 1.5F, Explosion.BlockInteraction.NONE);
-        }
-    }
+        handleExplosion(this, 1.5F);
+    }*/
 }

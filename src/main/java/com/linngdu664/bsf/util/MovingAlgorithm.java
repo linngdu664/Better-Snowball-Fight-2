@@ -14,6 +14,16 @@ import static com.linngdu664.bsf.util.BSFUtil.modSqr;
 import static com.linngdu664.bsf.util.BSFUtil.vec2AngleCos;
 
 public class MovingAlgorithm {
+
+    /**
+     * This method can get the nearest available target.
+     * @param snowball The snowball entity.
+     * @param t The class of specific targets.
+     * @param trackingRange Only gets target within the range. See AABB.inflate().
+     * @param <T> Extends entity class.
+     * @param angleRestriction Whether only return the target within 60 degrees.
+     * @return The target.
+     */
     private static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
         Level level = snowball.level;
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
@@ -41,6 +51,14 @@ public class MovingAlgorithm {
         return entity1;
     }
 
+    /**
+     * This method can get a target list.
+     * @param snowball The snowball entity.
+     * @param t The class of specific targets.
+     * @param trackingRange Only gets target within the range. See AABB.inflate().
+     * @param <T> Extends entity class.
+     * @return The target list.
+     */
     private static <T extends Entity> List<T> getTargetList(BSFSnowballEntity snowball, Class<T> t, double trackingRange) {
         Level level = snowball.level;
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
@@ -56,6 +74,7 @@ public class MovingAlgorithm {
         return null;
     }
 
+    @Deprecated
     //This is not used for tracking in fact, but it has some funny effects.
     public static <T extends Entity> void gravityTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
         if (trackingMultipleTargets) {
@@ -124,7 +143,7 @@ public class MovingAlgorithm {
      * @param range Only calculate the velocity of targets within the range.
      * @param GM The magnitude of force has direct ratio with this param.
      * @param boundaryR2 If the square of distance is smaller than this param, the force will be a const and will not follow an inverse-square law.
-     * @param <T> Extends entity class
+     * @param <T> Extends entity class.
      */
     public static <T extends Entity> void forceEffect(BSFSnowballEntity snowball, Class<T> targetClass, double range, double GM, double boundaryR2) {
         List<T> list = getTargetList(snowball, targetClass, range);
@@ -146,6 +165,19 @@ public class MovingAlgorithm {
         }
     }
 
+    /**
+     * This method is used for the tracking snowball. First, it will try to find the nearest available target. Then, if
+     * it finds a target, it will ignore gravity and changing the velocity vector to aim the target. If the target disappears,
+     * or it is too slow, it will restore gravity and try to find a new target.
+     * @param snowball The snowball entity.
+     * @param targetClass The class of specific targets.
+     * @param trackingRange Only tracks targets within the range.
+     * @param angleRestriction Whether only tracks targets within 60 degrees.
+     * @param maxTurningAngleCos the cosine of max turning angle per tick.
+     * @param maxTurningAngleSin the sine of max turning angle per tick.
+     * @param lockFeet If true, the snowball will track entity's feet to maximum the explosion damage.
+     * @param <T> Extends entity class.
+     */
     public static <T extends Entity> void missilesTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin, boolean lockFeet) {
         Level level = snowball.level;
         Entity target = getTarget(snowball, targetClass, angleRestriction, trackingRange);

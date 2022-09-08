@@ -116,7 +116,7 @@ public class SnowballMachineGunItem extends Item {
 
                 //add push
                 if (pLevel.isClientSide()) {
-                    player.push(-0.06 * cameraVec.x, -0.06 * cameraVec.y, -0.06 * cameraVec.z);
+                    player.push(-0.04 * cameraVec.x, -0.04 * cameraVec.y, -0.04 * cameraVec.z);
                 }
 
                 //add particles

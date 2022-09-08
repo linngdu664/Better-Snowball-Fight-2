@@ -8,6 +8,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 //You will see the deepest secrets of our code that we use this class to hide our shits.
@@ -84,12 +87,12 @@ public class BSFUtil {
     }
 
     /**
-     * This method is to find the ammo of the weapon in player's inventory. It will search tanks first.
-     * then it will search bulk snowballs if "onlyTank" is false.
+     * This method is to find the ammo of the weapon in player's inventory. It will search tanks first, and then it will
+     * search bulk snowballs if "onlyTank" is false.
      * @param player The user of the weapon.
      * @param onlyTank Whether the weapon can only use the snowball in tanks.
      * @param allowTracking Whether the weapon can shoot tracking snowball.
-     * @return The valid ammo itemstack. If the method can't find a proper itemstack, it will return null.
+     * @return The first valid ammo itemstack. If the method can't find a proper itemstack, it will return null.
      */
     public static ItemStack findAmmo(Player player, boolean onlyTank, boolean allowTracking) {
         /*if (onlyTank) {
@@ -160,5 +163,14 @@ public class BSFUtil {
         Vec3 speedVec = snowballEntity.getDeltaMovement().normalize();
         Vec3 cameraVec = new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
         return Math.abs(cameraVec.dot(speedVec) + 1.0) < 0.2;
+    }
+
+    public static void handleExplosion(BSFSnowballEntity snowball, float radius) {
+        Level level = snowball.getLevel();
+        if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
+            level.explode(null, snowball.getX(), snowball.getY(), snowball.getZ(), radius, Explosion.BlockInteraction.DESTROY);
+        } else {
+            level.explode(null, snowball.getX(), snowball.getY(), snowball.getZ(), radius, Explosion.BlockInteraction.NONE);
+        }
     }
 }

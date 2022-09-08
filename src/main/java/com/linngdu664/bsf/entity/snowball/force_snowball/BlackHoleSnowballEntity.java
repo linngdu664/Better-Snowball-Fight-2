@@ -8,14 +8,13 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+import static com.linngdu664.bsf.util.BSFUtil.handleExplosion;
 
 public class BlackHoleSnowballEntity extends BSFSnowballEntity {
     public int timer = 0;
@@ -31,19 +30,10 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
     }
 
     @Override
-    protected Item getRegisterItem() {
-        return null;
-    }
-
-    @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
+        handleExplosion(this, 6.0F);
         if (!level.isClientSide) {
-            if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
-                level.explode(null, this.getX(), this.getY(), this.getZ(), 3F, Explosion.BlockInteraction.DESTROY);
-            } else {
-                level.explode(null, this.getX(), this.getY(), this.getZ(), 3F, Explosion.BlockInteraction.NONE);
-            }
             this.discard();
         }
     }
@@ -60,13 +50,11 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
             MovingAlgorithm.forceEffect(this, Entity.class, 50, 16, 16);
             ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.12);
         }
-        if (timer == endTime && !level.isClientSide) {
-            if (level.getGameRules().getBoolean((GameRules.RULE_MOBGRIEFING))) {
-                level.explode(null, this.getX(), this.getY(), this.getZ(), 3F, Explosion.BlockInteraction.DESTROY);
-            } else {
-                level.explode(null, this.getX(), this.getY(), this.getZ(), 3F, Explosion.BlockInteraction.NONE);
+        if (timer == endTime) {
+            handleExplosion(this, 6.0F);
+            if (!level.isClientSide) {
+                this.discard();
             }
-            this.discard();
         }
         timer++;
     }
