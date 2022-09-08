@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.util;
 
-public enum SnowballType {
-    SMOOTH,
+public enum TankType {
     COMPACTED,
     STONE,
     GLASS,

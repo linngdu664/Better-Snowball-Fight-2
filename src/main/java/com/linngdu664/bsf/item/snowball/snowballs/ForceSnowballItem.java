@@ -103,7 +103,7 @@ public class ForceSnowballItem extends BSFSnowballItem {
 //            if (!pLevel.isClientSide) {
 //                float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
 //                float j = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.5F : 1.0F;
-//                AdvancedSnowballEntity snowballEntity = new AdvancedSnowballEntity(pLevel, pPlayer, SnowballType.ICE, 3.0F * j, 6.0F * j);
+//                AdvancedSnowballEntity snowballEntity = new AdvancedSnowballEntity(pLevel, pPlayer, TankType.ICE, 3.0F * j, 6.0F * j);
 //                snowballEntity.setItem(itemStack);
 //                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.125F * i, 1.0F);
 //                snowballEntity.frozenTicks = 60;
