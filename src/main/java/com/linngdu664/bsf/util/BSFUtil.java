@@ -1,9 +1,11 @@
 package com.linngdu664.bsf.util;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.ItemRegister;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -11,6 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 //You will see the deepest secrets of our code that we use this class to hide our shits.
@@ -156,12 +160,16 @@ public class BSFUtil {
         projectile.shoot(f, f1, f2, pVelocity, pInaccuracy);
     }
 
+    public static Vec3 SphericalToCartesian(float pitch, float yaw) {
+        return new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
+    }
+
     //Check weather the player can catch the snowball
     public static boolean isHeadingToSnowball(Player player, BSFSnowballEntity snowballEntity) {
         float pitch = player.getXRot() * Mth.DEG_TO_RAD;
         float yaw = player.getYRot() * Mth.DEG_TO_RAD;
         Vec3 speedVec = snowballEntity.getDeltaMovement().normalize();
-        Vec3 cameraVec = new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
+        Vec3 cameraVec = SphericalToCartesian(pitch, yaw);
         return Math.abs(cameraVec.dot(speedVec) + 1.0) < 0.2;
     }
 
@@ -172,5 +180,45 @@ public class BSFUtil {
         } else {
             level.explode(null, snowball.getX(), snowball.getY(), snowball.getZ(), radius, Explosion.BlockInteraction.NONE);
         }
+    }
+
+    public static boolean isNotBlocked(Vec3 rVec, Vec3 rVec1, Player player, Level level) {
+        double x = player.getX();
+        double y = player.getEyeY();
+        double z = player.getZ();
+        Vec3 n = rVec.normalize().scale(0.5);
+        int l = (int) (2 * Math.sqrt(modSqr(rVec)));
+        boolean flag = true;
+        for (int i = 0; i < l; i++) {
+            BlockPos blockPos = new BlockPos(x, y, z);
+            BlockState blockstate = level.getBlockState(blockPos);
+            System.out.println(x + " " + y + " " + z);
+            System.out.println(blockstate.getBlock());
+            if (blockstate.getBlock() != Blocks.AIR) {
+                System.out.println("failed eye");
+                flag = false;
+                break;
+            }
+            x += n.x;
+            y += n.y;
+            z += n.z;
+        }
+        x = player.getX();
+        y = player.getEyeY();
+        z = player.getZ();
+        n = rVec1.normalize().scale(0.5);
+        l = (int) (2 * Math.sqrt(modSqr(rVec1)));
+        for (int i = 0; i < l; i++) {
+            BlockPos blockPos = new BlockPos(x, y, z);
+            BlockState blockstate = level.getBlockState(blockPos);
+            if (blockstate.getBlock() != Blocks.AIR) {
+                System.out.println("failed feet");
+                return flag;
+            }
+            x += n.x;
+            y += n.y;
+            z += n.z;
+        }
+        return true;
     }
 }
