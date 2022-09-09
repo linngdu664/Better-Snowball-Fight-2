@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class EmptyBasin extends Item {
     public EmptyBasin() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
     }
 
     @Override
@@ -23,9 +23,12 @@ public class EmptyBasin extends Item {
         Level level = pContext.getLevel();
         ItemStack itemStack = pContext.getItemInHand();
         Block block = level.getBlockState(pContext.getClickedPos()).getBlock();
-        if (block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || block == Blocks.POWDER_SNOW) {
-            assert player != null;
+        assert player != null;
+        if (block == Blocks.SNOW_BLOCK || block == Blocks.SNOW) {
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_SNOW.get()), true);
+            itemStack.shrink(1);
+        } else if (block == Blocks.POWDER_SNOW) {
+            player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get()), true);
             itemStack.shrink(1);
         }
         return super.useOn(pContext);

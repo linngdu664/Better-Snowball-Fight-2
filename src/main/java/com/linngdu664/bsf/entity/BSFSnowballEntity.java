@@ -90,7 +90,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
 
             //Handle frozen and weakness effects
             if (frozenTime > 0) {
-                entity.setTicksFrozen(frozenTime);
+                entity.setTicksFrozen(entity.getTicksFrozen() + frozenTime);
                 entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1));
             }
             if (weaknessTime > 0) {
@@ -139,10 +139,12 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     }
 
     /**
-     * You must override this fucking method, or the glove will not function well!
+     * You should override this fucking method if you want to catch the snowball!
      * @return Register corresponding item.
      */
-    protected Item getRegisterItem(){return null;}
+    protected Item getRegisterItem() {
+        return null;
+    }
 
     /**
      * @param entity The player who is using the glove.

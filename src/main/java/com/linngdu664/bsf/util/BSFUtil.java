@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -183,19 +184,24 @@ public class BSFUtil {
     }
 
     public static boolean isNotBlocked(Vec3 rVec, Vec3 rVec1, Player player, Level level) {
+        double offsetX = 0.25 * rVec.z * Mth.fastInvSqrt(modSqr(rVec.x, rVec.z));
+        double offsetZ = 0.25 * rVec.x * Mth.fastInvSqrt(modSqr(rVec.x, rVec.z));
         double x = player.getX();
         double y = player.getEyeY();
         double z = player.getZ();
-        Vec3 n = rVec.normalize().scale(0.5);
-        int l = (int) (2 * Math.sqrt(modSqr(rVec)));
+        Vec3 n = rVec.normalize().scale(0.25);
+        int l = (int) (4 * Math.sqrt(modSqr(rVec)));
         boolean flag = true;
         for (int i = 0; i < l; i++) {
-            BlockPos blockPos = new BlockPos(x, y, z);
-            BlockState blockstate = level.getBlockState(blockPos);
-            System.out.println(x + " " + y + " " + z);
-            System.out.println(blockstate.getBlock());
-            if (blockstate.getBlock() != Blocks.AIR) {
-                System.out.println("failed eye");
+            int k = 0;
+            for (int j = -1; j <= 1; j++) {
+                BlockPos blockPos = new BlockPos(x - offsetX * j, y, z + offsetZ * j);
+                BlockState blockState = level.getBlockState(blockPos);
+                if (blockState.is(Blocks.AIR)) {
+                    k++;
+                }
+            }
+            if (k < 2) {
                 flag = false;
                 break;
             }
@@ -206,13 +212,18 @@ public class BSFUtil {
         x = player.getX();
         y = player.getEyeY();
         z = player.getZ();
-        n = rVec1.normalize().scale(0.5);
-        l = (int) (2 * Math.sqrt(modSqr(rVec1)));
+        n = rVec1.normalize().scale(0.25);
+        l = (int) (4 * Math.sqrt(modSqr(rVec1)));
         for (int i = 0; i < l; i++) {
-            BlockPos blockPos = new BlockPos(x, y, z);
-            BlockState blockstate = level.getBlockState(blockPos);
-            if (blockstate.getBlock() != Blocks.AIR) {
-                System.out.println("failed feet");
+            int k = 0;
+            for (int j = -1; j <= 1; j++) {
+                BlockPos blockPos = new BlockPos(x - offsetX * j, y, z + offsetZ * j);
+                BlockState blockState = level.getBlockState(blockPos);
+                if (blockState.is(Blocks.AIR)) {
+                    k++;
+                }
+            }
+            if (k < 2) {
                 return flag;
             }
             x += n.x;
