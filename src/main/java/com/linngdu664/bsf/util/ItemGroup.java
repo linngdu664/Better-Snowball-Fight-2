@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.util;
 
-import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.ItemRegister;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;

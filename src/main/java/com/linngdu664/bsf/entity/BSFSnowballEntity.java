@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.entity;
 
-import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.BSFUtil;
 import com.linngdu664.bsf.util.LaunchFrom;

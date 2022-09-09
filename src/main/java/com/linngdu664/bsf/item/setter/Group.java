@@ -1,5 +1,6 @@
 package com.linngdu664.bsf.item.setter;
 
+import com.linngdu664.bsf.item.ItemRegister;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.CreativeModeTab;
@@ -18,6 +19,6 @@ public class Group extends CreativeModeTab {
 
     @Override
     public @NotNull Component getDisplayName() {
-        return new TranslatableComponent("itemGroup.bsf.bsf_group");
+        return new TranslatableComponent("itemGroup.bsf_group");
     }
 }

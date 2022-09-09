@@ -3,8 +3,6 @@ package com.linngdu664.bsf.util;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -12,69 +10,9 @@ import java.util.List;
 
 import static com.linngdu664.bsf.util.BSFUtil.modSqr;
 import static com.linngdu664.bsf.util.BSFUtil.vec2AngleCos;
+import static com.linngdu664.bsf.util.TargetGetter.*;
 
 public class MovingAlgorithm {
-
-    /**
-     * This method can get the nearest available target.
-     * @param snowball The snowball entity.
-     * @param t The class of specific targets.
-     * @param trackingRange Only gets target within the range. See AABB.inflate().
-     * @param <T> Extends entity class.
-     * @param angleRestriction Whether only return the target within 60 degrees.
-     * @return The target.
-     */
-    private static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
-        Level level = snowball.level;
-        List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
-        if (list.contains(snowball)) {
-            list.remove(snowball);
-        }
-//        if (list.contains(snowball.getOwner())) {
-//            list.remove(snowball.getOwner());
-//        }
-        if (list.isEmpty()) {
-            return null;
-        }
-        Entity entity1 = list.get(0);
-        for (T entity : list) {
-            if (snowball.distanceToSqr(entity) < snowball.distanceToSqr(entity1)) {
-                entity1 = entity;
-            }
-        }
-        if (angleRestriction) {
-            Vec3 vec3 = new Vec3(entity1.getX() - snowball.getX(), entity1.getY() - snowball.getY(), entity1.getZ() - snowball.getZ());
-            Vec3 velocity = snowball.getDeltaMovement();
-            if (BSFUtil.vec3AngleCos(vec3, velocity) < 0.5 || modSqr(vec3) > trackingRange * trackingRange) {
-                return null;
-            }
-        }
-        return entity1;
-    }
-
-    /**
-     * This method can get a target list.
-     * @param snowball The snowball entity.
-     * @param t The class of specific targets.
-     * @param trackingRange Only gets target within the range. See AABB.inflate().
-     * @param <T> Extends entity class.
-     * @return The target list.
-     */
-    private static <T extends Entity> List<T> getTargetList(BSFSnowballEntity snowball, Class<T> t, double trackingRange) {
-        Level level = snowball.level;
-        List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
-        if (list.contains(snowball)) {
-            list.remove(snowball);
-        }
-//        if (list.contains(snowball.getOwner())) {
-//            list.remove(snowball.getOwner());
-//        }
-        if (!list.isEmpty()) {
-            return list;
-        }
-        return null;
-    }
-
     @Deprecated
     //This is not used for tracking in fact, but it has some funny effects.
     public static <T extends Entity> void gravityTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
@@ -148,7 +86,7 @@ public class MovingAlgorithm {
      */
     public static <T extends Entity> void forceEffect(BSFSnowballEntity snowball, Class<T> targetClass, double range, double GM, double boundaryR2) {
         List<T> list = getTargetList(snowball, targetClass, range);
-        if (list != null && !list.isEmpty()) {
+        //if (!list.isEmpty()) {
             for (T entity : list) {
                 Vec3 rVec = new Vec3(snowball.getX() - entity.getX(), snowball.getY() - entity.getEyeY(), snowball.getZ() - entity.getZ());
                 double r2 = modSqr(rVec);
@@ -163,7 +101,7 @@ public class MovingAlgorithm {
                 }
                 entity.push(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
             }
-        }
+        //}
     }
 
     /**

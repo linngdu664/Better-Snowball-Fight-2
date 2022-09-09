@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.snowball.tracking_snowball;
 
-import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.BSFUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

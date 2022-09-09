@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.entity.snowball.force_snowball;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.MovingAlgorithm;
 import net.minecraft.core.particles.ParticleTypes;

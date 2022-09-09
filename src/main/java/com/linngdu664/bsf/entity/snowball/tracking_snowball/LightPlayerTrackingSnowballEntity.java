@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.entity.snowball.tracking_snowball;
 
 import com.linngdu664.bsf.entity.snowball.TrackingSnowballEntity;
-import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

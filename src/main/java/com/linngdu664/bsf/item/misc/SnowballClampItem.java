@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.misc;
 
-import com.linngdu664.bsf.item.setter.ItemRegister;
+import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -16,6 +16,7 @@ import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,9 +33,8 @@ public class SnowballClampItem extends TieredItem {
         Player player = pContext.getPlayer();
         ItemStack itemStack = pContext.getItemInHand();
         Level level = pContext.getLevel();
-        if (level.getBlockState(pContext.getClickedPos()).getBlock() == Blocks.SNOW_BLOCK ||
-                level.getBlockState(pContext.getClickedPos()).getBlock() == Blocks.SNOW ||
-                level.getBlockState(pContext.getClickedPos()).getBlock() == Blocks.POWDER_SNOW) {
+        Block block = level.getBlockState(pContext.getClickedPos()).getBlock();
+        if (block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || block == Blocks.POWDER_SNOW) {
             assert player != null;
             if (player.getMainHandItem().isEmpty() || player.getOffhandItem().isEmpty()) {
                 player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);

@@ -25,7 +25,7 @@ public class PopsicleItem extends Item {
     private static final FoodProperties food = new FoodProperties.Builder().alwaysEat().build();
 
     public PopsicleItem() {
-        super(new Properties().food(food).tab(ItemGroup.MAIN));
+        super(new Properties().tab(ItemGroup.MAIN).food(food));
     }
 
     @Override
