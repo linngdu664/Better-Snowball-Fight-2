@@ -43,7 +43,7 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
         super.tick();
         if (timer == startTime && !level.isClientSide) {
             Vec3 vec3 = this.getDeltaMovement();
-            this.setDeltaMovement(vec3.x * 0.25, vec3.y * 0.25, vec3.z * 0.25);
+            this.push(vec3.x * -0.75, vec3.y * -0.75, vec3.z * -0.75);
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 200, 0, 0, 0, 0.32);
         }
         if (timer > startTime) {

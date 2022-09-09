@@ -27,11 +27,12 @@ public class MovingAlgorithm {
     private static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
         Level level = snowball.level;
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
-        if (t == Projectile.class) {
+        if (list.contains(snowball)) {
             list.remove(snowball);
-        } else if (t == Player.class) {
-            list.remove(snowball.getOwner());
         }
+//        if (list.contains(snowball.getOwner())) {
+//            list.remove(snowball.getOwner());
+//        }
         if (list.isEmpty()) {
             return null;
         }
@@ -65,9 +66,9 @@ public class MovingAlgorithm {
         if (list.contains(snowball)) {
             list.remove(snowball);
         }
-        if (list.contains(snowball.getOwner())) {
-            list.remove(snowball.getOwner());
-        }
+//        if (list.contains(snowball.getOwner())) {
+//            list.remove(snowball.getOwner());
+//        }
         if (!list.isEmpty()) {
             return list;
         }
