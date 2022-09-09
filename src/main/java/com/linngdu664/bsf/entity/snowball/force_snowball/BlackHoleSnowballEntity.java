@@ -1,11 +1,13 @@
 package com.linngdu664.bsf.entity.snowball.force_snowball;
 
+import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.MovingAlgorithm;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -41,10 +43,13 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
     @Override
     public void tick() {
         super.tick();
-        if (timer == startTime && !level.isClientSide) {
-            Vec3 vec3 = this.getDeltaMovement();
-            this.push(vec3.x * -0.75, vec3.y * -0.75, vec3.z * -0.75);
-            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 200, 0, 0, 0, 0.32);
+        if (timer == startTime) {
+            if(!level.isClientSide){
+                Vec3 vec3 = this.getDeltaMovement();
+                this.push(vec3.x * -0.75, vec3.y * -0.75, vec3.z * -0.75);
+                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 200, 0, 0, 0, 0.32);
+            }
+            level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundRegister.BLACK_HOLE_START.get(), SoundSource.VOICE, 3.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
         }
         if (timer > startTime) {
             MovingAlgorithm.forceEffect(this, Entity.class, 50, 16, 16);

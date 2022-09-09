@@ -12,6 +12,7 @@ public class SoundRegister {
     public static final RegistryObject<SoundEvent> SNOWBALL_MACHINE_GUN_SHOOT = build("snowball_machine_gun_shoot");
     public static final RegistryObject<SoundEvent> SHOTGUN_FIRE_1 = build("shotgun_fire1");
     public static final RegistryObject<SoundEvent> SHOTGUN_FIRE_2 = build("shotgun_fire2");
+    public static final RegistryObject<SoundEvent> BLACK_HOLE_START = build("black_hole_start");
 
     private static RegistryObject<SoundEvent> build (String id) {
         return SOUNDS.register(id, () -> new SoundEvent(new ResourceLocation("bsf", id)));
