@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +23,7 @@ public class SnowballStorageTankItem extends Item {
     public Item item;
 
     public SnowballStorageTankItem(Item item) {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(96));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(96).rarity(Rarity.UNCOMMON));
         this.item = item;
     }
 

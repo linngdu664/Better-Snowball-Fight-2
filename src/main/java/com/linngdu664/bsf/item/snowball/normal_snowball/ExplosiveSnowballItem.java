@@ -20,6 +20,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class ExplosiveSnowballItem extends BSFSnowballItem {
     public ExplosiveSnowballItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16).rarity(Rarity.UNCOMMON));
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
                 return Util.make(new ExplosiveSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {});

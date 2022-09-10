@@ -32,7 +32,7 @@ import java.util.List;
 public class SnowballCannonItem extends BowItem {
 
     public SnowballCannonItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(256));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(256).rarity(Rarity.RARE));
     }
 
     public LaunchFunc getLaunchFunc(double damageDropRate) {

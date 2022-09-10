@@ -5,10 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +14,7 @@ import java.util.List;
 
 public class GloveItem extends ShieldItem {
     public GloveItem() {
-        super(new Properties().tab(ItemGroup.MAIN).durability(128));
+        super(new Properties().tab(ItemGroup.MAIN).durability(128).rarity(Rarity.UNCOMMON));
     }
 
     @Override

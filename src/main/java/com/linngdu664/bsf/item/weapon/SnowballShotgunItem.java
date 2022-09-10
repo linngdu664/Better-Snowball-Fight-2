@@ -22,6 +22,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -33,7 +34,7 @@ import java.util.List;
 public class SnowballShotgunItem extends Item {
     private double pushRank;
     public SnowballShotgunItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(256));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(256).rarity(Rarity.EPIC));
     }
 
     public LaunchFunc getLaunchFunc(){

@@ -34,7 +34,7 @@ public class SnowballMachineGunItem extends Item {
     private static float recoil;
 
     public SnowballMachineGunItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(512));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(512).rarity(Rarity.EPIC));
     }
 
     public LaunchFunc getLaunchFunc() {
