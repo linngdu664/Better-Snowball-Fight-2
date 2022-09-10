@@ -25,6 +25,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static com.linngdu664.bsf.util.BSFUtil.SphericalToCartesian;
+
 public class PowerfulSnowballCannonItem extends SnowballCannonItem{
     @Override
     public LaunchFunc getLaunchFunc(double damageDropRate) {
@@ -58,12 +60,10 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem{
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
 
 
-                    float pitch = player.getXRot();
-                    float yaw = player.getYRot();
-                    Vec3 cameraVec = new Vec3(-Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.sin(yaw * Mth.DEG_TO_RAD), -Mth.sin(pitch * Mth.DEG_TO_RAD), Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.cos(yaw * Mth.DEG_TO_RAD));
+                    Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
                     //add push
                     if (pLevel.isClientSide()) {
-                        player.push(-0.12 * cameraVec.x, -0.12 * cameraVec.y, -0.12 * cameraVec.z);
+                        player.push(-0.2666666666666667 * cameraVec.x * f, -0.2666666666666667 * cameraVec.y * f, -0.2666666666666667 * cameraVec.z * f);
                     }
 
                     //add particles

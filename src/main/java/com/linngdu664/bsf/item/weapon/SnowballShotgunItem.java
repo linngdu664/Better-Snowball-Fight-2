@@ -31,6 +31,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static com.linngdu664.bsf.util.BSFUtil.SphericalToCartesian;
+
 public class SnowballShotgunItem extends Item {
     private double pushRank;
     public SnowballShotgunItem() {
@@ -87,7 +89,7 @@ public class SnowballShotgunItem extends Item {
         if (i > 0) {
             float pitch = player.getXRot();
             float yaw = player.getYRot();
-            Vec3 cameraVec = new Vec3(-Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.sin(yaw * Mth.DEG_TO_RAD), -Mth.sin(pitch * Mth.DEG_TO_RAD), Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.cos(yaw * Mth.DEG_TO_RAD));
+            Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
             if (!player.isShiftKeyDown()){
                 if (level.isClientSide()) {
                     player.push(-0.24 * cameraVec.x, -0.24 * cameraVec.y, -0.24 * cameraVec.z);

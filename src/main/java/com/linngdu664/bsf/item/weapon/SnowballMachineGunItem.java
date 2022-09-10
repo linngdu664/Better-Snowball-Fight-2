@@ -29,6 +29,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static com.linngdu664.bsf.util.BSFUtil.SphericalToCartesian;
+
 public class SnowballMachineGunItem extends Item {
     private static int timer;
     private static float recoil;
@@ -113,11 +115,11 @@ public class SnowballMachineGunItem extends Item {
                 pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                 pLevel.addFreshEntity(snowballEntity);
 
-                Vec3 cameraVec = new Vec3(-Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.sin(yaw * Mth.DEG_TO_RAD), -Mth.sin(pitch * Mth.DEG_TO_RAD), Mth.cos(pitch * Mth.DEG_TO_RAD) * Mth.cos(yaw * Mth.DEG_TO_RAD));
+                Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
 
                 //add push
                 if (pLevel.isClientSide()) {
-                    player.push(-0.04 * cameraVec.x, -0.04 * cameraVec.y, -0.04 * cameraVec.z);
+                    player.push(-cameraVec.x * recoil * 0.25, -cameraVec.y * recoil * 0.25, -cameraVec.z * recoil * 0.25);
                 }
 
                 //add particles
