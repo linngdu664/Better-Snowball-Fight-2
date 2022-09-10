@@ -28,7 +28,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class BSFSnowballEntity extends ThrowableItemProjectile {
-
+    public boolean isCaught = false;
     public double punch = 0.0;
     public float damage = Float.MIN_VALUE;
     public float blazeDamage = 3.0F;
@@ -81,6 +81,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
             //Handling the catch
             if (catchOnGlove(entity)) {
                 ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);
+                isCaught = true;
                 return;
             }
 

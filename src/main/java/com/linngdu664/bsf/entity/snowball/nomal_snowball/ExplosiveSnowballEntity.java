@@ -7,6 +7,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,17 +38,14 @@ public class ExplosiveSnowballEntity extends BSFSnowballEntity {
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
-        handleExplosion(this, 1.5F);
+        if (!isCaught) {
+            handleExplosion(this, 1.5F);
+        }
         if (!level.isClientSide) {
             this.discard();
         }
     }
 /*
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.EXPLOSIVE_SNOWBALL.get();
-    }
-
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
@@ -57,5 +56,10 @@ public class ExplosiveSnowballEntity extends BSFSnowballEntity {
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
         handleExplosion(this, 1.5F);
+    }
+
+    @Override
+    protected @NotNull Item getDefaultItem() {
+        return ItemRegister.EXPLOSIVE_SNOWBALL.get();
     }*/
 }

@@ -8,6 +8,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,15 +31,18 @@ public class ExplosiveMonsterTrackingSnowballEntity extends TrackingSnowballEnti
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
-        handleExplosion(this, 1.5F);
+        if (!isCaught) {
+            handleExplosion(this, 1.5F);
+        }
         if (!level.isClientSide) {
             this.discard();
         }
     }
 /*
     @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get();
+    protected void onHitEntity(EntityHitResult pResult) {
+        super.onHitEntity(pResult);
+        handleExplosion(this, 1.5F);
     }
 
     @Override
@@ -46,9 +51,9 @@ public class ExplosiveMonsterTrackingSnowballEntity extends TrackingSnowballEnti
         handleExplosion(this, 1.5F);
     }
 
+
     @Override
-    protected void onHitEntity(EntityHitResult pResult) {
-        super.onHitEntity(pResult);
-        handleExplosion(this, 1.5F);
+    protected @NotNull Item getDefaultItem() {
+        return ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get();
     }*/
 }
