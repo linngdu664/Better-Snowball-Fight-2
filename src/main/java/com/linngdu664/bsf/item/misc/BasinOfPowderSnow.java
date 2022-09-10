@@ -2,6 +2,7 @@ package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -30,16 +31,36 @@ public class BasinOfPowderSnow extends Item {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         List<LivingEntity> list = getTargetList(pPlayer, LivingEntity.class, 8);
         Vec3 cameraVec = SphericalToCartesian(pPlayer.getXRot() * Mth.DEG_TO_RAD, pPlayer.getYRot() * Mth.DEG_TO_RAD);
-        double newX2 = modSqr(cameraVec.x, cameraVec.z);
+        if (pLevel.isClientSide) {
+            Vec3 vecA = cameraVec.cross(new Vec3(0, 1, 0)).normalize();
+            if (vecA == Vec3.ZERO) {
+                vecA = cameraVec.cross(new Vec3(1, 0, 0).normalize());
+            }
+            Vec3 vecB = cameraVec.cross(vecA).normalize();
+            for (float r = 0.5F; r <= 4.5F; r += 0.5F) {
+                float rand = pLevel.getRandom().nextFloat() * Mth.PI * 0.16666667F;
+                for (float theta = rand; theta < Mth.TWO_PI + rand; theta += Mth.PI * 0.16666667F) {
+                    double x = 8.0F * cameraVec.x + r * (Mth.cos(theta) * vecA.x + Mth.sin(theta) * vecB.x);
+                    double y = 8.0F * cameraVec.y + r * (Mth.cos(theta) * vecA.y + Mth.sin(theta) * vecB.y);
+                    double z = 8.0F * cameraVec.z + r * (Mth.cos(theta) * vecA.z + Mth.sin(theta) * vecB.z);
+                    double inverseL = Mth.fastInvSqrt(modSqr(x, y, z));
+                    pLevel.addParticle(ParticleTypes.SNOWFLAKE, pPlayer.getX(), pPlayer.getEyeY(), pPlayer.getZ(), x * inverseL, y * inverseL, z * inverseL);
+                }
+            }
+        }
         if (!pLevel.isClientSide) {
             for (LivingEntity livingEntity : list) {
                 Vec3 rVec1 = new Vec3(livingEntity.getX() - pPlayer.getX(), livingEntity.getEyeY() - pPlayer.getEyeY(), livingEntity.getZ() - pPlayer.getZ());
                 Vec3 rVec2 = new Vec3(rVec1.x, livingEntity.getY() - pPlayer.getEyeY(), rVec1.z);
-                double newX1 = modSqr(rVec1.x, rVec1.z);
-                if (vec2AngleCos(rVec1.x, rVec1.z, cameraVec.x, cameraVec.z) > 0.5 && vec2AngleCos(newX2, cameraVec.y, newX1, rVec1.y) > 0.5 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
-                    System.out.println("ready freeze");
-                    double r2 = modSqr(rVec1);
-                    livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + (int) (640 / r2));
+                if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
+                    double r = Math.sqrt(modSqr(rVec1));
+                    if (r < 3) {
+                        livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 240);
+                    } else if (r < 6) {
+                        livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + (int) (240 - (r - 3) * (r - 3) * (r - 3)));
+                    } else if (r < 8) {
+                        livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + (int) (-15.375 * (r - 8) * (r * (r - 9.414634146341463) + 27.41463414634146)));
+                    }
                 }
             }
         }

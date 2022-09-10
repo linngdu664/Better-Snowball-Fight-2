@@ -35,14 +35,14 @@ public class BasinOfSnow extends Item {
                 vecA = cameraVec.cross(new Vec3(1, 0, 0).normalize());
             }
             Vec3 vecB = cameraVec.cross(vecA).normalize();
-            for (float r = 0.1F; r <= 4.1F; r += 0.5F) {
-                float rand = pLevel.getRandom().nextFloat();
-                for (float theta = rand; theta < Mth.TWO_PI + rand; theta += Mth.PI / 6) {
+            for (float r = 0.5F; r <= 4.5F; r += 0.5F) {
+                float rand = pLevel.getRandom().nextFloat() * Mth.PI * 0.16666667F;
+                for (float theta = rand; theta < Mth.TWO_PI + rand; theta += Mth.PI * 0.16666667F) {
                     double x = 8.0F * cameraVec.x + r * (Mth.cos(theta) * vecA.x + Mth.sin(theta) * vecB.x);
                     double y = 8.0F * cameraVec.y + r * (Mth.cos(theta) * vecA.y + Mth.sin(theta) * vecB.y);
                     double z = 8.0F * cameraVec.z + r * (Mth.cos(theta) * vecA.z + Mth.sin(theta) * vecB.z);
-                    Vec3 vVec = new Vec3(x, y, z).normalize();
-                    pLevel.addParticle(ParticleTypes.SNOWFLAKE, pPlayer.getX(), pPlayer.getEyeY(), pPlayer.getZ(), vVec.x, vVec.y, vVec.z);
+                    double inverseL = Mth.fastInvSqrt(modSqr(x, y, z));
+                    pLevel.addParticle(ParticleTypes.SNOWFLAKE, pPlayer.getX(), pPlayer.getEyeY(), pPlayer.getZ(), x * inverseL, y * inverseL, z * inverseL);
                 }
             }
         }
@@ -51,9 +51,12 @@ public class BasinOfSnow extends Item {
                 Vec3 rVec1 = new Vec3(livingEntity.getX() - pPlayer.getX(), livingEntity.getEyeY() - pPlayer.getEyeY(), livingEntity.getZ() - pPlayer.getZ());
                 Vec3 rVec2 = new Vec3(rVec1.x, livingEntity.getY() - pPlayer.getEyeY(), rVec1.z);
                 if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
-                    System.out.println("ready freeze");
-                    double r2 = modSqr(rVec1);
-                    livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + (int) (320 / r2));
+                    double r = Math.sqrt(modSqr(rVec1));
+                    if (r < 5) {
+                        livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 180);
+                    } else if (r < 8) {
+                        livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + (int) (180 - 6.666666666666667 * (r - 5) * (r - 5) * (r - 5)));
+                    }
                 }
             }
         }

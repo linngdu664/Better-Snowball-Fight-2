@@ -144,13 +144,17 @@ public class BSFUtil {
         return Mth.fastInvSqrt(modSqr(a)) * Mth.fastInvSqrt(modSqr(b)) * (a.x * b.x + a.y * b.y + a.z * b.z);
     }
 
-    //Calculate the square of the modulus(length) of the vector.
+    //Calculate the square of the modulus(length) of a vector.
     public static double modSqr(double x1, double y1) {
         return x1 * x1 + y1 * y1;
     }
 
     public static double modSqr(Vec3 a) {
         return a.x * a.x + a.y * a.y + a.z * a.z;
+    }
+
+    public static double modSqr(double x, double y, double z) {
+        return x * x + y * y + z * z;
     }
 
     //Rewrite vanilla "shootFromRotation" method to remove the influence of player's velocity.
