@@ -5,7 +5,6 @@ import com.linngdu664.bsf.item.ItemRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -13,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -165,6 +163,7 @@ public class BSFUtil {
         projectile.shoot(f, f1, f2, pVelocity, pInaccuracy);
     }
 
+    //Fucking Minecraft anti-human coordinate system.
     public static Vec3 SphericalToCartesian(float pitch, float yaw) {
         return new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
     }
@@ -187,7 +186,18 @@ public class BSFUtil {
         }
     }
 
-    public static boolean isNotBlocked(Vec3 rVec, Vec3 rVec1, Player player, Level level) {
+    //todo:check more blocks
+
+    /**
+     * This method can check whether there are blocks on head-head and head-feet line segments (See param).
+     * Specially designed for basin of snow/powder snow.
+     * @param rVec The vector from attacker's head to target's head.
+     * @param rVec1 The vector from attacker's head to target's feet.
+     * @param player The attacker.
+     * @param level The attacker's level.
+     * @return Whether both rVec and rVec1 are blocked by block.
+     */
+    public static boolean isBlocked(Vec3 rVec, Vec3 rVec1, Player player, Level level) {
         double offsetX = 0.25 * rVec.z * Mth.fastInvSqrt(modSqr(rVec.x, rVec.z));
         double offsetZ = 0.25 * rVec.x * Mth.fastInvSqrt(modSqr(rVec.x, rVec.z));
         double x = player.getX();
@@ -195,7 +205,7 @@ public class BSFUtil {
         double z = player.getZ();
         Vec3 n = rVec.normalize().scale(0.25);
         int l = (int) (4 * Math.sqrt(modSqr(rVec)));
-        boolean flag = true;
+        boolean flag = false;
         for (int i = 0; i < l; i++) {
             int k = 0;
             for (int j = -1; j <= 1; j++) {
@@ -206,7 +216,8 @@ public class BSFUtil {
                 }
             }
             if (k < 2) {
-                flag = false;
+                System.out.println("failed eye");//todo:delete
+                flag = true;
                 break;
             }
             x += n.x;
@@ -228,12 +239,13 @@ public class BSFUtil {
                 }
             }
             if (k < 2) {
+                System.out.println("failed feet");//todo:delete
                 return flag;
             }
             x += n.x;
             y += n.y;
             z += n.z;
         }
-        return true;
+        return false;
     }
 }

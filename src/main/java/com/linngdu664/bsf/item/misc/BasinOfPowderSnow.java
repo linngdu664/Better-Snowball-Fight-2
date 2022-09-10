@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import static com.linngdu664.bsf.util.BSFUtil.*;
-import static com.linngdu664.bsf.util.BSFUtil.modSqr;
 import static com.linngdu664.bsf.util.TargetGetter.getTargetList;
 
 public class BasinOfPowderSnow extends Item {
@@ -52,7 +51,8 @@ public class BasinOfPowderSnow extends Item {
             for (LivingEntity livingEntity : list) {
                 Vec3 rVec1 = new Vec3(livingEntity.getX() - pPlayer.getX(), livingEntity.getEyeY() - pPlayer.getEyeY(), livingEntity.getZ() - pPlayer.getZ());
                 Vec3 rVec2 = new Vec3(rVec1.x, livingEntity.getY() - pPlayer.getEyeY(), rVec1.z);
-                if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
+                if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isBlocked(rVec1, rVec2, pPlayer, pLevel)) {
+                    System.out.println("ready to freeze");
                     double r = Math.sqrt(modSqr(rVec1));
                     if (r < 3) {
                         livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 240);
