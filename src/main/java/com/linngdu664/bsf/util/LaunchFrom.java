@@ -5,5 +5,4 @@ public enum LaunchFrom {
     CANNON,
     MACHINE_GUN,
     SHOTGUN
-
 }
