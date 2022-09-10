@@ -1,6 +1,8 @@
 package com.linngdu664.bsf.util;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -18,33 +20,31 @@ public class MovingAlgorithm {
     public static <T extends Entity> void gravityTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
         if (trackingMultipleTargets) {
             List<T> list = getTargetList(snowball, targetClass, trackingRange);
-            if (list != null && !list.isEmpty()) {
-                for (T entity : list) {
-                    if (angleRestriction) {
-                        Vec3 vec3 = new Vec3(entity.getX() - snowball.getX(), entity.getY() - snowball.getY(), entity.getZ() - snowball.getZ());
-                        Vec3 velocity = snowball.getDeltaMovement();
-                        if (BSFUtil.vec3AngleCos(vec3, velocity) < 0.5 || modSqr(vec3) > trackingRange * trackingRange) {
-                            continue;
-                        }
+            for (T entity : list) {
+                if (angleRestriction) {
+                    Vec3 vec3 = new Vec3(entity.getX() - snowball.getX(), entity.getY() - snowball.getY(), entity.getZ() - snowball.getZ());
+                    Vec3 velocity = snowball.getDeltaMovement();
+                    if (BSFUtil.vec3AngleCos(vec3, velocity) < 0.5 || modSqr(vec3) > trackingRange * trackingRange) {
+                        continue;
                     }
-                    Vec3 rVec = new Vec3(entity.getX() - snowball.getX(), entity.getEyeY() - snowball.getY(), entity.getZ() - snowball.getZ());
-                    double r2 = rVec.x * rVec.x + rVec.y + rVec.y + rVec.z * rVec.z;
-                    Vec3 aVec;
-                    if (r2 > 0.1) {
-                        double ir2 = Mth.fastInvSqrt(r2);
-                        double a = GM / r2;
-                        aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
-                    } else {
-                        aVec = Vec3.ZERO;
-                    }
-                    if (selfAttraction) {
-                        Vec3 vVec = snowball.getDeltaMovement();
-                        snowball.lerpMotion(vVec.x + aVec.x, vVec.y + aVec.y, vVec.z + aVec.z);
-                    }
-                    if (attraction) {
-                        Vec3 vVec2 = entity.getDeltaMovement();
-                        entity.lerpMotion(vVec2.x - aVec.x, vVec2.y - aVec.y, vVec2.z - aVec.z);
-                    }
+                }
+                Vec3 rVec = new Vec3(entity.getX() - snowball.getX(), entity.getEyeY() - snowball.getY(), entity.getZ() - snowball.getZ());
+                double r2 = rVec.x * rVec.x + rVec.y + rVec.y + rVec.z * rVec.z;
+                Vec3 aVec;
+                if (r2 > 0.1) {
+                    double ir2 = Mth.fastInvSqrt(r2);
+                    double a = GM / r2;
+                    aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
+                } else {
+                    aVec = Vec3.ZERO;
+                }
+                if (selfAttraction) {
+                    Vec3 vVec = snowball.getDeltaMovement();
+                    snowball.lerpMotion(vVec.x + aVec.x, vVec.y + aVec.y, vVec.z + aVec.z);
+                }
+                if (attraction) {
+                    Vec3 vVec2 = entity.getDeltaMovement();
+                    entity.lerpMotion(vVec2.x - aVec.x, vVec2.y - aVec.y, vVec2.z - aVec.z);
                 }
             }
         } else {
@@ -86,22 +86,24 @@ public class MovingAlgorithm {
      */
     public static <T extends Entity> void forceEffect(BSFSnowballEntity snowball, Class<T> targetClass, double range, double GM, double boundaryR2) {
         List<T> list = getTargetList(snowball, targetClass, range);
-        //if (!list.isEmpty()) {
-            for (T entity : list) {
-                Vec3 rVec = new Vec3(snowball.getX() - entity.getX(), snowball.getY() - entity.getEyeY(), snowball.getZ() - entity.getZ());
-                double r2 = modSqr(rVec);
-                double ir2 = Mth.fastInvSqrt(r2);
-                double a;
-                if (r2 > boundaryR2) {
-                    a = GM / r2;
-                } else if (r2 > 0.25) {
-                    a = GM / boundaryR2;
-                } else {
-                    a = 0;
-                }
-                entity.push(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
+        for (T entity : list) {
+            Vec3 rVec = new Vec3(snowball.getX() - entity.getX(), snowball.getY() - entity.getEyeY(), snowball.getZ() - entity.getZ());
+            double r2 = modSqr(rVec);
+            double ir2 = Mth.fastInvSqrt(r2);
+            double a;
+            if (r2 > boundaryR2) {
+                a = GM / r2;
+            } else if (r2 > 0.25) {
+                a = GM / boundaryR2;
+            } else {
+                a = 0;
             }
-        //}
+            entity.push(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
+            //To tell client that player should move because client handles player's movement.
+            if (entity instanceof ServerPlayer player && !player.getAbilities().instabuild) {
+                player.connection.send(new ClientboundSetEntityMotionPacket(entity));
+            }
+        }
     }
 
     /**

@@ -25,9 +25,6 @@ public class TargetGetter {
         if (list.contains(snowball)) {
             list.remove(snowball);
         }
-//        if (list.contains(snowball.getOwner())) {
-//            list.remove(snowball.getOwner());
-//        }
         if (list.isEmpty()) {
             return null;
         }
