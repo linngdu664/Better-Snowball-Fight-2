@@ -12,11 +12,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-//You will see the deepest secrets of our code that we use this class to hide our shits.
+//You will see the deepest secrets of our code that we use this class to hide our shit code.
 public class BSFUtil {
     public static boolean isAmmoTank(Item item, boolean allowTracking) {
         return item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
@@ -57,7 +56,7 @@ public class BSFUtil {
 //    }
 
     /**
-     * This method is used to handle the storage of the snowballs.
+     * Handle the storage of the snowballs.
      * @param pPlayer The player who uses snowball.
      * @param itemStack The snowball itemstack.
      * @param tank The storage tank with the specific type.
@@ -90,8 +89,8 @@ public class BSFUtil {
     }
 
     /**
-     * This method is to find the ammo of the weapon in player's inventory. It will search tanks first, and then it will
-     * search bulk snowballs if "onlyTank" is false.
+     * Find the ammo of the weapon in player's inventory. It will search tanks first, and then it will search bulk
+     * snowballs if "onlyTank" is false.
      * @param player The user of the weapon.
      * @param onlyTank Whether the weapon can only use the snowball in tanks.
      * @param allowTracking Whether the weapon can shoot tracking snowball.
@@ -168,12 +167,10 @@ public class BSFUtil {
         return new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
     }
 
-    //Check weather the player can catch the snowball
+    //Check whether the player can catch the snowball
     public static boolean isHeadingToSnowball(Player player, BSFSnowballEntity snowballEntity) {
-        float pitch = player.getXRot() * Mth.DEG_TO_RAD;
-        float yaw = player.getYRot() * Mth.DEG_TO_RAD;
         Vec3 speedVec = snowballEntity.getDeltaMovement().normalize();
-        Vec3 cameraVec = SphericalToCartesian(pitch, yaw);
+        Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
         return Math.abs(cameraVec.dot(speedVec) + 1.0) < 0.2;
     }
 
@@ -187,17 +184,16 @@ public class BSFUtil {
     }
 
     //todo:check more blocks
-
     /**
-     * This method can check whether there are blocks on head-head and head-feet line segments (See param).
-     * Specially designed for basin of snow/powder snow.
+     * Check whether there are solid blocks on head-head and head-feet line segments (See param). Specially designed for
+     * basin of snow/powder snow.
      * @param rVec The vector from attacker's head to target's head.
      * @param rVec1 The vector from attacker's head to target's feet.
      * @param player The attacker.
      * @param level The attacker's level.
-     * @return Whether both rVec and rVec1 are blocked by block.
+     * @return Both rVec and rVec1 are blocked by solid block: false. Otherwise: true.
      */
-    public static boolean isBlocked(Vec3 rVec, Vec3 rVec1, Player player, Level level) {
+    public static boolean isNotBlocked(Vec3 rVec, Vec3 rVec1, Player player, Level level) {
         double offsetX = 0.25 * rVec.z * Mth.fastInvSqrt(modSqr(rVec.x, rVec.z));
         double offsetZ = 0.25 * rVec.x * Mth.fastInvSqrt(modSqr(rVec.x, rVec.z));
         double x = player.getX();
@@ -205,19 +201,20 @@ public class BSFUtil {
         double z = player.getZ();
         Vec3 n = rVec.normalize().scale(0.25);
         int l = (int) (4 * Math.sqrt(modSqr(rVec)));
-        boolean flag = false;
+        boolean flag = true;
         for (int i = 0; i < l; i++) {
             int k = 0;
             for (int j = -1; j <= 1; j++) {
                 BlockPos blockPos = new BlockPos(x - offsetX * j, y, z + offsetZ * j);
                 BlockState blockState = level.getBlockState(blockPos);
-                if (blockState.is(Blocks.AIR)) {
+                if (blockState.getMaterial().blocksMotion()) {
                     k++;
                 }
             }
-            if (k < 2) {
+            System.out.println(k);
+            if (k > 1) {
                 System.out.println("failed eye");//todo:delete
-                flag = true;
+                flag = false;
                 break;
             }
             x += n.x;
@@ -234,11 +231,12 @@ public class BSFUtil {
             for (int j = -1; j <= 1; j++) {
                 BlockPos blockPos = new BlockPos(x - offsetX * j, y, z + offsetZ * j);
                 BlockState blockState = level.getBlockState(blockPos);
-                if (blockState.is(Blocks.AIR)) {
+                if (blockState.getMaterial().blocksMotion()) {
                     k++;
                 }
             }
-            if (k < 2) {
+            System.out.println(k);
+            if (k > 1) {
                 System.out.println("failed feet");//todo:delete
                 return flag;
             }
@@ -246,6 +244,17 @@ public class BSFUtil {
             y += n.y;
             z += n.z;
         }
-        return false;
+        return true;
+    }
+
+    public static void consumeAmmo(ItemStack itemStack, Player player) {
+        if (isAmmoTank(itemStack.getItem(), true)) {
+            itemStack.hurtAndBreak(1, player, (p) -> p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true));
+        } else if (!player.getAbilities().instabuild) {
+            itemStack.shrink(1);
+            if (itemStack.isEmpty()) {
+                player.getInventory().removeItem(itemStack);
+            }
+        }
     }
 }

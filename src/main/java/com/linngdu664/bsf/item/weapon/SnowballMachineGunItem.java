@@ -5,9 +5,9 @@ import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.BSFUtil;
+import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
-import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -22,6 +22,9 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -32,8 +35,9 @@ import java.util.List;
 import static com.linngdu664.bsf.util.BSFUtil.SphericalToCartesian;
 
 public class SnowballMachineGunItem extends Item {
-    private static int timer;
-    private static float recoil;
+    private int timer = 0;
+    private float recoil = 0;
+    private float damageChance;
 
     public SnowballMachineGunItem() {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(512).rarity(Rarity.EPIC));
@@ -57,11 +61,13 @@ public class SnowballMachineGunItem extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         timer = 0;
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
+        damageChance = 1.0F / (1.0F + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, stack));
         pPlayer.startUsingItem(pUsedHand);
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.consume(stack);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onUseTick(@NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, @NotNull ItemStack pStack, int pRemainingUseDuration) {
         Player player = (Player) pLivingEntity;
@@ -115,7 +121,7 @@ public class SnowballMachineGunItem extends Item {
                 pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                 pLevel.addFreshEntity(snowballEntity);
 
-                Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
+                Vec3 cameraVec = SphericalToCartesian(pitch * Mth.DEG_TO_RAD, yaw * Mth.DEG_TO_RAD);
 
                 //add push
                 if (pLevel.isClientSide()) {
@@ -127,14 +133,11 @@ public class SnowballMachineGunItem extends Item {
                     ServerLevel serverLevel = (ServerLevel) pLevel;
                     serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 4, 0, 0, 0, 0.32);
                 }
-
-                if (!player.getAbilities().instabuild) {
-                    itemStack.hurtAndBreak(1, player, (p) -> {
-                        itemStack.shrink(1);
-                        p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true);
-                    });
+                itemStack.hurtAndBreak(1, player, (p) -> p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true));
+                if (pLevel.getRandom().nextFloat() <= damageChance && !player.getAbilities().instabuild) {
                     pStack.setDamageValue(pStack.getDamageValue() + 1);
                     if (pStack.getDamageValue() == 512) {
+                        player.awardStat(Stats.ITEM_BROKEN.get(pStack.getItem()));
                         pStack.shrink(1);
                         pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
                     }
@@ -195,6 +198,16 @@ public class SnowballMachineGunItem extends Item {
     @Override
     public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
         return pRepairCandidate.is(Items.IRON_INGOT);
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return enchantment.equals(Enchantments.UNBREAKING);
+    }
+
+    @Override
+    public int getItemEnchantability(ItemStack stack) {
+        return 1;
     }
 
     @Override

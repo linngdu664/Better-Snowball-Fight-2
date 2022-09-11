@@ -22,6 +22,8 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.SphericalToCartesian;
+import static com.linngdu664.bsf.util.BSFUtil.*;
 
 public class SnowballCannonItem extends BowItem {
 
@@ -59,8 +61,6 @@ public class SnowballCannonItem extends BowItem {
             if (f >= 0.1F) {
                 ItemStack itemStack = BSFUtil.findAmmo(player, false, true);
                 if (itemStack != null) {
-                    boolean k = BSFUtil.isAmmoTank(itemStack.getItem(), true);
-
                     BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player, f);
 
                     BSFUtil.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
@@ -103,6 +103,17 @@ public class SnowballCannonItem extends BowItem {
                     pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
                     pLevel.addFreshEntity(snowballEntity);
+                    consumeAmmo(itemStack, player);
+                    /*
+                    if (isAmmoTank(itemStack.getItem(), true)) {
+                        itemStack.hurtAndBreak(1, player, (p) -> p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true));
+                    } else if (!player.getAbilities().instabuild) {
+                        itemStack.shrink(1);
+                        if (itemStack.isEmpty()) {
+                            player.getInventory().removeItem(itemStack);
+                        }
+                    }
+
                     if (!player.getAbilities().instabuild) {
                         if (k) {
                             itemStack.setDamageValue(itemStack.getDamageValue() + 1);
@@ -116,7 +127,7 @@ public class SnowballCannonItem extends BowItem {
                                 player.getInventory().removeItem(itemStack);
                             }
                         }
-                    }
+                    }*/
                 }
                 player.awardStat(Stats.ITEM_USED.get(this));
             }
@@ -168,8 +179,8 @@ public class SnowballCannonItem extends BowItem {
     }
 
     @Override
-    public boolean isEnchantable(@NotNull ItemStack pStack) {
-        return false;
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return enchantment.equals(Enchantments.UNBREAKING);
     }
 
     @Override

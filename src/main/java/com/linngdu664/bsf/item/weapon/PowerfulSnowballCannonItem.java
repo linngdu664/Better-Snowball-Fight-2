@@ -25,9 +25,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.SphericalToCartesian;
+import static com.linngdu664.bsf.util.BSFUtil.*;
 
-public class PowerfulSnowballCannonItem extends SnowballCannonItem{
+public class PowerfulSnowballCannonItem extends SnowballCannonItem {
     @Override
     public LaunchFunc getLaunchFunc(double damageDropRate) {
         return new LaunchFunc() {
@@ -42,6 +42,7 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem{
             }
         };
     }
+
     @Override
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pEntityLiving, int pTimeLeft) {
         if (pEntityLiving instanceof Player player) {
@@ -50,8 +51,6 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem{
             if (f >= 0.1F) {
                 ItemStack itemStack = BSFUtil.findAmmo(player, false, true);
                 if (itemStack != null) {
-                    boolean k = BSFUtil.isAmmoTank(itemStack.getItem(), true);
-
                     BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player, f);
 
                     //v is change
@@ -75,6 +74,17 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem{
                     pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
                     pLevel.addFreshEntity(snowballEntity);
+                    consumeAmmo(itemStack, player);
+                    /*
+                    if (isAmmoTank(itemStack.getItem(), true)) {
+                        itemStack.hurtAndBreak(1, player, (p) -> p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true));
+                    } else if (!player.getAbilities().instabuild) {
+                        itemStack.shrink(1);
+                        if (itemStack.isEmpty()) {
+                            player.getInventory().removeItem(itemStack);
+                        }
+                    }
+
                     if (!player.getAbilities().instabuild) {
                         if (k) {
                             itemStack.setDamageValue(itemStack.getDamageValue() + 1);
@@ -88,12 +98,13 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem{
                                 player.getInventory().removeItem(itemStack);
                             }
                         }
-                    }
+                    }*/
                 }
                 player.awardStat(Stats.ITEM_USED.get(this));
             }
         }
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("snowball_cannon5.tooltip").withStyle(ChatFormatting.RED));
