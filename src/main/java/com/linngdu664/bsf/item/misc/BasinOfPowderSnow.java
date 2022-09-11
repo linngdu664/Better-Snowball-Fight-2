@@ -51,7 +51,7 @@ public class BasinOfPowderSnow extends Item {
             for (LivingEntity livingEntity : list) {
                 Vec3 rVec1 = new Vec3(livingEntity.getX() - pPlayer.getX(), livingEntity.getEyeY() - pPlayer.getEyeY() + 0.2, livingEntity.getZ() - pPlayer.getZ());
                 Vec3 rVec2 = new Vec3(rVec1.x, livingEntity.getY() - pPlayer.getEyeY(), rVec1.z);
-                if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isBlocked(rVec1, rVec2, pPlayer, pLevel)) {
+                if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
                     System.out.println("ready to freeze");
                     double r = Math.sqrt(modSqr(rVec1));
                     if (r < 3) {
