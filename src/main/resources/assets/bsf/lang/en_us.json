@@ -60,6 +60,9 @@
   "item.bsf.repulsion_snowball_to_monster_storage_tank": "Monster Repulsion Snowball Storage Tank",
   "item.bsf.repulsion_snowball_to_projectile_storage_tank": "Projectile Repulsion Snowball Storage Tank",
   "item.bsf.black_hole_snowball_storage_tank": "Black Hole Snowball Storage Tank",
+  "item.bsf.empty_basin": "Empty Basin",
+  "item.bsf.basin_of_snow": "Basin of Snow",
+  "item.bsf.basin_of_powder_snow": "Basin of Powder Snow",
 
   "stone_snowball.tooltip": "This is outrageous!",
   "snowball_clamp.tooltip": "Highly efficient snowballing tool",
@@ -133,5 +136,4 @@
   "advancements.bsf.snowball_cannon.description": "Make a snowball cannon",
   "advancements.bsf.snowball_machine_gun.title": "Power, You're on Denji's Side!",
   "advancements.bsf.snowball_machine_gun.description": "Make a snowball machine gun"
-
 }

@@ -60,6 +60,9 @@
   "item.bsf.repulsion_snowball_to_monster_storage_tank": "怪物斥力雪球储罐",
   "item.bsf.repulsion_snowball_to_projectile_storage_tank": "射弹斥力雪球储罐",
   "item.bsf.black_hole_snowball_storage_tank": "黑洞雪球储罐",
+  "item.bsf.empty_basin": "空盆",
+  "item.bsf.basin_of_snow": "雪盆",
+  "item.bsf.basin_of_powder_snow": "细雪盆",
 
   "stone_snowball.tooltip": "真过分！",
   "snowball_clamp.tooltip": "高效率的搓雪球工具",
