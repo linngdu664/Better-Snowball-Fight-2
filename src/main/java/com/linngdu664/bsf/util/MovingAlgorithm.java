@@ -99,7 +99,7 @@ public class MovingAlgorithm {
                 a = 0;
             }
             entity.push(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
-            //To tell client that player should move because client handles player's movement.
+            //Tell client that player should move because client handles player's movement.
             if (entity instanceof ServerPlayer player && !player.getAbilities().instabuild) {
                 player.connection.send(new ClientboundSetEntityMotionPacket(entity));
             }
@@ -107,9 +107,9 @@ public class MovingAlgorithm {
     }
 
     /**
-     * This method is used for the tracking snowball. First, it will try to find the nearest available target. Then, if
-     * it finds a target, it will ignore gravity and changing the velocity vector to aim the target. If the target disappears,
-     * or it is too slow, it will restore gravity and try to find a new target.
+     * This method is designed for the tracking snowball. First, it will try to find the nearest available target. Then,
+     * if it finds a target, the snowball will ignore gravity and changing the velocity vector to aim the target. If the
+     * target disappears or the snowball is too slow, the snowball will restore gravity and try to find a new target.
      * @param snowball The snowball entity.
      * @param targetClass The class of specific targets.
      * @param trackingRange Only tracks targets within the range.
@@ -176,8 +176,7 @@ public class MovingAlgorithm {
             }
             vx *= adjusted / vNewX;
             vz *= adjusted / vNewX;
-            //Do not directly use "setDeltaMovement" because it will cause the lagging of texture.
-            //Use "push" may avoid this.
+            //Do not directly use "setDeltaMovement" because it will cause the lagging of texture. Use "push" may avoid this.
             snowball.push(vx - velocity.x, vy - velocity.y, vz - velocity.z);
         }
     }
