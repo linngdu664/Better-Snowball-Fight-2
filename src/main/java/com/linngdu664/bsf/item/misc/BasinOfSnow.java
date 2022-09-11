@@ -42,7 +42,8 @@ public class BasinOfSnow extends Item {
                     double y = 8.0F * cameraVec.y + r * (Mth.cos(theta) * vecA.y + Mth.sin(theta) * vecB.y);
                     double z = 8.0F * cameraVec.z + r * (Mth.cos(theta) * vecA.z + Mth.sin(theta) * vecB.z);
                     double inverseL = Mth.fastInvSqrt(modSqr(x, y, z));
-                    pLevel.addParticle(ParticleTypes.SNOWFLAKE, pPlayer.getX(), pPlayer.getEyeY() - 0.2, pPlayer.getZ(), x * inverseL, y * inverseL, z * inverseL);
+                    double rand1 = pLevel.getRandom().nextDouble() * 0.9 + 0.1;
+                    pLevel.addParticle(ParticleTypes.SNOWFLAKE, pPlayer.getX(), pPlayer.getEyeY() - 0.2, pPlayer.getZ(), x * inverseL * rand1, y * inverseL * rand1, z * inverseL * rand1);
                 }
             }
         }
