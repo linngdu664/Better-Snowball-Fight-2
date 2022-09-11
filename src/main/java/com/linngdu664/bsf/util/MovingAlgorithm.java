@@ -10,9 +10,10 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.modSqr;
-import static com.linngdu664.bsf.util.BSFUtil.vec2AngleCos;
-import static com.linngdu664.bsf.util.TargetGetter.*;
+import static com.linngdu664.bsf.util.BSFMthUtil.modSqr;
+import static com.linngdu664.bsf.util.BSFMthUtil.vec2AngleCos;
+import static com.linngdu664.bsf.util.TargetGetter.getTarget;
+import static com.linngdu664.bsf.util.TargetGetter.getTargetList;
 
 public class MovingAlgorithm {
     @Deprecated
@@ -24,7 +25,7 @@ public class MovingAlgorithm {
                 if (angleRestriction) {
                     Vec3 vec3 = new Vec3(entity.getX() - snowball.getX(), entity.getY() - snowball.getY(), entity.getZ() - snowball.getZ());
                     Vec3 velocity = snowball.getDeltaMovement();
-                    if (BSFUtil.vec3AngleCos(vec3, velocity) < 0.5 || modSqr(vec3) > trackingRange * trackingRange) {
+                    if (BSFMthUtil.vec3AngleCos(vec3, velocity) < 0.5 || modSqr(vec3) > trackingRange * trackingRange) {
                         continue;
                     }
                 }

@@ -2,8 +2,6 @@ package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.util.BSFUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.ChatFormatting;
@@ -25,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.*;
+import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
 
 public class PowerfulSnowballCannonItem extends SnowballCannonItem {
     @Override
@@ -39,6 +37,7 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
             @Override
             public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.punch = damageDropRate * 2.5F;
+                bsfSnowballEntity.weaknessTime = 180;
             }
         };
     }
@@ -49,12 +48,12 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
             int i = this.getUseDuration(pStack) - pTimeLeft;
             float f = getPowerForTime(i);
             if (f >= 0.1F) {
-                ItemStack itemStack = BSFUtil.findAmmo(player, false, true);
+                ItemStack itemStack = findAmmo(player, false, true);
                 if (itemStack != null) {
                     BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player, f);
 
                     //v is change
-                    BSFUtil.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 4.0F, 1.0F);
+                    BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 4.0F, 1.0F);
 
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
 
@@ -62,7 +61,7 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
                     Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
                     //add push
                     if (pLevel.isClientSide()) {
-                        player.push(-0.2666666666666667 * cameraVec.x * f, -0.2666666666666667 * cameraVec.y * f, -0.2666666666666667 * cameraVec.z * f);
+                        player.push(-0.26666667 * cameraVec.x * f, -0.26666667 * cameraVec.y * f, -0.26666667 * cameraVec.z * f);
                     }
 
                     //add particles

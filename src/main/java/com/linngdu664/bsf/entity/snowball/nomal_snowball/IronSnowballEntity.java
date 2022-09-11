@@ -37,9 +37,4 @@ public class IronSnowballEntity extends BSFSnowballEntity {
             this.discard();
         }
     }
-/*
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.IRON_SNOWBALL.get();
-    }*/
 }

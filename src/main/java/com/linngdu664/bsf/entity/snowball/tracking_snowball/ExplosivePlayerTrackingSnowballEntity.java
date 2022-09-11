@@ -8,12 +8,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
-
-import static com.linngdu664.bsf.util.BSFUtil.handleExplosion;
 
 public class ExplosivePlayerTrackingSnowballEntity extends TrackingSnowballEntity {
     public ExplosivePlayerTrackingSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
@@ -32,28 +28,10 @@ public class ExplosivePlayerTrackingSnowballEntity extends TrackingSnowballEntit
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
         if (!isCaught) {
-            handleExplosion(this, 1.5F);
+            handleExplosion(1.5F);
         }
         if (!level.isClientSide) {
             this.discard();
         }
     }
-/*
-    @Override
-    protected void onHitEntity(EntityHitResult pResult) {
-        super.onHitEntity(pResult);
-        handleExplosion(this, 1.5F);
-    }
-
-    @Override
-    protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
-        super.onHitBlock(p_37258_);
-        handleExplosion(this, 1.5F);
-    }
-
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get();
-    }
-    }*/
 }

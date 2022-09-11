@@ -37,9 +37,4 @@ public class GlassSnowballEntity extends BSFSnowballEntity {
             this.discard();
         }
     }
-/*
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.GLASS_SNOWBALL.get();
-    }*/
 }

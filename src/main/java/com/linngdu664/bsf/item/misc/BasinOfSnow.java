@@ -2,6 +2,7 @@ package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -14,12 +15,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.*;
+import static com.linngdu664.bsf.util.BSFMthUtil.*;
 import static com.linngdu664.bsf.util.TargetGetter.getTargetList;
 
 public class BasinOfSnow extends Item {
@@ -56,16 +58,17 @@ public class BasinOfSnow extends Item {
                 Vec3 rVec2 = new Vec3(rVec1.x, livingEntity.getY() - pPlayer.getEyeY(), rVec1.z);
                 if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
                     System.out.println("ready to freeze");
-                    double r = Math.sqrt(modSqr(rVec1));
-                    int frozenTicks;
-                    if (r < 5) {
-                        frozenTicks=180;
-                        livingEntity.setTicksFrozen(Math.max(livingEntity.getTicksFrozen(), frozenTicks));
+                    float r = (float) Math.sqrt(modSqr(rVec1));
+                    int t = 0;
+                    if (r < 5.0F) {
+                        t = 180;
                         livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 2));
-                    } else if (r < 8) {
-                        frozenTicks=(int) (180 - 6.666666666666667 * (r - 5) * (r - 5) * (r - 5));
-                        livingEntity.setTicksFrozen(Math.max(livingEntity.getTicksFrozen(), frozenTicks));
+                    } else if (r < 8.0F) {
+                        t = (int) (180.0F - 6.6666667F * (r - 5.0F) * (r - 5.0F) * (r - 5.0F));
                         livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 1));
+                    }
+                    if (livingEntity.getTicksFrozen() < t) {
+                        livingEntity.setTicksFrozen(t);
                     }
                     livingEntity.hurt(DamageSource.playerAttack(pPlayer), Float.MIN_VALUE);
                 }
@@ -76,5 +79,69 @@ public class BasinOfSnow extends Item {
             pPlayer.setItemInHand(pUsedHand, newStack);
         }
         return InteractionResultHolder.success(itemStack);
+    }
+
+    //todo:check more blocks
+    /**
+     * Check whether there are solid blocks on head-head and head-feet line segments (See param). Specially designed for
+     * basin of snow/powder snow.
+     * @param rVec The vector from attacker's head to target's head.
+     * @param rVec1 The vector from attacker's head to target's feet.
+     * @param player The attacker.
+     * @param level The attacker's level.
+     * @return Both rVec and rVec1 are blocked by solid block: false. Otherwise: true.
+     */
+    public boolean isNotBlocked(Vec3 rVec, Vec3 rVec1, Player player, Level level) {
+        double offsetX = 0.25 * rVec.z * Mth.fastInvSqrt(modSqr(rVec.x, rVec.z));
+        double offsetZ = 0.25 * rVec.x * Mth.fastInvSqrt(modSqr(rVec.x, rVec.z));
+        double x = player.getX();
+        double y = player.getEyeY();
+        double z = player.getZ();
+        Vec3 n = rVec.normalize().scale(0.25);
+        int l = (int) (4 * Math.sqrt(modSqr(rVec)));
+        boolean flag = true;
+        for (int i = 0; i < l; i++) {
+            int k = 0;
+            for (int j = -1; j <= 1; j++) {
+                BlockPos blockPos = new BlockPos(x - offsetX * j, y, z + offsetZ * j);
+                BlockState blockState = level.getBlockState(blockPos);
+                if (blockState.getMaterial().blocksMotion()) {
+                    k++;
+                }
+            }
+            System.out.println(k);
+            if (k > 1) {
+                System.out.println("failed eye");//todo:delete
+                flag = false;
+                break;
+            }
+            x += n.x;
+            y += n.y;
+            z += n.z;
+        }
+        x = player.getX();
+        y = player.getEyeY();
+        z = player.getZ();
+        n = rVec1.normalize().scale(0.25);
+        l = (int) (4 * Math.sqrt(modSqr(rVec1)));
+        for (int i = 0; i < l; i++) {
+            int k = 0;
+            for (int j = -1; j <= 1; j++) {
+                BlockPos blockPos = new BlockPos(x - offsetX * j, y, z + offsetZ * j);
+                BlockState blockState = level.getBlockState(blockPos);
+                if (blockState.getMaterial().blocksMotion()) {
+                    k++;
+                }
+            }
+            System.out.println(k);
+            if (k > 1) {
+                System.out.println("failed feet");//todo:delete
+                return flag;
+            }
+            x += n.x;
+            y += n.y;
+            z += n.z;
+        }
+        return true;
     }
 }

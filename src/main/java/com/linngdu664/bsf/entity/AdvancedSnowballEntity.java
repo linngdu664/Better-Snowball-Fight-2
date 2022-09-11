@@ -74,7 +74,7 @@ public abstract class AdvancedSnowballEntity extends ThrowableItemProjectile {
         if (entityHitResult.getEntity() instanceof LivingEntity entity) {
             if (entity instanceof Player player && (player.getOffhandItem().is(ItemRegister.GLOVE.get()) &&
                     player.getUsedItemHand() == InteractionHand.OFF_HAND || player.getMainHandItem().is(ItemRegister.GLOVE.get()) &&
-                    player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && BSFUtil.isHeadingToSnowball(player, null)) {
+                    player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && BSFMthUtil.isHeadingToSnowball(player, null)) {
                 switch (type) {
                     case SMOOTH -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
                     case COMPACTED -> player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get(), 1), true);

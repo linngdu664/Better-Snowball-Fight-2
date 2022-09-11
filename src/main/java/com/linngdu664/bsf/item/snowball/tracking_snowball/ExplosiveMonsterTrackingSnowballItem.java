@@ -1,8 +1,7 @@
 package com.linngdu664.bsf.item.snowball.tracking_snowball;
 
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.util.BSFUtil;
-import com.linngdu664.bsf.util.ItemGroup;
+import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -10,7 +9,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
@@ -20,9 +18,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ExplosiveMonsterTrackingSnowballItem extends Item {
+public class ExplosiveMonsterTrackingSnowballItem extends BSFSnowballItem {
     public ExplosiveMonsterTrackingSnowballItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16).rarity(Rarity.RARE));
+        super(Rarity.RARE);
     }
 
     @Override
@@ -32,11 +30,12 @@ public class ExplosiveMonsterTrackingSnowballItem extends Item {
             ItemStack newStack = new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get(), itemStack.getCount());
             pPlayer.setItemInHand(pUsedHand, newStack);
         } else {
-            BSFUtil.storageInTank(pPlayer, itemStack, ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get());
+            storageInTank(pPlayer, itemStack, ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get());
         }
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("lunch_no_hand.tooltip").withStyle(ChatFormatting.DARK_RED));

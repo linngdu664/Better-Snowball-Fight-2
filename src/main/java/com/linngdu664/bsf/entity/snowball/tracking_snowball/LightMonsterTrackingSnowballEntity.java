@@ -31,9 +31,4 @@ public class LightMonsterTrackingSnowballEntity extends TrackingSnowballEntity {
             this.discard();
         }
     }
-/*
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get();
-    }*/
 }

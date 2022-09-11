@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -11,7 +10,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -19,15 +17,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.*;
+import static com.linngdu664.bsf.util.BSFMthUtil.*;
 import static com.linngdu664.bsf.util.TargetGetter.getTargetList;
 
-public class BasinOfPowderSnow extends Item {
-    public BasinOfPowderSnow() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1));
-    }
-
-    //todo:copy normal snow basin
+public class BasinOfPowderSnow extends BasinOfSnow {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
@@ -57,20 +50,20 @@ public class BasinOfPowderSnow extends Item {
                 Vec3 rVec2 = new Vec3(rVec1.x, livingEntity.getY() - pPlayer.getEyeY(), rVec1.z);
                 if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
                     System.out.println("ready to freeze");
-                    double r = Math.sqrt(modSqr(rVec1));
-                    int frozenTicks;
-                    if (r < 3) {
-                        frozenTicks=240;
-                        livingEntity.setTicksFrozen(Math.max(livingEntity.getTicksFrozen(), frozenTicks));
+                    float r = (float) Math.sqrt(modSqr(rVec1));
+                    int t = 0;
+                    if (r < 3.0F) {
+                        t =  240;
                         livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 3));
-                    } else if (r < 6) {
-                        frozenTicks=(int) (240 - (r - 3) * (r - 3) * (r - 3));
-                        livingEntity.setTicksFrozen(Math.max(livingEntity.getTicksFrozen(), frozenTicks));
+                    } else if (r < 6.0F) {
+                        t = (int) (240.0F - (r - 3.0F) * (r - 3.0F) * (r - 3.0F));
                         livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 2));
-                    } else if (r < 8) {
-                        frozenTicks=(int) (-15.375 * (r - 8) * (r * (r - 9.414634146341463) + 27.41463414634146));
-                        livingEntity.setTicksFrozen(Math.max(livingEntity.getTicksFrozen(), frozenTicks));
+                    } else if (r < 8F) {
+                        t = (int) (-15.375F * (r - 8.0F) * (r * (r - 9.4146341F) + 27.414634F));
                         livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 1));
+                    }
+                    if (livingEntity.getTicksFrozen() < t) {
+                        livingEntity.setTicksFrozen(t);
                     }
                     livingEntity.hurt(DamageSource.playerAttack(pPlayer), Float.MIN_VALUE);
                 }

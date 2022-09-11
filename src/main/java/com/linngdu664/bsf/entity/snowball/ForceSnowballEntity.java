@@ -1,10 +1,11 @@
 package com.linngdu664.bsf.entity.snowball;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.util.MovingAlgorithm;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+
+import static com.linngdu664.bsf.util.MovingAlgorithm.forceEffect;
 
 public class ForceSnowballEntity extends BSFSnowballEntity {
     public Class <? extends Entity> targetClass;
@@ -15,19 +16,11 @@ public class ForceSnowballEntity extends BSFSnowballEntity {
     public ForceSnowballEntity(LivingEntity livingEntity, Level level) {
         super(livingEntity, level);
     }
-/*
-    public ForceSnowballEntity(LivingEntity livingEntity, Level level, float damage, float blazeDamage, double range, Class<? extends Entity> targetClass, double GM, LaunchFrom launchFrom) {
-        super(livingEntity, level, 0, damage, blazeDamage, launchFrom);
-        this.targetClass = targetClass;
-        this.range = range;
-        this.GM = GM;
-    }*/
 
     @Override
     public void tick() {
         super.tick();
-        //MovingAlgorithm.gravityTracking(this, targetClass, range, GM, false, true, false, true);
-        MovingAlgorithm.forceEffect(this, targetClass, range, GM, boundaryR2);
+        forceEffect(this, targetClass, range, GM, boundaryR2);
     }
 
     public ForceSnowballEntity setRange(double range) {

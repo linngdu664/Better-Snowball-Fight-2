@@ -37,9 +37,4 @@ public class CompactedSnowballEntity extends BSFSnowballEntity {
             this.discard();
         }
     }
-/*
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.COMPACTED_SNOWBALL.get();
-    }*/
 }

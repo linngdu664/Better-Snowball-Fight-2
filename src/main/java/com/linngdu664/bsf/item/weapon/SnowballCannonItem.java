@@ -5,10 +5,8 @@ import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
 import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.util.BSFUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
-import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -22,8 +20,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -31,12 +27,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.*;
+import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
 
-public class SnowballCannonItem extends BowItem {
-
+public class SnowballCannonItem extends BSFWeaponItem {
     public SnowballCannonItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(256).rarity(Rarity.RARE));
+        super(256, Rarity.RARE);
     }
 
     public LaunchFunc getLaunchFunc(double damageDropRate) {
@@ -53,17 +48,26 @@ public class SnowballCannonItem extends BowItem {
         };
     }
 
+    public static float getPowerForTime(int pCharge) {
+        float f = (float)pCharge / 20.0F;
+        f = (f * f + f * 2.0F) / 3.0F;
+        if (f > 1.0F) {
+            f = 1.0F;
+        }
+        return f;
+    }
+
     @Override
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pEntityLiving, int pTimeLeft) {
         if (pEntityLiving instanceof Player player) {
             int i = this.getUseDuration(pStack) - pTimeLeft;
             float f = getPowerForTime(i);
             if (f >= 0.1F) {
-                ItemStack itemStack = BSFUtil.findAmmo(player, false, true);
+                ItemStack itemStack = findAmmo(player, false, true);
                 if (itemStack != null) {
                     BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player, f);
 
-                    BSFUtil.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 3.0F, 1.0F);
+                    BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 3.0F, 1.0F);
 //                    if (coreType == 1) {
 //                        snowballEntity.frozenTime+=140;
 //
@@ -83,7 +87,7 @@ public class SnowballCannonItem extends BowItem {
 //                        }
 //                    } else if (coreType == 2) {
 //                        snowballEntity.punch = f * 2.5;
-//                        BSFUtil.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 4.0F, 1.0F);
+//                        BSFMthUtil.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, f * 4.0F, 1.0F);
 //                        snowballEntity.weaknessTicks = 180;
 //                    }
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
@@ -179,11 +183,6 @@ public class SnowballCannonItem extends BowItem {
     }
 
     @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.equals(Enchantments.UNBREAKING);
-    }
-
-    @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
         pPlayer.startUsingItem(pHand);
@@ -191,8 +190,13 @@ public class SnowballCannonItem extends BowItem {
     }
 
     @Override
-    public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
-        return pRepairCandidate.is(Items.IRON_INGOT);
+    public int getUseDuration(@NotNull ItemStack pStack) {
+        return 72000;
+    }
+
+    @Override
+    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack pStack) {
+        return UseAnim.BOW;
     }
 
     @Override

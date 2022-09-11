@@ -37,9 +37,4 @@ public class GoldSnowballEntity extends BSFSnowballEntity {
             this.discard();
         }
     }
-/*
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.GOLD_SNOWBALL.get();
-    }*/
 }

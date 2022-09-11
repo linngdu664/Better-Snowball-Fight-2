@@ -3,8 +3,6 @@ package com.linngdu664.bsf.item.snowball.normal_snowball;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.GlassSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
-import com.linngdu664.bsf.util.BSFUtil;
-import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.Position;
@@ -20,6 +18,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -30,10 +29,11 @@ import java.util.List;
 
 public class GlassSnowballItem extends BSFSnowballItem {
     public GlassSnowballItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
+        super(Rarity.COMMON);
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
-                return Util.make(new GlassSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {});
+                return Util.make(new GlassSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {
+                });
             }
         });
     }
@@ -41,7 +41,7 @@ public class GlassSnowballItem extends BSFSnowballItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if (!BSFUtil.storageInTank(pPlayer, itemStack, ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get())) {
+        if (!storageInTank(pPlayer, itemStack, ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get())) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
                 float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;

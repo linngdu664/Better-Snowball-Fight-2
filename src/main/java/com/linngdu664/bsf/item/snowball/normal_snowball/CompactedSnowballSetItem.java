@@ -2,7 +2,6 @@ package com.linngdu664.bsf.item.snowball.normal_snowball;
 
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.CompactedSnowballEntity;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
-import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -14,6 +13,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class CompactedSnowballSetItem extends BSFSnowballItem {
     public CompactedSnowballSetItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
+        super(Rarity.COMMON);
     }
 
     @Override

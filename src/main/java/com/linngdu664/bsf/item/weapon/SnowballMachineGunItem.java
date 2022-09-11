@@ -4,8 +4,6 @@ import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.util.BSFUtil;
-import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.ChatFormatting;
@@ -22,7 +20,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -32,15 +29,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.SphericalToCartesian;
+import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
 
-public class SnowballMachineGunItem extends Item {
+public class SnowballMachineGunItem extends BSFWeaponItem {
     private int timer = 0;
     private float recoil = 0;
     private float damageChance;
 
     public SnowballMachineGunItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(512).rarity(Rarity.EPIC));
+        super(512, Rarity.EPIC);
     }
 
     public LaunchFunc getLaunchFunc() {
@@ -74,7 +71,7 @@ public class SnowballMachineGunItem extends Item {
         float pitch = player.getXRot();
         float yaw = player.getYRot();
         if (timer % 3 == 0) {
-            ItemStack itemStack = BSFUtil.findAmmo(player, true, false);
+            ItemStack itemStack = findAmmo(player, true, false);
             if (itemStack != null) {
                 BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player);
 
@@ -117,7 +114,7 @@ public class SnowballMachineGunItem extends Item {
 //                    j = 0.075F;
 //                }
 
-                BSFUtil.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, 2.6F, 1.0F);
+                BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 2.6F, 1.0F);
                 pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                 pLevel.addFreshEntity(snowballEntity);
 
@@ -130,10 +127,9 @@ public class SnowballMachineGunItem extends Item {
 
                 //add particles
                 if (!pLevel.isClientSide()) {
-                    ServerLevel serverLevel = (ServerLevel) pLevel;
-                    serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 4, 0, 0, 0, 0.32);
+                    ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 4, 0, 0, 0, 0.32);
                 }
-                itemStack.hurtAndBreak(1, player, (p) -> p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true));
+                consumeAmmo(itemStack, player);
                 if (pLevel.getRandom().nextFloat() <= damageChance && !player.getAbilities().instabuild) {
                     pStack.setDamageValue(pStack.getDamageValue() + 1);
                     if (pStack.getDamageValue() == 512) {
@@ -193,21 +189,6 @@ public class SnowballMachineGunItem extends Item {
     @Override
     public int getUseDuration(@NotNull ItemStack pStack) {
         return Integer.MAX_VALUE;
-    }
-
-    @Override
-    public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
-        return pRepairCandidate.is(Items.IRON_INGOT);
-    }
-
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.equals(Enchantments.UNBREAKING);
-    }
-
-    @Override
-    public int getItemEnchantability(ItemStack stack) {
-        return 1;
     }
 
     @Override

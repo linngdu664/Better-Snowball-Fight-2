@@ -36,9 +36,4 @@ public class SmoothSnowballEntity extends BSFSnowballEntity {
             this.discard();
         }
     }
-/*
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.SMOOTH_SNOWBALL.get();
-    }*/
 }

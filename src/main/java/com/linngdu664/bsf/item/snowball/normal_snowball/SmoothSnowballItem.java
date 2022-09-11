@@ -3,7 +3,6 @@ package com.linngdu664.bsf.item.snowball.normal_snowball;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.SmoothSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
-import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.Position;
@@ -19,6 +18,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -29,10 +29,11 @@ import java.util.List;
 
 public class SmoothSnowballItem extends BSFSnowballItem {
     public SmoothSnowballItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
+        super(Rarity.COMMON);
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
-                return Util.make(new SmoothSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {});
+                return Util.make(new SmoothSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {
+                });
             }
         });
     }

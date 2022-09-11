@@ -31,9 +31,4 @@ public class MonsterGravitySnowballEntity extends ForceSnowballEntity {
             this.discard();
         }
     }
-/*
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.MONSTER_GRAVITY_SNOWBALL.get();
-    }*/
 }

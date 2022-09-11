@@ -31,9 +31,4 @@ public class HeavyPlayerTrackingSnowballEntity extends TrackingSnowballEntity {
             this.discard();
         }
     }
-/*
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get();
-    }*/
 }

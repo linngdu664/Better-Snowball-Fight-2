@@ -27,20 +27,20 @@ public class EmptyBasin extends Item {
         InteractionHand hand = pContext.getHand();
         assert player != null;
         if (block == Blocks.SNOW_BLOCK || block == Blocks.SNOW) {
-            if(itemStack.getCount()>1){
+            if (itemStack.getCount() > 1) {
                 player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_SNOW.get()), true);
                 itemStack.shrink(1);
-            }else{
+            } else {
                 ItemStack newStack = new ItemStack(ItemRegister.BASIN_OF_SNOW.get(), itemStack.getCount());
                 itemStack.shrink(1);
                 player.setItemInHand(hand, newStack);
             }
 
         } else if (block == Blocks.POWDER_SNOW) {
-            if(itemStack.getCount()>1){
+            if (itemStack.getCount() > 1) {
                 player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get()), true);
                 itemStack.shrink(1);
-            }else{
+            } else {
                 ItemStack newStack = new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get(), itemStack.getCount());
                 itemStack.shrink(1);
                 player.setItemInHand(hand, newStack);

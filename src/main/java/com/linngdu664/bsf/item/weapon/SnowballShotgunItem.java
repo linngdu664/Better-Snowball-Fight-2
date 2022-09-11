@@ -5,8 +5,6 @@ import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
 import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.util.BSFUtil;
-import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.ChatFormatting;
@@ -24,22 +22,21 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFUtil.*;
+import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
 
-public class SnowballShotgunItem extends Item {
+public class SnowballShotgunItem extends BSFWeaponItem {
     private double pushRank;
 
     public SnowballShotgunItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(256).rarity(Rarity.EPIC));
+        super(256, Rarity.EPIC);
     }
 
     public LaunchFunc getLaunchFunc() {
@@ -62,12 +59,12 @@ public class SnowballShotgunItem extends Item {
         pushRank = 0.24;
         int i;
         for (i = 0; i < 4; i++) {
-            ItemStack itemStack = BSFUtil.findAmmo(player, false, true);
+            ItemStack itemStack = findAmmo(player, false, true);
             if (itemStack != null) {
                 BSFSnowballEntity snowballEntity = itemToEntity(itemStack, level, player);
                 assert snowballEntity != null;
                 if (!player.isShiftKeyDown()) {
-                    BSFUtil.shootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 0.0F, 2.0F, 10.0F);
+                    BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 2.0F, 10.0F);
                     level.addFreshEntity(snowballEntity);
                 }
                 consumeAmmo(itemStack, player);
@@ -132,9 +129,9 @@ public class SnowballShotgunItem extends Item {
 //        if (!player.isShiftKeyDown()) {
 //            int i;
 //            for (i = 0; i < 4; i++) {
-//                ItemStack itemStack = BSFUtil.findAmmo(player, false);
+//                ItemStack itemStack = BSFMthUtil.findAmmo(player, false);
 //                if (itemStack != null) {
-//                    boolean k = BSFUtil.isAmmoTank(itemStack, true);
+//                    boolean k = BSFMthUtil.isAmmoTank(itemStack, true);
 //                    AdvancedSnowballEntity snowballEntity;
 //                    if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
 //                        snowballEntity = new AdvancedSnowballEntity(level, player, TankType.COMPACTED);
@@ -191,7 +188,7 @@ public class SnowballShotgunItem extends Item {
 //                    }
 //                    snowballEntity.punch = 1.51F;
 //
-//                    BSFUtil.shootFromRotation(snowballEntity,player.getXRot(), player.getYRot(), 0.0F, 2.0F, 10.0F);
+//                    BSFMthUtil.shootFromRotation(snowballEntity,player.getXRot(), player.getYRot(), 0.0F, 2.0F, 10.0F);
 //
 //                    stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
 //                    if (!player.isShiftKeyDown()){
@@ -247,9 +244,9 @@ public class SnowballShotgunItem extends Item {
 //            double pushRank = 0.24;
 //            int i;
 //            for (i = 0; i < 4; i++) {
-//                ItemStack itemStack = BSFUtil.findAmmo(player, false);
+//                ItemStack itemStack = BSFMthUtil.findAmmo(player, false);
 //                if (itemStack != null) {
-//                    boolean k = BSFUtil.isAmmoTank(itemStack, true);
+//                    boolean k = BSFMthUtil.isAmmoTank(itemStack, true);
 //                    if (itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL.get() || itemStack.getItem() == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() ||
 //                            itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL.get() || itemStack.getItem() == ItemRegister.MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
 //                            itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL.get() || itemStack.getItem() == ItemRegister.PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
@@ -364,16 +361,6 @@ public class SnowballShotgunItem extends Item {
             return new ExplosivePlayerTrackingSnowballEntity(player, level, getLaunchFunc());
         }
         return null;
-    }
-
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.equals(Enchantments.UNBREAKING);
-    }
-
-    @Override
-    public int getItemEnchantability(ItemStack stack) {
-        return 1;
     }
 
     @Override

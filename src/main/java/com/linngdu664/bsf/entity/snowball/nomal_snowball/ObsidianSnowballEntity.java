@@ -38,9 +38,4 @@ public class ObsidianSnowballEntity extends BSFSnowballEntity {
             this.discard();
         }
     }
-/*
-    @Override
-    protected @NotNull Item getDefaultItem() {
-        return ItemRegister.OBSIDIAN_SNOWBALL.get();
-    }*/
 }
