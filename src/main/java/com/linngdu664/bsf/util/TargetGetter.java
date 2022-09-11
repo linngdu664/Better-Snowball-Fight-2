@@ -11,7 +11,7 @@ import static com.linngdu664.bsf.util.BSFUtil.modSqr;
 
 public class TargetGetter {
     /**
-     * This method can get the nearest available target.
+     * Get the nearest available target.
      * @param snowball The snowball entity.
      * @param t The class of specific targets.
      * @param trackingRange Only gets target within the range. See AABB.inflate().
@@ -22,9 +22,7 @@ public class TargetGetter {
     public static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
         Level level = snowball.level;
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
-        if (list.contains(snowball)) {
-            list.remove(snowball);
-        }
+        list.remove(snowball);
         if (list.isEmpty()) {
             return null;
         }
@@ -45,7 +43,7 @@ public class TargetGetter {
     }
 
     /**
-     * This method can get a target list.
+     * Get a target list.
      * @param entity The center entity.
      * @param t The class of specific targets.
      * @param range Only gets target within the range. See AABB.inflate().
@@ -55,17 +53,7 @@ public class TargetGetter {
     public static <T extends Entity> List<T> getTargetList(Entity entity, Class<T> t, double range) {
         Level level = entity.level;
         List<T> list = level.getEntitiesOfClass(t, entity.getBoundingBox().inflate(range, range, range), (p_186450_) -> true);
-        if (list.contains(entity)) {
-            list.remove(entity);
-        }
+        list.remove(entity);
         return list;
-//        if (list.contains(snowball.getOwner())) {
-//            list.remove(snowball.getOwner());
-//        }
-        /*
-        if (!list.isEmpty()) {
-            return list;
-        }
-        return null;*/
     }
 }
