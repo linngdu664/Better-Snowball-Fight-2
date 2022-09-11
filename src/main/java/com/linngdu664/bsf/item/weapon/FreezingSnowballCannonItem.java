@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class FreezingSnowballCannonItem extends SnowballCannonItem{
+public class FreezingSnowballCannonItem extends SnowballCannonItem {
     @Override
     public LaunchFunc getLaunchFunc(double damageDropRate) {
         return new LaunchFunc() {
@@ -26,17 +26,18 @@ public class FreezingSnowballCannonItem extends SnowballCannonItem{
 
             @Override
             public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
-                if(bsfSnowballEntity instanceof IceSnowballEntity){
-                    bsfSnowballEntity.blazeDamage=10;
-                    bsfSnowballEntity.frozenTime=200;
-                }else{
-                    bsfSnowballEntity.blazeDamage+=1;
+                if (bsfSnowballEntity instanceof IceSnowballEntity) {
+                    bsfSnowballEntity.blazeDamage = 10;
+                    bsfSnowballEntity.frozenTime = 200;
+                } else {
+                    bsfSnowballEntity.blazeDamage += 1;
                 }
-                bsfSnowballEntity.blazeDamage*=damageDropRate;
+                bsfSnowballEntity.blazeDamage *= damageDropRate;
                 bsfSnowballEntity.punch = damageDropRate * 1.51F;
             }
         };
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("snowball_cannon4.tooltip").withStyle(ChatFormatting.BLUE));

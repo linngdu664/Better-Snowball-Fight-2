@@ -61,7 +61,7 @@ public class ShortTimeSnowflake extends TextureSheetParticle {
             return new SimpleParticleType(false);
         }
 
-       @Override
+        @Override
         public ResourceLocation name() {
             return new ResourceLocation("bsf", "short_time_snowflake");
         }
