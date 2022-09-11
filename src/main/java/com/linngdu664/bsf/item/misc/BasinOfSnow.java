@@ -6,6 +6,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -42,7 +45,7 @@ public class BasinOfSnow extends Item {
                     double y = 8.0F * cameraVec.y + r * (Mth.cos(theta) * vecA.y + Mth.sin(theta) * vecB.y);
                     double z = 8.0F * cameraVec.z + r * (Mth.cos(theta) * vecA.z + Mth.sin(theta) * vecB.z);
                     double inverseL = Mth.fastInvSqrt(modSqr(x, y, z));
-                    double rand1 = pLevel.getRandom().nextDouble() * 0.9 + 0.1;
+                    double rand1 =Math.sqrt(pLevel.getRandom().nextDouble() * 0.9 + 0.1) ;
                     pLevel.addParticle(ParticleTypes.SNOWFLAKE, pPlayer.getX(), pPlayer.getEyeY() - 0.2, pPlayer.getZ(), x * inverseL * rand1, y * inverseL * rand1, z * inverseL * rand1);
                 }
             }
@@ -54,11 +57,17 @@ public class BasinOfSnow extends Item {
                 if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
                     System.out.println("ready to freeze");
                     double r = Math.sqrt(modSqr(rVec1));
+                    int frozenTicks;
                     if (r < 5) {
-                        livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 180);
+                        frozenTicks=180;
+                        livingEntity.setTicksFrozen(Math.max(livingEntity.getTicksFrozen(), frozenTicks));
+                        livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 2));
                     } else if (r < 8) {
-                        livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + (int) (180 - 6.666666666666667 * (r - 5) * (r - 5) * (r - 5)));
+                        frozenTicks=(int) (180 - 6.666666666666667 * (r - 5) * (r - 5) * (r - 5));
+                        livingEntity.setTicksFrozen(Math.max(livingEntity.getTicksFrozen(), frozenTicks));
+                        livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 1));
                     }
+                    livingEntity.hurt(DamageSource.playerAttack(pPlayer), Float.MIN_VALUE);
                 }
             }
         }
