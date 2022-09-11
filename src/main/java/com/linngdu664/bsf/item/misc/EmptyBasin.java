@@ -2,6 +2,7 @@ package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -23,13 +24,27 @@ public class EmptyBasin extends Item {
         Level level = pContext.getLevel();
         ItemStack itemStack = pContext.getItemInHand();
         Block block = level.getBlockState(pContext.getClickedPos()).getBlock();
+        InteractionHand hand = pContext.getHand();
         assert player != null;
         if (block == Blocks.SNOW_BLOCK || block == Blocks.SNOW) {
-            player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_SNOW.get()), true);
-            itemStack.shrink(1);
+            if(itemStack.getCount()>1){
+                player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_SNOW.get()), true);
+                itemStack.shrink(1);
+            }else{
+                ItemStack newStack = new ItemStack(ItemRegister.BASIN_OF_SNOW.get(), itemStack.getCount());
+                itemStack.shrink(1);
+                player.setItemInHand(hand, newStack);
+            }
+
         } else if (block == Blocks.POWDER_SNOW) {
-            player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get()), true);
-            itemStack.shrink(1);
+            if(itemStack.getCount()>1){
+                player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get()), true);
+                itemStack.shrink(1);
+            }else{
+                ItemStack newStack = new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get(), itemStack.getCount());
+                itemStack.shrink(1);
+                player.setItemInHand(hand, newStack);
+            }
         }
         return super.useOn(pContext);
     }

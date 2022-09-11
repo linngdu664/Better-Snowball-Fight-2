@@ -43,13 +43,13 @@ public class BasinOfPowderSnow extends Item {
                     double y = 8.0F * cameraVec.y + r * (Mth.cos(theta) * vecA.y + Mth.sin(theta) * vecB.y);
                     double z = 8.0F * cameraVec.z + r * (Mth.cos(theta) * vecA.z + Mth.sin(theta) * vecB.z);
                     double inverseL = Mth.fastInvSqrt(modSqr(x, y, z));
-                    pLevel.addParticle(ParticleTypes.SNOWFLAKE, pPlayer.getX(), pPlayer.getEyeY(), pPlayer.getZ(), x * inverseL, y * inverseL, z * inverseL);
+                    pLevel.addParticle(ParticleTypes.SNOWFLAKE, pPlayer.getX(), pPlayer.getEyeY() - 0.2, pPlayer.getZ(), x * inverseL, y * inverseL, z * inverseL);
                 }
             }
         }
         if (!pLevel.isClientSide) {
             for (LivingEntity livingEntity : list) {
-                Vec3 rVec1 = new Vec3(livingEntity.getX() - pPlayer.getX(), livingEntity.getEyeY() - pPlayer.getEyeY(), livingEntity.getZ() - pPlayer.getZ());
+                Vec3 rVec1 = new Vec3(livingEntity.getX() - pPlayer.getX(), livingEntity.getEyeY() - pPlayer.getEyeY() + 0.2, livingEntity.getZ() - pPlayer.getZ());
                 Vec3 rVec2 = new Vec3(rVec1.x, livingEntity.getY() - pPlayer.getEyeY(), rVec1.z);
                 if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isBlocked(rVec1, rVec2, pPlayer, pLevel)) {
                     System.out.println("ready to freeze");
@@ -65,8 +65,8 @@ public class BasinOfPowderSnow extends Item {
             }
         }
         if (!pPlayer.getAbilities().instabuild) {
-            pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_BASIN.get()), true);
-            itemStack.shrink(1);
+            ItemStack newStack = new ItemStack(ItemRegister.EMPTY_BASIN.get(), itemStack.getCount());
+            pPlayer.setItemInHand(pUsedHand, newStack);
         }
         return InteractionResultHolder.success(itemStack);
     }
