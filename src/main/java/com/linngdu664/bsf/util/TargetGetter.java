@@ -9,6 +9,8 @@ import java.util.List;
 
 import static com.linngdu664.bsf.util.BSFMthUtil.modSqr;
 
+// I wonder why IDEA warns list.remove.
+@SuppressWarnings("all")
 public class TargetGetter {
     /**
      * Get the nearest available target.
@@ -43,7 +45,7 @@ public class TargetGetter {
     }
 
     /**
-     * Get a target list.
+     * Get a list that contains nearby targets.
      * @param entity The center entity.
      * @param t The class of specific targets.
      * @param range Only gets target within the range. See AABB.inflate().

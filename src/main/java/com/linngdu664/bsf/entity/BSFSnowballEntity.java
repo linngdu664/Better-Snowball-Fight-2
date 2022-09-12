@@ -39,10 +39,10 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     public LaunchFrom launchFrom;
     public int frozenTime = 0;
     public int weaknessTime = 0;
-    //You need to distinguish between LaunchFrom and LaunchFunc
-    //LaunchFrom is an Enum, LaunchFunc is an Interface
+    // You need to distinguish between LaunchFrom and LaunchFunc
+    // LaunchFrom is an Enum, LaunchFunc is an Interface
 
-    //EntityType should not be SNOWBALL, because if we do so, it will call snowball mixin and make a mess.
+    // EntityType should not be SNOWBALL, because if we do so, it will call snowball mixin and make a mess.
     public BSFSnowballEntity(LivingEntity livingEntity, Level level) {
         super(EntityType.EGG, livingEntity, level);
     }
@@ -58,18 +58,18 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         if (pResult.getEntity() instanceof LivingEntity entity) {
-            //Handling the catch
+            // Handling the catch
             if (catchOnGlove(entity)) {
                 ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);
                 isCaught = true;
                 return;
             }
 
-            //Damage entity
+            // Damage entity
             float hurt = entity instanceof Blaze ? blazeDamage : damage;
             entity.hurt(DamageSource.thrown(this, this.getOwner()), hurt);
 
-            //Handle frozen and weakness effects
+            // Handle frozen and weakness effects
             if (frozenTime > 0) {
                 if (entity.getTicksFrozen() < frozenTime) {
                     entity.setTicksFrozen(frozenTime);
@@ -80,11 +80,11 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
                 entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weaknessTime, 1));
             }
 
-            //Push entity
+            // Push entity
             Vec3 vec3d = this.getDeltaMovement().multiply(0.1 * punch, 0.0, 0.1 * punch);
             entity.push(vec3d.x, 0.0, vec3d.z);
 
-            //Spawn hit particles
+            // Spawn hit particles
             ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
         }
@@ -97,7 +97,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
-        //Spawn hit particles
+        // Spawn hit particles
         ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
         ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
     }
@@ -107,7 +107,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
      */
     @Override
     public void tick() {
-        //Spawn trace particles
+        // Spawn trace particles
         ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
         super.tick();
     }
@@ -150,7 +150,7 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
         return false;
     }
 
-    //Check whether the player can catch the snowball
+    // Check whether the player can catch the snowball
     protected boolean isHeadingToSnowball(Player player) {
         Vec3 speedVec = this.getDeltaMovement().normalize();
         Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
@@ -166,9 +166,9 @@ public class BSFSnowballEntity extends ThrowableItemProjectile {
         }
     }
 
-    //Setters with builder style
-    //Like this:  snowballEntity.setPunch(2.0).setDamage(2.5f)
-    //If necessary, add setWeaknessTime.
+    // Setters with builder style
+    // Like this:  snowballEntity.setPunch(2.0).setDamage(2.5f)
+    // If necessary, add setWeaknessTime.
     public BSFSnowballEntity setPunch(double punch) {
         this.punch = punch;
         return this;

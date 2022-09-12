@@ -61,6 +61,7 @@ public class SnowballMixin extends ThrowableItemProjectile {
         }
     }
 
+    // Cancel "broadcastEntityEvent" and discard directly.
     @Inject(method = "onHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;broadcastEntityEvent(Lnet/minecraft/world/entity/Entity;B)V"), cancellable = true)
     private void injectedOnHit(HitResult pResult, CallbackInfo ci) {
         this.discard();

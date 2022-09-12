@@ -9,6 +9,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.IRegistryDelegate;
 import org.jetbrains.annotations.NotNull;
 
+// Good modders copy, great ones steal.
 @OnlyIn(Dist.CLIENT)
 public class ShortTimeSnowflake extends TextureSheetParticle {
     private final SpriteSet sprites;
