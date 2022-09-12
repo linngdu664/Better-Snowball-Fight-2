@@ -31,13 +31,12 @@ public class CompactedSnowballSetItem extends BSFSnowballItem {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!pLevel.isClientSide) {
-            float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
-            CompactedSnowballEntity snowballEntity1 = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));
-            CompactedSnowballEntity snowballEntity2 = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));
-            CompactedSnowballEntity snowballEntity3 = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));
-            snowballEntity1.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, i, 10.0F);
-            snowballEntity2.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, i, 10.0F);
-            snowballEntity3.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, i, 10.0F);
+            CompactedSnowballEntity snowballEntity1 = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballReDamageRate(pPlayer)));
+            CompactedSnowballEntity snowballEntity2 = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballReDamageRate(pPlayer)));
+            CompactedSnowballEntity snowballEntity3 = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballReDamageRate(pPlayer)));
+            snowballEntity1.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, getSnowballSlowdownRate(pPlayer), 10.0F);
+            snowballEntity2.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, getSnowballSlowdownRate(pPlayer), 10.0F);
+            snowballEntity3.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, getSnowballSlowdownRate(pPlayer), 10.0F);
             pLevel.addFreshEntity(snowballEntity1);
             pLevel.addFreshEntity(snowballEntity2);
             pLevel.addFreshEntity(snowballEntity3);

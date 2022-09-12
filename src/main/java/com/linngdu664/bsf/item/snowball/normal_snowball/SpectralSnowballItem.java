@@ -44,9 +44,8 @@ public class SpectralSnowballItem extends BSFSnowballItem {
         if (!storageInTank(pPlayer, itemStack, ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get())) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
-                float i = pPlayer.hasEffect(MobEffects.WEAKNESS) ? 0.75F : 1.0F;
-                SpectralSnowballEntity snowballEntity = new SpectralSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));
-                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F * i, 1.0F);
+                SpectralSnowballEntity snowballEntity = new SpectralSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballReDamageRate(pPlayer)));
+                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F * getSnowballSlowdownRate(pPlayer), 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }
             if (!pPlayer.getAbilities().instabuild) {

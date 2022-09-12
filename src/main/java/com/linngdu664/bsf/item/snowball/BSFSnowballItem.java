@@ -6,6 +6,7 @@ import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -63,5 +64,27 @@ public class BSFSnowballItem extends Item {
             return true;
         }
         return false;
+    }
+
+    public float getSnowballSlowdownRate(Player player){
+        return (float) Math.pow(1.005,-player.getTicksFrozen());
+    }
+    public float getSnowballReDamageRate(Player player){
+        float reDamageRate=1;
+        if (player.hasEffect(MobEffects.WEAKNESS)){
+            switch (player.getEffect(MobEffects.WEAKNESS).getAmplifier()){
+                case 1-> reDamageRate-=0.25f;
+                case 2->reDamageRate-=0.5f;
+                default->reDamageRate-=0.75f;
+            }
+        }
+        if (player.hasEffect(MobEffects.DAMAGE_BOOST)){
+            switch (player.getEffect(MobEffects.DAMAGE_BOOST).getAmplifier()){
+                case 1->reDamageRate+=0.15f;
+                default->reDamageRate+=0.3f;
+            }
+        }
+        return reDamageRate;
+
     }
 }
