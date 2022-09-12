@@ -35,7 +35,6 @@ public class EmptyBasin extends Item {
                 itemStack.shrink(1);
                 player.setItemInHand(hand, newStack);
             }
-
         } else if (block == Blocks.POWDER_SNOW) {
             if (itemStack.getCount() > 1) {
                 player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get()), true);
