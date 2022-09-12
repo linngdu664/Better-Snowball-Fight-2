@@ -34,7 +34,7 @@ import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
 public class BSFSnowballEntity extends ThrowableItemProjectile {
     public boolean isCaught = false;
     public double punch = 0.0;
-    public float damage = Float.MIN_VALUE;
+    public float damage = Float.MIN_NORMAL;
     public float blazeDamage = 3.0F;
     public LaunchFrom launchFrom;
     public int frozenTime = 0;
