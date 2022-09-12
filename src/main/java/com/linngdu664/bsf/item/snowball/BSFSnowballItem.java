@@ -12,6 +12,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 
+import java.util.Objects;
+
 public class BSFSnowballItem extends Item {
     public BSFSnowballItem(Rarity rarity) {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(16).rarity(rarity));
@@ -66,25 +68,27 @@ public class BSFSnowballItem extends Item {
         return false;
     }
 
-    public float getSnowballSlowdownRate(Player player){
-        return (float) Math.pow(1.005,-player.getTicksFrozen());
+    // 1.005^(-ticks)
+    public float getSnowballSlowdownRate(Player player) {
+        return (float) Math.exp(-0.005 * player.getTicksFrozen());
     }
-    public float getSnowballReDamageRate(Player player){
-        float reDamageRate=1;
-        if (player.hasEffect(MobEffects.WEAKNESS)){
-            switch (player.getEffect(MobEffects.WEAKNESS).getAmplifier()){
-                case 1-> reDamageRate-=0.25f;
-                case 2->reDamageRate-=0.5f;
-                default->reDamageRate-=0.75f;
-            }
+
+    public float getSnowballReDamageRate(Player player) {
+        float reDamageRate = 1;
+        if (player.hasEffect(MobEffects.WEAKNESS)) {
+            reDamageRate -= switch (Objects.requireNonNull(player.getEffect(MobEffects.WEAKNESS)).getAmplifier()) {
+                case 0 -> 0.25f;
+                case 1 -> 0.5f;
+                default -> 0.75f;
+            };
         }
-        if (player.hasEffect(MobEffects.DAMAGE_BOOST)){
-            switch (player.getEffect(MobEffects.DAMAGE_BOOST).getAmplifier()){
-                case 1->reDamageRate+=0.15f;
-                default->reDamageRate+=0.3f;
+        if (player.hasEffect(MobEffects.DAMAGE_BOOST)) {
+            if (Objects.requireNonNull(player.getEffect(MobEffects.DAMAGE_BOOST)).getAmplifier() == 0) {
+                reDamageRate += 0.15F;
+            } else {
+                reDamageRate += 0.3F;
             }
         }
         return reDamageRate;
-
     }
 }
