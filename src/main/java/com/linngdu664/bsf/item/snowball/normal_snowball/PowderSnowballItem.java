@@ -47,6 +47,7 @@ public class PowderSnowballItem extends BSFSnowballItem {
             pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.POWDER_SNOWBALL.get()), true);
             if (!pPlayer.getAbilities().instabuild) {
                 itemStack.shrink(1);
+                pPlayer.getCooldowns().addCooldown(this, 7);
             }
         }
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
