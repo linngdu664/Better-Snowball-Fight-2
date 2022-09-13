@@ -22,7 +22,7 @@ public class FreezingSnowballCannonItem extends SnowballCannonItem {
         return new LaunchFunc() {
             @Override
             public LaunchFrom getLaunchForm() {
-                return LaunchFrom.CANNON;
+                return LaunchFrom.FREEZING_CANNON;
             }
 
             @Override

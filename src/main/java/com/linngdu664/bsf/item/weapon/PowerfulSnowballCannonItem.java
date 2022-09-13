@@ -31,7 +31,7 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
         return new LaunchFunc() {
             @Override
             public LaunchFrom getLaunchForm() {
-                return LaunchFrom.CANNON;
+                return LaunchFrom.POWERFUL_CANNON;
             }
 
             @Override
