@@ -23,10 +23,10 @@ public class BSFWeaponItem extends Item {
                 item == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() || (item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) && allowTracking;
+                item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get() || (
+                item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
+                item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
+                item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) && allowTracking;
     }
 
     protected boolean isAmmo(Item item, boolean allowTracking) {
@@ -34,10 +34,11 @@ public class BSFWeaponItem extends Item {
                 item == ItemRegister.GLASS_SNOWBALL.get() || item == ItemRegister.GOLD_SNOWBALL.get() ||
                 item == ItemRegister.ICE_SNOWBALL.get() || item == ItemRegister.IRON_SNOWBALL.get() ||
                 item == ItemRegister.OBSIDIAN_SNOWBALL.get() || item == ItemRegister.STONE_SNOWBALL.get() ||
-                item == ItemRegister.SPECTRAL_SNOWBALL.get() || (item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get() ||
-                item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get() ||
-                item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() ||
-                item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()) && allowTracking;
+                item == ItemRegister.SPECTRAL_SNOWBALL.get() || item == ItemRegister.FROZEN_SNOWBALL.get() || (
+                item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get() ||
+                item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() ||
+                item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get())
+                && allowTracking;
     }
 
     /**
