@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.entity.animal.SnowGolem;
 
 import java.util.List;
 
@@ -45,6 +46,10 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
         super.onHit(pResult);
         if (!isCaught) {
             BlockPos blockPos = new BlockPos(pResult.getLocation());
+            BlockState ice = Blocks.ICE.defaultBlockState();
+            BlockState basalt = Blocks.BASALT.defaultBlockState();
+            BlockState air = Blocks.AIR.defaultBlockState();
+            BlockState snow = Blocks.SNOW.defaultBlockState();
             for (int i = (int) (blockPos.getX() - frozenRange); i <= blockPos.getX() + frozenRange; i++) {
                 for (int j = (int) (blockPos.getY() - frozenRange); j <= blockPos.getY() + frozenRange; j++) {
                     for (int k = (int) (blockPos.getZ() - frozenRange); k <= blockPos.getZ() + frozenRange; k++) {
@@ -52,17 +57,13 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
                             BlockPos blockPos1 = new BlockPos(i, j, k);
                             BlockState blockState = level.getBlockState(blockPos1);
                             if (blockState.getBlock() == Blocks.WATER && blockState.getValue(LiquidBlock.LEVEL) == 0) {
-                                BlockState blockState1 = Blocks.ICE.defaultBlockState();
-                                level.setBlock(blockPos1, blockState1, 3);
+                                level.setBlockAndUpdate(blockPos1, ice);
                             } else if (blockState.getBlock() == Blocks.LAVA && blockState.getValue(LiquidBlock.LEVEL) == 0) {
-                                BlockState blockState1 = Blocks.BASALT.defaultBlockState();
-                                level.setBlock(blockPos1, blockState1, 3);
+                                level.setBlockAndUpdate(blockPos1, basalt);
                             } else if (blockState.getBlock() == Blocks.FIRE) {
-                                BlockState blockState1 = Blocks.AIR.defaultBlockState();
-                                level.setBlock(blockPos1, blockState1, 3);
-                            } else if (blockState.getBlock() == Blocks.AIR && level.getBlockState(blockPos1.below()).getMaterial().isSolid()) {
-                                BlockState blockState1 = Blocks.SNOW.defaultBlockState();
-                                level.setBlock(blockPos1, blockState1, 3);
+                                level.setBlockAndUpdate(blockPos1, air);
+                            } else if (blockState.getBlock() == Blocks.AIR && snow.canSurvive(level, blockPos1)) {
+                                level.setBlockAndUpdate(blockPos1, snow);
                             }
                         }
                     }
