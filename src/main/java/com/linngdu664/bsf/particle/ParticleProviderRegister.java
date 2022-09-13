@@ -13,5 +13,6 @@ public class ParticleProviderRegister {
     public static void ParticleProviderRegistry(final ParticleFactoryRegisterEvent event) {
         ParticleEngine particleEngine = Minecraft.getInstance().particleEngine;
         particleEngine.register(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), ShortTimeSnowflake.Provider::new);
+        particleEngine.register(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), BigLongTimeSnowflake.Provider::new);
     }
 }
