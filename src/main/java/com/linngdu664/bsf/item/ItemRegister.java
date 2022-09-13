@@ -29,6 +29,7 @@ public class ItemRegister {
     public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL = ITEMS.register("explosive_snowball", ExplosiveSnowballItem::new);
     public static final RegistryObject<Item> SPECTRAL_SNOWBALL = ITEMS.register("spectral_snowball", SpectralSnowballItem::new);
     public static final RegistryObject<Item> FROZEN_SNOWBALL = ITEMS.register("frozen_snowball", FrozenSnowballItem::new);
+    public static final RegistryObject<Item> POWDER_SNOWBALL = ITEMS.register("powder_snowball", PowderSnowballItem::new);
 
     public static final RegistryObject<Item> LIGHT_MONSTER_TRACKING_SNOWBALL = ITEMS.register("monster_tracking_snowball", LightMonsterTrackingSnowballItem::new);
     public static final RegistryObject<Item> HEAVY_MONSTER_TRACKING_SNOWBALL = ITEMS.register("monster_tracking_snowball_with_damage", HeavyMonsterTrackingSnowballItem::new);
@@ -78,6 +79,7 @@ public class ItemRegister {
     public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_snowball_storage_tank", () -> new ExplosiveSnowballStorageTank(EXPLOSIVE_SNOWBALL.get()));
     public static final RegistryObject<Item> SPECTRAL_SNOWBALL_STORAGE_TANK = ITEMS.register("spectral_snowball_storage_tank", () -> new SpectralSnowballStorageTank(SPECTRAL_SNOWBALL.get()));
     public static final RegistryObject<Item> FROZEN_SNOWBALL_STORAGE_TANK = ITEMS.register("frozen_snowball_storage_tank",  () -> new FrozenSnowballStorageTank(FROZEN_SNOWBALL.get()));
+    public static final RegistryObject<Item> POWDER_SNOWBALL_STORAGE_TANK = ITEMS.register("powder_snowball_storage_tank",  () -> new PowderSnowballStorageTank(POWDER_SNOWBALL.get()));
 
     public static final RegistryObject<Item> LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("monster_tracking_snowball_storage_tank", () -> new LightMonsterTrackingSnowballStorageTank(LIGHT_MONSTER_TRACKING_SNOWBALL.get()));
     public static final RegistryObject<Item> HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("monster_tracking_snowball_with_damage_storage_tank", () -> new HeavyMonsterTrackingSnowballStorageTank(HEAVY_MONSTER_TRACKING_SNOWBALL.get()));
