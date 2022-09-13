@@ -74,58 +74,56 @@ public class SnowballMachineGunItem extends BSFWeaponItem {
         float yaw = player.getYRot();
         boolean flag = false;
         if (!isOnCoolDown) {
-            if (timer % 3 == 0) {
-                ItemStack itemStack = findAmmo(player, true, true);
-                if (itemStack != null) {
-                    if (itemStack.is(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) ||
-                            itemStack.is(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) ||
-                            itemStack.is(ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get())) {
-                        flag = true;
-                    }
-                    BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player);
-                    BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 2.6F, 1.0F);
-                    pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                    pLevel.addFreshEntity(snowballEntity);
+            ItemStack itemStack = findAmmo(player, true, true);
+            if (itemStack != null) {
+                if (itemStack.is(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) ||
+                        itemStack.is(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) ||
+                        itemStack.is(ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get())) {
+                    flag = true;
+                }
+            } else {
+                recoil = 0;
+            }
+            if (timer % 3 == 0 && itemStack != null && (!flag || timer % 6 == 0)) {
+                BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player);
+                BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 2.6F, 1.0F);
+                pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                pLevel.addFreshEntity(snowballEntity);
 
-                    Vec3 cameraVec = SphericalToCartesian(pitch * Mth.DEG_TO_RAD, yaw * Mth.DEG_TO_RAD);
-                    //add push
-                    if (pLevel.isClientSide()) {
-                        player.push(-cameraVec.x * recoil * 0.25, -cameraVec.y * recoil * 0.25, -cameraVec.z * recoil * 0.25);
-                    }
+                Vec3 cameraVec = SphericalToCartesian(pitch * Mth.DEG_TO_RAD, yaw * Mth.DEG_TO_RAD);
+                // add push
+                if (pLevel.isClientSide()) {
+                    player.push(-cameraVec.x * recoil * 0.25, -cameraVec.y * recoil * 0.25, -cameraVec.z * recoil * 0.25);
+                }
 
-                    //add particles
-                    if (!pLevel.isClientSide()) {
-                        ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 4, 0, 0, 0, 0.32);
-                    }
+                // add particles
+                if (!pLevel.isClientSide()) {
+                    ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 4, 0, 0, 0, 0.32);
+                }
 
-                    // handle ammo consume and damage weapon.
-                    consumeAmmo(itemStack, player);
-                    if (pLevel.getRandom().nextFloat() <= damageChance && !player.getAbilities().instabuild) {
-                        pStack.setDamageValue(pStack.getDamageValue() + 1);
-                        if (pStack.getDamageValue() == 512) {
-                            player.awardStat(Stats.ITEM_BROKEN.get(pStack.getItem()));
-                            pStack.shrink(1);
-                            pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
-                        }
+                // handle ammo consume and damage weapon.
+                consumeAmmo(itemStack, player);
+                if (pLevel.getRandom().nextFloat() <= damageChance && !player.getAbilities().instabuild) {
+                    pStack.setDamageValue(pStack.getDamageValue() + 1);
+                    if (pStack.getDamageValue() == 512) {
+                        player.awardStat(Stats.ITEM_BROKEN.get(pStack.getItem()));
+                        pStack.shrink(1);
+                        pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
                     }
-                } else {
-                    recoil = 0;
                 }
             }
             // set pitch according to recoil.
-            if (pitch > -90.0F && pLevel.isClientSide()) {
+            if (pitch > -90.0F && pLevel.isClientSide() && (!flag || timer % 6 < 3)) {
                 player.setXRot(pitch - recoil);
             }
 
-            // add and check cd.
+            // add and check cd time.
             if (!pLevel.isClientSide && recoil != 0) {
                 timer += 3;
-                if (flag) {
-                    if (timer >= 60) {
-                        player.getCooldowns().addCooldown(this, 60);
-                        isOnCoolDown = true;
-                        timer = 120;
-                    }
+                if (flag && timer >= 60) {
+                    player.getCooldowns().addCooldown(this, 60);
+                    isOnCoolDown = true;
+                    timer = 120;
                 } else if (timer >= 120) {
                     player.getCooldowns().addCooldown(this, 60);
                     isOnCoolDown = true;
