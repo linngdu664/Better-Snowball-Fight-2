@@ -22,8 +22,8 @@ public class BigLongTimeSnowflake extends TextureSheetParticle {
         this.xd = pXSpeed + (Math.random() * 2.0D - 1.0D) * (double) 0.05F;
         this.yd = pYSpeed + (Math.random() * 2.0D - 1.0D) * (double) 0.05F;
         this.zd = pZSpeed + (Math.random() * 2.0D - 1.0D) * (double) 0.05F;
-        this.quadSize = 0.1F * (this.random.nextFloat() * this.random.nextFloat() * 1.0F + 1.0F);
-        this.lifetime = (int) (4.0D / ((double) this.random.nextFloat() * 0.8D + 0.2D));
+        this.quadSize = 0.5F * (this.random.nextFloat() * this.random.nextFloat() * 1.0F + 1.0F);
+        this.lifetime = (int) (20.0F * this.random.nextFloat() + 80.0F);
         this.setSpriteFromAge(pSprites);
     }
 

@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.item.snowball.normal_snowball;
 
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.FrozenSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.IceSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import net.minecraft.ChatFormatting;
@@ -32,7 +31,7 @@ public class FrozenSnowballItem extends BSFSnowballItem {
         super(Rarity.UNCOMMON);
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
-                return Util.make(new IceSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {
+                return Util.make(new FrozenSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {
                 });
             }
         });

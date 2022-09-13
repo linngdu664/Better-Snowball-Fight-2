@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.snowball.normal_snowball;
 
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.SmoothSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.nomal_snowball.PowderSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import net.minecraft.Util;
@@ -24,7 +24,7 @@ public class PowderSnowballItem extends BSFSnowballItem {
         super(Rarity.COMMON);
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
-                return Util.make(new SmoothSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {
+                return Util.make(new PowderSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {
                 });
             }
         });
@@ -36,7 +36,7 @@ public class PowderSnowballItem extends BSFSnowballItem {
         if (pUsedHand == InteractionHand.MAIN_HAND) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
-                SmoothSnowballEntity snowballEntity = new SmoothSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballReDamageRate(pPlayer)));
+                PowderSnowballEntity snowballEntity = new PowderSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballReDamageRate(pPlayer)));
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.25F * getSnowballSlowdownRate(pPlayer), 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }
@@ -47,7 +47,7 @@ public class PowderSnowballItem extends BSFSnowballItem {
             pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.POWDER_SNOWBALL.get()), true);
             if (!pPlayer.getAbilities().instabuild) {
                 itemStack.shrink(1);
-                pPlayer.getCooldowns().addCooldown(this, 7);
+                pPlayer.getCooldowns().addCooldown(this, 20);
             }
         }
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
