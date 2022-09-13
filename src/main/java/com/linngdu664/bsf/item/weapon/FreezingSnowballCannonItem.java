@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.nomal_snowball.FrozenSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.IceSnowballEntity;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
@@ -26,10 +27,10 @@ public class FreezingSnowballCannonItem extends SnowballCannonItem {
 
             @Override
             public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
-                if (bsfSnowballEntity instanceof IceSnowballEntity) {
-                    bsfSnowballEntity.blazeDamage = 10;
+                if (bsfSnowballEntity instanceof IceSnowballEntity || bsfSnowballEntity instanceof FrozenSnowballEntity) {
+                    bsfSnowballEntity.blazeDamage += 4;
                     bsfSnowballEntity.frozenTime = 200;
-                } else {
+                }else {
                     bsfSnowballEntity.blazeDamage += 1;
                     bsfSnowballEntity.frozenTime = 140;
                 }
