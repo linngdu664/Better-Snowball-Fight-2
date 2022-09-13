@@ -111,6 +111,11 @@
   "snowball_shotgun2.tooltip": "Shot consumes snowballs when shift is pressed to provide a large thrust",
   "snowball_shotgun3.tooltip": "The amount of thrust is determined by the type of snowball consumed",
   "can_change.tooltip": "Use when shift is pressed to switch modes",
+  "empty_basin.tooltip": "Necessities",
+  "empty_basin.tooltip1": "Right click to load snow or powder snow",
+  "basin_of_snow.tooltip": "add some *",
+  "basin_of_snow.tooltip1": "Right click to splash",
+  "basin_of_powder_snow.tooltip": "Being suggestive",
 
   "lunch_yes_hand.tooltip": "thrown by hand: yes",
   "lunch_yes_cannon.tooltip": "thrown by cannon: yes",

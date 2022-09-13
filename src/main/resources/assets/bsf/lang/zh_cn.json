@@ -111,6 +111,12 @@
   "snowball_shotgun2.tooltip": "shift按下时射击消耗弹药提供大推力",
   "snowball_shotgun3.tooltip": "推力大小由消耗雪球类型决定",
   "can_change.tooltip": "shift按下时使用切换模式",
+  "empty_basin.tooltip": "生活必需品",
+  "empty_basin.tooltip1": "右键装雪或细雪",
+  "basin_of_snow.tooltip": "加点料",
+  "basin_of_snow.tooltip1": "右键泼出",
+  "basin_of_powder_snow.tooltip": "意味深",
+
 
 
 
