@@ -2,8 +2,13 @@ package com.linngdu664.bsf.entity.snowball.nomal_snowball;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
+import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +32,9 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
         this.setFrozenTime(60).setLaunchFrom(launchFunc.getLaunchForm()).setDamage(3).setBlazeDamage(8);
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.FROZEN_SNOWBALL.get()));
+        if (launchFrom == LaunchFrom.FREEZING_CANNON){
+            frozenRange = 3.5f;
+        }
     }
 
     //This is only used for dispenser
@@ -72,10 +80,21 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
             List<LivingEntity> list = getTargetList(this, LivingEntity.class, 2.5F);
             for (LivingEntity entity : list) {
                 if (distanceToSqr(entity) < frozenRange * frozenRange) {
-                    //todo:add entity effects here
+                    if (frozenTime > 0) {
+                        if (entity.getTicksFrozen() < frozenTime) {
+                            entity.setTicksFrozen(frozenTime);
+                        }
+                        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1));
+                    }
                 }
             }
         }
+        if (launchFrom == LaunchFrom.FREEZING_CANNON){
+            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 400, 0, 0, 0, 0.32);
+        }else {
+            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 300, 0, 0, 0, 0.32);
+        }
+
         if (!level.isClientSide) {
             this.discard();
         }

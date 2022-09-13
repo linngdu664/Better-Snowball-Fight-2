@@ -18,6 +18,7 @@
   "item.bsf.obsidian_snowball": "黑曜石雪團",
   "item.bsf.spectral_snowball": "爍靈雪團",
   "item.frozen_snowball": "急凍雪團",
+  "item.powder_snowball": "細雪雪團",
   "item.bsf.powerful_snowball_cannon": "強力雪團炮",
   "item.bsf.freezing_snowball_cannon": "冰凍雪團炮",
   "item.bsf.super_power_core": "超力核",
@@ -37,6 +38,8 @@
   "item.bsf.explosive_snowball_storage_tank": "爆炸雪團甕",
   "item.bsf.ice_snowball_storage_tank": "冰雪團甕",
   "item.bsf.spectral_snowball_storage_tank": "爍靈雪團甕",
+  "item.bsf.frozen_snowball_storage_tank": "急凍雪團甕",
+  "item.bsf.powder_snowball_storage_tank": "細雪雪團甕",
   "item.bsf.ice_skates": "冰鞵",
   "item.bsf.snowball_shotgun": "雪團铳",
 

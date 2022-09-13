@@ -50,6 +50,7 @@ public class FrozenSnowballItem extends BSFSnowballItem {
             }
             if (!pPlayer.getAbilities().instabuild) {
                 itemStack.shrink(1);
+                pPlayer.getCooldowns().addCooldown(this, 10);
             }
         }
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
