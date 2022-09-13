@@ -79,7 +79,6 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
             List<LivingEntity> list = getTargetList(this, LivingEntity.class, 2.5F);
             for (LivingEntity entity : list) {
                 if (distanceToSqr(entity) < frozenRange * frozenRange) {
-                    //todo:add entity effects here
                     if (frozenTime > 0) {
                         if (entity.getTicksFrozen() < frozenTime) {
                             entity.setTicksFrozen(frozenTime);
