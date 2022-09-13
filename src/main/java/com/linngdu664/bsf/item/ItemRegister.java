@@ -2,6 +2,9 @@ package com.linngdu664.bsf.item;
 
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.FrozenSnowballEntity;
 import com.linngdu664.bsf.item.misc.*;
+import com.linngdu664.bsf.item.misc.tank.force_snowball.*;
+import com.linngdu664.bsf.item.misc.tank.normal_snowball.*;
+import com.linngdu664.bsf.item.misc.tank.tracking_snowball.*;
 import com.linngdu664.bsf.item.snowball.force_snowball.*;
 import com.linngdu664.bsf.item.snowball.normal_snowball.*;
 import com.linngdu664.bsf.item.snowball.tracking_snowball.*;
@@ -66,28 +69,28 @@ public class ItemRegister {
     public static final RegistryObject<Item> SNOWBALL_SHOTGUN = ITEMS.register("snowball_shotgun", SnowballShotgunItem::new);
 
     public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_storage_tank", EmptySnowballStorageTankItem::new);
-    public static final RegistryObject<Item> COMPACTED_SNOWBALL_STORAGE_TANK = ITEMS.register("compacted_snowball_storage_tank", () -> new SnowballStorageTankItem(COMPACTED_SNOWBALL.get()));
-    public static final RegistryObject<Item> STONE_SNOWBALL_STORAGE_TANK = ITEMS.register("stone_snowball_storage_tank", () -> new SnowballStorageTankItem(STONE_SNOWBALL.get()));
-    public static final RegistryObject<Item> GLASS_SNOWBALL_STORAGE_TANK = ITEMS.register("glass_snowball_storage_tank", () -> new SnowballStorageTankItem(GLASS_SNOWBALL.get()));
-    public static final RegistryObject<Item> ICE_SNOWBALL_STORAGE_TANK = ITEMS.register("ice_snowball_storage_tank", () -> new SnowballStorageTankItem(ICE_SNOWBALL.get()));
-    public static final RegistryObject<Item> IRON_SNOWBALL_STORAGE_TANK = ITEMS.register("iron_snowball_storage_tank", () -> new SnowballStorageTankItem(IRON_SNOWBALL.get()));
-    public static final RegistryObject<Item> GOLD_SNOWBALL_STORAGE_TANK = ITEMS.register("gold_snowball_storage_tank", () -> new SnowballStorageTankItem(GOLD_SNOWBALL.get()));
-    public static final RegistryObject<Item> OBSIDIAN_SNOWBALL_STORAGE_TANK = ITEMS.register("obsidian_snowball_storage_tank", () -> new SnowballStorageTankItem(OBSIDIAN_SNOWBALL.get()));
-    public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_snowball_storage_tank", () -> new SnowballStorageTankItem(EXPLOSIVE_SNOWBALL.get()));
-    public static final RegistryObject<Item> SPECTRAL_SNOWBALL_STORAGE_TANK = ITEMS.register("spectral_snowball_storage_tank", () -> new SnowballStorageTankItem(SPECTRAL_SNOWBALL.get()));
-    public static final RegistryObject<Item> FROZEN_SNOWBALL_STORAGE_TANK = ITEMS.register("frozen_snowball_storage_tank",  () -> new SnowballStorageTankItem(FROZEN_SNOWBALL.get()));
+    public static final RegistryObject<Item> COMPACTED_SNOWBALL_STORAGE_TANK = ITEMS.register("compacted_snowball_storage_tank", () -> new CompactedSnowballStorageTank(COMPACTED_SNOWBALL.get()));
+    public static final RegistryObject<Item> STONE_SNOWBALL_STORAGE_TANK = ITEMS.register("stone_snowball_storage_tank", () -> new StoneSnowballStorageTank(STONE_SNOWBALL.get()));
+    public static final RegistryObject<Item> GLASS_SNOWBALL_STORAGE_TANK = ITEMS.register("glass_snowball_storage_tank", () -> new GlassSnowballStorageTank(GLASS_SNOWBALL.get()));
+    public static final RegistryObject<Item> ICE_SNOWBALL_STORAGE_TANK = ITEMS.register("ice_snowball_storage_tank", () -> new IceSnowballStorageTank(ICE_SNOWBALL.get()));
+    public static final RegistryObject<Item> IRON_SNOWBALL_STORAGE_TANK = ITEMS.register("iron_snowball_storage_tank", () -> new IronSnowballStorageTank(IRON_SNOWBALL.get()));
+    public static final RegistryObject<Item> GOLD_SNOWBALL_STORAGE_TANK = ITEMS.register("gold_snowball_storage_tank", () -> new GoldSnowballStorageTank(GOLD_SNOWBALL.get()));
+    public static final RegistryObject<Item> OBSIDIAN_SNOWBALL_STORAGE_TANK = ITEMS.register("obsidian_snowball_storage_tank", () -> new ObsidianSnowballStorageTank(OBSIDIAN_SNOWBALL.get()));
+    public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_snowball_storage_tank", () -> new ExplosiveSnowballStorageTank(EXPLOSIVE_SNOWBALL.get()));
+    public static final RegistryObject<Item> SPECTRAL_SNOWBALL_STORAGE_TANK = ITEMS.register("spectral_snowball_storage_tank", () -> new SpectralSnowballStorageTank(SPECTRAL_SNOWBALL.get()));
+    public static final RegistryObject<Item> FROZEN_SNOWBALL_STORAGE_TANK = ITEMS.register("frozen_snowball_storage_tank",  () -> new FrozenSnowballStorageTank(FROZEN_SNOWBALL.get()));
 
-    public static final RegistryObject<Item> LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("monster_tracking_snowball_storage_tank", () -> new SnowballStorageTankItem(LIGHT_MONSTER_TRACKING_SNOWBALL.get()));
-    public static final RegistryObject<Item> HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("monster_tracking_snowball_with_damage_storage_tank", () -> new SnowballStorageTankItem(HEAVY_MONSTER_TRACKING_SNOWBALL.get()));
-    public static final RegistryObject<Item> EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_monster_tracking_snowball_storage_tank", () -> new SnowballStorageTankItem(EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()));
-    public static final RegistryObject<Item> LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("player_tracking_snowball_storage_tank", () -> new SnowballStorageTankItem(LIGHT_PLAYER_TRACKING_SNOWBALL.get()));
-    public static final RegistryObject<Item> HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("player_tracking_snowball_with_damage_storage_tank", () -> new SnowballStorageTankItem(HEAVY_PLAYER_TRACKING_SNOWBALL.get()));
-    public static final RegistryObject<Item> EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_player_tracking_snowball_storage_tank", () -> new SnowballStorageTankItem(EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()));
+    public static final RegistryObject<Item> LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("monster_tracking_snowball_storage_tank", () -> new LightMonsterTrackingSnowballStorageTank(LIGHT_MONSTER_TRACKING_SNOWBALL.get()));
+    public static final RegistryObject<Item> HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("monster_tracking_snowball_with_damage_storage_tank", () -> new HeavyMonsterTrackingSnowballStorageTank(HEAVY_MONSTER_TRACKING_SNOWBALL.get()));
+    public static final RegistryObject<Item> EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_monster_tracking_snowball_storage_tank", () -> new ExplosiveMonsterTrackingSnowballStorageTank(EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()));
+    public static final RegistryObject<Item> LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("player_tracking_snowball_storage_tank", () -> new LightPlayerTrackingSnowballStorageTank(LIGHT_PLAYER_TRACKING_SNOWBALL.get()));
+    public static final RegistryObject<Item> HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("player_tracking_snowball_with_damage_storage_tank", () -> new HeavyPlayerTrackingSnowballStorageTank(HEAVY_PLAYER_TRACKING_SNOWBALL.get()));
+    public static final RegistryObject<Item> EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK = ITEMS.register("explosive_player_tracking_snowball_storage_tank", () -> new ExplosivePlayerTrackingSnowballStorageTank(EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()));
 
-    public static final RegistryObject<Item> MONSTER_GRAVITY_SNOWBALL_STORAGE_TANK = ITEMS.register("gravity_snowball_to_monster_storage_tank", () -> new SnowballStorageTankItem(MONSTER_GRAVITY_SNOWBALL.get()));
-    public static final RegistryObject<Item> PROJECTILE_GRAVITY_SNOWBALL_STORAGE_TANK = ITEMS.register("gravity_snowball_to_projectile_storage_tank", () -> new SnowballStorageTankItem(PROJECTILE_GRAVITY_SNOWBALL.get()));
-    public static final RegistryObject<Item> MONSTER_REPULSION_SNOWBALL_STORAGE_TANK = ITEMS.register("repulsion_snowball_to_monster_storage_tank", () -> new SnowballStorageTankItem(MONSTER_REPULSION_SNOWBALL.get()));
-    public static final RegistryObject<Item> PROJECTILE_REPULSION_SNOWBALL_STORAGE_TANK = ITEMS.register("repulsion_snowball_to_projectile_storage_tank", () -> new SnowballStorageTankItem(PROJECTILE_REPULSION_SNOWBALL.get()));
-    public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL_STORAGE_TANK = ITEMS.register("black_hole_snowball_storage_tank", () -> new SnowballStorageTankItem(BLACK_HOLE_SNOWBALL.get()));
+    public static final RegistryObject<Item> MONSTER_GRAVITY_SNOWBALL_STORAGE_TANK = ITEMS.register("gravity_snowball_to_monster_storage_tank", () -> new MonsterGravitySnowballStorageTank(MONSTER_GRAVITY_SNOWBALL.get()));
+    public static final RegistryObject<Item> PROJECTILE_GRAVITY_SNOWBALL_STORAGE_TANK = ITEMS.register("gravity_snowball_to_projectile_storage_tank", () -> new ProjectileGravitySnowballStorageTank(PROJECTILE_GRAVITY_SNOWBALL.get()));
+    public static final RegistryObject<Item> MONSTER_REPULSION_SNOWBALL_STORAGE_TANK = ITEMS.register("repulsion_snowball_to_monster_storage_tank", () -> new MonsterRepulsionSnowballStorageTank(MONSTER_REPULSION_SNOWBALL.get()));
+    public static final RegistryObject<Item> PROJECTILE_REPULSION_SNOWBALL_STORAGE_TANK = ITEMS.register("repulsion_snowball_to_projectile_storage_tank", () -> new ProjectileRepulsionSnowballStorageTank(PROJECTILE_REPULSION_SNOWBALL.get()));
+    public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL_STORAGE_TANK = ITEMS.register("black_hole_snowball_storage_tank", () -> new BlackHoleSnowballStorageTank(BLACK_HOLE_SNOWBALL.get()));
 
 }
