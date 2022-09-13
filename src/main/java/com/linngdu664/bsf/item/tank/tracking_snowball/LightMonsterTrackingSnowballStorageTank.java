@@ -1,18 +1,11 @@
-package com.linngdu664.bsf.item.misc.tank.tracking_snowball;
+package com.linngdu664.bsf.item.tank.tracking_snowball;
 
-import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.misc.SnowballStorageTankItem;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -20,9 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ExplosivePlayerTrackingSnowballStorageTank extends SnowballStorageTankItem {
+public class LightMonsterTrackingSnowballStorageTank extends SnowballStorageTankItem {
 
-    public ExplosivePlayerTrackingSnowballStorageTank(Item item) {
+    public LightMonsterTrackingSnowballStorageTank(Item item) {
         super(item);
     }
 
@@ -33,6 +26,6 @@ public class ExplosivePlayerTrackingSnowballStorageTank extends SnowballStorageT
         pTooltipComponents.add(new TranslatableComponent("lunch_no_machine_gun.tooltip").withStyle(ChatFormatting.DARK_GREEN));
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_shotgun.tooltip").withStyle(ChatFormatting.DARK_GREEN));
         pTooltipComponents.add(new TranslatableComponent("can_change.tooltip").withStyle(ChatFormatting.BLUE));
-        pTooltipComponents.add(new TranslatableComponent("EPT_snowball.tooltip").withStyle(ChatFormatting.GOLD));
+        pTooltipComponents.add(new TranslatableComponent("LMT_snowball.tooltip").withStyle(ChatFormatting.GOLD));
     }
 }

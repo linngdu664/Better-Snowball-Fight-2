@@ -1,18 +1,11 @@
-package com.linngdu664.bsf.item.misc.tank.tracking_snowball;
+package com.linngdu664.bsf.item.tank.tracking_snowball;
 
-import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.misc.SnowballStorageTankItem;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
