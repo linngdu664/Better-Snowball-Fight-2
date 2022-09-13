@@ -7,7 +7,7 @@ import net.minecraft.world.level.Level;
 
 import static com.linngdu664.bsf.util.MovingAlgorithm.forceEffect;
 
-public class ForceSnowballEntity extends BSFSnowballEntity {
+public abstract class ForceSnowballEntity extends BSFSnowballEntity {
     public Class <? extends Entity> targetClass;
     public double range;
     public double GM;

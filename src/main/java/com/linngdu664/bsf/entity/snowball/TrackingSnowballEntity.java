@@ -10,7 +10,7 @@ import net.minecraft.world.phys.Vec3;
 
 import static com.linngdu664.bsf.util.MovingAlgorithm.missilesTracking;
 
-public class TrackingSnowballEntity extends BSFSnowballEntity {
+public abstract class TrackingSnowballEntity extends BSFSnowballEntity {
     public float v0;
     public float maxTurningAngleCos;
     public float maxTurningAngleSin;

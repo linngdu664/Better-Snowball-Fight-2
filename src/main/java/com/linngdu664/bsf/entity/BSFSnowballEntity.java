@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
 
-public class BSFSnowballEntity extends ThrowableItemProjectile {
+public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
     public boolean isCaught = false;
     public double punch = 0.0;
     public float damage = Float.MIN_NORMAL;
