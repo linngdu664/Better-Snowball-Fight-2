@@ -135,7 +135,7 @@ public class SnowballShotgunItem extends BSFWeaponItem {
             return new FrozenSnowballEntity(player, level, getLaunchFunc());
         } else if (item == ItemRegister.POWDER_SNOWBALL.get() || item == ItemRegister.POWDER_SNOWBALL_STORAGE_TANK.get()) {
             pushRank += 0.12;
-            return new FrozenSnowballEntity(player, level, getLaunchFunc());
+            return new PowderSnowballEntity(player, level, getLaunchFunc());
         } else if (item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
             pushRank += 0.18;
             return new LightMonsterTrackingSnowballEntity(player, level, getLaunchFunc());
