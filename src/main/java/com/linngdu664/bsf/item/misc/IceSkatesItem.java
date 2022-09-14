@@ -13,10 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
@@ -43,7 +40,7 @@ public class IceSkatesItem extends ArmorItem {
 
             @Override
             public int getEnchantmentValue() {
-                return 0;
+                return 1;
             }
 
             @Override
@@ -52,8 +49,8 @@ public class IceSkatesItem extends ArmorItem {
             }
 
             @Override
-            public Ingredient getRepairIngredient() {
-                return null;
+            public @NotNull Ingredient getRepairIngredient() {
+                return Ingredient.EMPTY;
             }
 
             @Override
@@ -81,6 +78,7 @@ public class IceSkatesItem extends ArmorItem {
         return "bsf:textures/models/armor/ice_skates_layer.png";
     }
 
+    @SuppressWarnings("rawtypes")
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         consumer.accept(new IItemRenderProperties() {
             @Override
