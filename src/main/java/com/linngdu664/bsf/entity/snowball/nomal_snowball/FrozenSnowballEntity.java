@@ -7,6 +7,7 @@ import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -84,7 +85,11 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
                         if (entity.getTicksFrozen() < frozenTime) {
                             entity.setTicksFrozen(frozenTime);
                         }
-                        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1));
+                        entity.hurt(DamageSource.thrown(this, this.getOwner()), Float.MIN_NORMAL);
+                        if (launchFrom == LaunchFrom.FREEZING_CANNON) {
+                            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 4));
+                        }
+                        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 2));
                     }
                 }
             }
