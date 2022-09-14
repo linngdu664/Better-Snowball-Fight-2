@@ -29,7 +29,7 @@ public class BigLongTimeSnowflake extends TextureSheetParticle {
 
     @Override
     public @NotNull ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
     @Override

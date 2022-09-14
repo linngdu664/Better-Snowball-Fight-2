@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.item.snowball.normal_snowball;
 
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.PowderSnowballEntity;
-import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import net.minecraft.Util;
 import net.minecraft.core.Position;

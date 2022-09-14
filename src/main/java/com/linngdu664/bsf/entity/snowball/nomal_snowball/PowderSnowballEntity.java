@@ -4,7 +4,6 @@ import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -38,17 +37,17 @@ public class PowderSnowballEntity extends BSFSnowballEntity {
         Vec3 vec3 = this.getDeltaMovement();
         this.push(-vec3.x, -vec3.y, -vec3.z);
         this.setNoGravity(true);
-        ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 100, 0, 0, 0, 0.64);
+        ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 50, 0, 0, 0, 0.64);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if(isStart){
+        if (isStart) {
             // 0.32
             ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 50, 0, 0, 0, 0.25);
             timer++;
-            if(timer>200){
+            if (timer > 200) {
                 this.discard();
             }
         }
