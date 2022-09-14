@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SnowballStorageTankItem extends Item {
+public abstract class SnowballStorageTankItem extends Item {
     public Item item;
 
     public SnowballStorageTankItem(Item item) {

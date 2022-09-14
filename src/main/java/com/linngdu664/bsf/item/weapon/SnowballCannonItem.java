@@ -168,6 +168,8 @@ public class SnowballCannonItem extends BSFWeaponItem {
             return new SpectralSnowballEntity(player, level, getLaunchFunc(damageDropRate));
         } else if (item == ItemRegister.FROZEN_SNOWBALL.get() || item == ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get()) {
             return new FrozenSnowballEntity(player, level, getLaunchFunc(damageDropRate));
+        } else if (item == ItemRegister.POWDER_SNOWBALL.get() || item == ItemRegister.POWDER_SNOWBALL_STORAGE_TANK.get()) {
+            return new FrozenSnowballEntity(player, level, getLaunchFunc(damageDropRate));
         } else if (item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
             return new LightMonsterTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
         } else if (item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {

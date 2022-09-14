@@ -14,7 +14,7 @@ import net.minecraft.world.item.Rarity;
 
 import java.util.Objects;
 
-public class BSFSnowballItem extends Item {
+public abstract class BSFSnowballItem extends Item {
     public BSFSnowballItem(Rarity rarity) {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(16).rarity(rarity));
     }
