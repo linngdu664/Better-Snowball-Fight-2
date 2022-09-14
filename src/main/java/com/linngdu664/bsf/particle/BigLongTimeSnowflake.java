@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 @OnlyIn(Dist.CLIENT)
 public class BigLongTimeSnowflake extends TextureSheetParticle {
     private final SpriteSet sprites;
-    //todo complete it
+
     protected BigLongTimeSnowflake(ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, SpriteSet pSprites) {
         super(pLevel, pX, pY, pZ);
         this.gravity = 0;
@@ -50,9 +50,9 @@ public class BigLongTimeSnowflake extends TextureSheetParticle {
         }
 
         public Particle createParticle(@NotNull SimpleParticleType pType, @NotNull ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
-            BigLongTimeSnowflake shortTimeSnowflake = new BigLongTimeSnowflake(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, this.sprites);
-            shortTimeSnowflake.setColor(0.923F, 0.964F, 0.999F);
-            return shortTimeSnowflake;
+            BigLongTimeSnowflake bigLongTimeSnowflake = new BigLongTimeSnowflake(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, this.sprites);
+            bigLongTimeSnowflake.setColor(0.923F, 0.964F, 0.999F);
+            return bigLongTimeSnowflake;
         }
     }
 
