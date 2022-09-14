@@ -124,11 +124,11 @@
 
 
   "lunch_yes_hand.tooltip": "用手扔：可以",
-  "lunch_yes_cannon.tooltip": "雪球炮；可以",
+  "lunch_yes_cannon.tooltip": "雪球炮：可以",
   "lunch_yes_machine_gun.tooltip": "雪球機槍：可以",
   "lunch_yes_shotgun.tooltip": "雪球散彈槍：可以",
   "lunch_no_hand.tooltip": "用手扔：不可以",
-  "lunch_no_cannon.tooltip": "雪球炮；不可以",
+  "lunch_no_cannon.tooltip": "雪球炮：不可以",
   "lunch_no_machine_gun.tooltip": "雪球機槍：不可以",
   "lunch_no_shotgun.tooltip": "雪球散彈槍：不可以",
 

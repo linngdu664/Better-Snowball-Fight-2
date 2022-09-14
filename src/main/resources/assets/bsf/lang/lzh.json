@@ -125,11 +125,11 @@
 
 
   "lunch_yes_hand.tooltip": "用手扔之：可",
-  "lunch_yes_cannon.tooltip": "用炮射之；可",
+  "lunch_yes_cannon.tooltip": "用炮射之：可",
   "lunch_yes_machine_gun.tooltip": "連銃射之：可",
   "lunch_yes_shotgun.tooltip": "用銃射之：可",
   "lunch_no_hand.tooltip": "用手扔之：不",
-  "lunch_no_cannon.tooltip": "用炮射之；不",
+  "lunch_no_cannon.tooltip": "用炮射之：不",
   "lunch_no_machine_gun.tooltip": "連銃射之：不",
   "lunch_no_shotgun.tooltip": "用銃射之：不",
 
