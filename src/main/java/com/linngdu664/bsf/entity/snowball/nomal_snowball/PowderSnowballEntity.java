@@ -58,7 +58,7 @@ public class PowderSnowballEntity extends BSFSnowballEntity {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
-        if (!isCaught) {
+        if (isCaught) {
             this.discard();
         }
     }
