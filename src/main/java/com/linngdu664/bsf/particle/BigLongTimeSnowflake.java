@@ -16,14 +16,14 @@ public class BigLongTimeSnowflake extends TextureSheetParticle {
     //todo complete it
     protected BigLongTimeSnowflake(ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed, SpriteSet pSprites) {
         super(pLevel, pX, pY, pZ);
-        this.gravity = 0.225F;
+        this.gravity = 0;
         this.friction = 1.0F;
         this.sprites = pSprites;
         this.xd = pXSpeed + (Math.random() * 2.0D - 1.0D) * (double) 0.05F;
         this.yd = pYSpeed + (Math.random() * 2.0D - 1.0D) * (double) 0.05F;
         this.zd = pZSpeed + (Math.random() * 2.0D - 1.0D) * (double) 0.05F;
-        this.quadSize = 0.5F * (this.random.nextFloat() * this.random.nextFloat() * 1.0F + 1.0F);
-        this.lifetime = (int) (20.0F * this.random.nextFloat() + 80.0F);
+        this.quadSize = 0.8F * (this.random.nextFloat() * this.random.nextFloat() + 1.0F);
+        this.lifetime = (int) (60.0F * this.random.nextFloat() + 100.0F);
         this.setSpriteFromAge(pSprites);
     }
 
