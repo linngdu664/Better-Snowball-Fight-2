@@ -25,7 +25,6 @@ public class HeavyMonsterTrackingSnowballStorageTank extends SnowballStorageTank
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_cannon.tooltip").withStyle(ChatFormatting.DARK_GREEN));
         pTooltipComponents.add(new TranslatableComponent("lunch_no_machine_gun.tooltip").withStyle(ChatFormatting.DARK_GREEN));
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_shotgun.tooltip").withStyle(ChatFormatting.DARK_GREEN));
-        pTooltipComponents.add(new TranslatableComponent("can_change.tooltip").withStyle(ChatFormatting.BLUE));
         pTooltipComponents.add(new TranslatableComponent("HMT_snowball.tooltip").withStyle(ChatFormatting.GOLD));
     }
 }
