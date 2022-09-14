@@ -93,11 +93,11 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
                     }
                 }
             }
-        }
-        if (launchFrom == LaunchFrom.FREEZING_CANNON) {
-            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 400, 0, 0, 0, 0.32);
-        } else {
-            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 300, 0, 0, 0, 0.32);
+            if (launchFrom == LaunchFrom.FREEZING_CANNON) {
+                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 400, 0, 0, 0, 0.32);
+            } else {
+                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 200, 0, 0, 0, 0.32);
+            }
         }
 
         if (!level.isClientSide) {
