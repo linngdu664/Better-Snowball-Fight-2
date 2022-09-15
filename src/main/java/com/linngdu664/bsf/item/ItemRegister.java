@@ -53,6 +53,10 @@ public class ItemRegister {
 
     public static final RegistryObject<Item> SUPER_POWER_CORE = ITEMS.register("super_power_core", SuperFrozenCoreItem::new);
     public static final RegistryObject<Item> SUPER_FROZEN_CORE = ITEMS.register("super_frozen_core", SuperPowerCoreItem::new);
+    public static final RegistryObject<Item> TRACKING_CORE = ITEMS.register("tracking_core", TrackingCoreItem::new);
+    public static final RegistryObject<Item> UNSTABLE_CORE = ITEMS.register("unstable_core", SuperPowerCoreItem::new);
+    public static final RegistryObject<Item> REPULSION_CORE = ITEMS.register("repulsion_core", SuperPowerCoreItem::new);
+    public static final RegistryObject<Item> GRAVITY_CORE = ITEMS.register("gravity_core", SuperPowerCoreItem::new);
 
     public static final RegistryObject<Item> GLOVE = ITEMS.register("glove", GloveItem::new);
     public static final RegistryObject<Item> ICE_SKATES_ITEM = ITEMS.register("ice_skates", IceSkatesItem::new);
