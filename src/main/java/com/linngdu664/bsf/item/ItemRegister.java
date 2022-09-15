@@ -58,6 +58,7 @@ public class ItemRegister {
     public static final RegistryObject<Item> REPULSION_CORE = ITEMS.register("repulsion_core", SuperPowerCoreItem::new);
     public static final RegistryObject<Item> GRAVITY_CORE = ITEMS.register("gravity_core", SuperPowerCoreItem::new);
 
+    public static final RegistryObject<Item> SNOW_BLOCK_BLENDER = ITEMS.register("snow_block_blender", SnowBlockBlender::new);
     public static final RegistryObject<Item> GLOVE = ITEMS.register("glove", GloveItem::new);
     public static final RegistryObject<Item> ICE_SKATES_ITEM = ITEMS.register("ice_skates", IceSkatesItem::new);
     public static final RegistryObject<Item> POPSICLE = ITEMS.register("popsicle", PopsicleItem::new);
