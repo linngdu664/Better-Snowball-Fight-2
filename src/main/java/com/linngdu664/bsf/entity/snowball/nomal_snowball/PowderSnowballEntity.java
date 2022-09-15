@@ -38,7 +38,7 @@ public class PowderSnowballEntity extends BSFSnowballEntity {
         Vec3 vec3 = this.getDeltaMovement();
         this.push(-vec3.x, -vec3.y, -vec3.z);
         this.setNoGravity(true);
-        ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 50, 0, 0, 0, 0.8);
+        ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 25, 0, 0, 0, 0.4);
     }
 
     @Override
