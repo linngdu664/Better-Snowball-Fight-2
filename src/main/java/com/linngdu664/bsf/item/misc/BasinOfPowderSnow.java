@@ -54,7 +54,6 @@ public class BasinOfPowderSnow extends BasinOfSnow {
                 Vec3 rVec1 = new Vec3(livingEntity.getX() - pPlayer.getX(), livingEntity.getEyeY() - pPlayer.getEyeY() + 0.2, livingEntity.getZ() - pPlayer.getZ());
                 Vec3 rVec2 = new Vec3(rVec1.x, livingEntity.getY() - pPlayer.getEyeY(), rVec1.z);
                 if (vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
-                    System.out.println("ready to freeze");
                     float r = (float) Math.sqrt(modSqr(rVec1));
                     int t = 0;
                     if (r < 3.0F) {
@@ -80,6 +79,7 @@ public class BasinOfPowderSnow extends BasinOfSnow {
         }
         return InteractionResultHolder.success(itemStack);
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("basin_of_snow.tooltip1").withStyle(ChatFormatting.GRAY));
