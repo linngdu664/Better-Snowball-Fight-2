@@ -72,18 +72,16 @@ public class IceSkatesItem extends ArmorItem {
             }
 
         }, EquipmentSlot.FEET, new Properties().tab(ItemGroup.MAIN).stacksTo(1));
-
     }
 
-    @Nullable
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         return "bsf:textures/models/armor/ice_skates_layer.png";
     }
 
-    @SuppressWarnings("rawtypes")
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         consumer.accept(new IItemRenderProperties() {
+            @SuppressWarnings("rawtypes")
             @Override
             public @NotNull HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
                 HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(), Map.of(
