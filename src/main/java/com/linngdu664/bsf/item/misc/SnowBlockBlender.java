@@ -62,6 +62,11 @@ public class SnowBlockBlender extends Item {
     }
 
     @Override
+    public int getEnchantmentValue() {
+        return 1;
+    }
+
+    @Override
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack pStack) {
         return UseAnim.BOW;
     }
