@@ -74,7 +74,7 @@ public class SnowballMachineGunItem extends BSFWeaponItem {
         float yaw = player.getYRot();
         boolean flag = false;
         if (!isOnCoolDown) {
-            ItemStack itemStack = findAmmo(player, true, true);
+            ItemStack itemStack = findAmmo(player, true, false);
             if (itemStack != null) {
                 if (itemStack.is(ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) ||
                         itemStack.is(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) ||

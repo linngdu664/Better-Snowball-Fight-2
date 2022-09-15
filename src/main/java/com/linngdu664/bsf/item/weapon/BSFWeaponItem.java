@@ -9,8 +9,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class BSFWeaponItem extends Item {
@@ -18,29 +16,28 @@ public abstract class BSFWeaponItem extends Item {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(durability).rarity(rarity));
     }
 
-    protected boolean isAmmoTank(Item item, boolean allowTracking) {
+    protected boolean isAmmoTank(Item item, boolean allowPowder) {
         return item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.POWDER_SNOWBALL_STORAGE_TANK.get() || (
+                item == ItemRegister.POWDER_SNOWBALL_STORAGE_TANK.get() && allowPowder ||
                 item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) && allowTracking;
+                item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get();
     }
 
-    protected boolean isAmmo(Item item, boolean allowTracking) {
+    protected boolean isAmmo(Item item) {
         return item == ItemRegister.COMPACTED_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_SNOWBALL.get() ||
                 item == ItemRegister.GLASS_SNOWBALL.get() || item == ItemRegister.GOLD_SNOWBALL.get() ||
                 item == ItemRegister.ICE_SNOWBALL.get() || item == ItemRegister.IRON_SNOWBALL.get() ||
                 item == ItemRegister.OBSIDIAN_SNOWBALL.get() || item == ItemRegister.STONE_SNOWBALL.get() ||
                 item == ItemRegister.SPECTRAL_SNOWBALL.get() || item == ItemRegister.FROZEN_SNOWBALL.get() ||
-                item == ItemRegister.POWDER_SNOWBALL.get() || (
+                item == ItemRegister.POWDER_SNOWBALL.get() ||
                 item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get() ||
                 item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() ||
-                item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get())
-                && allowTracking;
+                item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get();
     }
 
     /**
@@ -48,18 +45,18 @@ public abstract class BSFWeaponItem extends Item {
      * snowballs if "onlyTank" is false.
      * @param player The user of the weapon.
      * @param onlyTank Whether the weapon can only use the snowball in tanks.
-     * @param allowTracking Whether the weapon can shoot tracking snowball.
+     * @param allowPowder Whether the weapon can shoot powder snow snowball.
      * @return The first valid ammo itemstack. If the method can't find a proper itemstack, it will return null.
      */
-    protected ItemStack findAmmo(Player player, boolean onlyTank, boolean allowTracking) {
+    protected ItemStack findAmmo(Player player, boolean onlyTank, boolean allowPowder) {
         for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-            if (isAmmoTank(player.getInventory().getItem(j).getItem(), allowTracking)) {
+            if (isAmmoTank(player.getInventory().getItem(j).getItem(), allowPowder)) {
                 return player.getInventory().getItem(j);
             }
         }
         if (!onlyTank) {
             for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-                if (isAmmo(player.getInventory().getItem(j).getItem(), allowTracking)) {
+                if (isAmmo(player.getInventory().getItem(j).getItem())) {
                     return player.getInventory().getItem(j);
                 }
             }
@@ -89,11 +86,6 @@ public abstract class BSFWeaponItem extends Item {
     @Override
     public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
         return pRepairCandidate.is(Items.IRON_INGOT);
-    }
-
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment.equals(Enchantments.UNBREAKING);
     }
 
     @Override
