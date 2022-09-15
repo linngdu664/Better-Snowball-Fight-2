@@ -10,11 +10,11 @@
       "item": "bsf:smooth_snowball"
     },
     "R": {
-      "item": "minecraft:glowstone"
+      "item": "bsf:tracking_core"
     }
   },
   "result": {
-    "item": "bsf:spectral_snowball",
+    "item": "bsf:monster_tracking_snowball",
     "count": 8
   }
 }

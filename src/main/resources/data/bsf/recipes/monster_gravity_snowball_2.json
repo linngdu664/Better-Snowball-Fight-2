@@ -10,11 +10,11 @@
       "item": "bsf:smooth_snowball"
     },
     "R": {
-      "item": "minecraft:glowstone"
+      "item": "bsf:gravity_core"
     }
   },
   "result": {
-    "item": "bsf:spectral_snowball",
+    "item": "bsf:gravity_snowball_to_monster",
     "count": 8
   }
 }

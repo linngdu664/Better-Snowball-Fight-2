@@ -7,14 +7,14 @@
   ],
   "key": {
     "W": {
-      "item": "bsf:smooth_snowball"
+      "item": "minecraft:snowball"
     },
     "R": {
-      "item": "minecraft:glowstone"
+      "item": "bsf:repulsion_core"
     }
   },
   "result": {
-    "item": "bsf:spectral_snowball",
+    "item": "bsf:repulsion_snowball_to_monster",
     "count": 8
   }
 }

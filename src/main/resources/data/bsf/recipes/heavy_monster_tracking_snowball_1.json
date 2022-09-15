@@ -7,14 +7,14 @@
   ],
   "key": {
     "W": {
-      "item": "bsf:smooth_snowball"
+      "item": "bsf:gold_snowball"
     },
     "R": {
-      "item": "minecraft:glowstone"
+      "item": "bsf:tracking_core"
     }
   },
   "result": {
-    "item": "bsf:spectral_snowball",
+    "item": "bsf:monster_tracking_snowball_with_damage",
     "count": 8
   }
 }

@@ -7,14 +7,14 @@
   ],
   "key": {
     "W": {
-      "item": "bsf:smooth_snowball"
+      "item": "minecraft:snowball"
     },
     "R": {
-      "item": "minecraft:glowstone"
+      "item": "minecraft:powder_snow_bucket"
     }
   },
   "result": {
-    "item": "bsf:spectral_snowball",
+    "item": "bsf:powder_snowball",
     "count": 8
   }
 }
