@@ -67,6 +67,10 @@
   "item.bsf.empty_basin": "Empty Basin",
   "item.bsf.basin_of_snow": "Basin of Snow",
   "item.bsf.basin_of_powder_snow": "Basin of Powder Snow",
+  "item.bsf.tracking_core": "Tracking Core",
+  "item.bsf.unstable_core": "Unstable Core",
+  "item.bsf.repulsion_core": "Repulsion Core",
+  "item.bsf.gravity_core": "Gravity Core",
 
   "stone_snowball.tooltip": "This is outrageous!",
   "snowball_clamp.tooltip": "Highly efficient snowballing tool",

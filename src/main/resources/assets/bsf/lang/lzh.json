@@ -68,6 +68,10 @@
   "item.bsf.empty_basin": "空盆",
   "item.bsf.basin_of_snow": "雪盆",
   "item.bsf.basin_of_powder_snow": "細雪盆",
+  "item.bsf.tracking_core": "跟蹤核心",
+  "item.bsf.unstable_core": "不穩核心",
+  "item.bsf.repulsion_core": "斥力核心",
+  "item.bsf.gravity_core": "引力核心",
 
   "stone_snowball.tooltip": "甚也！",
   "snowball_clamp.tooltip": "高效善雪團之具",
