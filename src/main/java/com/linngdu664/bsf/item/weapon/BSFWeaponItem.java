@@ -16,13 +16,13 @@ public abstract class BSFWeaponItem extends Item {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(durability).rarity(rarity));
     }
 
-    protected boolean isAmmoTank(Item item, boolean allowPowder) {
+    protected boolean isAmmoTank(Item item, boolean isNormalWeapon) {
         return item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.POWDER_SNOWBALL_STORAGE_TANK.get() && allowPowder ||
+                item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() || (
+                item == ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.POWDER_SNOWBALL_STORAGE_TANK.get()) && isNormalWeapon ||
                 item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get();
@@ -45,12 +45,12 @@ public abstract class BSFWeaponItem extends Item {
      * snowballs if "onlyTank" is false.
      * @param player The user of the weapon.
      * @param onlyTank Whether the weapon can only use the snowball in tanks.
-     * @param allowPowder Whether the weapon can shoot powder snow snowball.
+     * @param isNormalWeapon Whether the weapon is a normal weapon (cannon/shotgun).
      * @return The first valid ammo itemstack. If the method can't find a proper itemstack, it will return null.
      */
-    protected ItemStack findAmmo(Player player, boolean onlyTank, boolean allowPowder) {
+    protected ItemStack findAmmo(Player player, boolean onlyTank, boolean isNormalWeapon) {
         for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-            if (isAmmoTank(player.getInventory().getItem(j).getItem(), allowPowder)) {
+            if (isAmmoTank(player.getInventory().getItem(j).getItem(), isNormalWeapon)) {
                 return player.getInventory().getItem(j);
             }
         }

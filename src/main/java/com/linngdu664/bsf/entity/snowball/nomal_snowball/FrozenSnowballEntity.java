@@ -2,8 +2,10 @@ package com.linngdu664.bsf.entity.snowball.nomal_snowball;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
+import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -21,9 +23,6 @@ import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
-import static com.linngdu664.bsf.util.BSFMthUtil.modSqr;
-import static com.linngdu664.bsf.util.TargetGetter.getTargetList;
 
 public class FrozenSnowballEntity extends BSFSnowballEntity {
     public float frozenRange = 2.5F;
@@ -62,7 +61,7 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
             for (int i = (int) (blockPos.getX() - frozenRange); i <= blockPos.getX() + frozenRange; i++) {
                 for (int j = (int) (blockPos.getY() - frozenRange); j <= blockPos.getY() + frozenRange; j++) {
                     for (int k = (int) (blockPos.getZ() - frozenRange); k <= blockPos.getZ() + frozenRange; k++) {
-                        if (modSqr(i - blockPos.getX(), j - blockPos.getY(), k - blockPos.getZ()) <= frozenRange * frozenRange) {
+                        if (BSFMthUtil.modSqr(i - blockPos.getX(), j - blockPos.getY(), k - blockPos.getZ()) <= frozenRange * frozenRange) {
                             BlockPos blockPos1 = new BlockPos(i, j, k);
                             BlockState blockState = level.getBlockState(blockPos1);
                             if (blockState.getBlock() == Blocks.WATER && blockState.getValue(LiquidBlock.LEVEL) == 0) {
@@ -78,7 +77,7 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
                     }
                 }
             }
-            List<LivingEntity> list = getTargetList(this, LivingEntity.class, 2.5F);
+            List<LivingEntity> list = TargetGetter.getTargetList(this, LivingEntity.class, 2.5F);
             for (LivingEntity entity : list) {
                 if (distanceToSqr(entity) < frozenRange * frozenRange) {
                     if (frozenTime > 0) {

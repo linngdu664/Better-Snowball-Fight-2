@@ -7,7 +7,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -28,8 +27,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-
-import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
 
 public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
     public boolean isCaught = false;
@@ -153,7 +150,7 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
     // Check whether the player can catch the snowball
     protected boolean isHeadingToSnowball(Player player) {
         Vec3 speedVec = this.getDeltaMovement().normalize();
-        Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
+        Vec3 cameraVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
         return Math.abs(cameraVec.dot(speedVec) + 1.0) < 0.2;
     }
 

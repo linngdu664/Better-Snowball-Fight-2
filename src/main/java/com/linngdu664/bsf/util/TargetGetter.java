@@ -7,8 +7,6 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFMthUtil.modSqr;
-
 // I wonder why IDEA warns list.remove.
 @SuppressWarnings("all")
 public class TargetGetter {
@@ -37,7 +35,7 @@ public class TargetGetter {
         if (angleRestriction) {
             Vec3 vec3 = new Vec3(entity1.getX() - snowball.getX(), entity1.getY() - snowball.getY(), entity1.getZ() - snowball.getZ());
             Vec3 velocity = snowball.getDeltaMovement();
-            if (BSFMthUtil.vec3AngleCos(vec3, velocity) < 0.5 || modSqr(vec3) > trackingRange * trackingRange) {
+            if (BSFMthUtil.vec3AngleCos(vec3, velocity) < 0.5 || vec3.lengthSqr() > trackingRange * trackingRange) {
                 return null;
             }
         }

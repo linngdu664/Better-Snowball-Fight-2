@@ -1,14 +1,12 @@
 package com.linngdu664.bsf.entity.snowball;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.util.BSFMthUtil;
+import com.linngdu664.bsf.util.MovingAlgorithm;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-
-import static com.linngdu664.bsf.util.MovingAlgorithm.missilesTracking;
 
 public abstract class TrackingSnowballEntity extends BSFSnowballEntity {
     public float v0;
@@ -28,12 +26,12 @@ public abstract class TrackingSnowballEntity extends BSFSnowballEntity {
         super.tick();
         if (init) {
             Vec3 vec3 = this.getDeltaMovement();
-            v0 = (float) Math.sqrt(BSFMthUtil.modSqr(vec3));
+            v0 = (float) vec3.length();
             maxTurningAngleCos = Mth.cos(7.1619724F * v0 * Mth.DEG_TO_RAD);
             maxTurningAngleSin = Mth.sin(7.1619724F * v0 * Mth.DEG_TO_RAD);
             init = false;
         }
-        missilesTracking(this, targetClass, range, true, maxTurningAngleCos, maxTurningAngleSin, lockFeet);
+        MovingAlgorithm.missilesTracking(this, targetClass, range, true, maxTurningAngleCos, maxTurningAngleSin, lockFeet);
     }
 
     public TrackingSnowballEntity setRange(double range) {
