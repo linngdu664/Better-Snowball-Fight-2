@@ -15,7 +15,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -30,8 +29,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-
-import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
 
 public class SnowballMachineGunItem extends BSFWeaponItem {
     private int timer = 0;
@@ -81,44 +78,45 @@ public class SnowballMachineGunItem extends BSFWeaponItem {
                         itemStack.is(ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get())) {
                     flag = true;
                 }
+                if (timer % 3 == 0 && (!flag || timer % 6 == 0)) {
+                    BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player);
+                    BSFShootFromRotation(snowballEntity, pitch, yaw, 2.6F, 1.0F);
+                    pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                    pLevel.addFreshEntity(snowballEntity);
+
+                    Vec3 cameraVec = Vec3.directionFromRotation(pitch, yaw);
+                    // add push
+                    if (pLevel.isClientSide()) {
+                        player.push(-cameraVec.x * recoil * 0.25, -cameraVec.y * recoil * 0.25, -cameraVec.z * recoil * 0.25);
+                    }
+
+                    // add particles
+                    if (!pLevel.isClientSide()) {
+                        ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 4, 0, 0, 0, 0.32);
+                    }
+
+                    // handle ammo consume and damage weapon.
+                    consumeAmmo(itemStack, player);
+                    if (pLevel.getRandom().nextFloat() <= damageChance && !player.getAbilities().instabuild) {
+                        pStack.setDamageValue(pStack.getDamageValue() + 1);
+                        if (pStack.getDamageValue() == 512) {
+                            player.awardStat(Stats.ITEM_BROKEN.get(pStack.getItem()));
+                            pStack.shrink(1);
+                            pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
+                        }
+                    }
+                }
             } else {
                 recoil = 0;
             }
-            if (timer % 3 == 0 && itemStack != null && (!flag || timer % 6 == 0)) {
-                BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player);
-                BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 2.6F, 1.0F);
-                pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                pLevel.addFreshEntity(snowballEntity);
 
-                Vec3 cameraVec = SphericalToCartesian(pitch * Mth.DEG_TO_RAD, yaw * Mth.DEG_TO_RAD);
-                // add push
-                if (pLevel.isClientSide()) {
-                    player.push(-cameraVec.x * recoil * 0.25, -cameraVec.y * recoil * 0.25, -cameraVec.z * recoil * 0.25);
-                }
-
-                // add particles
-                if (!pLevel.isClientSide()) {
-                    ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 4, 0, 0, 0, 0.32);
-                }
-
-                // handle ammo consume and damage weapon.
-                consumeAmmo(itemStack, player);
-                if (pLevel.getRandom().nextFloat() <= damageChance && !player.getAbilities().instabuild) {
-                    pStack.setDamageValue(pStack.getDamageValue() + 1);
-                    if (pStack.getDamageValue() == 512) {
-                        player.awardStat(Stats.ITEM_BROKEN.get(pStack.getItem()));
-                        pStack.shrink(1);
-                        pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
-                    }
-                }
-            }
             // set pitch according to recoil.
             if (pitch > -90.0F && pLevel.isClientSide() && (!flag || timer % 6 < 3)) {
                 player.setXRot(pitch - recoil);
             }
 
             // add and check cd time.
-            if (!pLevel.isClientSide && recoil != 0) {
+            if (!pLevel.isClientSide && itemStack != null) {
                 timer += 3;
                 if (flag && timer >= 60) {
                     player.getCooldowns().addCooldown(this, 60);

@@ -10,22 +10,17 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-import static com.linngdu664.bsf.util.BSFMthUtil.modSqr;
-import static com.linngdu664.bsf.util.BSFMthUtil.vec2AngleCos;
-import static com.linngdu664.bsf.util.TargetGetter.getTarget;
-import static com.linngdu664.bsf.util.TargetGetter.getTargetList;
-
 public class MovingAlgorithm {
     @Deprecated
     //This is not used for tracking in fact, but it has some funny effects.
     public static <T extends Entity> void gravityTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
         if (trackingMultipleTargets) {
-            List<T> list = getTargetList(snowball, targetClass, trackingRange);
+            List<T> list = TargetGetter.getTargetList(snowball, targetClass, trackingRange);
             for (T entity : list) {
                 if (angleRestriction) {
                     Vec3 vec3 = new Vec3(entity.getX() - snowball.getX(), entity.getY() - snowball.getY(), entity.getZ() - snowball.getZ());
                     Vec3 velocity = snowball.getDeltaMovement();
-                    if (BSFMthUtil.vec3AngleCos(vec3, velocity) < 0.5 || modSqr(vec3) > trackingRange * trackingRange) {
+                    if (BSFMthUtil.vec3AngleCos(vec3, velocity) < 0.5 || vec3.lengthSqr() > trackingRange * trackingRange) {
                         continue;
                     }
                 }
@@ -49,7 +44,7 @@ public class MovingAlgorithm {
                 }
             }
         } else {
-            Entity target = getTarget(snowball, targetClass, angleRestriction, trackingRange);
+            Entity target =TargetGetter.getTarget(snowball, targetClass, angleRestriction, trackingRange);
             if (target != null) {
                 Vec3 rVec = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());
                 double r2 = rVec.x * rVec.x + rVec.y + rVec.y + rVec.z * rVec.z;
@@ -86,10 +81,10 @@ public class MovingAlgorithm {
      * @param <T> Extends entity class.
      */
     public static <T extends Entity> void forceEffect(BSFSnowballEntity snowball, Class<T> targetClass, double range, double GM, double boundaryR2) {
-        List<T> list = getTargetList(snowball, targetClass, range);
+        List<T> list = TargetGetter.getTargetList(snowball, targetClass, range);
         for (T entity : list) {
             Vec3 rVec = new Vec3(snowball.getX() - entity.getX(), snowball.getY() - entity.getEyeY(), snowball.getZ() - entity.getZ());
-            double r2 = modSqr(rVec);
+            double r2 = rVec.lengthSqr();
             double ir2 = Mth.fastInvSqrt(r2);
             double a;
             if (r2 > boundaryR2) {
@@ -122,9 +117,9 @@ public class MovingAlgorithm {
      */
     public static <T extends Entity> void missilesTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin, boolean lockFeet) {
         Level level = snowball.level;
-        Entity target = getTarget(snowball, targetClass, angleRestriction, trackingRange);
+        Entity target = TargetGetter.getTarget(snowball, targetClass, angleRestriction, trackingRange);
         Vec3 velocity = snowball.getDeltaMovement();
-        if (target == null || !target.isAlive() || modSqr(velocity) < 0.25) {
+        if (target == null || !target.isAlive() || velocity.lengthSqr() < 0.25) {
             snowball.setNoGravity(false);
         } else if (!level.isClientSide) {
             snowball.setNoGravity(true);
@@ -134,7 +129,7 @@ public class MovingAlgorithm {
             } else {
                 delta = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());
             }
-            double cosTheta = vec2AngleCos(delta.x, delta.z, velocity.x, velocity.z);
+            double cosTheta = BSFMthUtil.vec2AngleCos(delta.x, delta.z, velocity.x, velocity.z);
             double sinTheta;
             if (cosTheta < maxTurningAngleCos) {
                 cosTheta = maxTurningAngleCos;
@@ -154,9 +149,9 @@ public class MovingAlgorithm {
                 vx = d2;
                 vz = d3;
             }
-            double vNewX = Math.sqrt(vx * vx + vz * vz);
-            double deltaNewX = Math.sqrt(delta.x * delta.x + delta.z * delta.z);
-            cosTheta = vec2AngleCos(vNewX, velocity.y, deltaNewX, delta.y);
+            double vNewX = Math.sqrt(BSFMthUtil.modSqr(vx, vz));
+            double deltaNewX = Math.sqrt(BSFMthUtil.modSqr(delta.x, delta.z));
+            cosTheta = BSFMthUtil.vec2AngleCos(vNewX, velocity.y, deltaNewX, delta.y);
             if (cosTheta < maxTurningAngleCos) {
                 cosTheta = maxTurningAngleCos;
                 sinTheta = maxTurningAngleSin;

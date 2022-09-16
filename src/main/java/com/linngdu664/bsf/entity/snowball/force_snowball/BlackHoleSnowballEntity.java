@@ -4,6 +4,7 @@ import com.linngdu664.bsf.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.MovingAlgorithm;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -14,8 +15,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-
-import static com.linngdu664.bsf.util.MovingAlgorithm.forceEffect;
 
 public class BlackHoleSnowballEntity extends BSFSnowballEntity {
     public int timer = 0;
@@ -51,7 +50,7 @@ public class BlackHoleSnowballEntity extends BSFSnowballEntity {
             level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundRegister.BLACK_HOLE_START.get(), SoundSource.VOICE, 3.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
         }
         if (timer > startTime) {
-            forceEffect(this, Entity.class, 30, 8, 8);
+            MovingAlgorithm.forceEffect(this, Entity.class, 30, 8, 8);
             ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.12);
         }
         if (timer == endTime) {

@@ -11,7 +11,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -22,8 +21,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-
-import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
 
 public class PowerfulSnowballCannonItem extends SnowballCannonItem {
     @Override
@@ -51,55 +48,24 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
                 ItemStack itemStack = findAmmo(player, false, true);
                 if (itemStack != null) {
                     BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player, f);
-
-                    //v is change
+                    //v is changed
                     BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 4.0F, 1.0F);
-
+                    pLevel.addFreshEntity(snowballEntity);
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
-
-
-                    Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
+                    Vec3 cameraVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
                     //add push
                     if (pLevel.isClientSide()) {
                         player.push(-0.26666667 * cameraVec.x * f, -0.26666667 * cameraVec.y * f, -0.26666667 * cameraVec.z * f);
-                    }
-
+                    } else {
                     //add particles
-                    if (!pLevel.isClientSide()) {
                         ServerLevel serverLevel = (ServerLevel) pLevel;
                         serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.32);
                     }
 
                     pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-
-                    pLevel.addFreshEntity(snowballEntity);
                     consumeAmmo(itemStack, player);
-                    /*
-                    if (isAmmoTank(itemStack.getItem(), true)) {
-                        itemStack.hurtAndBreak(1, player, (p) -> p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true));
-                    } else if (!player.getAbilities().instabuild) {
-                        itemStack.shrink(1);
-                        if (itemStack.isEmpty()) {
-                            player.getInventory().removeItem(itemStack);
-                        }
-                    }
-
-                    if (!player.getAbilities().instabuild) {
-                        if (k) {
-                            itemStack.setDamageValue(itemStack.getDamageValue() + 1);
-                            if (itemStack.getDamageValue() == 96) {
-                                itemStack.shrink(1);
-                                player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get(), 1), true);
-                            }
-                        } else {
-                            itemStack.shrink(1);
-                            if (itemStack.isEmpty()) {
-                                player.getInventory().removeItem(itemStack);
-                            }
-                        }
-                    }*/
+                    player.awardStat(Stats.ITEM_USED.get(this));
                 }
-                player.awardStat(Stats.ITEM_USED.get(this));
             }
         }
     }

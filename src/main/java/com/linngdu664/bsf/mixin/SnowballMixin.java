@@ -31,8 +31,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
-
 @Mixin(Snowball.class)
 public class SnowballMixin extends ThrowableItemProjectile {
     public SnowballMixin(EntityType<? extends ThrowableItemProjectile> p_37442_, Level p_37443_) {
@@ -70,7 +68,7 @@ public class SnowballMixin extends ThrowableItemProjectile {
 
     private boolean isHeadingToSnowball(Player player) {
         Vec3 speedVec = this.getDeltaMovement().normalize();
-        Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
+        Vec3 cameraVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
         return Mth.abs((float) (cameraVec.dot(speedVec) + 1.0F)) < 0.2F;
     }
 

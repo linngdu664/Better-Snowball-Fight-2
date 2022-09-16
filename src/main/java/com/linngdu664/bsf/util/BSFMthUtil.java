@@ -10,16 +10,12 @@ public class BSFMthUtil {
     }
 
     public static double vec3AngleCos(Vec3 a, Vec3 b) {
-        return Mth.fastInvSqrt(modSqr(a)) * Mth.fastInvSqrt(modSqr(b)) * (a.x * b.x + a.y * b.y + a.z * b.z);
+        return Mth.fastInvSqrt(a.lengthSqr()) * Mth.fastInvSqrt(b.lengthSqr()) * a.dot(b);
     }
 
     //Calculate the square of the modulus(length) of a vector.
-    public static double modSqr(double x1, double y1) {
-        return x1 * x1 + y1 * y1;
-    }
-
-    public static double modSqr(Vec3 a) {
-        return a.x * a.x + a.y * a.y + a.z * a.z;
+    public static double modSqr(double x, double y) {
+        return x * x + y * y;
     }
 
     public static double modSqr(double x, double y, double z) {
@@ -27,7 +23,7 @@ public class BSFMthUtil {
     }
 
     //Fucking Minecraft anti-human coordinate system.
-    public static Vec3 SphericalToCartesian(float pitch, float yaw) {
-        return new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
-    }
+//    public static Vec3 SphericalToCartesian(float pitch, float yaw) {
+//        return new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
+//    }
 }

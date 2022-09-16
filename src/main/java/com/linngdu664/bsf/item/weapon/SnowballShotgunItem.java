@@ -14,7 +14,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -28,8 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-
-import static com.linngdu664.bsf.util.BSFMthUtil.SphericalToCartesian;
 
 public class SnowballShotgunItem extends BSFWeaponItem {
     private double pushRank;
@@ -72,12 +69,11 @@ public class SnowballShotgunItem extends BSFWeaponItem {
             }
         }
         if (i > 0) {
-            Vec3 cameraVec = SphericalToCartesian(player.getXRot() * Mth.DEG_TO_RAD, player.getYRot() * Mth.DEG_TO_RAD);
+            Vec3 cameraVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
             if (!player.isShiftKeyDown()) {
                 if (level.isClientSide()) {
                     player.push(-0.24 * cameraVec.x, -0.24 * cameraVec.y, -0.24 * cameraVec.z);
-                }
-                if (!level.isClientSide()) {
+                } else {
                     //add particles
                     ServerLevel serverLevel = (ServerLevel) level;
                     serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.16);
@@ -86,8 +82,7 @@ public class SnowballShotgunItem extends BSFWeaponItem {
             } else {
                 if (level.isClientSide()) {
                     player.push(-pushRank * cameraVec.x, -pushRank * cameraVec.y, -pushRank * cameraVec.z);
-                }
-                if (!level.isClientSide()) {
+                } else {
                     //add particles
                     ServerLevel serverLevel = (ServerLevel) level;
                     serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, (int) (29 * pushRank + 9.04), 0, 0, 0, 0.32);
@@ -95,9 +90,9 @@ public class SnowballShotgunItem extends BSFWeaponItem {
                 level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SHOTGUN_FIRE_1.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             }
             stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
+            player.getCooldowns().addCooldown(this, 20);
+            player.awardStat(Stats.ITEM_USED.get(this));
         }
-        player.getCooldowns().addCooldown(this, 20);
-        player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.pass(stack);
     }
 
@@ -137,7 +132,7 @@ public class SnowballShotgunItem extends BSFWeaponItem {
             pushRank += 0.12;
             return new PowderSnowballEntity(player, level, getLaunchFunc());
         } else if (item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-            pushRank += 0.18;
+            pushRank += 0.10;
             return new LightMonsterTrackingSnowballEntity(player, level, getLaunchFunc());
         } else if (item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
             pushRank += 0.18;
@@ -146,7 +141,7 @@ public class SnowballShotgunItem extends BSFWeaponItem {
             pushRank += 0.42;
             return new ExplosiveMonsterTrackingSnowballEntity(player, level, getLaunchFunc());
         } else if (item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-            pushRank += 0.18;
+            pushRank += 0.10;
             return new LightPlayerTrackingSnowballEntity(player, level, getLaunchFunc());
         } else if (item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
             pushRank += 0.18;
