@@ -1,10 +1,10 @@
 package com.linngdu664.bsf.item.tank.normal_snowball;
 
+import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -14,10 +14,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class PowderSnowballStorageTank extends SnowballStorageTankItem {
-
-    public PowderSnowballStorageTank(Item item) {
-        super(item);
+    public PowderSnowballStorageTank() {
+        super(ItemRegister.POWDER_SNOWBALL.get());
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_hand.tooltip").withStyle(ChatFormatting.DARK_GREEN));
