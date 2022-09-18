@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.weapon;
 
-import com.linngdu664.bsf.SoundRegister;
+import com.linngdu664.bsf.util.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
