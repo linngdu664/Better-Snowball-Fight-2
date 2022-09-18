@@ -1,7 +1,10 @@
 package com.linngdu664.bsf;
 
+import com.linngdu664.bsf.event.AttackEntityEvent;
+import com.linngdu664.bsf.event.OnPlayerTickEvent;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.particle.ParticleRegister;
+import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -17,7 +20,8 @@ public class Main {
         ItemRegister.ITEMS.register(bus);
         SoundRegister.SOUNDS.register(bus);
         ParticleRegister.PARTICLES.register(bus);
-        MinecraftForge.EVENT_BUS.register(new EventHandler());
+        MinecraftForge.EVENT_BUS.register(new AttackEntityEvent());
+        MinecraftForge.EVENT_BUS.register(new OnPlayerTickEvent());
         bus.addListener(this::initClient);
     }
 

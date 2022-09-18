@@ -1,31 +1,22 @@
-package com.linngdu664.bsf;
+package com.linngdu664.bsf.event;
 
 import com.linngdu664.bsf.item.misc.IceSkatesItem;
-import com.linngdu664.bsf.item.snowball.normal_snowball.SmoothSnowballItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class EventHandler {
+public class OnPlayerTickEvent {
     public static final UUID SKATES_SPEED_ID = UUID.fromString("00a3641b-33e0-4022-8d92-1c7b74c380b0");
 
     private void clearSpeedEffect(Player player) {
@@ -68,49 +59,6 @@ public class EventHandler {
                     }
                 } else {
                     clearSpeedEffect(player);
-                }
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void attackEntity(AttackEntityEvent event) {
-        Player player = event.getPlayer();
-        Entity entity = event.getTarget();
-        Level level = player.getLevel();
-        Item item = player.getMainHandItem().getItem();
-        if (!player.isSpectator() && entity instanceof LivingEntity target) {
-            if (item instanceof SolidBucketItem) {
-                if (target.getTicksFrozen() < 240) {
-                    target.setTicksFrozen(240);
-                }
-                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
-                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
-                target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 150, 1));
-                for (int i = 0; i < 32; i++) {
-                    level.addParticle(ParticleTypes.ITEM_SNOWBALL, target.getX(), target.getEyeY(), target.getZ(), 0, 0, 0);
-                }
-                if (target instanceof Blaze) {
-                    target.hurt(DamageSource.playerAttack(player), 8);
-                }
-                if (!player.getAbilities().instabuild) {
-                    player.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
-                    player.getInventory().placeItemBackInInventory(new ItemStack(Items.BUCKET), true);
-                }
-            } else if (item instanceof SnowballItem || item instanceof SmoothSnowballItem) {
-                if (target.getTicksFrozen() < 180) {
-                    target.setTicksFrozen(180);
-                }
-                target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1));
-                target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 1));
-                if (!player.getAbilities().instabuild) {
-                    player.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
-                }
-                for (int i = 0; i < 16; i++) {
-                    level.addParticle(ParticleTypes.ITEM_SNOWBALL, target.getX(), target.getEyeY(), target.getZ(), 0, 0, 0);
-                }
-                if (target instanceof Blaze) {
-                    target.hurt(DamageSource.playerAttack(player), 4);
                 }
             }
         }
