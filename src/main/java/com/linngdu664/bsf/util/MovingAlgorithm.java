@@ -11,63 +11,6 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class MovingAlgorithm {
-    @Deprecated
-    //This is not used for tracking in fact, but it has some funny effects.
-    public static <T extends Entity> void gravityTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, double GM, boolean angleRestriction, boolean trackingMultipleTargets, boolean selfAttraction, boolean attraction) {
-        if (trackingMultipleTargets) {
-            List<T> list = TargetGetter.getTargetList(snowball, targetClass, trackingRange);
-            for (T entity : list) {
-                if (angleRestriction) {
-                    Vec3 vec3 = new Vec3(entity.getX() - snowball.getX(), entity.getY() - snowball.getY(), entity.getZ() - snowball.getZ());
-                    Vec3 velocity = snowball.getDeltaMovement();
-                    if (BSFMthUtil.vec3AngleCos(vec3, velocity) < 0.5 || vec3.lengthSqr() > trackingRange * trackingRange) {
-                        continue;
-                    }
-                }
-                Vec3 rVec = new Vec3(entity.getX() - snowball.getX(), entity.getEyeY() - snowball.getY(), entity.getZ() - snowball.getZ());
-                double r2 = rVec.x * rVec.x + rVec.y + rVec.y + rVec.z * rVec.z;
-                Vec3 aVec;
-                if (r2 > 0.1) {
-                    double ir2 = Mth.fastInvSqrt(r2);
-                    double a = GM / r2;
-                    aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
-                } else {
-                    aVec = Vec3.ZERO;
-                }
-                if (selfAttraction) {
-                    Vec3 vVec = snowball.getDeltaMovement();
-                    snowball.lerpMotion(vVec.x + aVec.x, vVec.y + aVec.y, vVec.z + aVec.z);
-                }
-                if (attraction) {
-                    Vec3 vVec2 = entity.getDeltaMovement();
-                    entity.lerpMotion(vVec2.x - aVec.x, vVec2.y - aVec.y, vVec2.z - aVec.z);
-                }
-            }
-        } else {
-            Entity target =TargetGetter.getTarget(snowball, targetClass, angleRestriction, trackingRange);
-            if (target != null) {
-                Vec3 rVec = new Vec3(target.getX() - snowball.getX(), target.getEyeY() - snowball.getY(), target.getZ() - snowball.getZ());
-                double r2 = rVec.x * rVec.x + rVec.y + rVec.y + rVec.z * rVec.z;
-                Vec3 aVec;
-                if (r2 > 0.1) {
-                    double ir2 = Mth.fastInvSqrt(r2);
-                    double a = GM / r2;
-                    aVec = new Vec3(a * rVec.x * ir2, a * rVec.y * ir2, a * rVec.z * ir2);
-                } else {
-                    aVec = Vec3.ZERO;
-                }
-                if (selfAttraction) {
-                    Vec3 vVec = snowball.getDeltaMovement();
-                    snowball.lerpMotion(vVec.x + aVec.x, vVec.y + aVec.y, vVec.z + aVec.z);
-                }
-                if (attraction) {
-                    Vec3 vVec2 = target.getDeltaMovement();
-                    target.lerpMotion(vVec2.x - aVec.x, vVec2.y - aVec.y, vVec2.z - aVec.z);
-                }
-            }
-        }
-    }
-
     /**
      * This method uses the "inverse square-const-zero" model to simulate gravity/repulsion. If we only use inverse-square
      * law, the dt (0.05s) is too long, resulting in huge velocity errors when the distance is short (acceleration is huge),
