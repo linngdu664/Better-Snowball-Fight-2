@@ -1,5 +1,6 @@
 package com.linngdu664.bsf;
 
+import com.linngdu664.bsf.effect.EffectRegister;
 import com.linngdu664.bsf.event.AttackEntityEvent;
 import com.linngdu664.bsf.event.OnPlayerTickEvent;
 import com.linngdu664.bsf.item.ItemRegister;
@@ -20,6 +21,7 @@ public class Main {
         ItemRegister.ITEMS.register(bus);
         SoundRegister.SOUNDS.register(bus);
         ParticleRegister.PARTICLES.register(bus);
+        EffectRegister.EFFECTS.register(bus);
         MinecraftForge.EVENT_BUS.register(new AttackEntityEvent());
         MinecraftForge.EVENT_BUS.register(new OnPlayerTickEvent());
         bus.addListener(this::initClient);
