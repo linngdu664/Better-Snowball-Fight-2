@@ -40,14 +40,17 @@ public class MilkPopsicleItem extends Item {
 
     @Override
     public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, Level level, @NotNull LivingEntity user) {
+        Player player = (Player) user;
         if (!level.isClientSide) {
-            user.setRemainingFireTicks(0);
-            user.removeAllEffects();
-            user.setTicksFrozen(40);
-            user.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
+            player.setRemainingFireTicks(0);
+            player.removeAllEffects();
+            player.setTicksFrozen(40);
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1));
         }
-        CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) user, stack);
-        if (!((Player) user).getAbilities().instabuild) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
+        }
+        if (!player.getAbilities().instabuild) {
             stack.shrink(1);
         }
         return stack;
