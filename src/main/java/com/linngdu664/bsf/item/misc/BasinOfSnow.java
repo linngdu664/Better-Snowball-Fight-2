@@ -38,24 +38,7 @@ public class BasinOfSnow extends Item {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         List<LivingEntity> list = TargetGetter.getTargetList(pPlayer, LivingEntity.class, 8);
         Vec3 cameraVec = Vec3.directionFromRotation(pPlayer.getXRot(), pPlayer.getYRot());
-        if (pLevel.isClientSide) {
-            Vec3 vecA = cameraVec.cross(new Vec3(0, 1, 0)).normalize();
-            if (vecA == Vec3.ZERO) {
-                vecA = cameraVec.cross(new Vec3(1, 0, 0).normalize());
-            }
-            Vec3 vecB = cameraVec.cross(vecA).normalize();
-            for (float r = 0.5F; r <= 4.5F; r += 0.5F) {
-                float rand = pLevel.getRandom().nextFloat() * Mth.PI * 0.16666667F;
-                for (float theta = rand; theta < Mth.TWO_PI + rand; theta += Mth.PI * 0.16666667F) {
-                    double x = 8.0F * cameraVec.x + r * (Mth.cos(theta) * vecA.x + Mth.sin(theta) * vecB.x);
-                    double y = 8.0F * cameraVec.y + r * (Mth.cos(theta) * vecA.y + Mth.sin(theta) * vecB.y);
-                    double z = 8.0F * cameraVec.z + r * (Mth.cos(theta) * vecA.z + Mth.sin(theta) * vecB.z);
-                    double inverseL = Mth.fastInvSqrt(BSFMthUtil.modSqr(x, y, z));
-                    double rand1 = Math.sqrt(pLevel.getRandom().nextDouble() * 0.9 + 0.1);
-                    pLevel.addParticle(ParticleTypes.SNOWFLAKE, pPlayer.getX(), pPlayer.getEyeY() - 0.2, pPlayer.getZ(), x * inverseL * rand1, y * inverseL * rand1, z * inverseL * rand1);
-                }
-            }
-        }
+        spawnParticles(pLevel, pPlayer, cameraVec);
         if (!pLevel.isClientSide) {
             for (LivingEntity livingEntity : list) {
                 Vec3 rVec1 = new Vec3(livingEntity.getX() - pPlayer.getX(), livingEntity.getEyeY() - pPlayer.getEyeY() + 0.2, livingEntity.getZ() - pPlayer.getZ());
@@ -103,16 +86,9 @@ public class BasinOfSnow extends Item {
         Vec3 n = rVec.normalize().scale(0.25);
         int l = (int) (4 * rVec.length());
         boolean flag = true;
+        int k;
         for (int i = 0; i < l; i++) {
-            int k = 0;
-            for (int j = -1; j <= 1; j++) {
-                BlockPos blockPos = new BlockPos(x - offsetX * j, y, z + offsetZ * j);
-                BlockState blockState = level.getBlockState(blockPos);
-                if (blockState.getMaterial().blocksMotion()) {
-                    k++;
-                }
-            }
-            System.out.println(k);
+            k = detectBlock(level, offsetX, offsetZ, x, y, z);
             if (k > 1) {
                 flag = false;
                 break;
@@ -127,15 +103,7 @@ public class BasinOfSnow extends Item {
         n = rVec1.normalize().scale(0.25);
         l = (int) (4 * rVec1.length());
         for (int i = 0; i < l; i++) {
-            int k = 0;
-            for (int j = -1; j <= 1; j++) {
-                BlockPos blockPos = new BlockPos(x - offsetX * j, y, z + offsetZ * j);
-                BlockState blockState = level.getBlockState(blockPos);
-                if (blockState.getMaterial().blocksMotion()) {
-                    k++;
-                }
-            }
-            System.out.println(k);
+            k = detectBlock(level, offsetX, offsetZ, x, y, z);
             if (k > 1) {
                 return flag;
             }
@@ -144,6 +112,39 @@ public class BasinOfSnow extends Item {
             z += n.z;
         }
         return true;
+    }
+
+    private int detectBlock(Level level, double offsetX, double offsetZ, double x, double y, double z) {
+        int k = 0;
+        for (int j = -1; j <= 1; j++) {
+            BlockPos blockPos = new BlockPos(x - offsetX * j, y, z + offsetZ * j);
+            BlockState blockState = level.getBlockState(blockPos);
+            if (blockState.getMaterial().blocksMotion()) {
+                k++;
+            }
+        }
+        return k;
+    }
+
+    protected void spawnParticles(Level pLevel, Player pPlayer, Vec3 cameraVec) {
+        if (pLevel.isClientSide) {
+            Vec3 vecA = cameraVec.cross(new Vec3(0, 1, 0)).normalize();
+            if (vecA == Vec3.ZERO) {
+                vecA = cameraVec.cross(new Vec3(1, 0, 0).normalize());
+            }
+            Vec3 vecB = cameraVec.cross(vecA).normalize();
+            for (float r = 0.5F; r <= 4.5F; r += 0.5F) {
+                float rand = pLevel.getRandom().nextFloat() * Mth.PI * 0.16666667F;
+                for (float theta = rand; theta < Mth.TWO_PI + rand; theta += Mth.PI * 0.16666667F) {
+                    double x = 8.0F * cameraVec.x + r * (Mth.cos(theta) * vecA.x + Mth.sin(theta) * vecB.x);
+                    double y = 8.0F * cameraVec.y + r * (Mth.cos(theta) * vecA.y + Mth.sin(theta) * vecB.y);
+                    double z = 8.0F * cameraVec.z + r * (Mth.cos(theta) * vecA.z + Mth.sin(theta) * vecB.z);
+                    double inverseL = Mth.fastInvSqrt(BSFMthUtil.modSqr(x, y, z));
+                    double rand1 = Math.sqrt(pLevel.getRandom().nextDouble() * 0.9 + 0.1);
+                    pLevel.addParticle(ParticleTypes.SNOWFLAKE, pPlayer.getX(), pPlayer.getEyeY() - 0.2, pPlayer.getZ(), x * inverseL * rand1, y * inverseL * rand1, z * inverseL * rand1);
+                }
+            }
+        }
     }
 
     @Override
