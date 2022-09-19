@@ -27,6 +27,7 @@
   "item.bsf.glove": "Glove",
   "item.bsf.popsicle": "Popsicle",
   "item.bsf.milk_popsicle": "Milk Popsicle",
+  "item.bsf.vodka": "Vodka",
   "item.bsf.snowball_machine_gun": "Snowball Machine Gun",
   "item.bsf.empty_snowball_storage_tank": "Empty Snowball Storage Tank",
   "item.bsf.compacted_snowball_storage_tank": "Compacted Snowball Storage Tank",
@@ -152,5 +153,7 @@
   "advancements.bsf.snowball_cannon.title": "Find It in a Frozen Chest?",
   "advancements.bsf.snowball_cannon.description": "Make a snowball cannon",
   "advancements.bsf.snowball_machine_gun.title": "Power, You're on Denji's Side!",
-  "advancements.bsf.snowball_machine_gun.description": "Make a snowball machine gun"
+  "advancements.bsf.snowball_machine_gun.description": "Make a snowball machine gun",
+
+  "effect.bsf.cold_resistance": "Cold Resistance"
 }

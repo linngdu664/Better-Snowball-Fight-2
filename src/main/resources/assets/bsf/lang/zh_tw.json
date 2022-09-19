@@ -27,6 +27,7 @@
   "item.bsf.compacted_snowball_set": "固實雪球組",
   "item.bsf.popsicle": "冰棍",
   "item.bsf.milk_popsicle": "牛奶雪糕",
+  "item.bsf.vodka": "伏特加",
   "item.bsf.snowball_machine_gun": "雪球機槍",
   "item.bsf.empty_snowball_storage_tank": "空雪球儲罐",
   "item.bsf.compacted_snowball_storage_tank": "固實雪球儲罐",
@@ -152,5 +153,7 @@
   "advancements.bsf.snowball_cannon.title": "妳是在冰凍箱中找到的嗎？",
   "advancements.bsf.snowball_cannon.description": "制作一個雪球炮",
   "advancements.bsf.snowball_machine_gun.title": "那帕瓦就和電次一隊吧！",
-  "advancements.bsf.snowball_machine_gun.description": "制作一挺雪球機槍"
+  "advancements.bsf.snowball_machine_gun.description": "制作一挺雪球機槍",
+
+  "effect.bsf.cold_resistance": "抗寒"
 }
