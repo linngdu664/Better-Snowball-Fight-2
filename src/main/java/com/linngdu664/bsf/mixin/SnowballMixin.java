@@ -96,10 +96,10 @@ public class SnowballMixin extends ThrowableItemProjectile {
             }
             float i = entity instanceof Blaze ? 3.0F : Float.MIN_VALUE;
             entity.hurt(DamageSource.thrown(this, this.getOwner()), i);
-            if (!level.isClientSide) {
-                ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
-                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
-            }
+        }
+        if (!level.isClientSide) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
+            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
         }
     }
 }
