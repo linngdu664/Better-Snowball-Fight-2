@@ -37,7 +37,7 @@ public class BasinOfPowderSnow extends BasinOfSnow {
                     float r = (float) rVec1.length();
                     int t = 0;
                     if (r < 3.0F) {
-                        t =  240;
+                        t = 240;
                         livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 3));
                     } else if (r < 6.0F) {
                         t = (int) (240.0F - (r - 3.0F) * (r - 3.0F) * (r - 3.0F));

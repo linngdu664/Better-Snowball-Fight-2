@@ -12,7 +12,7 @@ public abstract class TrackingSnowballEntity extends BSFSnowballEntity {
     public float v0;
     public float maxTurningAngleCos;
     public float maxTurningAngleSin;
-    public Class <? extends Entity> targetClass;
+    public Class<? extends Entity> targetClass;
     public double range;
     public boolean lockFeet = false;
     private boolean init = true;

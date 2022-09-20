@@ -12,10 +12,11 @@ import java.util.List;
 public class TargetGetter {
     /**
      * Get the nearest available target.
-     * @param snowball The snowball entity.
-     * @param t The class of specific targets.
-     * @param trackingRange Only gets target within the range. See AABB.inflate().
-     * @param <T> Extends entity class.
+     *
+     * @param snowball         The snowball entity.
+     * @param t                The class of specific targets.
+     * @param trackingRange    Only gets target within the range. See AABB.inflate().
+     * @param <T>              Extends entity class.
      * @param angleRestriction Whether only return the target within 60 degrees.
      * @return The target.
      */
@@ -44,10 +45,11 @@ public class TargetGetter {
 
     /**
      * Get a list that contains nearby targets.
+     *
      * @param entity The center entity.
-     * @param t The class of specific targets.
-     * @param range Only gets target within the range. See AABB.inflate().
-     * @param <T> Extends entity class.
+     * @param t      The class of specific targets.
+     * @param range  Only gets target within the range. See AABB.inflate().
+     * @param <T>    Extends entity class.
      * @return The target list.
      */
     public static <T extends Entity> List<T> getTargetList(Entity entity, Class<T> t, double range) {

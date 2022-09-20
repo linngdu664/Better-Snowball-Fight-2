@@ -1,9 +1,9 @@
 package com.linngdu664.bsf.item.weapon;
 
-import com.linngdu664.bsf.util.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -57,7 +57,7 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
                     if (pLevel.isClientSide()) {
                         player.push(-0.26666667 * cameraVec.x * f, -0.26666667 * cameraVec.y * f, -0.26666667 * cameraVec.z * f);
                     } else {
-                    //add particles
+                        //add particles
                         ServerLevel serverLevel = (ServerLevel) pLevel;
                         serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.32);
                     }

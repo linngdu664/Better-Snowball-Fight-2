@@ -7,7 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 public abstract class ForceSnowballEntity extends BSFSnowballEntity {
-    public Class <? extends Entity> targetClass;
+    public Class<? extends Entity> targetClass;
     public double range;
     public double GM;
     public double boundaryR2;

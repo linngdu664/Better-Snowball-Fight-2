@@ -30,7 +30,7 @@ public class FreezingSnowballCannonItem extends SnowballCannonItem {
                 if (bsfSnowballEntity instanceof IceSnowballEntity || bsfSnowballEntity instanceof FrozenSnowballEntity) {
                     bsfSnowballEntity.blazeDamage += 4;
                     bsfSnowballEntity.frozenTime = 200;
-                }else {
+                } else {
                     bsfSnowballEntity.blazeDamage += 1;
                     bsfSnowballEntity.frozenTime = 140;
                 }

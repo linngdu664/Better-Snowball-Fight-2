@@ -43,8 +43,9 @@ public abstract class BSFWeaponItem extends Item {
     /**
      * Find the ammo of the weapon in player's inventory. It will search tanks first, and then it will search bulk
      * snowballs if "onlyTank" is false.
-     * @param player The user of the weapon.
-     * @param onlyTank Whether the weapon can only use the snowball in tanks.
+     *
+     * @param player         The user of the weapon.
+     * @param onlyTank       Whether the weapon can only use the snowball in tanks.
      * @param isNormalWeapon Whether the weapon is a normal weapon (cannon/shotgun).
      * @return The first valid ammo itemstack. If the method can't find a proper itemstack, it will return null.
      */
