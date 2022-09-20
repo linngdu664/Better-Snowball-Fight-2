@@ -2,9 +2,7 @@ package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -26,8 +24,9 @@ public class UnstableCoreItem extends Item {
         ItemStack itemStack = context.getItemInHand();
         Level level = context.getLevel();
         Block block = level.getBlockState(context.getClickedPos()).getBlock();
-        if (block == Blocks.LODESTONE){
+        if (block == Blocks.LODESTONE) {
             itemStack.shrink(1);
+            assert player != null;
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GRAVITY_CORE.get(), 1), true);
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.REPULSION_CORE.get(), 1), true);
         }
