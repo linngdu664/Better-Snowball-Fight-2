@@ -18,6 +18,7 @@ public class EmptySnowballStorageTankItem extends Item {
     public EmptySnowballStorageTankItem() {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).rarity(Rarity.UNCOMMON));
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("snowball_storage_tank.tooltip").withStyle(ChatFormatting.GRAY));

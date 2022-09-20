@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class AbstractClientPlayerMixin extends Player {
     public final ClientLevel clientLevel;
 
-    public AbstractClientPlayerMixin(ClientLevel pClientLevel, GameProfile pGameProfile){
+    public AbstractClientPlayerMixin(ClientLevel pClientLevel, GameProfile pGameProfile) {
         super(pClientLevel, pClientLevel.getSharedSpawnPos(), pClientLevel.getSharedSpawnAngle(), pGameProfile);
         this.clientLevel = pClientLevel;
     }
@@ -29,7 +29,7 @@ public abstract class AbstractClientPlayerMixin extends Player {
             if (this.getAbilities().flying) {
                 f *= 1.1F;
             }
-            f *= ((float)this.getAttributeValue(Attributes.MOVEMENT_SPEED) / this.getAbilities().getWalkingSpeed() + 1.0F) / 2.0F;
+            f *= ((float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) / this.getAbilities().getWalkingSpeed() + 1.0F) / 2.0F;
             if (this.getAbilities().getWalkingSpeed() == 0.0F || Float.isNaN(f) || Float.isInfinite(f)) {
                 f = 1.0F;
             }

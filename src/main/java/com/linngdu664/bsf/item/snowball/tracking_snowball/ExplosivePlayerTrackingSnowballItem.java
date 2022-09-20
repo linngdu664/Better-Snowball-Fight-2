@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ExplosivePlayerTrackingSnowballItem extends BSFSnowballItem{
+public class ExplosivePlayerTrackingSnowballItem extends BSFSnowballItem {
     public ExplosivePlayerTrackingSnowballItem() {
         super(Rarity.RARE);
     }

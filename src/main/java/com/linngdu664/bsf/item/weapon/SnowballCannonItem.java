@@ -1,12 +1,12 @@
 package com.linngdu664.bsf.item.weapon;
 
-import com.linngdu664.bsf.util.SoundRegister;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
 import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -31,6 +31,15 @@ public class SnowballCannonItem extends BSFWeaponItem {
         super(256, Rarity.RARE);
     }
 
+    public static float getPowerForTime(int pCharge) {
+        float f = (float) pCharge / 20.0F;
+        f = (f * f + f * 2.0F) / 3.0F;
+        if (f > 1.0F) {
+            f = 1.0F;
+        }
+        return f;
+    }
+
     public LaunchFunc getLaunchFunc(double damageDropRate) {
         return new LaunchFunc() {
             @Override
@@ -43,15 +52,6 @@ public class SnowballCannonItem extends BSFWeaponItem {
                 bsfSnowballEntity.punch = damageDropRate * 1.51F;
             }
         };
-    }
-
-    public static float getPowerForTime(int pCharge) {
-        float f = (float)pCharge / 20.0F;
-        f = (f * f + f * 2.0F) / 3.0F;
-        if (f > 1.0F) {
-            f = 1.0F;
-        }
-        return f;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class SnowballCannonItem extends BSFWeaponItem {
                     if (pLevel.isClientSide()) {
                         player.push(-0.2 * cameraVec.x * f, -0.2 * cameraVec.y * f, -0.2 * cameraVec.z * f);
                     } else {
-                    //add particles
+                        //add particles
                         ServerLevel serverLevel = (ServerLevel) pLevel;
                         serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.32);
                     }
@@ -85,9 +85,10 @@ public class SnowballCannonItem extends BSFWeaponItem {
 
     /**
      * This horrible method is used to return the specific snowball entity according to the item.
-     * @param itemStack The selected itemstack.
-     * @param level Player's level
-     * @param player Just player
+     *
+     * @param itemStack      The selected itemstack.
+     * @param level          Player's level
+     * @param player         Just player
      * @param damageDropRate This param(0~1) is associate with the charge time of the snowball cannon. The damage value will multiply this param.
      * @return The specific snowball entity with proper characters.
      */

@@ -50,6 +50,7 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
 
     /**
      * Triggered when an entity hits an entity
+     *
      * @param pResult EntityHitResult
      */
     @Override
@@ -90,6 +91,7 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
 
     /**
      * Triggered when an entity hits a block.
+     *
      * @param p_37258_ blockHitResult
      */
     @Override
@@ -112,6 +114,7 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
 
     /**
      * Do not touch/override this magical fucking method, or the texture of the snowball will become egg!
+     *
      * @return I don't understand.
      */
     @Override
@@ -121,6 +124,7 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
 
     /**
      * You should override this fucking method if you want to catch the snowball!
+     *
      * @return Register corresponding item.
      */
     protected Item getRegisterItem() {

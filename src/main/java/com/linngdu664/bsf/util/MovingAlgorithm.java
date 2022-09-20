@@ -16,12 +16,13 @@ public class MovingAlgorithm {
      * law, the dt (0.05s) is too long, resulting in huge velocity errors when the distance is short (acceleration is huge),
      * so we limit the acceleration and even force it to be 0 when the distance is shorter than 0.5m to avoid abnormal
      * movements or game crashes.
-     * @param snowball The snowball entity.
+     *
+     * @param snowball    The snowball entity.
      * @param targetClass The class of specific targets.
-     * @param range Only calculate the velocity of targets within the range.
-     * @param GM The magnitude of force has direct ratio with this param.
-     * @param boundaryR2 If the square of distance is smaller than this param, the force will be a const and will not follow an inverse-square law.
-     * @param <T> Extends entity class.
+     * @param range       Only calculate the velocity of targets within the range.
+     * @param GM          The magnitude of force has direct ratio with this param.
+     * @param boundaryR2  If the square of distance is smaller than this param, the force will be a const and will not follow an inverse-square law.
+     * @param <T>         Extends entity class.
      */
     public static <T extends Entity> void forceEffect(BSFSnowballEntity snowball, Class<T> targetClass, double range, double GM, double boundaryR2) {
         List<T> list = TargetGetter.getTargetList(snowball, targetClass, range);
@@ -49,14 +50,15 @@ public class MovingAlgorithm {
      * This method is designed for the tracking snowball. First, it will try to find the nearest available target. Then,
      * if it finds a target, the snowball will ignore gravity and changing the velocity vector to aim the target. If the
      * target disappears or the snowball is too slow, the snowball will restore gravity and try to find a new target.
-     * @param snowball The snowball entity.
-     * @param targetClass The class of specific targets.
-     * @param trackingRange Only tracks targets within the range.
-     * @param angleRestriction Whether only tracks targets within 60 degrees.
+     *
+     * @param snowball           The snowball entity.
+     * @param targetClass        The class of specific targets.
+     * @param trackingRange      Only tracks targets within the range.
+     * @param angleRestriction   Whether only tracks targets within 60 degrees.
      * @param maxTurningAngleCos the cosine of max turning angle per tick.
      * @param maxTurningAngleSin the sine of max turning angle per tick.
-     * @param lockFeet If true, the snowball will track entity's feet to maximum the explosion damage.
-     * @param <T> Extends entity class.
+     * @param lockFeet           If true, the snowball will track entity's feet to maximum the explosion damage.
+     * @param <T>                Extends entity class.
      */
     public static <T extends Entity> void missilesTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin, boolean lockFeet) {
         Level level = snowball.level;
