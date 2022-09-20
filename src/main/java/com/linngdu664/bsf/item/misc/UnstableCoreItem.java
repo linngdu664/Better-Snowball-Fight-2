@@ -4,6 +4,7 @@ import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,10 +22,9 @@ public class UnstableCoreItem extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
-        InteractionHand usedItemHand = player.getUsedItemHand();
+        ItemStack itemStack = context.getItemInHand();
         Level level = context.getLevel();
         Block block = level.getBlockState(context.getClickedPos()).getBlock();
-        ItemStack itemStack = player.getItemInHand(usedItemHand);
         if (block == Blocks.LODESTONE){
             itemStack.shrink(1);
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GRAVITY_CORE.get(), 1), true);
