@@ -20,7 +20,7 @@ import java.util.Objects;
 
 public class VodkaItem extends Item {
     public VodkaItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
     }
 
     @Override
