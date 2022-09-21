@@ -27,11 +27,15 @@ public class UnstableCoreItem extends Item {
         Level level = context.getLevel();
         Block block = level.getBlockState(context.getClickedPos()).getBlock();
         if (block == Blocks.LODESTONE) {
-            ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, context.getClickedPos().getX(), context.getClickedPos().getY(), context.getClickedPos().getZ(), 64, 0, 0, 0, 0.12);
-            itemStack.shrink(1);
+            if(!player.isCreative()){
+                itemStack.shrink(1);
+            }
             assert player != null;
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GRAVITY_CORE.get(), 1), true);
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.REPULSION_CORE.get(), 1), true);
+            if (!level.isClientSide) {
+                ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, context.getClickedPos().getX()+0.5, context.getClickedPos().getY()+0.5, context.getClickedPos().getZ()+0.5, 64, 0, 0, 0, 0.12);
+            }
         }
         return super.useOn(context);
     }
