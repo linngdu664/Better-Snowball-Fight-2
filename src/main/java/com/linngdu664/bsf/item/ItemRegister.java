@@ -82,9 +82,9 @@ public class ItemRegister {
     public static final RegistryObject<Item> SUPER_POWER_CORE = ITEMS.register("super_power_core", SuperFrozenCoreItem::new);
     public static final RegistryObject<Item> SUPER_FROZEN_CORE = ITEMS.register("super_frozen_core", SuperPowerCoreItem::new);
     public static final RegistryObject<Item> TRACKING_CORE = ITEMS.register("tracking_core", TrackingCoreItem::new);
-    public static final RegistryObject<Item> UNSTABLE_CORE = ITEMS.register("unstable_core", SuperPowerCoreItem::new);
-    public static final RegistryObject<Item> REPULSION_CORE = ITEMS.register("repulsion_core", SuperPowerCoreItem::new);
-    public static final RegistryObject<Item> GRAVITY_CORE = ITEMS.register("gravity_core", SuperPowerCoreItem::new);
+    public static final RegistryObject<Item> UNSTABLE_CORE = ITEMS.register("unstable_core", UnstableCoreItem::new);
+    public static final RegistryObject<Item> REPULSION_CORE = ITEMS.register("repulsion_core", RepulsionCoreItem::new);
+    public static final RegistryObject<Item> GRAVITY_CORE = ITEMS.register("gravity_core", GravityCoreItem::new);
     public static final RegistryObject<Item> SNOWBALL_CANNON = ITEMS.register("snowball_cannon", SnowballCannonItem::new);
     public static final RegistryObject<Item> POWERFUL_SNOWBALL_CANNON = ITEMS.register("powerful_snowball_cannon", PowerfulSnowballCannonItem::new);
     public static final RegistryObject<Item> FREEZING_SNOWBALL_CANNON = ITEMS.register("freezing_snowball_cannon", FreezingSnowballCannonItem::new);
