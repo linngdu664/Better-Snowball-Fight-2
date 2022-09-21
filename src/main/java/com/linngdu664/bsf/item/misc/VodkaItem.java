@@ -2,7 +2,10 @@ package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.effect.EffectRegister;
 import com.linngdu664.bsf.util.ItemGroup;
+import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -15,12 +18,14 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Objects;
 
 public class VodkaItem extends Item {
     public VodkaItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
     }
 
     @Override
@@ -33,6 +38,7 @@ public class VodkaItem extends Item {
             int t;
             if (player.hasEffect(EffectRegister.COLD_RESISTANCE_EFFECT.get())) {
                 t = Objects.requireNonNull(pEntityLiving.getEffect(EffectRegister.COLD_RESISTANCE_EFFECT.get())).getDuration();
+                player.setRemainingFireTicks(player.getRemainingFireTicks()+60);
             } else {
                 t = 0;
             }
@@ -62,5 +68,9 @@ public class VodkaItem extends Item {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pHand) {
         return ItemUtils.startUsingInstantly(pLevel, pPlayer, pHand);
+    }
+    @Override
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
+        pTooltipComponents.add(new TranslatableComponent("vodka.tooltip").withStyle(ChatFormatting.GRAY));
     }
 }

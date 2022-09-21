@@ -126,6 +126,9 @@
   "basin_of_snow.tooltip1": "Right click to splash",
   "basin_of_powder_snow.tooltip": "Being suggestive",
   "powder_snowball.tooltip": "Smoke bomb",
+  "vodka.tooltip": "Moderate drinking",
+  "snow_block_blender.tooltip": "Not for stirring eggs",
+  "snow_block_blender1.tooltip": "Turning snow block into powder snow",
 
 
   "lunch_yes_hand.tooltip": "thrown by hand: yes",

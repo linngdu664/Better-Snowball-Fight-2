@@ -2,6 +2,8 @@ package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -25,6 +27,7 @@ public class UnstableCoreItem extends Item {
         Level level = context.getLevel();
         Block block = level.getBlockState(context.getClickedPos()).getBlock();
         if (block == Blocks.LODESTONE) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, context.getClickedPos().getX(), context.getClickedPos().getY(), context.getClickedPos().getZ(), 64, 0, 0, 0, 0.12);
             itemStack.shrink(1);
             assert player != null;
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GRAVITY_CORE.get(), 1), true);
