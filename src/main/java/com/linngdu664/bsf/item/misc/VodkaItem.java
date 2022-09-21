@@ -33,6 +33,7 @@ public class VodkaItem extends Item {
             int t;
             if (player.hasEffect(EffectRegister.COLD_RESISTANCE_EFFECT.get())) {
                 t = Objects.requireNonNull(pEntityLiving.getEffect(EffectRegister.COLD_RESISTANCE_EFFECT.get())).getDuration();
+                player.setRemainingFireTicks(player.getRemainingFireTicks()+60);
             } else {
                 t = 0;
             }
