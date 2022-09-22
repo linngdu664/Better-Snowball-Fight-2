@@ -27,19 +27,21 @@ public class RepulsiveFieldGenerator extends Item {
     @Override
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, int pTimeCharged) {
         Player player = (Player) pLivingEntity;
-        int t = getUseDuration(pStack) - pTimeCharged;
-        if (t > 10) {
-            t = 10;
-        }
-        double r = 2 + 0.1 * t;
-        float angleCos = Mth.cos((10.0F + t) * Mth.PI * 0.016666667F);
-        Vec3 vec3 = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
-        List<Projectile> list = TargetGetter.getTargetList(player, Projectile.class, r);
-        for (Projectile projectile : list) {
-            Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
-            if (player.distanceToSqr(projectile) < r * r && BSFMthUtil.vec3AngleCos(rVec, vec3) < angleCos) {
-                Vec3 dvVec = projectile.getDeltaMovement().scale(-2);
-                projectile.push(dvVec.x, dvVec.y, dvVec.z);
+        if (!pLevel.isClientSide) {
+            int t = getUseDuration(pStack) - pTimeCharged;
+            if (t > 10) {
+                t = 10;
+            }
+            double r = 4 + 0.2 * t;
+            float angleCos = Mth.cos((10.0F + t) * Mth.PI * 0.016666667F);
+            Vec3 vec3 = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
+            List<Projectile> list = TargetGetter.getTargetList(player, Projectile.class, r);
+            for (Projectile projectile : list) {
+                Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
+                if (BSFMthUtil.vec3AngleCos(rVec, vec3) > angleCos) {
+                    Vec3 dvVec = projectile.getDeltaMovement().scale(-2);
+                    projectile.push(dvVec.x, dvVec.y, dvVec.z);
+                }
             }
         }
         player.getCooldowns().addCooldown(this, 20);
