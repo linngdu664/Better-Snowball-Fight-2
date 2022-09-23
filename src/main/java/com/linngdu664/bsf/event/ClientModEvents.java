@@ -1,35 +1,20 @@
-package com.linngdu664.bsf;
+package com.linngdu664.bsf.event;
 
-import com.linngdu664.bsf.effect.EffectRegister;
 import com.linngdu664.bsf.entity.EntityRegister;
-import com.linngdu664.bsf.event.AttackEntityEvent;
-import com.linngdu664.bsf.event.OnPlayerTickEvent;
+import com.linngdu664.bsf.entity.renderer.BSFSnowGolemRenderer;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.particle.ParticleRegister;
-import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod("bsf")
-public class Main {
-    public Main() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        ItemRegister.ITEMS.register(bus);
-        SoundRegister.SOUNDS.register(bus);
-        ParticleRegister.PARTICLES.register(bus);
-        EffectRegister.EFFECTS.register(bus);
-        EntityRegister.ENTITY_TYPES.register(bus);
-        MinecraftForge.EVENT_BUS.register(new AttackEntityEvent());
-        MinecraftForge.EVENT_BUS.register(new OnPlayerTickEvent());
-        //bus.addListener(this::initClient);
-    }
-/*
-    private void initClient(final FMLClientSetupEvent event) {
+@Mod.EventBusSubscriber(modid = "bsf", bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public class ClientModEvents {
+    @SubscribeEvent
+    public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             ItemProperties.register(ItemRegister.SNOWBALL_CANNON.get(),
                     new ResourceLocation("pull"), (itemStack, world, livingEntity, num) -> {
@@ -64,5 +49,11 @@ public class Main {
             ItemProperties.register(ItemRegister.GLOVE.get(), new ResourceLocation("using"), (itemStack, world, livingEntity, num)
                     -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == itemStack ? 1.0F : 0.0F);
         });
-    }*/
+    }
+
+    // Important: If you want to launch the game, do not touch it until the snow golem has a proper model.
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+//      event.registerEntityRenderer(EntityRegister.BSF_SNOW_GOLEM.get(), BSFSnowGolemRenderer::new);
+    }
 }

@@ -1,12 +1,12 @@
 package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
+import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -39,7 +39,7 @@ public class UnstableCoreItem extends Item {
                 ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, context.getClickedPos().getX()+0.5, context.getClickedPos().getY()+0.5, context.getClickedPos().getZ()+0.5, 64, 0, 0, 0, 0.12);
             }
         } else {
-            BSFSnowGolemEntity golem = new BSFSnowGolemEntity(EntityType.CAT, level, player);
+            BSFSnowGolemEntity golem = new BSFSnowGolemEntity(EntityRegister.BSF_SNOW_GOLEM.get(), level, player);
             level.addFreshEntity(golem);
         }
         return super.useOn(context);
