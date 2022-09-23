@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.entity.goal;
 
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
-import com.linngdu664.bsf.entity.BSFSnowGolemMode;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.phys.Vec3;
@@ -18,7 +17,7 @@ public class BSFGolemRandomStrollGoal extends RandomStrollGoal {
 
     @Override
     public boolean canUse() {
-        if (golem.getMode() == BSFSnowGolemMode.ATTACK) {
+        if (golem.getStatus() == 3) {
             return super.canUse();
         }
         return false;

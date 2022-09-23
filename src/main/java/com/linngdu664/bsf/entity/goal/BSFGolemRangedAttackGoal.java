@@ -1,39 +1,40 @@
 package com.linngdu664.bsf.entity.goal;
 
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
-import com.linngdu664.bsf.entity.BSFSnowGolemMode;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
 public class BSFGolemRangedAttackGoal extends Goal {
     private final BSFSnowGolemEntity golem;
-    @Nullable
-    private LivingEntity target;
-    private int attackTime = -1;
     private final double speedModifier;
-    private int seeTime;
     private final int attackIntervalMin;
     private final int attackIntervalMax;
     private final float attackRadius;
     private final float attackRadiusSqr;
+    @Nullable
+    private LivingEntity target;
+    private int attackTime = -1;
+    private int seeTime;
 
-    public BSFGolemRangedAttackGoal(BSFSnowGolemEntity pRangedAttackMob, double pSpeedModifier, int pAttackInterval, float pAttackRadius) {
-        this.golem = pRangedAttackMob;
+    public BSFGolemRangedAttackGoal(BSFSnowGolemEntity golem, double pSpeedModifier, int pAttackInterval, float pAttackRadius) {
+        this.golem = golem;
         this.speedModifier = pSpeedModifier;
         this.attackIntervalMin = pAttackInterval;
         this.attackIntervalMax = pAttackInterval;
         this.attackRadius = pAttackRadius;
         this.attackRadiusSqr = pAttackRadius * pAttackRadius;
+        golem.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
     public boolean canUse() {
         LivingEntity livingentity = this.golem.getTarget();
-        if (livingentity != null && livingentity.isAlive() && golem.getMode() != BSFSnowGolemMode.FOLLOW) {
+        if (livingentity != null && livingentity.isAlive() && golem.getStatus() != 1) {
             this.target = livingentity;
             return true;
         } else {
@@ -65,7 +66,7 @@ public class BSFGolemRangedAttackGoal extends Goal {
             this.seeTime = 0;
         }
 
-        if (!(d0 > (double) this.attackRadiusSqr) && this.seeTime >= 5 || golem.getMode() == BSFSnowGolemMode.TURRET) {
+        if (!(d0 > (double) this.attackRadiusSqr) && this.seeTime >= 5 || golem.getStatus() == 4) {
             this.golem.getNavigation().stop();
         } else {
             this.golem.getNavigation().moveTo(this.target, this.speedModifier);

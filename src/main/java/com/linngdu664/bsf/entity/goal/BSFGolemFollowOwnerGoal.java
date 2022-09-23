@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.entity.goal;
 
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
-import com.linngdu664.bsf.entity.BSFSnowGolemMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -16,13 +15,13 @@ import java.util.EnumSet;
 
 public class BSFGolemFollowOwnerGoal extends Goal {
     private final BSFSnowGolemEntity golem;
-    private LivingEntity owner;
     private final LevelReader level;
     private final double speedModifier;
     private final PathNavigation navigation;
-    private int timeToRecalcPath;
     private final float stopDistance;
     private final float startDistance;
+    private LivingEntity owner;
+    private int timeToRecalcPath;
 
     public BSFGolemFollowOwnerGoal(BSFSnowGolemEntity golem, double pSpeedModifier, float pStartDistance, float pStopDistance) {
         this.golem = golem;
@@ -31,6 +30,7 @@ public class BSFGolemFollowOwnerGoal extends Goal {
         this.navigation = golem.getNavigation();
         this.startDistance = pStartDistance;
         this.stopDistance = pStopDistance;
+        golem.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
@@ -38,7 +38,7 @@ public class BSFGolemFollowOwnerGoal extends Goal {
         LivingEntity livingentity = this.golem.getOwner();
         if (livingentity == null || livingentity.isSpectator() || golem.isOrderedToSit() ||
                 golem.distanceToSqr(livingentity) < (double) (startDistance * startDistance) ||
-                golem.getMode() == BSFSnowGolemMode.ATTACK || golem.getMode() == BSFSnowGolemMode.TURRET) {
+                golem.getStatus() == 3 || golem.getStatus() == 4) {
             return false;
         } else {
             this.owner = livingentity;
