@@ -54,6 +54,6 @@ public class ClientModEvents {
     // Important: If you want to launch the game, do not touch it until the snow golem has a proper model.
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-//      event.registerEntityRenderer(EntityRegister.BSF_SNOW_GOLEM.get(), BSFSnowGolemRenderer::new);
+        event.registerEntityRenderer(EntityRegister.BSF_SNOW_GOLEM.get(), BSFSnowGolemRenderer::new);
     }
 }
