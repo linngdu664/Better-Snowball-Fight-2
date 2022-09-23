@@ -30,13 +30,13 @@ public class UnstableCoreItem extends Item {
         Level level = context.getLevel();
         Block block = level.getBlockState(context.getClickedPos()).getBlock();
         if (block == Blocks.LODESTONE) {
-            if(!player.getAbilities().instabuild){
+            if (!player.getAbilities().instabuild) {
                 itemStack.shrink(1);
             }
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GRAVITY_CORE.get(), 1), true);
             player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.REPULSION_CORE.get(), 1), true);
             if (!level.isClientSide) {
-                ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, context.getClickedPos().getX()+0.5, context.getClickedPos().getY()+0.5, context.getClickedPos().getZ()+0.5, 64, 0, 0, 0, 0.12);
+                ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, context.getClickedPos().getX() + 0.5, context.getClickedPos().getY() + 0.5, context.getClickedPos().getZ() + 0.5, 64, 0, 0, 0, 0.12);
             }
         } else {
             BSFSnowGolemEntity golem = new BSFSnowGolemEntity(EntityRegister.BSF_SNOW_GOLEM.get(), level, player);

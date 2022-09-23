@@ -38,7 +38,7 @@ public class VodkaItem extends Item {
             int t;
             if (player.hasEffect(EffectRegister.COLD_RESISTANCE_EFFECT.get())) {
                 t = Objects.requireNonNull(pEntityLiving.getEffect(EffectRegister.COLD_RESISTANCE_EFFECT.get())).getDuration();
-                player.setRemainingFireTicks(player.getRemainingFireTicks()+60);
+                player.setRemainingFireTicks(player.getRemainingFireTicks() + 60);
             } else {
                 t = 0;
             }
@@ -69,6 +69,7 @@ public class VodkaItem extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pHand) {
         return ItemUtils.startUsingInstantly(pLevel, pPlayer, pHand);
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("vodka.tooltip").withStyle(ChatFormatting.GRAY));
