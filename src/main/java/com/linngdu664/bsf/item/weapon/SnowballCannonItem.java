@@ -40,7 +40,7 @@ public class SnowballCannonItem extends BSFWeaponItem {
         return f;
     }
 
-    public LaunchFunc getLaunchFunc(double damageDropRate) {
+    public static LaunchFunc getLaunchFunc(double damageDropRate) {
         return new LaunchFunc() {
             @Override
             public LaunchFrom getLaunchForm() {

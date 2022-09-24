@@ -35,7 +35,7 @@ public class SnowballShotgunItem extends BSFWeaponItem {
         super(256, Rarity.EPIC);
     }
 
-    public LaunchFunc getLaunchFunc() {
+    public static LaunchFunc getLaunchFunc() {
         return new LaunchFunc() {
             @Override
             public LaunchFrom getLaunchForm() {

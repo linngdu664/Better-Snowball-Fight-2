@@ -23,8 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class PowerfulSnowballCannonItem extends SnowballCannonItem {
-    @Override
-    public LaunchFunc getLaunchFunc(double damageDropRate) {
+    public static LaunchFunc getLaunchFunc(double damageDropRate) {
         return new LaunchFunc() {
             @Override
             public LaunchFrom getLaunchForm() {
