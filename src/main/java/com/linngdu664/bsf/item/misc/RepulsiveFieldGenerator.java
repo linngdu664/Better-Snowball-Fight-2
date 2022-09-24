@@ -1,5 +1,6 @@
 package com.linngdu664.bsf.item.misc;
 
+import com.linngdu664.bsf.entity.snowball.force_snowball.BlackHoleSnowballEntity;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.TargetGetter;
@@ -26,25 +27,66 @@ public class RepulsiveFieldGenerator extends Item {
 
     @Override
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, int pTimeCharged) {
-        Player player = (Player) pLivingEntity;
-        if (!pLevel.isClientSide) {
-            int t = getUseDuration(pStack) - pTimeCharged;
-            if (t > 10) {
-                t = 10;
+        if(pLivingEntity instanceof Player player) {
+            if (!pLevel.isClientSide) {
+//                int t = getUseDuration(pStack) - pTimeCharged;
+//                if (t > 10) {
+//                    t = 10;
+//                }
+//                double r = 1 + 0.2 * t;
+                float angleCos = Mth.cos(15 * Mth.PI * 0.016666667F);
+                Vec3 vec3 = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
+                List<Projectile> list = TargetGetter.getTargetList(player, Projectile.class, 3.5);
+                for (Projectile projectile : list) {
+                    Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
+                    if (BSFMthUtil.vec3AngleCos(rVec, vec3) > angleCos) {
+                        if(!(projectile instanceof BlackHoleSnowballEntity)){
+                            Vec3 dvVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot()).scale(2);
+                            projectile.push(dvVec.x, dvVec.y, dvVec.z);
+                        }
+                    }
+                }
             }
-            double r = 4 + 0.2 * t;
-            float angleCos = Mth.cos((10.0F + t) * Mth.PI * 0.016666667F);
-            Vec3 vec3 = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
-            List<Projectile> list = TargetGetter.getTargetList(player, Projectile.class, r);
-            for (Projectile projectile : list) {
-                Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
-                if (BSFMthUtil.vec3AngleCos(rVec, vec3) > angleCos) {
-                    Vec3 dvVec = projectile.getDeltaMovement().scale(-2);
-                    projectile.push(dvVec.x, dvVec.y, dvVec.z);
+            player.getCooldowns().addCooldown(this, getUseDuration(pStack) - pTimeCharged + 20);
+        }
+    }
+
+    /**
+     * Triggered every ticks to make the snowball stop
+     * @param pLevel
+     * @param pLivingEntity
+     * @param pStack
+     * @param pRemainingUseDuration
+     */
+    @Override
+    public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
+        if(pRemainingUseDuration==1){
+            this.releaseUsing(pStack,pLevel,pLivingEntity,pRemainingUseDuration);
+        }else{
+            if(pLivingEntity instanceof Player player){
+                if (!pLevel.isClientSide) {
+//                    int t = getUseDuration(pStack) - pRemainingUseDuration;
+//                    if (t > 10) {
+//                        t = 10;
+//                    }
+//                    double r = 1 + 0.2 * t;
+                    float angleCos = Mth.cos(10 * Mth.PI * 0.016666667F);
+                    Vec3 vec3 = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
+                    List<Projectile> list = TargetGetter.getTargetList(player, Projectile.class, 3);
+                    for (Projectile projectile : list) {
+                        Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
+                        if (BSFMthUtil.vec3AngleCos(rVec, vec3) > angleCos) {
+                            if(!(projectile instanceof BlackHoleSnowballEntity)){
+                                Vec3 dvVec = projectile.getDeltaMovement().scale(-0.9);
+                                projectile.push(dvVec.x, dvVec.y, dvVec.z);
+                            }
+
+                        }
+                    }
                 }
             }
         }
-        player.getCooldowns().addCooldown(this, 20);
+        super.onUseTick(pLevel, pLivingEntity, pStack, pRemainingUseDuration);
     }
 
     @Override
@@ -56,11 +98,11 @@ public class RepulsiveFieldGenerator extends Item {
 
     @Override
     public int getUseDuration(@NotNull ItemStack pStack) {
-        return 72000;
+        return 60;
     }
 
     @Override
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack pStack) {
-        return UseAnim.SPEAR;
+        return UseAnim.BOW;
     }
 }
