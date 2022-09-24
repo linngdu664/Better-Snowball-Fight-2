@@ -1,9 +1,12 @@
 package com.linngdu664.bsf.item.misc;
 
 import com.linngdu664.bsf.entity.snowball.force_snowball.BlackHoleSnowballEntity;
+import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.TargetGetter;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -43,6 +46,7 @@ public class RepulsiveFieldGenerator extends Item {
                         if(!(projectile instanceof BlackHoleSnowballEntity)){
                             Vec3 dvVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot()).scale(2);
                             projectile.push(dvVec.x, dvVec.y, dvVec.z);
+                            ((ServerLevel) pLevel).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 10, 0, 0, 0, 0.04);
                         }
                     }
                 }
@@ -79,8 +83,8 @@ public class RepulsiveFieldGenerator extends Item {
                             if(!(projectile instanceof BlackHoleSnowballEntity)){
                                 Vec3 dvVec = projectile.getDeltaMovement().scale(-0.9);
                                 projectile.push(dvVec.x, dvVec.y, dvVec.z);
+                                ((ServerLevel) pLevel).sendParticles(ParticleTypes.ELECTRIC_SPARK, projectile.getX(), projectile.getY(), projectile.getZ(), 3, 0, 0, 0, 0.04);
                             }
-
                         }
                     }
                 }
