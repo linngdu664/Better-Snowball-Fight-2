@@ -1,10 +1,13 @@
 package com.linngdu664.bsf.item.misc;
 
+import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -16,6 +19,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
@@ -41,12 +45,34 @@ public class SnowBlockBlender extends Item {
         Player player = (Player) pLivingEntity;
         BlockHitResult blockHitResult = getPlayerPOVHitResult(pLevel, player, ClipContext.Fluid.NONE);
         BlockPos blockPos = blockHitResult.getBlockPos();
-        if (pLevel.getBlockState(blockPos).getBlock() == Blocks.SNOW_BLOCK && !pLevel.isClientSide && pRemainingUseDuration == 1) {
-            pLevel.setBlockAndUpdate(blockPos, Blocks.POWDER_SNOW.defaultBlockState());
-            if (!player.getAbilities().instabuild) {
-                pStack.hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(player.getUsedItemHand()));
+        if (pLevel.getBlockState(blockPos).getBlock() == Blocks.SNOW_BLOCK && !pLevel.isClientSide) {
+            if (pRemainingUseDuration == 1){
+                pLevel.setBlockAndUpdate(blockPos, Blocks.POWDER_SNOW.defaultBlockState());
+                for (int i = 0; i < 5; i++) {
+                    ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX(), blockPos.getY()+BSFMthUtil.random(0,1), blockPos.getZ()+BSFMthUtil.random(0,1), 5, 0, 0, 0, 0.1);
+                    ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX()+1, blockPos.getY()+BSFMthUtil.random(0,1), blockPos.getZ()+BSFMthUtil.random(0,1), 5, 0, 0, 0, 0.1);
+                    ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX()+BSFMthUtil.random(0,1), blockPos.getY(), blockPos.getZ()+BSFMthUtil.random(0,1), 5, 0, 0, 0, 0.1);
+                    ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX()+BSFMthUtil.random(0,1), blockPos.getY()+1, blockPos.getZ()+BSFMthUtil.random(0,1), 5, 0, 0, 0, 0.1);
+                    ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX()+BSFMthUtil.random(0,1), blockPos.getY()+BSFMthUtil.random(0,1), blockPos.getZ(), 5, 0, 0, 0, 0.1);
+                    ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX()+BSFMthUtil.random(0,1), blockPos.getY()+BSFMthUtil.random(0,1), blockPos.getZ()+1, 5, 0, 0, 0, 0.1);
+                }
+                if (!player.getAbilities().instabuild) {
+                    pStack.hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(player.getUsedItemHand()));
+                }
+                player.awardStat(Stats.ITEM_USED.get(this));
+            }else{
+                for (int i = 0; i < 5; i++) {
+                    switch ((int) BSFMthUtil.random(1,6)){
+                        case 1 -> ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX(), blockPos.getY()+BSFMthUtil.random(0,1), blockPos.getZ()+BSFMthUtil.random(0,1), 3, 0, 0, 0, 0.04);
+                        case 2 -> ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX()+1, blockPos.getY()+BSFMthUtil.random(0,1), blockPos.getZ()+BSFMthUtil.random(0,1), 3, 0, 0, 0, 0.04);
+                        case 3 -> ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX()+BSFMthUtil.random(0,1), blockPos.getY(), blockPos.getZ()+BSFMthUtil.random(0,1), 3, 0, 0, 0, 0.04);
+                        case 4 -> ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX()+BSFMthUtil.random(0,1), blockPos.getY()+1, blockPos.getZ()+BSFMthUtil.random(0,1), 3, 0, 0, 0, 0.04);
+                        case 5 -> ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX()+BSFMthUtil.random(0,1), blockPos.getY()+BSFMthUtil.random(0,1), blockPos.getZ(), 3, 0, 0, 0, 0.04);
+                        case 6 -> ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, blockPos.getX()+BSFMthUtil.random(0,1), blockPos.getY()+BSFMthUtil.random(0,1), blockPos.getZ()+1, 3, 0, 0, 0, 0.04);
+                    }
+                }
             }
-            player.awardStat(Stats.ITEM_USED.get(this));
+
         }
     }
 

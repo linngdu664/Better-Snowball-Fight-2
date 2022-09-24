@@ -26,4 +26,14 @@ public class BSFMthUtil {
 //    public static Vec3 SphericalToCartesian(float pitch, float yaw) {
 //        return new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
 //    }
+
+    /**
+     * Generate random numbers [a,b)
+     * @param a
+     * @param b
+     * @return
+     */
+    public static double random(double a, double b){
+        return Math.random()*(b-a)+a;
+    }
 }
