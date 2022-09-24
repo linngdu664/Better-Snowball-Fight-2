@@ -30,7 +30,7 @@ public class RepulsiveFieldGenerator extends Item {
 
     @Override
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, int pTimeCharged) {
-        if(pLivingEntity instanceof Player player) {
+        if (pLivingEntity instanceof Player player) {
             if (!pLevel.isClientSide) {
 //                int t = getUseDuration(pStack) - pTimeCharged;
 //                if (t > 10) {
@@ -43,7 +43,7 @@ public class RepulsiveFieldGenerator extends Item {
                 for (Projectile projectile : list) {
                     Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
                     if (BSFMthUtil.vec3AngleCos(rVec, vec3) > angleCos) {
-                        if(!(projectile instanceof BlackHoleSnowballEntity)){
+                        if (!(projectile instanceof BlackHoleSnowballEntity)) {
                             Vec3 dvVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot()).scale(2);
                             projectile.push(dvVec.x, dvVec.y, dvVec.z);
                             ((ServerLevel) pLevel).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 10, 0, 0, 0, 0.04);
@@ -56,18 +56,20 @@ public class RepulsiveFieldGenerator extends Item {
     }
 
     /**
-     * Triggered every ticks to make the snowball stop
-     * @param pLevel
-     * @param pLivingEntity
-     * @param pStack
-     * @param pRemainingUseDuration
+     * Triggered every tick to make the snowball stop
+     *
+     * @param pLevel level
+     * @param pLivingEntity player
+     * @param pStack itemstack
+     * @param pRemainingUseDuration remaining use duration
      */
     @Override
-    public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
-        if(pRemainingUseDuration==1){
-            this.releaseUsing(pStack,pLevel,pLivingEntity,pRemainingUseDuration);
-        }else{
-            if(pLivingEntity instanceof Player player){
+    @SuppressWarnings("deprecation")
+    public void onUseTick(@NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, @NotNull ItemStack pStack, int pRemainingUseDuration) {
+        if (pRemainingUseDuration == 1) {
+            this.releaseUsing(pStack, pLevel, pLivingEntity, pRemainingUseDuration);
+        } else {
+            if (pLivingEntity instanceof Player player) {
                 if (!pLevel.isClientSide) {
 //                    int t = getUseDuration(pStack) - pRemainingUseDuration;
 //                    if (t > 10) {
@@ -80,7 +82,7 @@ public class RepulsiveFieldGenerator extends Item {
                     for (Projectile projectile : list) {
                         Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
                         if (BSFMthUtil.vec3AngleCos(rVec, vec3) > angleCos) {
-                            if(!(projectile instanceof BlackHoleSnowballEntity)){
+                            if (!(projectile instanceof BlackHoleSnowballEntity)) {
                                 Vec3 dvVec = projectile.getDeltaMovement().scale(-0.9);
                                 projectile.push(dvVec.x, dvVec.y, dvVec.z);
                                 ((ServerLevel) pLevel).sendParticles(ParticleTypes.ELECTRIC_SPARK, projectile.getX(), projectile.getY(), projectile.getZ(), 3, 0, 0, 0, 0.04);
