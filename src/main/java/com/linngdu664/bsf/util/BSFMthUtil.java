@@ -29,11 +29,12 @@ public class BSFMthUtil {
 
     /**
      * Generate random numbers [a,b)
-     * @param a
-     * @param b
-     * @return
+     *
+     * @param a a
+     * @param b b
+     * @return random number [a,b)
      */
-    public static double random(double a, double b){
-        return Math.random()*(b-a)+a;
+    public static double random(double a, double b) {
+        return Math.random() * (b - a) + a;
     }
 }
