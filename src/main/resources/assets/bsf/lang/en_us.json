@@ -73,6 +73,7 @@
   "item.bsf.unstable_core": "Unstable Core",
   "item.bsf.repulsion_core": "Repulsion Core",
   "item.bsf.gravity_core": "Gravity Core",
+  "item.bsf.repulsive_field_generator": "Repulsive Field Generator",
 
   "stone_snowball.tooltip": "This is outrageous!",
   "snowball_clamp.tooltip": "Highly efficient snowballing tool",
