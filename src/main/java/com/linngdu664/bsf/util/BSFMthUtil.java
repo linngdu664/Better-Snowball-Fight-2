@@ -3,8 +3,11 @@ package com.linngdu664.bsf.util;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Random;
+
 public class BSFMthUtil {
-    //Calculate the cosine of the angle between 2 vectors using fast algorithm.
+    private static final Random random = new Random();
+    // Calculate the cosine of the angle between 2 vectors using fast algorithm.
     public static double vec2AngleCos(double x1, double y1, double x2, double y2) {
         return Mth.fastInvSqrt(modSqr(x1, y1)) * Mth.fastInvSqrt(modSqr(x2, y2)) * (x1 * x2 + y1 * y2);
     }
@@ -13,7 +16,7 @@ public class BSFMthUtil {
         return Mth.fastInvSqrt(a.lengthSqr()) * Mth.fastInvSqrt(b.lengthSqr()) * a.dot(b);
     }
 
-    //Calculate the square of the modulus(length) of a vector.
+    // Calculate the square of the modulus(length) of a vector.
     public static double modSqr(double x, double y) {
         return x * x + y * y;
     }
@@ -27,14 +30,12 @@ public class BSFMthUtil {
 //        return new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
 //    }
 
-    /**
-     * Generate random numbers [a,b)
-     *
-     * @param a a
-     * @param b b
-     * @return random number [a,b)
-     */
-    public static double random(double a, double b) {
-        return Math.random() * (b - a) + a;
+    // These are random number helpers
+    public static double randDouble(double a, double b) {
+        return random.nextDouble() * (b - a) + a;
+    }
+
+    public static int randInt(int a, int b) {
+        return random.nextInt(b - a) + a;
     }
 }
