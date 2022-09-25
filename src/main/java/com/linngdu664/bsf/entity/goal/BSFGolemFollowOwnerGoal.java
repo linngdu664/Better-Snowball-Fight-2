@@ -34,57 +34,61 @@ public class BSFGolemFollowOwnerGoal extends Goal {
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
+    @Override
     public boolean canUse() {
-        LivingEntity livingentity = this.golem.getOwner();
+        LivingEntity livingentity = golem.getOwner();
         if (livingentity == null || livingentity.isSpectator() || golem.isOrderedToSit() ||
                 golem.distanceToSqr(livingentity) < (double) (startDistance * startDistance) ||
                 golem.getStatus() == 3 || golem.getStatus() == 4) {
             return false;
         } else {
-            this.owner = livingentity;
+            owner = livingentity;
             return true;
         }
     }
 
+    @Override
     public boolean canContinueToUse() {
-        if (this.navigation.isDone() || this.golem.isOrderedToSit()) {
+        if (navigation.isDone() || golem.isOrderedToSit()) {
             return false;
         } else {
-            return !(this.golem.distanceToSqr(this.owner) <= (double) (this.stopDistance * this.stopDistance));
+            return !(golem.distanceToSqr(owner) <= (double) (stopDistance * stopDistance));
         }
     }
 
+    @Override
     public void start() {
-        this.timeToRecalcPath = 0;
+        timeToRecalcPath = 0;
     }
 
+    @Override
     public void stop() {
-        this.owner = null;
-        this.navigation.stop();
+        owner = null;
+        navigation.stop();
     }
 
+    @Override
     public void tick() {
-        this.golem.getLookControl().setLookAt(this.owner, 10.0F, (float) this.golem.getMaxHeadXRot());
-        if (--this.timeToRecalcPath <= 0) {
-            this.timeToRecalcPath = this.adjustedTickDelay(10);
-            if (!this.golem.isLeashed() && !this.golem.isPassenger()) {
-                if (this.golem.distanceToSqr(this.owner) >= 144.0D) {
-                    this.teleportToOwner();
+        golem.getLookControl().setLookAt(owner, 10.0F, (float) golem.getMaxHeadXRot());
+        if (--timeToRecalcPath <= 0) {
+            timeToRecalcPath = adjustedTickDelay(10);
+            if (!golem.isLeashed() && !golem.isPassenger()) {
+                if (golem.distanceToSqr(owner) >= 144.0D) {
+                    teleportToOwner();
                 } else {
-                    this.navigation.moveTo(this.owner, this.speedModifier);
+                    navigation.moveTo(owner, speedModifier);
                 }
             }
         }
     }
 
     private void teleportToOwner() {
-        BlockPos blockpos = this.owner.blockPosition();
-
+        BlockPos blockpos = owner.blockPosition();
         for (int i = 0; i < 10; ++i) {
-            int j = this.randomIntInclusive(-3, 3);
-            int k = this.randomIntInclusive(-1, 1);
-            int l = this.randomIntInclusive(-3, 3);
-            boolean flag = this.maybeTeleportTo(blockpos.getX() + j, blockpos.getY() + k, blockpos.getZ() + l);
+            int j = randomIntInclusive(-3, 3);
+            int k = randomIntInclusive(-1, 1);
+            int l = randomIntInclusive(-3, 3);
+            boolean flag = maybeTeleportTo(blockpos.getX() + j, blockpos.getY() + k, blockpos.getZ() + l);
             if (flag) {
                 return;
             }
@@ -92,33 +96,33 @@ public class BSFGolemFollowOwnerGoal extends Goal {
     }
 
     private boolean maybeTeleportTo(int pX, int pY, int pZ) {
-        if (Math.abs((double) pX - this.owner.getX()) < 2.0D && Math.abs((double) pZ - this.owner.getZ()) < 2.0D) {
+        if (Math.abs((double) pX - owner.getX()) < 2.0D && Math.abs((double) pZ - owner.getZ()) < 2.0D) {
             return false;
-        } else if (!this.canTeleportTo(new BlockPos(pX, pY, pZ))) {
+        } else if (!canTeleportTo(new BlockPos(pX, pY, pZ))) {
             return false;
         } else {
-            this.golem.moveTo(pX + 0.5D, pY, pZ + 0.5D, this.golem.getYRot(), this.golem.getXRot());
-            this.navigation.stop();
+            golem.moveTo(pX + 0.5D, pY, pZ + 0.5D, golem.getYRot(), golem.getXRot());
+            navigation.stop();
             return true;
         }
     }
 
     private boolean canTeleportTo(BlockPos pPos) {
-        BlockPathTypes blockpathtypes = WalkNodeEvaluator.getBlockPathTypeStatic(this.level, pPos.mutable());
+        BlockPathTypes blockpathtypes = WalkNodeEvaluator.getBlockPathTypeStatic(level, pPos.mutable());
         if (blockpathtypes != BlockPathTypes.WALKABLE) {
             return false;
         } else {
-            BlockState blockstate = this.level.getBlockState(pPos.below());
+            BlockState blockstate = level.getBlockState(pPos.below());
             if (blockstate.getBlock() instanceof LeavesBlock) {
                 return false;
             } else {
-                BlockPos blockpos = pPos.subtract(this.golem.blockPosition());
-                return this.level.noCollision(this.golem, this.golem.getBoundingBox().move(blockpos));
+                BlockPos blockpos = pPos.subtract(golem.blockPosition());
+                return level.noCollision(golem, golem.getBoundingBox().move(blockpos));
             }
         }
     }
 
     private int randomIntInclusive(int pMin, int pMax) {
-        return this.golem.getRandom().nextInt(pMax - pMin + 1) + pMin;
+        return golem.getRandom().nextInt(pMax - pMin + 1) + pMin;
     }
 }

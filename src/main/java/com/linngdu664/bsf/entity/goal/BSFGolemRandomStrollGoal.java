@@ -24,11 +24,11 @@ public class BSFGolemRandomStrollGoal extends RandomStrollGoal {
     }
 
     protected Vec3 getPosition() {
-        if (this.mob.isInWaterOrBubble()) {
-            Vec3 vec3 = LandRandomPos.getPos(this.mob, 15, 7);
+        if (mob.isInWaterOrBubble()) {
+            Vec3 vec3 = LandRandomPos.getPos(mob, 15, 7);
             return vec3 == null ? super.getPosition() : vec3;
         } else {
-            return this.mob.getRandom().nextFloat() >= this.probability ? LandRandomPos.getPos(this.mob, 10, 7) : super.getPosition();
+            return mob.getRandom().nextFloat() >= probability ? LandRandomPos.getPos(mob, 10, 7) : super.getPosition();
         }
     }
 }
