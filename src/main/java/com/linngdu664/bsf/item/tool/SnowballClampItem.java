@@ -1,10 +1,11 @@
-package com.linngdu664.bsf.item.misc;
+package com.linngdu664.bsf.item.tool;
 
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,17 +32,18 @@ public class SnowballClampItem extends TieredItem {
     @Override
     public @NotNull InteractionResult useOn(UseOnContext pContext) {
         Player player = pContext.getPlayer();
+        assert player != null;
         ItemStack itemStack = pContext.getItemInHand();
         Level level = pContext.getLevel();
         Block block = level.getBlockState(pContext.getClickedPos()).getBlock();
         if (block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || block == Blocks.POWDER_SNOW) {
-            assert player != null;
             if (player.getMainHandItem().isEmpty() || player.getOffhandItem().isEmpty()) {
                 player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
                 itemStack.hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(pContext.getHand()));
             }
         }
-        return super.useOn(pContext);
+        player.awardStat(Stats.ITEM_USED.get(this));
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -50,6 +52,7 @@ public class SnowballClampItem extends TieredItem {
             pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
             pStack.hurtAndBreak(1, pPlayer, (e) -> e.broadcastBreakEvent(pUsedHand));
         }
+        pPlayer.awardStat(Stats.ITEM_USED.get(this));
         return super.interactLivingEntity(pStack, pPlayer, pInteractionTarget, pUsedHand);
     }
 

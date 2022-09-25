@@ -1,10 +1,12 @@
-package com.linngdu664.bsf.item.misc;
+package com.linngdu664.bsf.item.tool;
 
-import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -12,9 +14,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GloveItem extends ShieldItem {
+public class GloveItem extends BSFEnhanceableToolItem {
     public GloveItem() {
-        super(new Properties().tab(ItemGroup.MAIN).durability(128).rarity(Rarity.UNCOMMON));
+        super(Rarity.UNCOMMON, 128);
+    }
+
+    @Override
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pHand) {
+        ItemStack itemstack = pPlayer.getItemInHand(pHand);
+        pPlayer.startUsingItem(pHand);
+        return InteractionResultHolder.consume(itemstack);
     }
 
     @Override

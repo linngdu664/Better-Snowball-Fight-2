@@ -1,18 +1,17 @@
-package com.linngdu664.bsf.item.misc;
+package com.linngdu664.bsf.item.tool;
 
 import com.linngdu664.bsf.entity.snowball.force_snowball.BlackHoleSnowballEntity;
 import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.BSFMthUtil;
-import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAnim;
@@ -22,9 +21,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class RepulsiveFieldGeneratorItem extends Item {
+public class RepulsiveFieldGeneratorItem extends BSFEnhanceableToolItem {
     public RepulsiveFieldGeneratorItem() {
-        super(new Properties().tab(ItemGroup.MAIN).rarity(Rarity.RARE).stacksTo(1).durability(100));
+        super(Rarity.RARE, 256);
     }
 
     @Override
@@ -47,6 +46,7 @@ public class RepulsiveFieldGeneratorItem extends Item {
             if (!player.getAbilities().instabuild) {
                 pStack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
             }
+            player.awardStat(Stats.ITEM_USED.get(this));
             player.getCooldowns().addCooldown(this, getUseDuration(pStack) - pTimeCharged + 20);
         }
     }

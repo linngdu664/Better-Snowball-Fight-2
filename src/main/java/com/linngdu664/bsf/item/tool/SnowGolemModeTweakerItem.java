@@ -1,4 +1,4 @@
-package com.linngdu664.bsf.item.misc;
+package com.linngdu664.bsf.item.tool;
 
 import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.world.item.Item;

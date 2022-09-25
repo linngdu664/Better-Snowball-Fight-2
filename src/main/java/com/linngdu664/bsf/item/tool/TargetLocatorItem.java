@@ -1,28 +1,27 @@
-package com.linngdu664.bsf.item.misc;
+package com.linngdu664.bsf.item.tool;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.GPSSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.normal_snowball.CompactedSnowballItem;
 import com.linngdu664.bsf.item.tank.normal_snowball.CompactedSnowballStorageTank;
-import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class TargetLocatorItem extends Item {
+public class TargetLocatorItem extends BSFEnhanceableToolItem {
     private LivingEntity livingEntity;
 
     public TargetLocatorItem() {
-        super(new Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON).stacksTo(1).durability(100));
+        super(Rarity.UNCOMMON, 256);
     }
 
     @Override
@@ -55,6 +54,7 @@ public class TargetLocatorItem extends Item {
                 itemStack.hurtAndBreak(1, pPlayer, p -> p.broadcastBreakEvent(pUsedHand));
             }
         }
+        pPlayer.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.pass(itemStack);
     }
 
