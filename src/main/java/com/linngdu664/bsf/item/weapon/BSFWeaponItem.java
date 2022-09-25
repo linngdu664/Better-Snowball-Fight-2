@@ -75,7 +75,7 @@ public abstract class BSFWeaponItem extends Item {
 
     protected void consumeAmmo(ItemStack itemStack, Player player) {
         if (isAmmoTank(itemStack.getItem(), true)) {
-            itemStack.hurtAndBreak(1, player, (p) -> p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true));
+            itemStack.hurtAndBreak(1, player, p -> p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true));
         } else if (!player.getAbilities().instabuild) {
             itemStack.shrink(1);
             if (itemStack.isEmpty()) {

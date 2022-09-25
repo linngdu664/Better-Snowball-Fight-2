@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class FrozenSnowballEntity extends BSFSnowballEntity {
-    public float frozenRange = 2.5F;
+    private float frozenRange = 2.5F;
 
     public FrozenSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);

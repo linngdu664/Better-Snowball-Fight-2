@@ -16,7 +16,6 @@ public class IceSnowballEntity extends BSFSnowballEntity {
         this.setFrozenTime(60).setLaunchFrom(launchFunc.getLaunchForm()).setDamage(3).setBlazeDamage(6);
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.ICE_SNOWBALL.get()));
-
     }
 
     //This is only used for dispenser

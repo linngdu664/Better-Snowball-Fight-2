@@ -7,7 +7,6 @@ import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,26 +22,20 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class RepulsiveFieldGenerator extends Item {
-    public RepulsiveFieldGenerator() {
-        super(new Properties().tab(ItemGroup.MAIN).rarity(Rarity.RARE).stacksTo(1));
+public class RepulsiveFieldGeneratorItem extends Item {
+    public RepulsiveFieldGeneratorItem() {
+        super(new Properties().tab(ItemGroup.MAIN).rarity(Rarity.RARE).stacksTo(1).durability(100));
     }
 
     @Override
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, int pTimeCharged) {
         if (pLivingEntity instanceof Player player) {
             if (!pLevel.isClientSide) {
-//                int t = getUseDuration(pStack) - pTimeCharged;
-//                if (t > 10) {
-//                    t = 10;
-//                }
-//                double r = 1 + 0.2 * t;
-                float angleCos = Mth.cos(15 * Mth.PI * 0.016666667F);
                 Vec3 vec3 = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
                 List<Projectile> list = TargetGetter.getTargetList(player, Projectile.class, 3.5);
                 for (Projectile projectile : list) {
                     Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
-                    if (BSFMthUtil.vec3AngleCos(rVec, vec3) > angleCos) {
+                    if (BSFMthUtil.vec3AngleCos(rVec, vec3) > 0.70710678F) {
                         if (!(projectile instanceof BlackHoleSnowballEntity)) {
                             Vec3 dvVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot()).scale(2);
                             projectile.push(dvVec.x, dvVec.y, dvVec.z);
@@ -51,6 +44,9 @@ public class RepulsiveFieldGenerator extends Item {
                     }
                 }
             }
+            if (!player.getAbilities().instabuild) {
+                pStack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
+            }
             player.getCooldowns().addCooldown(this, getUseDuration(pStack) - pTimeCharged + 20);
         }
     }
@@ -58,9 +54,9 @@ public class RepulsiveFieldGenerator extends Item {
     /**
      * Triggered every tick to make the snowball stop
      *
-     * @param pLevel level
-     * @param pLivingEntity player
-     * @param pStack itemstack
+     * @param pLevel                level
+     * @param pLivingEntity         player
+     * @param pStack                itemstack
      * @param pRemainingUseDuration remaining use duration
      */
     @Override
@@ -71,17 +67,11 @@ public class RepulsiveFieldGenerator extends Item {
         } else {
             if (pLivingEntity instanceof Player player) {
                 if (!pLevel.isClientSide) {
-//                    int t = getUseDuration(pStack) - pRemainingUseDuration;
-//                    if (t > 10) {
-//                        t = 10;
-//                    }
-//                    double r = 1 + 0.2 * t;
-                    float angleCos = Mth.cos(10 * Mth.PI * 0.016666667F);
                     Vec3 vec3 = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
                     List<Projectile> list = TargetGetter.getTargetList(player, Projectile.class, 3);
                     for (Projectile projectile : list) {
                         Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
-                        if (BSFMthUtil.vec3AngleCos(rVec, vec3) > angleCos) {
+                        if (BSFMthUtil.vec3AngleCos(rVec, vec3) > 0.86602540F) {
                             if (!(projectile instanceof BlackHoleSnowballEntity)) {
                                 Vec3 dvVec = projectile.getDeltaMovement().scale(-0.9);
                                 projectile.push(dvVec.x, dvVec.y, dvVec.z);
@@ -92,7 +82,6 @@ public class RepulsiveFieldGenerator extends Item {
                 }
             }
         }
-        super.onUseTick(pLevel, pLivingEntity, pStack, pRemainingUseDuration);
     }
 
     @Override
