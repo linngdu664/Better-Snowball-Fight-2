@@ -74,6 +74,8 @@
   "item.bsf.repulsion_core": "斥力核心",
   "item.bsf.gravity_core": "引力核心",
   "item.bsf.repulsive_field_generator": "便携式斥力场发生器",
+  "item.bsf.target_locator": "目标定位器",
+  "item.bsf.snow_golem_mode_tweaker": "雪傀儡模式调整器",
 
   "stone_snowball.tooltip": "真过分！",
   "snowball_clamp.tooltip": "高效率的搓雪球工具",
