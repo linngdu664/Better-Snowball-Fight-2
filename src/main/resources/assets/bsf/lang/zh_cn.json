@@ -159,5 +159,14 @@
   "advancements.bsf.snowball_machine_gun.title": "那帕瓦就和电次一队吧！",
   "advancements.bsf.snowball_machine_gun.description": "制作一挺雪球机枪",
 
-  "effect.bsf.cold_resistance": "抗寒"
+  "effect.bsf.cold_resistance": "抗寒",
+
+  "entity.bsf.bsf_snow_golem": "高级雪傀儡",
+  "snow_golem_locator_false.tip": "目标：附近怪物",
+  "snow_golem_locator_true.tip": "目标：目标定位器指定的实体",
+  "snow_golem_standby.tip": "模式：待机",
+  "snow_golem_follow.tip": "模式：跟随",
+  "snow_golem_follow_and_attack.tip": "模式：跟随并攻击",
+  "snow_golem_attack.tip": "模式：巡逻并攻击",
+  "snow_golem_turret.tip": "模式：炮塔"
 }
