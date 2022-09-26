@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class SnowballStorageTankItem extends Item {
-    public Item item;
+    private final Item item;
 
     public SnowballStorageTankItem(Item item) {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(96).rarity(Rarity.UNCOMMON));
@@ -40,6 +40,10 @@ public abstract class SnowballStorageTankItem extends Item {
             pPlayer.awardStat(Stats.ITEM_USED.get(this));
         }
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
+    }
+
+    public Item getSnowball() {
+        return item;
     }
 
     @Override

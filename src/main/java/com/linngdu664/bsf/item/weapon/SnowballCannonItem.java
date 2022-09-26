@@ -4,6 +4,7 @@ import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
 import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.item.ItemRegister;
+import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.SoundRegister;
@@ -94,39 +95,42 @@ public class SnowballCannonItem extends BSFWeaponItem {
      */
     public BSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player, double damageDropRate) {
         Item item = itemStack.getItem();
-        if (item == ItemRegister.COMPACTED_SNOWBALL.get() || item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
+        if (item instanceof SnowballStorageTankItem tank) {
+            item = tank.getSnowball();
+        }
+        if (item == ItemRegister.COMPACTED_SNOWBALL.get()) {
             return new CompactedSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.STONE_SNOWBALL.get() || item == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.STONE_SNOWBALL.get()) {
             return new StoneSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.GLASS_SNOWBALL.get() || item == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.GLASS_SNOWBALL.get()) {
             return new GlassSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.IRON_SNOWBALL.get() || item == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.IRON_SNOWBALL.get()) {
             return new IronSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.ICE_SNOWBALL.get() || item == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.ICE_SNOWBALL.get()) {
             return new IceSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.GOLD_SNOWBALL.get() || item == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.GOLD_SNOWBALL.get()) {
             return new GoldSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.OBSIDIAN_SNOWBALL.get() || item == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.OBSIDIAN_SNOWBALL.get()) {
             return new ObsidianSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.EXPLOSIVE_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.EXPLOSIVE_SNOWBALL.get()) {
             return new ExplosiveSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.SPECTRAL_SNOWBALL.get() || item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.SPECTRAL_SNOWBALL.get()) {
             return new SpectralSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.FROZEN_SNOWBALL.get() || item == ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.FROZEN_SNOWBALL.get()) {
             return new FrozenSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.POWDER_SNOWBALL.get() || item == ItemRegister.POWDER_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.POWDER_SNOWBALL.get()) {
             return new PowderSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get()) {
             return new LightMonsterTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get()) {
             return new HeavyMonsterTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()) {
             return new ExplosiveMonsterTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get()) {
             return new LightPlayerTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get()) {
             return new HeavyPlayerTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+        } else if (item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()) {
             return new ExplosivePlayerTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
         }
         return null;
