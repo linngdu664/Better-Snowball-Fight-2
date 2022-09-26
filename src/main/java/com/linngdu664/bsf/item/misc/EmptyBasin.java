@@ -32,24 +32,25 @@ public class EmptyBasin extends Item {
         ItemStack itemStack = pContext.getItemInHand();
         Block block = level.getBlockState(pContext.getClickedPos()).getBlock();
         InteractionHand hand = pContext.getHand();
-        assert player != null;
-        if (block == Blocks.SNOW_BLOCK || block == Blocks.SNOW) {
-            if (itemStack.getCount() > 1) {
-                player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_SNOW.get()), true);
-                itemStack.shrink(1);
-            } else {
-                ItemStack newStack = new ItemStack(ItemRegister.BASIN_OF_SNOW.get(), itemStack.getCount());
-                itemStack.shrink(1);
-                player.setItemInHand(hand, newStack);
-            }
-        } else if (block == Blocks.POWDER_SNOW) {
-            if (itemStack.getCount() > 1) {
-                player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get()), true);
-                itemStack.shrink(1);
-            } else {
-                ItemStack newStack = new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get(), itemStack.getCount());
-                itemStack.shrink(1);
-                player.setItemInHand(hand, newStack);
+        if (player != null) {
+            if (block == Blocks.SNOW_BLOCK || block == Blocks.SNOW) {
+                if (itemStack.getCount() > 1) {
+                    player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_SNOW.get()), true);
+                    itemStack.shrink(1);
+                } else {
+                    ItemStack newStack = new ItemStack(ItemRegister.BASIN_OF_SNOW.get(), itemStack.getCount());
+                    itemStack.shrink(1);
+                    player.setItemInHand(hand, newStack);
+                }
+            } else if (block == Blocks.POWDER_SNOW) {
+                if (itemStack.getCount() > 1) {
+                    player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get()), true);
+                    itemStack.shrink(1);
+                } else {
+                    ItemStack newStack = new ItemStack(ItemRegister.BASIN_OF_POWDER_SNOW.get(), itemStack.getCount());
+                    itemStack.shrink(1);
+                    player.setItemInHand(hand, newStack);
+                }
             }
         }
         return super.useOn(pContext);

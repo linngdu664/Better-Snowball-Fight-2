@@ -13,31 +13,30 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class OnPlayerTickEvent {
     public static final UUID SKATES_SPEED_ID = UUID.fromString("00a3641b-33e0-4022-8d92-1c7b74c380b0");
 
     private void clearSpeedEffect(Player player) {
-        if (Objects.requireNonNull(player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED)).getModifier(SKATES_SPEED_ID) != null) {
-            Objects.requireNonNull(player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED)).removeModifier(SKATES_SPEED_ID);
+        if (player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).getModifier(SKATES_SPEED_ID) != null) {
+            player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).removeModifier(SKATES_SPEED_ID);
             player.maxUpStep = 0.6f;
         }
     }
 
     private void addSpeedGoodEffect(Player player) {
         AttributeModifier skatesSpeed = new AttributeModifier(SKATES_SPEED_ID, "skates_speed", 0.15, AttributeModifier.Operation.ADDITION);
-        if (!Objects.requireNonNull(player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED)).hasModifier(skatesSpeed)) {
-            Objects.requireNonNull(player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED)).addPermanentModifier(skatesSpeed);
+        if (!player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).hasModifier(skatesSpeed)) {
+            player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).addPermanentModifier(skatesSpeed);
             player.maxUpStep = 2;
         }
     }
 
     private void addSpeedBadEffect(Player player) {
         AttributeModifier skatesSpeed = new AttributeModifier(SKATES_SPEED_ID, "skates_speed", -0.25, AttributeModifier.Operation.MULTIPLY_BASE);
-        if (!Objects.requireNonNull(player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED)).hasModifier(skatesSpeed)) {
-            Objects.requireNonNull(player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED)).addPermanentModifier(skatesSpeed);
+        if (!player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).hasModifier(skatesSpeed)) {
+            player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).addPermanentModifier(skatesSpeed);
             player.maxUpStep = 0.5f;
         }
     }

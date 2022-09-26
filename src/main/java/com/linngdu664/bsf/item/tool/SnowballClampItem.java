@@ -32,17 +32,16 @@ public class SnowballClampItem extends TieredItem {
     @Override
     public @NotNull InteractionResult useOn(UseOnContext pContext) {
         Player player = pContext.getPlayer();
-        assert player != null;
         ItemStack itemStack = pContext.getItemInHand();
         Level level = pContext.getLevel();
         Block block = level.getBlockState(pContext.getClickedPos()).getBlock();
-        if (block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || block == Blocks.POWDER_SNOW) {
+        if ((block == Blocks.SNOW_BLOCK || block == Blocks.SNOW || block == Blocks.POWDER_SNOW) && player != null) {
             if (player.getMainHandItem().isEmpty() || player.getOffhandItem().isEmpty()) {
                 player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
                 itemStack.hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(pContext.getHand()));
             }
+            player.awardStat(Stats.ITEM_USED.get(this));
         }
-        player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResult.PASS;
     }
 
