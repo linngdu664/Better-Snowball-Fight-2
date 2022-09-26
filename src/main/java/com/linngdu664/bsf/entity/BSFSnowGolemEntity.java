@@ -7,8 +7,8 @@ import com.linngdu664.bsf.entity.goal.BSFNearestAttackableTargetGoal;
 import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
 import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.tool.TargetLocatorItem;
 import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
+import com.linngdu664.bsf.item.tool.TargetLocatorItem;
 import com.linngdu664.bsf.item.weapon.FreezingSnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.PowerfulSnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.SnowballCannonItem;
@@ -16,14 +16,16 @@ import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.SoundRegister;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -47,7 +49,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob {
     // flag:
@@ -153,8 +154,11 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         if (!level.isClientSide) {
             if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get())) {
                 if (pPlayer.isShiftKeyDown()) {
-                    setTarget(null);
                     setUseLocator(!getUseLocator());
+                    if (getOwner() != null) {
+                        getOwner().sendMessage(getUseLocator() ? new TranslatableComponent("snow_golem_locator_true.tip") : new TranslatableComponent("snow_golem_locator_false.tip"), Util.NIL_UUID);
+                    }
+                    setTarget(null);
                 } else {
                     if (getStatus() == 4) {
                         setStatus((byte) 0);
@@ -162,6 +166,15 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                         setStatus((byte) (getStatus() + 1));
                     }
                     setOrderedToSit(getStatus() == 0);
+                    if (getOwner() != null) {
+                        getOwner().sendMessage(new TranslatableComponent(switch (getStatus()) {
+                            case 0 -> "snow_golem_standby.tip";
+                            case 1 -> "snow_golem_follow.tip";
+                            case 2 -> "snow_golem_follow_and_attack.tip";
+                            case 3 -> "snow_golem_attack.tip";
+                            default -> "snow_golem_turret.tip";
+                        }), Util.NIL_UUID);
+                    }
                 }
             } else if (itemStack.getItem() instanceof SnowballStorageTankItem) {
                 if (inventory.getItem(0).isEmpty()) {
@@ -182,7 +195,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 if (entity != this) {
                     setTarget(targetLocator.getLivingEntity());
                 }
-            } else {
+            } else if (itemStack.isEmpty()) {
                 if (pPlayer.isShiftKeyDown()) {
                     pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(1), true);
                     inventory.removeItem(1, 1);
@@ -271,18 +284,16 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         ItemStack weapon = inventory.getItem(1);
         ItemStack ammo = inventory.getItem(0);
         float damageChance = 1.0F / (1.0F + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, weapon));
-        float v = 0;
+        float v = 3.0F;
         float accuracy = 1.0F;
         LaunchFunc launchFunc = null;
         if (weapon.getItem() == ItemRegister.SNOWBALL_CANNON.get()) {
             launchFunc = SnowballCannonItem.getLaunchFunc(1);
-            v = 3.0F;
         } else if (weapon.getItem() == ItemRegister.POWERFUL_SNOWBALL_CANNON.get()) {
             launchFunc = PowerfulSnowballCannonItem.getLaunchFunc(1);
             v = 4.0F;
         } else if (weapon.getItem() == ItemRegister.FREEZING_SNOWBALL_CANNON.get()) {
             launchFunc = FreezingSnowballCannonItem.getLaunchFunc(1);
-            v = 3.0F;
         } else if (weapon.getItem() == ItemRegister.SNOWBALL_SHOTGUN.get()) {
             launchFunc = SnowballShotgunItem.getLaunchFunc();
             v = 2.0F;
@@ -295,8 +306,8 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             double x2 = BSFMthUtil.modSqr(dx, dz);
             double d = Math.sqrt(x2 + h * h);
             double x = Math.sqrt(x2);
-            // 0.5 * g / 400.0
-            double k = 0.0125 * x2 / (v * v);
+            // 0.5 * g / 400.0, g = 12
+            double k = 0.015 * x2 / (v * v);
             double cosTheta = 0.7071067811865475 / d * Math.sqrt(x2 - 2 * k * h + x * Math.sqrt(x2 - 4 * k * k - 4 * k * h));
             double sinTheta;
             dx /= x;
@@ -322,12 +333,12 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                         inventory.setItem(0, new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));
                     }
                     if (i == 0) {
-                        level.playSound(null, getX(), getY(), getZ(), weapon.getItem() instanceof SnowballShotgunItem ? SoundRegister.SHOTGUN_FIRE_2.get() : SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.NEUTRAL, 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                        this.playSound(weapon.getItem() instanceof SnowballShotgunItem ? SoundRegister.SHOTGUN_FIRE_2.get() : SoundRegister.SNOWBALL_CANNON_SHOOT.get(), 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                         if (getRandom().nextFloat() <= damageChance) {
                             weapon.setDamageValue(weapon.getDamageValue() + 1);
                             if (weapon.getDamageValue() == 256) {
                                 inventory.removeItem(1, 1);
-                                level.playSound(null, getX(), getY(), getZ(), SoundEvents.ITEM_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
+                                this.playSound(SoundEvents.ITEM_BREAK, 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
                             }
                         }
                     }
@@ -349,7 +360,16 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         }
     }
 
-    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
+        return SoundEvents.SNOW_GOLEM_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.SNOW_GOLEM_DEATH;
+    }
+
     @Override
     public AgeableMob getBreedOffspring(@NotNull ServerLevel p_146743_, @NotNull AgeableMob p_146744_) {
         return null;
