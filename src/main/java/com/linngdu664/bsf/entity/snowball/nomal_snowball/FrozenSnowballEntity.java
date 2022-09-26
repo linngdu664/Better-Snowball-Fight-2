@@ -1,5 +1,6 @@
 package com.linngdu664.bsf.entity.snowball.nomal_snowball;
 
+import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.BSFMthUtil;
@@ -13,6 +14,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.SnowGolem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -58,9 +60,9 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
             BlockState basalt = Blocks.BASALT.defaultBlockState();
             BlockState air = Blocks.AIR.defaultBlockState();
             BlockState snow = Blocks.SNOW.defaultBlockState();
-            for (int i = (int) (blockPos.getX() - frozenRange); i <= blockPos.getX() + frozenRange; i++) {
-                for (int j = (int) (blockPos.getY() - frozenRange); j <= blockPos.getY() + frozenRange; j++) {
-                    for (int k = (int) (blockPos.getZ() - frozenRange); k <= blockPos.getZ() + frozenRange; k++) {
+            for (int i = (int) (blockPos.getX() - frozenRange); i <= (int) (blockPos.getX() + frozenRange); i++) {
+                for (int j = (int) (blockPos.getY() - frozenRange); j <= (int) (blockPos.getY() + frozenRange); j++) {
+                    for (int k = (int) (blockPos.getZ() - frozenRange); k <= (int) (blockPos.getZ() + frozenRange); k++) {
                         if (BSFMthUtil.modSqr(i - blockPos.getX(), j - blockPos.getY(), k - blockPos.getZ()) <= frozenRange * frozenRange) {
                             BlockPos blockPos1 = new BlockPos(i, j, k);
                             BlockState blockState = level.getBlockState(blockPos1);
@@ -79,7 +81,7 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
             }
             List<LivingEntity> list = TargetGetter.getTargetList(this, LivingEntity.class, 2.5F);
             for (LivingEntity entity : list) {
-                if (distanceToSqr(entity) < frozenRange * frozenRange) {
+                if (distanceToSqr(entity) < frozenRange * frozenRange && !(entity instanceof BSFSnowGolemEntity) && !(entity instanceof SnowGolem)) {
                     if (frozenTime > 0) {
                         if (entity.getTicksFrozen() < frozenTime) {
                             entity.setTicksFrozen(frozenTime);
@@ -98,7 +100,6 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
                 ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 200, 0, 0, 0, 0.32);
             }
         }
-
         if (!level.isClientSide) {
             this.discard();
         }

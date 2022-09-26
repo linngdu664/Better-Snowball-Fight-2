@@ -14,6 +14,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.SnowGolem;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
@@ -68,7 +69,7 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
             entity.hurt(DamageSource.thrown(this, this.getOwner()), hurt);
 
             // Handle frozen and weakness effects
-            if (frozenTime > 0) {
+            if (frozenTime > 0 && !(entity instanceof BSFSnowGolemEntity) && !(entity instanceof SnowGolem)) {
                 if (entity.getTicksFrozen() < frozenTime) {
                     entity.setTicksFrozen(frozenTime);
                 }

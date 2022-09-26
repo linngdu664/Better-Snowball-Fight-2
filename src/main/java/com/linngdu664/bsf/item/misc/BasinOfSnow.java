@@ -1,5 +1,6 @@
 package com.linngdu664.bsf.item.misc;
 
+import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.ItemGroup;
@@ -16,6 +17,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.SnowGolem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,22 +43,24 @@ public class BasinOfSnow extends Item {
         spawnParticles(pLevel, pPlayer, cameraVec);
         if (!pLevel.isClientSide) {
             for (LivingEntity livingEntity : list) {
-                Vec3 rVec1 = new Vec3(livingEntity.getX() - pPlayer.getX(), livingEntity.getEyeY() - pPlayer.getEyeY() + 0.2, livingEntity.getZ() - pPlayer.getZ());
-                Vec3 rVec2 = new Vec3(rVec1.x, livingEntity.getY() - pPlayer.getEyeY(), rVec1.z);
-                if (BSFMthUtil.vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
-                    float r = (float) rVec1.length();
-                    int t = 0;
-                    if (r < 5.0F) {
-                        t = 180;
-                        livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 2));
-                    } else if (r < 8.0F) {
-                        t = (int) (180.0F - 6.6666667F * (r - 5.0F) * (r - 5.0F) * (r - 5.0F));
-                        livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 1));
+                if (!(livingEntity instanceof BSFSnowGolemEntity) && !(livingEntity instanceof SnowGolem)) {
+                    Vec3 rVec1 = new Vec3(livingEntity.getX() - pPlayer.getX(), livingEntity.getEyeY() - pPlayer.getEyeY() + 0.2, livingEntity.getZ() - pPlayer.getZ());
+                    Vec3 rVec2 = new Vec3(rVec1.x, livingEntity.getY() - pPlayer.getEyeY(), rVec1.z);
+                    if (BSFMthUtil.vec3AngleCos(rVec1, cameraVec) > 0.9363291776 && isNotBlocked(rVec1, rVec2, pPlayer, pLevel)) {
+                        float r = (float) rVec1.length();
+                        int t = 0;
+                        if (r < 5.0F) {
+                            t = 180;
+                            livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 2));
+                        } else if (r < 8.0F) {
+                            t = (int) (180.0F - 6.6666667F * (r - 5.0F) * (r - 5.0F) * (r - 5.0F));
+                            livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (livingEntity.getTicksFrozen() * 0.5), 1));
+                        }
+                        if (livingEntity.getTicksFrozen() < t) {
+                            livingEntity.setTicksFrozen(t);
+                        }
+                        livingEntity.hurt(DamageSource.playerAttack(pPlayer), Float.MIN_VALUE);
                     }
-                    if (livingEntity.getTicksFrozen() < t) {
-                        livingEntity.setTicksFrozen(t);
-                    }
-                    livingEntity.hurt(DamageSource.playerAttack(pPlayer), Float.MIN_VALUE);
                 }
             }
         }
