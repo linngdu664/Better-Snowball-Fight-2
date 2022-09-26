@@ -46,8 +46,7 @@ public class PowderSnowballEntity extends BSFSnowballEntity {
         super.tick();
         if (isStart) {
             ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.2);
-            timer++;
-            if (timer > 200) {
+            if (++timer > 200) {
                 this.discard();
             }
         }

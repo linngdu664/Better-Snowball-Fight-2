@@ -5,7 +5,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 
 public abstract class BSFEnhanceableToolItem extends Item {
-    public BSFEnhanceableToolItem (Rarity rarity, int durability) {
+    public BSFEnhanceableToolItem(Rarity rarity, int durability) {
         super(new Properties().stacksTo(1).tab(ItemGroup.MAIN).rarity(rarity).durability(durability));
     }
 
