@@ -1,5 +1,7 @@
 package com.linngdu664.bsf.item;
 
+import com.linngdu664.bsf.block.BlockRegister;
+import com.linngdu664.bsf.item.block.SmartSnowBlockItem;
 import com.linngdu664.bsf.item.misc.*;
 import com.linngdu664.bsf.item.snowball.force_snowball.*;
 import com.linngdu664.bsf.item.snowball.normal_snowball.*;
@@ -95,4 +97,6 @@ public class ItemRegister {
     public static final RegistryObject<Item> SNOWBALL_MACHINE_GUN = ITEMS.register("snowball_machine_gun", SnowballMachineGunItem::new);
     public static final RegistryObject<Item> SNOWBALL_SHOTGUN = ITEMS.register("snowball_shotgun", SnowballShotgunItem::new);
     public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_storage_tank", EmptySnowballStorageTankItem::new);
+
+    public static final RegistryObject<Item> TEST_BLOCK = ITEMS.register("smart_snow_block", () -> new SmartSnowBlockItem(BlockRegister.SMART_SNOW_BLOCK.get()));
 }

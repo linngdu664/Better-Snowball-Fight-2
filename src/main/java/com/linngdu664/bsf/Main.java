@@ -1,5 +1,6 @@
 package com.linngdu664.bsf;
 
+import com.linngdu664.bsf.block.BlockRegister;
 import com.linngdu664.bsf.effect.EffectRegister;
 import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.event.AttackEntityEvent;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class Main {
     public Main() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        BlockRegister.BLOCKS.register(bus);
         ItemRegister.ITEMS.register(bus);
         SoundRegister.SOUNDS.register(bus);
         ParticleRegister.PARTICLES.register(bus);
