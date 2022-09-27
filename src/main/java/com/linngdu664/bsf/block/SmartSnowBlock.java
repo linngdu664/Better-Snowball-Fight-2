@@ -4,8 +4,8 @@ import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
 import com.linngdu664.bsf.entity.EntityRegister;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -19,25 +19,31 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 
-public class SmartSnowBlock extends Block {
+public class SmartSnowBlock extends HorizontalDirectionalBlock {
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D);
-    private static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
     private static final Predicate<BlockState> PUMPKINS_PREDICATE = (p_51396_) -> p_51396_ != null && p_51396_.is(BlockRegister.SMART_SNOW_BLOCK.get());
     private BlockPattern snowGolemFull;
 
     public SmartSnowBlock() {
         super(Properties.of(Material.WOOD).strength(1.0F).sound(SoundType.WOOD));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public void setPlacedBy(@NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull BlockState pState, @Nullable LivingEntity pPlacer, @NotNull ItemStack pStack) {
+        if (pPlacer instanceof Player player) {
+            checkSpawn(pLevel, pPos, player);
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -46,39 +52,14 @@ public class SmartSnowBlock extends Block {
         return SHAPE;
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public @NotNull VoxelShape getOcclusionShape(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
-        return Shapes.empty();
-    }
-
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return this.defaultBlockState().setValue(ROTATION, Mth.floor((double) (pContext.getRotation() * 16.0F / 360.0F) + 0.5D) & 15);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public @NotNull BlockState rotate(BlockState pState, Rotation pRotation) {
-        return pState.setValue(ROTATION, pRotation.rotate(pState.getValue(ROTATION), 16));
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public @NotNull BlockState mirror(BlockState pState, Mirror pMirror) {
-        return pState.setValue(ROTATION, pMirror.mirror(pState.getValue(ROTATION), 16));
+        return defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(ROTATION);
-    }
-
-    @Override
-    public void setPlacedBy(@NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull BlockState pState, @Nullable LivingEntity pPlacer, @NotNull ItemStack pStack) {
-        if (pPlacer instanceof Player player) {
-            checkSpawn(pLevel, pPos, player);
-        }
+        pBuilder.add(FACING);
     }
 
     private void checkSpawn(Level level, BlockPos pos, Player player) {
@@ -99,7 +80,7 @@ public class SmartSnowBlock extends Block {
             for (ServerPlayer serverplayer : level.getEntitiesOfClass(ServerPlayer.class, snowGolem.getBoundingBox().inflate(5.0D))) {
                 CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayer, snowGolem);
             }
-            for (int l = 0; l < this.getOrCreateSnowGolemFull().getHeight(); ++l) {
+            for (int l = 0; l < getOrCreateSnowGolemFull().getHeight(); ++l) {
                 BlockInWorld blockInWorld = blockPatternMatch.getBlock(0, l, 0);
                 level.blockUpdated(blockInWorld.getPos(), Blocks.AIR);
             }
@@ -107,9 +88,9 @@ public class SmartSnowBlock extends Block {
     }
 
     private BlockPattern getOrCreateSnowGolemFull() {
-        if (this.snowGolemFull == null) {
-            this.snowGolemFull = BlockPatternBuilder.start().aisle("^", "#", "#").where('^', BlockInWorld.hasState(PUMPKINS_PREDICATE)).where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.SNOW_BLOCK))).build();
+        if (snowGolemFull == null) {
+            snowGolemFull = BlockPatternBuilder.start().aisle("^", "#", "#").where('^', BlockInWorld.hasState(PUMPKINS_PREDICATE)).where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.SNOW_BLOCK))).build();
         }
-        return this.snowGolemFull;
+        return snowGolemFull;
     }
 }
