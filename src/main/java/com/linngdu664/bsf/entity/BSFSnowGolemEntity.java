@@ -168,7 +168,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                         }), Util.NIL_UUID);
                     }
                 }
-                return InteractionResult.SUCCESS;
             } else if (itemStack.getItem() instanceof SnowballStorageTankItem) {
                 if (inventory.getItem(0).isEmpty()) {
                     inventory.setItem(0, itemStack.copy());
@@ -176,7 +175,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 if (!pPlayer.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
-                return InteractionResult.SUCCESS;
             } else if (itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) {
                 if (inventory.getItem(1).isEmpty()) {
                     inventory.setItem(1, itemStack.copy());
@@ -184,13 +182,11 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 if (!pPlayer.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
-                return InteractionResult.SUCCESS;
             } else if (itemStack.getItem() instanceof TargetLocatorItem targetLocator && getUseLocator()) {
                 LivingEntity entity = targetLocator.getLivingEntity();
                 if (entity != this) {
                     setTarget(targetLocator.getLivingEntity());
                 }
-                return InteractionResult.SUCCESS;
             } else if (itemStack.isEmpty()) {
                 if (pPlayer.isShiftKeyDown()) {
                     pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(1), true);
@@ -199,10 +195,9 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(0), true);
                     inventory.removeItem(0, 1);
                 }
-                return InteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.PASS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
