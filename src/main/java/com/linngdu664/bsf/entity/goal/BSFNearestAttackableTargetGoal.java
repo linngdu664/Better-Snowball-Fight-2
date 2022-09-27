@@ -8,7 +8,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 
-public class BSFNearestAttackableTargetGoal extends NearestAttackableTargetGoal {
+@SuppressWarnings("unchecked")
+public class BSFNearestAttackableTargetGoal extends NearestAttackableTargetGoal<BSFSnowGolemEntity> {
     private final BSFSnowGolemEntity golem;
 
     public BSFNearestAttackableTargetGoal(BSFSnowGolemEntity golem, Class pTargetType, int pRandomInterval, boolean pMustSee, boolean pMustReach, @Nullable Predicate pTargetPredicate) {
