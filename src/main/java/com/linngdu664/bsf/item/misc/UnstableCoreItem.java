@@ -1,7 +1,5 @@
 package com.linngdu664.bsf.item.misc;
 
-import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
-import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,21 +26,17 @@ public class UnstableCoreItem extends Item {
         ItemStack itemStack = context.getItemInHand();
         Level level = context.getLevel();
         Block block = level.getBlockState(context.getClickedPos()).getBlock();
-        if (player != null) {
-            if (block == Blocks.LODESTONE) {
-                if (!player.getAbilities().instabuild) {
-                    itemStack.shrink(1);
-                }
-                player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GRAVITY_CORE.get(), 1), true);
-                player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.REPULSION_CORE.get(), 1), true);
-                if (!level.isClientSide) {
-                    ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, context.getClickedPos().getX() + 0.5, context.getClickedPos().getY() + 0.5, context.getClickedPos().getZ() + 0.5, 64, 0, 0, 0, 0.12);
-                }
-            } else {
-                BSFSnowGolemEntity golem = new BSFSnowGolemEntity(EntityRegister.BSF_SNOW_GOLEM.get(), level, player);
-                level.addFreshEntity(golem);
+        if (block == Blocks.LODESTONE && player != null) {
+            if (!player.getAbilities().instabuild) {
+                itemStack.shrink(1);
             }
+            player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.GRAVITY_CORE.get(), 1), true);
+            player.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.REPULSION_CORE.get(), 1), true);
+            if (!level.isClientSide) {
+                ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, context.getClickedPos().getX() + 0.5, context.getClickedPos().getY() + 0.5, context.getClickedPos().getZ() + 0.5, 64, 0, 0, 0, 0.12);
+            }
+            return InteractionResult.SUCCESS;
         }
-        return super.useOn(context);
+        return InteractionResult.PASS;
     }
 }
