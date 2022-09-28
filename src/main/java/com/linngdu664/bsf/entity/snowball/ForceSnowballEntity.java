@@ -7,10 +7,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 public abstract class ForceSnowballEntity extends BSFSnowballEntity {
-    public Class<? extends Entity> targetClass;
-    public double range;
-    public double GM;
-    public double boundaryR2;
+    private Class<? extends Entity> targetClass;
+    private double range;
+    private double GM;
+    private double boundaryR2;
 
     public ForceSnowballEntity(LivingEntity livingEntity, Level level) {
         super(livingEntity, level);

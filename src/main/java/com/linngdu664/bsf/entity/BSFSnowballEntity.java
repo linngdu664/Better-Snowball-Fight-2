@@ -35,8 +35,8 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
     public float damage = Float.MIN_NORMAL;
     public float blazeDamage = 3.0F;
     public LaunchFrom launchFrom;
-    public int frozenTime = 0;
-    public int weaknessTime = 0;
+    public int frozenTicks = 0;
+    public int weaknessTicks = 0;
     // You need to distinguish between LaunchFrom and LaunchFunc
     // LaunchFrom is an Enum, LaunchFunc is an Interface
 
@@ -69,14 +69,14 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
             entity.hurt(DamageSource.thrown(this, this.getOwner()), hurt);
 
             // Handle frozen and weakness effects
-            if (frozenTime > 0 && !(entity instanceof BSFSnowGolemEntity) && !(entity instanceof SnowGolem)) {
-                if (entity.getTicksFrozen() < frozenTime) {
-                    entity.setTicksFrozen(frozenTime);
+            if (frozenTicks > 0 && !(entity instanceof BSFSnowGolemEntity) && !(entity instanceof SnowGolem)) {
+                if (entity.getTicksFrozen() < frozenTicks) {
+                    entity.setTicksFrozen(frozenTicks);
                 }
                 entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 1));
             }
-            if (weaknessTime > 0) {
-                entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weaknessTime, 1));
+            if (weaknessTicks > 0) {
+                entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, weaknessTicks, 1));
             }
 
             // Push entity
@@ -126,9 +126,9 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
     /**
      * You should override this fucking method if you want to catch the snowball!
      *
-     * @return Register corresponding item.
+     * @return The corresponding item.
      */
-    protected Item getRegisterItem() {
+    protected Item getCorrespondingItem() {
         return null;
     }
 
@@ -140,7 +140,7 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
         if (entity instanceof Player player && (player.getOffhandItem().is(ItemRegister.GLOVE.get()) &&
                 player.getUsedItemHand() == InteractionHand.OFF_HAND || player.getMainHandItem().is(ItemRegister.GLOVE.get()) &&
                 player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && isHeadingToSnowball(player)) {
-            player.getInventory().placeItemBackInInventory(new ItemStack(getRegisterItem()));
+            player.getInventory().placeItemBackInInventory(new ItemStack(getCorrespondingItem()));
             if (player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {
                 player.getMainHandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             } else if (player.getOffhandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {
@@ -192,8 +192,8 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
         return this;
     }
 
-    public BSFSnowballEntity setFrozenTime(int frozenTime) {
-        this.frozenTime = frozenTime;
+    public BSFSnowballEntity setFrozenTicks(int frozenTicks) {
+        this.frozenTicks = frozenTicks;
         return this;
     }
 }

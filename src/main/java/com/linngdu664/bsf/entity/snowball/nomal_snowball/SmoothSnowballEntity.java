@@ -25,7 +25,7 @@ public class SmoothSnowballEntity extends BSFSnowballEntity {
     }
 
     @Override
-    protected Item getRegisterItem() {
+    protected Item getCorrespondingItem() {
         return ItemRegister.SMOOTH_SNOWBALL.get();
     }
 

@@ -16,7 +16,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class BlackHoleSnowballEntity extends BSFSnowballEntity {
-    public int timer = 0;
+    private int timer = 0;
     public int startTime = 20;
     public int endTime = 150;
 

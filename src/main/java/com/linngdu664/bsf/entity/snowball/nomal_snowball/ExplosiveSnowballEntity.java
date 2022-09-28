@@ -27,7 +27,7 @@ public class ExplosiveSnowballEntity extends BSFSnowballEntity {
     }
 
     @Override
-    protected Item getRegisterItem() {
+    protected Item getCorrespondingItem() {
         return ItemRegister.EXPLOSIVE_SNOWBALL.get();
     }
 

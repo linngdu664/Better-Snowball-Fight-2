@@ -20,7 +20,7 @@ public class MonsterRepulsionSnowballEntity extends ForceSnowballEntity {
     }
 
     @Override
-    protected Item getRegisterItem() {
+    protected Item getCorrespondingItem() {
         return ItemRegister.MONSTER_REPULSION_SNOWBALL.get();
     }
 

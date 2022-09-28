@@ -20,7 +20,7 @@ public class ExplosivePlayerTrackingSnowballEntity extends TrackingSnowballEntit
     }
 
     @Override
-    protected Item getRegisterItem() {
+    protected Item getCorrespondingItem() {
         return ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get();
     }
 

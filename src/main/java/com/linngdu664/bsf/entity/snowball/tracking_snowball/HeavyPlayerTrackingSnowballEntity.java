@@ -20,7 +20,7 @@ public class HeavyPlayerTrackingSnowballEntity extends TrackingSnowballEntity {
     }
 
     @Override
-    protected Item getRegisterItem() {
+    protected Item getCorrespondingItem() {
         return ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get();
     }
 

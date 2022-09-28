@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class IceSnowballEntity extends BSFSnowballEntity {
     public IceSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
-        this.setFrozenTime(60).setLaunchFrom(launchFunc.getLaunchForm()).setDamage(3).setBlazeDamage(6);
+        this.setFrozenTicks(60).setLaunchFrom(launchFunc.getLaunchForm()).setDamage(3).setBlazeDamage(6);
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.ICE_SNOWBALL.get()));
     }
@@ -21,12 +21,12 @@ public class IceSnowballEntity extends BSFSnowballEntity {
     //This is only used for dispenser
     public IceSnowballEntity(Level level, double x, double y, double z) {
         super(level, x, y, z);
-        this.setFrozenTime(60).setDamage(3).setBlazeDamage(6);
+        this.setFrozenTicks(60).setDamage(3).setBlazeDamage(6);
         this.setItem(new ItemStack(ItemRegister.ICE_SNOWBALL.get()));
     }
 
     @Override
-    protected Item getRegisterItem() {
+    protected Item getCorrespondingItem() {
         return ItemRegister.ICE_SNOWBALL.get();
     }
 

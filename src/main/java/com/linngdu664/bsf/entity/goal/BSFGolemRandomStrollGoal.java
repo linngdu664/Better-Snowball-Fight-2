@@ -6,7 +6,7 @@ import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.phys.Vec3;
 
 public class BSFGolemRandomStrollGoal extends RandomStrollGoal {
-    protected final float probability;
+    private final float probability;
     private final BSFSnowGolemEntity golem;
 
     public BSFGolemRandomStrollGoal(BSFSnowGolemEntity golem, double pSpeedModifier, float pProbability) {

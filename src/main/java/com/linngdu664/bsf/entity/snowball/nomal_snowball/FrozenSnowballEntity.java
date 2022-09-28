@@ -31,7 +31,7 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
 
     public FrozenSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
-        this.setFrozenTime(60).setLaunchFrom(launchFunc.getLaunchForm()).setDamage(3).setBlazeDamage(8);
+        this.setFrozenTicks(60).setLaunchFrom(launchFunc.getLaunchForm()).setDamage(3).setBlazeDamage(8);
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.FROZEN_SNOWBALL.get()));
         if (launchFrom == LaunchFrom.FREEZING_CANNON) {
@@ -47,7 +47,7 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
     }
 
     @Override
-    protected Item getRegisterItem() {
+    protected Item getCorrespondingItem() {
         return ItemRegister.FROZEN_SNOWBALL.get();
     }
 
@@ -82,9 +82,9 @@ public class FrozenSnowballEntity extends BSFSnowballEntity {
             List<LivingEntity> list = TargetGetter.getTargetList(this, LivingEntity.class, 2.5F);
             for (LivingEntity entity : list) {
                 if (distanceToSqr(entity) < frozenRange * frozenRange && !(entity instanceof BSFSnowGolemEntity) && !(entity instanceof SnowGolem)) {
-                    if (frozenTime > 0) {
-                        if (entity.getTicksFrozen() < frozenTime) {
-                            entity.setTicksFrozen(frozenTime);
+                    if (frozenTicks > 0) {
+                        if (entity.getTicksFrozen() < frozenTicks) {
+                            entity.setTicksFrozen(frozenTicks);
                         }
                         entity.hurt(DamageSource.thrown(this, this.getOwner()), Float.MIN_NORMAL);
                         if (launchFrom == LaunchFrom.FREEZING_CANNON) {

@@ -9,12 +9,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 public abstract class TrackingSnowballEntity extends BSFSnowballEntity {
-    public float v0;
-    public float maxTurningAngleCos;
-    public float maxTurningAngleSin;
-    public Class<? extends Entity> targetClass;
-    public double range;
-    public boolean lockFeet = false;
+    private float maxTurningAngleCos;
+    private float maxTurningAngleSin;
+    private Class<? extends Entity> targetClass;
+    private double range;
+    private boolean lockFeet = false;
     private boolean init = true;
 
     public TrackingSnowballEntity(LivingEntity livingEntity, Level level) {
@@ -26,7 +25,7 @@ public abstract class TrackingSnowballEntity extends BSFSnowballEntity {
         super.tick();
         if (init) {
             Vec3 vec3 = this.getDeltaMovement();
-            v0 = (float) vec3.length();
+            float v0 = (float) vec3.length();
             maxTurningAngleCos = Mth.cos(7.1619724F * v0 * Mth.DEG_TO_RAD);
             maxTurningAngleSin = Mth.sin(7.1619724F * v0 * Mth.DEG_TO_RAD);
             init = false;

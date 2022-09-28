@@ -20,7 +20,7 @@ public class ProjectileGravitySnowballEntity extends ForceSnowballEntity {
     }
 
     @Override
-    protected Item getRegisterItem() {
+    protected Item getCorrespondingItem() {
         return ItemRegister.PROJECTILE_GRAVITY_SNOWBALL.get();
     }
 
