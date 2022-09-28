@@ -1,34 +1,8 @@
 {
-  "elements": [
-    {
-      "from": [1, 0, 1],
-      "to": [15, 14, 15],
-      "faces": {
-        "down": {
-          "texture": "#down",
-          "cullface": "down"
-        },
-        "up": {
-          "texture": "#up",
-          "cullface": "up"
-        },
-        "north": {
-          "texture": "#north",
-          "cullface": "north"
-        },
-        "south": {
-          "texture": "#south",
-          "cullface": "south"
-        },
-        "west": {
-          "texture": "#west",
-          "cullface": "west"
-        },
-        "east": {
-          "texture": "#east",
-          "cullface": "east"
-        }
-      }
-    }
-  ]
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "minecraft:block/pumpkin_top",
+    "front": "minecraft:block/carved_pumpkin",
+    "side": "minecraft:block/pumpkin_side"
+  }
 }
