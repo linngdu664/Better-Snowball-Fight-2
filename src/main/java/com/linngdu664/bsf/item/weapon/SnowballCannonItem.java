@@ -1,10 +1,6 @@
 package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
-import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
-import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.SoundRegister;
@@ -63,7 +59,7 @@ public class SnowballCannonItem extends BSFWeaponItem {
             if (f >= 0.1F) {
                 ItemStack itemStack = findAmmo(player, false, true);
                 if (itemStack != null) {
-                    BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player, f);
+                    BSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc(f));
                     BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 3.0F, 1.0F);
                     pLevel.addFreshEntity(snowballEntity);
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
@@ -84,7 +80,7 @@ public class SnowballCannonItem extends BSFWeaponItem {
         }
     }
 
-    /**
+    /*
      * This horrible method is used to return the specific snowball entity according to the item.
      *
      * @param itemStack      The selected itemstack.
@@ -93,7 +89,7 @@ public class SnowballCannonItem extends BSFWeaponItem {
      * @param damageDropRate This param(0~1) is associate with the charge time of the snowball cannon. The damage value will multiply this param.
      * @return The specific snowball entity with proper characters.
      */
-    public BSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player, double damageDropRate) {
+    /*public BSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player, double damageDropRate) {
         Item item = itemStack.getItem();
         if (item instanceof SnowballStorageTankItem tank) {
             item = tank.getSnowball();
@@ -134,7 +130,7 @@ public class SnowballCannonItem extends BSFWeaponItem {
             return new ExplosivePlayerTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
         }
         return null;
-    }
+    }*/
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pHand) {

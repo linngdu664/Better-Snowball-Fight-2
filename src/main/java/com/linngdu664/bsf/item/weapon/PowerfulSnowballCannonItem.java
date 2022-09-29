@@ -46,7 +46,7 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
             if (f >= 0.1F) {
                 ItemStack itemStack = findAmmo(player, false, true);
                 if (itemStack != null) {
-                    BSFSnowballEntity snowballEntity = itemToEntity(itemStack, pLevel, player, f);
+                    BSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc(f));
                     //v is changed
                     BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 4.0F, 1.0F);
                     pLevel.addFreshEntity(snowballEntity);

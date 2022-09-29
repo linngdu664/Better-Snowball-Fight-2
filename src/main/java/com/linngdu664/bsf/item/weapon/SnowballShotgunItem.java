@@ -1,9 +1,7 @@
 package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.*;
-import com.linngdu664.bsf.entity.snowball.tracking_snowball.*;
-import com.linngdu664.bsf.item.ItemRegister;
+import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
@@ -58,8 +56,8 @@ public class SnowballShotgunItem extends BSFWeaponItem {
         for (i = 0; i < 4; i++) {
             ItemStack itemStack = findAmmo(player, false, true);
             if (itemStack != null) {
-                BSFSnowballEntity snowballEntity = itemToEntity(itemStack, level, player);
-                assert snowballEntity != null;
+                BSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, level, getLaunchFunc());
+                addPush(itemStack.getItem());
                 if (!player.isShiftKeyDown()) {
                     BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 2.0F, 10.0F);
                     level.addFreshEntity(snowballEntity);
@@ -97,6 +95,15 @@ public class SnowballShotgunItem extends BSFWeaponItem {
         return InteractionResultHolder.pass(stack);
     }
 
+    private void addPush(Item item) {
+        if (item instanceof SnowballStorageTankItem tank) {
+            item = tank.getSnowball();
+        }
+        if (item instanceof BSFSnowballItem snowball) {
+            pushRank += snowball.getPushRank();
+        }
+    }
+/*
     private BSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player) {
         Item item = itemStack.getItem();
         if (item instanceof SnowballStorageTankItem tank) {
@@ -156,7 +163,7 @@ public class SnowballShotgunItem extends BSFWeaponItem {
         }
         return null;
     }
-
+*/
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("snowball_shotgun1.tooltip").withStyle(ChatFormatting.DARK_PURPLE));

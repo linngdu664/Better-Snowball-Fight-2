@@ -49,6 +49,16 @@ public class BlackHoleSnowballItem extends BSFSnowballItem {
     }
 
     @Override
+    public boolean canBeLaunchedByMachineGun() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeLaunchedByNormalWeapon() {
+        return false;
+    }
+
+    @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_hand.tooltip").withStyle(ChatFormatting.DARK_GREEN));
         pTooltipComponents.add(new TranslatableComponent("lunch_no_cannon.tooltip").withStyle(ChatFormatting.DARK_RED));

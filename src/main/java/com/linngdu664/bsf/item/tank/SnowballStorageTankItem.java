@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.item.tank;
 
 import com.linngdu664.bsf.item.ItemRegister;
+import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -42,8 +43,8 @@ public abstract class SnowballStorageTankItem extends Item {
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
     }
 
-    public Item getSnowball() {
-        return item;
+    public BSFSnowballItem getSnowball() {
+        return (BSFSnowballItem) item;
     }
 
     @Override

@@ -1,7 +1,11 @@
 package com.linngdu664.bsf.item.weapon;
 
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
+import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
 import com.linngdu664.bsf.util.ItemGroup;
+import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -9,13 +13,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class BSFWeaponItem extends Item {
     public BSFWeaponItem(int durability, Rarity rarity) {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(durability).rarity(rarity));
     }
-
+/*
     protected boolean isAmmoTank(Item item, boolean isNormalWeapon) {
         return item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
                 item == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
@@ -39,6 +44,7 @@ public abstract class BSFWeaponItem extends Item {
                 item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() ||
                 item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get();
     }
+*/
 
     /**
      * Find the ammo of the weapon in player's inventory. It will search tanks first, and then it will search bulk
@@ -50,15 +56,18 @@ public abstract class BSFWeaponItem extends Item {
      * @return The first valid ammo itemstack. If the method can't find a proper itemstack, it will return null.
      */
     protected ItemStack findAmmo(Player player, boolean onlyTank, boolean isNormalWeapon) {
-        for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-            if (isAmmoTank(player.getInventory().getItem(j).getItem(), isNormalWeapon)) {
-                return player.getInventory().getItem(j);
+        int k = player.getInventory().getContainerSize();
+        for (int j = 0; j < k; j++) {
+            ItemStack itemStack = player.getInventory().getItem(j);
+            if (itemStack.getItem() instanceof SnowballStorageTankItem tank && (tank.getSnowball().canBeLaunchedByMachineGun() && !isNormalWeapon || tank.getSnowball().canBeLaunchedByNormalWeapon() && isNormalWeapon)) {
+                return itemStack;
             }
         }
         if (!onlyTank) {
-            for (int j = 0; j < player.getInventory().getContainerSize(); j++) {
-                if (isAmmo(player.getInventory().getItem(j).getItem())) {
-                    return player.getInventory().getItem(j);
+            for (int j = 0; j < k; j++) {
+                ItemStack itemStack = player.getInventory().getItem(j);
+                if (itemStack.getItem() instanceof BSFSnowballItem snowball && (snowball.canBeLaunchedByMachineGun() && !isNormalWeapon || snowball.canBeLaunchedByNormalWeapon() && isNormalWeapon)) {
+                    return itemStack;
                 }
             }
         }
@@ -74,7 +83,7 @@ public abstract class BSFWeaponItem extends Item {
     }
 
     protected void consumeAmmo(ItemStack itemStack, Player player) {
-        if (isAmmoTank(itemStack.getItem(), true)) {
+        if (itemStack.getItem() instanceof SnowballStorageTankItem) {
             itemStack.hurtAndBreak(1, player, p -> p.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()), true));
         } else if (!player.getAbilities().instabuild) {
             itemStack.shrink(1);
@@ -84,6 +93,59 @@ public abstract class BSFWeaponItem extends Item {
         }
     }
 
+    protected BSFSnowballEntity ItemToEntity(Item item, Player player, Level level, LaunchFunc launchFunc) {
+        if (item instanceof SnowballStorageTankItem tank) {
+            item = tank.getSnowball();
+        }
+        if (item instanceof BSFSnowballItem snowball) {
+            return snowball.getCorrespondingEntity(level, player, launchFunc);
+        }
+        return null;
+    }
+
+/*
+    protected BSFSnowballEntity ItemToEntity(Item item, Player player, Level level, LaunchFunc launchFunc) {
+        if (item instanceof SnowballStorageTankItem tank) {
+            item = tank.getSnowball();
+        }
+        if (item instanceof CompactedSnowballItem) {
+            return new CompactedSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof StoneSnowballItem) {
+            return new StoneSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof GlassSnowballItem) {
+            return new GlassSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof IceSnowballItem) {
+            return new IceSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof IronSnowballItem) {
+            return new IronSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof GoldSnowballItem) {
+            return new GoldSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof ObsidianSnowballItem) {
+            return new ObsidianSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof SpectralSnowballItem) {
+            return new SpectralSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof ExplosiveSnowballItem) {
+            return new ExplosiveSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof FrozenSnowballItem) {
+            return new FrozenSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof PowderSnowballItem) {
+            return new PowderSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof LightMonsterTrackingSnowballItem) {
+            return new LightSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof HeavyMonsterTrackingSnowballItem) {
+            return new HeavySnowballEntity(player, level, launchFunc);
+        } else if (item instanceof ExplosiveMonsterTrackingSnowballItem) {
+            return new ExplosiveSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof LightPlayerTrackingSnowballItem) {
+            return new CompactedSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof HeavyPlayerTrackingSnowballItem) {
+            return new CompactedSnowballEntity(player, level, launchFunc);
+        } else if (item instanceof ExplosivePlayerTrackingSnowballItem) {
+            return new CompactedSnowballEntity(player, level, launchFunc);
+        }
+        return null;
+    }
+*/
     @Override
     public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
         return pRepairCandidate.is(Items.IRON_INGOT);

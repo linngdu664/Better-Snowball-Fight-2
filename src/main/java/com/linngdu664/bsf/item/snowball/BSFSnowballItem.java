@@ -7,10 +7,12 @@ import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.Level;
 
 import java.util.Objects;
 
@@ -73,7 +75,7 @@ public abstract class BSFSnowballItem extends Item {
         return (float) Math.exp(-0.005 * player.getTicksFrozen());
     }
 
-    public float getSnowballReDamageRate(Player player) {
+    public float getSnowballDamageRate(Player player) {
         float reDamageRate = 1;
         if (player.hasEffect(MobEffects.WEAKNESS)) {
             reDamageRate -= switch (Objects.requireNonNull(player.getEffect(MobEffects.WEAKNESS)).getAmplifier()) {
@@ -90,5 +92,33 @@ public abstract class BSFSnowballItem extends Item {
             }
         }
         return reDamageRate;
+    }
+
+    /**
+     * You must override this fucking method if you want to launch the snowball by weapons.
+     *
+     * @param level Level.
+     * @param livingEntity The entity who throws/launches the snowball.
+     * @param launchFunc The launch func.
+     * @return The corresponding entity.
+     */
+    public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
+        return null;
+    }
+
+    public boolean canBeLaunchedByMachineGun() {
+        return true;
+    }
+
+    public boolean canBeLaunchedByNormalWeapon() {
+        return true;
+    }
+
+    public float getRecoil() {
+        return 0.075F;
+    }
+
+    public double getPushRank() {
+        return 0.1;
     }
 }

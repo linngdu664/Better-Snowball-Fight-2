@@ -1,13 +1,17 @@
 package com.linngdu664.bsf.item.snowball.tracking_snowball;
 
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.tracking_snowball.ExplosivePlayerTrackingSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -34,6 +38,21 @@ public class ExplosivePlayerTrackingSnowballItem extends BSFSnowballItem {
         }
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
+    }
+
+    @Override
+    public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
+        return new ExplosivePlayerTrackingSnowballEntity(livingEntity, level, launchFunc);
+    }
+
+    @Override
+    public float getRecoil() {
+        return 0.12F;
+    }
+
+    @Override
+    public double getPushRank() {
+        return 0.42;
     }
 
     @Override
