@@ -97,9 +97,9 @@ public abstract class BSFSnowballItem extends Item {
     /**
      * You must override this fucking method if you want to launch the snowball by weapons.
      *
-     * @param level Level.
+     * @param level        Level.
      * @param livingEntity The entity who throws/launches the snowball.
-     * @param launchFunc The launch func.
+     * @param launchFunc   The launch func.
      * @return The corresponding entity.
      */
     public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {

@@ -1,9 +1,9 @@
 package com.linngdu664.bsf.event;
 
-import com.linngdu664.bsf.client.model.IceSkatesModel;
-import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.client.model.BSFSnowGolemModel;
+import com.linngdu664.bsf.client.model.IceSkatesModel;
 import com.linngdu664.bsf.client.renderer.entity.BSFSnowGolemRenderer;
+import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.item.ItemRegister;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;

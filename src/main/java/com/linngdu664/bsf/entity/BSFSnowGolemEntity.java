@@ -209,16 +209,17 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         }
         return InteractionResult.SUCCESS;
     }
-/*
-    void printInfo() {
-        System.out.println("print info:");
-        System.out.println(this);
-        System.out.println("    inventory:" + inventory.getItem(0) + " " + inventory.getItem(1));
-        System.out.println("    target:" + getTarget());
-        System.out.println("    target mode:" + getUseLocator());
-        System.out.println("    behavior:" + getStatus());
-    }
-*/
+
+    /*
+        void printInfo() {
+            System.out.println("print info:");
+            System.out.println(this);
+            System.out.println("    inventory:" + inventory.getItem(0) + " " + inventory.getItem(1));
+            System.out.println("    target:" + getTarget());
+            System.out.println("    target mode:" + getUseLocator());
+            System.out.println("    behavior:" + getStatus());
+        }
+    */
     @Override
     public boolean isSensitiveToWater() {
         return true;

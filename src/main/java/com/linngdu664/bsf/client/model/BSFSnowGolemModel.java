@@ -12,8 +12,11 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
+@OnlyIn(Dist.CLIENT)
 public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("bsf", "bsf_snow_golem"), "main");
@@ -31,6 +34,7 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
         this.bb_main = root.getChild("bb_main");
     }
 
+    @SuppressWarnings("unused")
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
@@ -68,6 +72,7 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
             this.right_arm_r1.yRot = 0;
             this.right_arm_r1.zRot = Mth.DEG_TO_RAD * -60;
         }
+        //System.out.println(entity);
 
 //		System.out.println(entity.toString()+" "+limbSwing+" "+limbSwingAmount+" "+ageInTicks);
     }

@@ -60,7 +60,7 @@ public class IceSnowballItem extends BSFSnowballItem {
 
     @Override
     public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
-        return new IceSnowballEntity(livingEntity, level ,launchFunc);
+        return new IceSnowballEntity(livingEntity, level, launchFunc);
     }
 
     @Override
