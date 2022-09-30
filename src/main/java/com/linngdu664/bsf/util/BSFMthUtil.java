@@ -26,11 +26,6 @@ public class BSFMthUtil {
         return x * x + y * y + z * z;
     }
 
-    //Fucking Minecraft anti-human coordinate system.
-//    public static Vec3 SphericalToCartesian(float pitch, float yaw) {
-//        return new Vec3(-Mth.cos(pitch) * Mth.sin(yaw), -Mth.sin(pitch), Mth.cos(pitch) * Mth.cos(yaw));
-//    }
-
     // These are random number helpers
     public static double randDouble(double a, double b) {
         return random.nextDouble() * (b - a) + a;

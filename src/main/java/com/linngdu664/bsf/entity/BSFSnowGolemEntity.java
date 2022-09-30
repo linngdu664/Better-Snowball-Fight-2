@@ -1,12 +1,12 @@
 package com.linngdu664.bsf.entity;
 
-import com.linngdu664.bsf.entity.goal.BSFGolemFollowOwnerGoal;
-import com.linngdu664.bsf.entity.goal.BSFGolemRandomStrollGoal;
-import com.linngdu664.bsf.entity.goal.BSFGolemRangedAttackGoal;
-import com.linngdu664.bsf.entity.goal.BSFNearestAttackableTargetGoal;
+import com.linngdu664.bsf.entity.ai.goal.BSFGolemFollowOwnerGoal;
+import com.linngdu664.bsf.entity.ai.goal.BSFGolemRandomStrollGoal;
+import com.linngdu664.bsf.entity.ai.goal.BSFGolemRangedAttackGoal;
+import com.linngdu664.bsf.entity.ai.goal.BSFNearestAttackableTargetGoal;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
-import com.linngdu664.bsf.item.tank.normal_snowball.PowderSnowballStorageTank;
+import com.linngdu664.bsf.item.tank.normal.PowderSnowballStorageTank;
 import com.linngdu664.bsf.item.tool.TargetLocatorItem;
 import com.linngdu664.bsf.item.weapon.FreezingSnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.PowerfulSnowballCannonItem;
@@ -40,7 +40,6 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -129,10 +128,10 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         return inventory;
     }
 
-    public boolean haveGun(){
+    public boolean haveGun() {
 //        printInfo();
 //        System.out.println(inventory.getItem(0).getItem()+" "+inventory.getItem(0).getItem().getDescriptionId());
-        return !inventory.getItem(0).getItem().getDescriptionId().equals("block.minecraft.air");
+        return !inventory.getItem(1).getItem().getDescriptionId().equals("block.minecraft.air");
     }
 
     @Override
@@ -148,7 +147,25 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
-        if (!level.isClientSide) {
+        if (itemStack.getItem() instanceof SnowballStorageTankItem tank && tank.getSnowball().canBeLaunchedByNormalWeapon() && !(tank instanceof PowderSnowballStorageTank) && inventory.getItem(0).isEmpty()) {
+            inventory.setItem(0, itemStack.copy());
+            if (!pPlayer.getAbilities().instabuild) {
+                itemStack.shrink(1);
+            }
+        } else if ((itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) && inventory.getItem(1).isEmpty()) {
+            inventory.setItem(1, itemStack.copy());
+            if (!pPlayer.getAbilities().instabuild) {
+                itemStack.shrink(1);
+            }
+        } else if (itemStack.isEmpty()) {
+            if (pPlayer.isShiftKeyDown()) {
+                pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(1), true);
+                inventory.removeItem(1, 1);
+            } else {
+                pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(0), true);
+                inventory.removeItem(0, 1);
+            }
+        } else if (!level.isClientSide) {
             if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get())) {
                 if (pPlayer.isShiftKeyDown()) {
                     setUseLocator(!getUseLocator());
@@ -173,41 +190,24 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                         }), Util.NIL_UUID);
                     }
                 }
-            } else if (itemStack.getItem() instanceof SnowballStorageTankItem tank && tank.getSnowball().canBeLaunchedByNormalWeapon() && !(tank instanceof PowderSnowballStorageTank) && inventory.getItem(0).isEmpty()) {
-                inventory.setItem(0, itemStack.copy());
-                if (!pPlayer.getAbilities().instabuild) {
-                    itemStack.shrink(1);
-                }
-            } else if ((itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) && inventory.getItem(1).isEmpty()) {
-                inventory.setItem(1, itemStack.copy());
-                if (!pPlayer.getAbilities().instabuild) {
-                    itemStack.shrink(1);
-                }
             } else if (itemStack.getItem() instanceof TargetLocatorItem targetLocator && getUseLocator()) {
                 LivingEntity entity = targetLocator.getLivingEntity();
                 if (entity != this) {
                     setTarget(targetLocator.getLivingEntity());
-                }
-            } else if (itemStack.isEmpty()) {
-                if (pPlayer.isShiftKeyDown()) {
-                    pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(1), true);
-                    inventory.removeItem(1, 1);
-                } else {
-                    pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(0), true);
-                    inventory.removeItem(0, 1);
                 }
             }
         }
         printInfo();
         return InteractionResult.SUCCESS;
     }
-    void printInfo(){
+
+    void printInfo() {
         System.out.println("print info:");
         System.out.println(this);
-        System.out.println("    inventory:"+inventory.getItem(0).toString()+" "+inventory.getItem(1).toString());
-        System.out.println("    target:"+getTarget());
-        System.out.println("    target mode:"+getUseLocator());
-        System.out.println("    behavior:"+getStatus());
+        System.out.println("    inventory:" + inventory.getItem(0).toString() + " " + inventory.getItem(1).toString());
+        System.out.println("    target:" + getTarget());
+        System.out.println("    target mode:" + getUseLocator());
+        System.out.println("    behavior:" + getStatus());
     }
 
     @Override
@@ -242,45 +242,46 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             }
         }
     }
-/*
-    public BSFSnowballEntity itemToEntity(ItemStack tank, LaunchFunc launchFunc) {
-        Item item = tank.getItem();
-        if (item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
-            return new CompactedSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {
-            return new StoneSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()) {
-            return new GlassSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()) {
-            return new IronSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()) {
-            return new IceSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()) {
-            return new GoldSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
-            return new ObsidianSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()) {
-            return new ExplosiveSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()) {
-            return new SpectralSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get()) {
-            return new FrozenSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-            return new LightMonsterTrackingSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-            return new HeavyMonsterTrackingSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-            return new ExplosiveMonsterTrackingSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-            return new LightPlayerTrackingSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-            return new HeavyPlayerTrackingSnowballEntity(this, level, launchFunc);
-        } else if (item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-            return new ExplosivePlayerTrackingSnowballEntity(this, level, launchFunc);
+
+    /*
+        public BSFSnowballEntity itemToEntity(ItemStack tank, LaunchFunc launchFunc) {
+            Item item = tank.getItem();
+            if (item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
+                return new CompactedSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {
+                return new StoneSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()) {
+                return new GlassSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()) {
+                return new IronSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()) {
+                return new IceSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()) {
+                return new GoldSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
+                return new ObsidianSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()) {
+                return new ExplosiveSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()) {
+                return new SpectralSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get()) {
+                return new FrozenSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+                return new LightMonsterTrackingSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+                return new HeavyMonsterTrackingSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+                return new ExplosiveMonsterTrackingSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+                return new LightPlayerTrackingSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+                return new HeavyPlayerTrackingSnowballEntity(this, level, launchFunc);
+            } else if (item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
+                return new ExplosivePlayerTrackingSnowballEntity(this, level, launchFunc);
+            }
+            return null;
         }
-        return null;
-    }
-*/
+    */
     @Override
     public void performRangedAttack(@NotNull LivingEntity pTarget, float pDistanceFactor) {
         ItemStack weapon = inventory.getItem(1);
@@ -361,6 +362,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             }
         }
     }
+
 
     @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {

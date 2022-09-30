@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.event;
 
-import com.linngdu664.bsf.item.snowball.normal_snowball.SmoothSnowballItem;
+import com.linngdu664.bsf.item.snowball.normal.SmoothSnowballItem;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;

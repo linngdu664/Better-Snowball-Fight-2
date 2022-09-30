@@ -1,9 +1,9 @@
 package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.item.snowball.normal_snowball.ExplosiveSnowballItem;
-import com.linngdu664.bsf.item.snowball.tracking_snowball.ExplosiveMonsterTrackingSnowballItem;
-import com.linngdu664.bsf.item.snowball.tracking_snowball.ExplosivePlayerTrackingSnowballItem;
+import com.linngdu664.bsf.item.snowball.normal.ExplosiveSnowballItem;
+import com.linngdu664.bsf.item.snowball.tracking.ExplosiveMonsterTrackingSnowballItem;
+import com.linngdu664.bsf.item.snowball.tracking.ExplosivePlayerTrackingSnowballItem;
 import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
