@@ -57,6 +57,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     // 4: turret
     private static final EntityDataAccessor<Byte> STATUS_FLAG = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> USE_LOCATOR = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> WEAPON_FLAG = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BOOLEAN);
     private final Container inventory = new BSFSnowGolemContainer();
 
     public BSFSnowGolemEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
@@ -76,13 +77,15 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         super.defineSynchedData();
         entityData.define(STATUS_FLAG, (byte) 0);
         entityData.define(USE_LOCATOR, false);
+        entityData.define(WEAPON_FLAG, false);
     }
 
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putByte("Status", getStatus());
-        pCompound.putBoolean("AttackMode", getUseLocator());
+        pCompound.putBoolean("UseLocator", getUseLocator());
+        pCompound.putBoolean("WeaponFlag", hasWeaponFlag());
         CompoundTag compoundTag = new CompoundTag();
         inventory.getItem(1).save(compoundTag);
         pCompound.put("Weapon", compoundTag);
@@ -97,8 +100,11 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         if (pCompound.contains("Status")) {
             setStatus(pCompound.getByte("Status"));
         }
-        if (pCompound.contains("AttackMode")) {
-            setUseLocator(pCompound.getBoolean("AttackMode"));
+        if (pCompound.contains("UseLocator")) {
+            setUseLocator(pCompound.getBoolean("UseLocator"));
+        }
+        if (pCompound.contains("WeaponFlag")) {
+            setWeaponFlag(pCompound.getBoolean("WeaponFlag"));
         }
         if (pCompound.contains("Weapon")) {
             inventory.setItem(1, ItemStack.of(pCompound.getCompound("Weapon")));
@@ -128,10 +134,12 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         return inventory;
     }
 
-    public boolean haveGun() {
-//        printInfo();
-//        System.out.println(inventory.getItem(0).getItem()+" "+inventory.getItem(0).getItem().getDescriptionId());
-        return !inventory.getItem(1).getItem().getDescriptionId().equals("block.minecraft.air");
+    public boolean hasWeaponFlag() {
+        return entityData.get(WEAPON_FLAG);
+    }
+
+    public void setWeaponFlag(boolean flag) {
+        entityData.set(WEAPON_FLAG, flag);
     }
 
     @Override
@@ -147,26 +155,28 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
-        if (itemStack.getItem() instanceof SnowballStorageTankItem tank && tank.getSnowball().canBeLaunchedByNormalWeapon() && !(tank instanceof PowderSnowballStorageTank) && inventory.getItem(0).isEmpty()) {
-            inventory.setItem(0, itemStack.copy());
-            if (!pPlayer.getAbilities().instabuild) {
-                itemStack.shrink(1);
-            }
-        } else if ((itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) && inventory.getItem(1).isEmpty()) {
-            inventory.setItem(1, itemStack.copy());
-            if (!pPlayer.getAbilities().instabuild) {
-                itemStack.shrink(1);
-            }
-        } else if (itemStack.isEmpty()) {
-            if (pPlayer.isShiftKeyDown()) {
-                pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(1), true);
-                inventory.removeItem(1, 1);
-            } else {
-                pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(0), true);
-                inventory.removeItem(0, 1);
-            }
-        } else if (!level.isClientSide) {
-            if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get())) {
+        if (!level.isClientSide) {
+            if (itemStack.getItem() instanceof SnowballStorageTankItem tank && tank.getSnowball().canBeLaunchedByNormalWeapon() && !(tank instanceof PowderSnowballStorageTank) && inventory.getItem(0).isEmpty()) {
+                inventory.setItem(0, itemStack.copy());
+                if (!pPlayer.getAbilities().instabuild) {
+                    itemStack.shrink(1);
+                }
+            } else if ((itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) && inventory.getItem(1).isEmpty()) {
+                inventory.setItem(1, itemStack.copy());
+                if (!pPlayer.getAbilities().instabuild) {
+                    itemStack.shrink(1);
+                }
+                setWeaponFlag(true);
+            } else if (itemStack.isEmpty()) {
+                if (pPlayer.isShiftKeyDown()) {
+                    pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(1), true);
+                    inventory.removeItem(1, 1);
+                    setWeaponFlag(false);
+                } else {
+                    pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(0), true);
+                    inventory.removeItem(0, 1);
+                }
+            } else if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get())) {
                 if (pPlayer.isShiftKeyDown()) {
                     setUseLocator(!getUseLocator());
                     if (getOwner() != null) {
@@ -197,19 +207,18 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 }
             }
         }
-        printInfo();
         return InteractionResult.SUCCESS;
     }
-
+/*
     void printInfo() {
         System.out.println("print info:");
         System.out.println(this);
-        System.out.println("    inventory:" + inventory.getItem(0).toString() + " " + inventory.getItem(1).toString());
+        System.out.println("    inventory:" + inventory.getItem(0) + " " + inventory.getItem(1));
         System.out.println("    target:" + getTarget());
         System.out.println("    target mode:" + getUseLocator());
         System.out.println("    behavior:" + getStatus());
     }
-
+*/
     @Override
     public boolean isSensitiveToWater() {
         return true;
