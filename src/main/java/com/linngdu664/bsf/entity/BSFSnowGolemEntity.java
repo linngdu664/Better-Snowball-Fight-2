@@ -40,6 +40,7 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -128,6 +129,12 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         return inventory;
     }
 
+    public boolean haveGun(){
+//        printInfo();
+//        System.out.println(inventory.getItem(0).getItem()+" "+inventory.getItem(0).getItem().getDescriptionId());
+        return !inventory.getItem(0).getItem().getDescriptionId().equals("block.minecraft.air");
+    }
+
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
@@ -191,7 +198,16 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 }
             }
         }
+        printInfo();
         return InteractionResult.SUCCESS;
+    }
+    void printInfo(){
+        System.out.println("print info:");
+        System.out.println(this);
+        System.out.println("    inventory:"+inventory.getItem(0).toString()+" "+inventory.getItem(1).toString());
+        System.out.println("    target:"+getTarget());
+        System.out.println("    target mode:"+getUseLocator());
+        System.out.println("    behavior:"+getStatus());
     }
 
     @Override
