@@ -54,11 +54,11 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
         this.up.xRot = headPitch * Mth.DEG_TO_RAD;
         this.middle.yRot = netHeadYaw * Mth.DEG_TO_RAD * 0.25F;
         if (entity.hasWeaponFlag()) {
-            this.left_arm_r1.xRot = Mth.DEG_TO_RAD * (-103);
-            this.left_arm_r1.yRot = Mth.DEG_TO_RAD * (-67);
+            this.left_arm_r1.xRot = Mth.DEG_TO_RAD * 103;
+            this.left_arm_r1.yRot = Mth.DEG_TO_RAD * 67;
             this.left_arm_r1.zRot = Mth.DEG_TO_RAD * 162;
-            this.right_arm_r1.xRot = Mth.DEG_TO_RAD * (-124);
-            this.right_arm_r1.yRot = Mth.DEG_TO_RAD * 81;
+            this.right_arm_r1.xRot = Mth.DEG_TO_RAD * 124;
+            this.right_arm_r1.yRot = Mth.DEG_TO_RAD * -81;
             this.right_arm_r1.zRot = Mth.DEG_TO_RAD * 176;
         } else {
             this.left_arm_r1.xRot = 0;
@@ -68,7 +68,6 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
             this.right_arm_r1.yRot = 0;
             this.right_arm_r1.zRot = Mth.DEG_TO_RAD * -60;
         }
-        //System.out.println(entity);
 
 //		System.out.println(entity.toString()+" "+limbSwing+" "+limbSwingAmount+" "+ageInTicks);
     }
