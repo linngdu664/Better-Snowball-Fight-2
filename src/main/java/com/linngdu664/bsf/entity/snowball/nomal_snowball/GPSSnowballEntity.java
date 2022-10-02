@@ -19,7 +19,7 @@ public class GPSSnowballEntity extends BSFSnowballEntity {
         super(livingEntity, level);
         this.targetLocator = targetLocator;
         this.setPunch(2.0).setLaunchFrom(LaunchFrom.HAND);
-        this.setItem(new ItemStack(ItemRegister.COMPACTED_SNOWBALL.get()));
+        this.setItem(new ItemStack(ItemRegister.GPS_SNOWBALL.get()));
     }
 
     @Override
