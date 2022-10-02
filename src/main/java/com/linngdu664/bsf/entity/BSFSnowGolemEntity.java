@@ -49,16 +49,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob {
-    // status flag:
-    // 0: standby
-    // 1: follow
-    // 2: follow & attack
-    // 3: patrol & attack
-    // 4: turret
+    /*
+     status flag:
+     0: standby
+     1: follow
+     2: follow & attack
+     3: patrol & attack
+     4: turret
+     */
     private static final EntityDataAccessor<Byte> STATUS_FLAG = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> USE_LOCATOR = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> WEAPON_FLAG = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BOOLEAN);
-    private final Container inventory = new BSFSnowGolemContainer();
+    private static final EntityDataAccessor<ItemStack> WEAPON = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<ItemStack> AMMO = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.ITEM_STACK);
+//    private final Container inventory = new BSFSnowGolemContainer();
 
     public BSFSnowGolemEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
         super(p_21803_, p_21804_);
@@ -77,7 +80,8 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         super.defineSynchedData();
         entityData.define(STATUS_FLAG, (byte) 0);
         entityData.define(USE_LOCATOR, false);
-        entityData.define(WEAPON_FLAG, false);
+        entityData.define(WEAPON, ItemStack.EMPTY);
+        entityData.define(AMMO, ItemStack.EMPTY);
     }
 
     @Override
@@ -85,12 +89,11 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         super.addAdditionalSaveData(pCompound);
         pCompound.putByte("Status", getStatus());
         pCompound.putBoolean("UseLocator", getUseLocator());
-        pCompound.putBoolean("WeaponFlag", hasWeaponFlag());
         CompoundTag compoundTag = new CompoundTag();
-        inventory.getItem(1).save(compoundTag);
+        getWeapon().save(compoundTag);
         pCompound.put("Weapon", compoundTag);
         compoundTag = new CompoundTag();
-        inventory.getItem(0).save(compoundTag);
+        getAmmo().save(compoundTag);
         pCompound.put("Ammo", compoundTag);
     }
 
@@ -103,14 +106,14 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         if (pCompound.contains("UseLocator")) {
             setUseLocator(pCompound.getBoolean("UseLocator"));
         }
-        if (pCompound.contains("WeaponFlag")) {
-            setWeaponFlag(pCompound.getBoolean("WeaponFlag"));
-        }
         if (pCompound.contains("Weapon")) {
-            inventory.setItem(1, ItemStack.of(pCompound.getCompound("Weapon")));
+            setWeapon(ItemStack.of(pCompound.getCompound("Weapon")));
         }
+//        if (pCompound.contains("Weapon")) {
+//            inventory.setItem(1, ItemStack.of(pCompound.getCompound("Weapon")));
+//        }
         if (pCompound.contains("Ammo")) {
-            inventory.setItem(0, ItemStack.of(pCompound.getCompound("Ammo")));
+            setAmmo(ItemStack.of(pCompound.getCompound("Ammo")));
         }
     }
 
@@ -130,16 +133,23 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.set(USE_LOCATOR, useLocator);
     }
 
-    public Container getInventory() {
-        return inventory;
+//    public Container getInventory() {
+//        return inventory;
+//    }
+
+    public ItemStack getWeapon() {
+        return entityData.get(WEAPON);
     }
 
-    public boolean hasWeaponFlag() {
-        return entityData.get(WEAPON_FLAG);
+    public void setWeapon(ItemStack itemStack) {
+        entityData.set(WEAPON, itemStack);
+    }
+    public ItemStack getAmmo() {
+        return entityData.get(AMMO);
     }
 
-    public void setWeaponFlag(boolean flag) {
-        entityData.set(WEAPON_FLAG, flag);
+    public void setAmmo(ItemStack itemStack) {
+        entityData.set(AMMO, itemStack);
     }
 
     @Override
@@ -156,25 +166,29 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
         if (!level.isClientSide) {
-            if (itemStack.getItem() instanceof SnowballStorageTankItem tank && tank.getSnowball().canBeLaunchedByNormalWeapon() && !(tank instanceof PowderSnowballStorageTank) && inventory.getItem(0).isEmpty()) {
-                inventory.setItem(0, itemStack.copy());
+            if (itemStack.getItem() instanceof SnowballStorageTankItem tank && tank.getSnowball().canBeLaunchedByNormalWeapon() && !(tank instanceof PowderSnowballStorageTank) && getAmmo().isEmpty()) {
+//                inventory.setItem(0, itemStack.copy());
+                setAmmo(itemStack.copy());
                 if (!pPlayer.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
-            } else if ((itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) && inventory.getItem(1).isEmpty()) {
-                inventory.setItem(1, itemStack.copy());
+
+            } else if ((itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) && getWeapon().isEmpty()) {
+//                inventory.setItem(1, itemStack.copy());
+                setWeapon(itemStack.copy());
                 if (!pPlayer.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
-                setWeaponFlag(true);
+
             } else if (itemStack.isEmpty()) {
                 if (pPlayer.isShiftKeyDown()) {
-                    pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(1), true);
-                    inventory.removeItem(1, 1);
-                    setWeaponFlag(false);
+                    pPlayer.getInventory().placeItemBackInInventory(getWeapon(), true);
+//                    inventory.removeItem(1, 1);
+                    setWeapon(ItemStack.EMPTY);
                 } else {
-                    pPlayer.getInventory().placeItemBackInInventory(inventory.getItem(0), true);
-                    inventory.removeItem(0, 1);
+                    pPlayer.getInventory().placeItemBackInInventory(getAmmo(), true);
+//                    inventory.removeItem(0, 1);
+                    setAmmo(ItemStack.EMPTY);
                 }
             } else if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get())) {
                 if (pPlayer.isShiftKeyDown()) {
@@ -294,8 +308,8 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     */
     @Override
     public void performRangedAttack(@NotNull LivingEntity pTarget, float pDistanceFactor) {
-        ItemStack weapon = inventory.getItem(1);
-        ItemStack ammo = inventory.getItem(0);
+        ItemStack weapon = getWeapon();
+        ItemStack ammo = getAmmo();
         float damageChance = 1.0F / (1.0F + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, weapon));
         float v = 3.0F;
         float accuracy = 1.0F;
@@ -343,14 +357,16 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     level.addFreshEntity(snowball);
                     ammo.setDamageValue(ammo.getDamageValue() + 1);
                     if (ammo.getDamageValue() == 96) {
-                        inventory.setItem(0, new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));
+//                        inventory.setItem(0, );
+                        setAmmo(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));
                     }
                     if (i == 0) {
                         playSound(weapon.getItem() instanceof SnowballShotgunItem ? SoundRegister.SHOTGUN_FIRE_2.get() : SoundRegister.SNOWBALL_CANNON_SHOOT.get(), 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                         if (getRandom().nextFloat() <= damageChance) {
                             weapon.setDamageValue(weapon.getDamageValue() + 1);
                             if (weapon.getDamageValue() == 256) {
-                                inventory.removeItem(1, 1);
+//                                inventory.removeItem(1, 1);
+                                setWeapon(ItemStack.EMPTY);
                                 playSound(SoundEvents.ITEM_BREAK, 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
                             }
                         }
@@ -365,12 +381,15 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     @Override
     public void die(@NotNull DamageSource pCause) {
         super.die(pCause);
-        for (int i = 0; i <= 1; i++) {
-            ItemStack itemstack = inventory.getItem(i);
-            if (!itemstack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemstack)) {
-                spawnAtLocation(itemstack);
-            }
+        ItemStack itemstack = getWeapon();
+        if (!itemstack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemstack)) {
+            spawnAtLocation(itemstack);
         }
+        itemstack = getAmmo();
+        if (!itemstack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemstack)) {
+            spawnAtLocation(itemstack);
+        }
+
     }
 
 

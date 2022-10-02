@@ -65,7 +65,7 @@ public class BSFGolemRangedAttackGoal extends Goal {
     public void tick() {
         float attackRadiusSqr = this.attackRadiusSqr;
         float attackRadius = this.attackRadius;
-        if (golem.getInventory().getItem(1).getItem() instanceof SnowballShotgunItem) {
+        if (golem.getWeapon().getItem() instanceof SnowballShotgunItem) {
             attackRadius *= 0.2;
             attackRadiusSqr *= 0.04;
         }

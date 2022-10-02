@@ -12,11 +12,9 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-@OnlyIn(Dist.CLIENT)
 public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("bsf", "bsf_snow_golem"), "main");
@@ -34,14 +32,13 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
         this.bb_main = root.getChild("bb_main");
     }
 
-    @SuppressWarnings("unused")
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition middle = partdefinition.addOrReplaceChild("middle", CubeListBuilder.create().texOffs(0, 16).addBox(-5.0F, -22.0F, -5.0F, 10.0F, 10.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition left_arm_r1 = middle.addOrReplaceChild("left_arm_r1", CubeListBuilder.create().texOffs(32, 0).addBox(1.0F, 0.0F, 0.0F, 12.0F, 2.0F, 2.0F, new CubeDeformation(-0.5F)), PartPose.offsetAndRotation(4.0F, -21.0F, -1.0F, 0.0F, 0.0F, 1.0472F));
+        PartDefinition left_arm_r1 = middle.addOrReplaceChild("left_arm_r1", CubeListBuilder.create().texOffs(32, 0).addBox(-2.0F, 0.0F, 0.0F, 12.0F, 2.0F, 2.0F, new CubeDeformation(-0.5F)), PartPose.offsetAndRotation(4.0F, -21.0F, -1.0F, 0.0F, 0.0F, 1.0472F));
 
         PartDefinition right_arm_r1 = middle.addOrReplaceChild("right_arm_r1", CubeListBuilder.create().texOffs(32, 0).addBox(-13.0F, 0.0F, 0.0F, 12.0F, 2.0F, 2.0F, new CubeDeformation(-0.5F)), PartPose.offsetAndRotation(-4.0F, -21.0F, -1.0F, 0.0F, 0.0F, -1.0472F));
 
@@ -57,7 +54,7 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
         this.up.yRot = netHeadYaw * Mth.DEG_TO_RAD;
         this.up.xRot = headPitch * Mth.DEG_TO_RAD;
         this.middle.yRot = netHeadYaw * Mth.DEG_TO_RAD * 0.25F;
-        if (entity.hasWeaponFlag()) {
+        if (entity.getWeapon()!= ItemStack.EMPTY) {
             this.left_arm_r1.xRot = Mth.DEG_TO_RAD * 103;
             this.left_arm_r1.yRot = Mth.DEG_TO_RAD * 67;
             this.left_arm_r1.zRot = Mth.DEG_TO_RAD * 162;
@@ -72,7 +69,6 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
             this.right_arm_r1.yRot = 0;
             this.right_arm_r1.zRot = Mth.DEG_TO_RAD * -60;
         }
-        //System.out.println(entity);
 
 //		System.out.println(entity.toString()+" "+limbSwing+" "+limbSwingAmount+" "+ageInTicks);
     }
