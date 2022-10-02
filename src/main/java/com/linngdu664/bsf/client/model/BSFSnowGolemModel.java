@@ -54,7 +54,7 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
         this.up.yRot = netHeadYaw * Mth.DEG_TO_RAD;
         this.up.xRot = headPitch * Mth.DEG_TO_RAD;
         this.middle.yRot = netHeadYaw * Mth.DEG_TO_RAD * 0.25F;
-        if (entity.getWeapon()!= ItemStack.EMPTY) {
+        if (entity.getWeapon() != ItemStack.EMPTY) {
             this.left_arm_r1.xRot = Mth.DEG_TO_RAD * 103;
             this.left_arm_r1.yRot = Mth.DEG_TO_RAD * 67;
             this.left_arm_r1.zRot = Mth.DEG_TO_RAD * 162;
