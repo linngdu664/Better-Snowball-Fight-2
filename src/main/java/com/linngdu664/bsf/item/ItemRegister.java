@@ -11,6 +11,7 @@ import com.linngdu664.bsf.item.tank.normal.*;
 import com.linngdu664.bsf.item.tank.tracking.*;
 import com.linngdu664.bsf.item.tool.*;
 import com.linngdu664.bsf.item.weapon.*;
+import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.registries.DeferredRegister;
@@ -99,4 +100,6 @@ public class ItemRegister {
     public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_storage_tank", EmptySnowballStorageTankItem::new);
 
     public static final RegistryObject<Item> TEST_BLOCK = ITEMS.register("smart_snow_block", () -> new SmartSnowBlockItem(BlockRegister.SMART_SNOW_BLOCK.get()));
+
+    public static final RegistryObject<Item> GPS_SNOWBALL = ITEMS.register("gps_snowball", ()->new Item(new Item.Properties()));//This item does not need to be added to the group
 }
