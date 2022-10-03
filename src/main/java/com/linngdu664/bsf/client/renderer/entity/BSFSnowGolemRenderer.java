@@ -11,8 +11,7 @@ import org.jetbrains.annotations.NotNull;
 //@OnlyIn(Dist.CLIENT)
 public class BSFSnowGolemRenderer extends MobRenderer<BSFSnowGolemEntity, BSFSnowGolemModel<BSFSnowGolemEntity>> {
     public BSFSnowGolemRenderer(EntityRendererProvider.Context context) {
-        // TODO: create model and texture for snow golem
-        super(context, new BSFSnowGolemModel(context.bakeLayer(BSFSnowGolemModel.LAYER_LOCATION)), 0.7f);
+        super(context, new BSFSnowGolemModel<>(context.bakeLayer(BSFSnowGolemModel.LAYER_LOCATION)), 0.7f);
         this.addLayer(new BSFSnowGolemHoldItemLayer(this));
     }
 
