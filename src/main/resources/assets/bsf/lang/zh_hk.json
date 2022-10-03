@@ -133,7 +133,6 @@
   "snow_block_blender.tooltip": "不是用來攪雞蛋的",
   "snow_block_blender1.tooltip": "把雪塊變成細雪",
 
-
   "lunch_yes_hand.tooltip": "用手扔：可以",
   "lunch_yes_cannon.tooltip": "雪球炮：可以",
   "lunch_yes_machine_gun.tooltip": "雪球機槍：可以",
@@ -169,5 +168,8 @@
   "snow_golem_follow.tip": "模式：跟隨",
   "snow_golem_follow_and_attack.tip": "模式：跟隨並攻擊",
   "snow_golem_attack.tip": "模式：巡邏並攻擊",
-  "snow_golem_turret.tip": "模式：炮塔"
+  "snow_golem_turret.tip": "模式：炮塔",
+  "snow_golem_locator_tip": "目標已鎖定",
+
+  "block.bsf.smart_snow_block": "智慧雪塊"
 }
