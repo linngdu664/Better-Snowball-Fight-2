@@ -61,7 +61,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     private static final EntityDataAccessor<Boolean> USE_LOCATOR = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<ItemStack> WEAPON = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<ItemStack> AMMO = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.ITEM_STACK);
-//    private final Container inventory = new BSFSnowGolemContainer();
 
     public BSFSnowGolemEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
         super(p_21803_, p_21804_);
@@ -109,9 +108,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         if (pCompound.contains("Weapon")) {
             setWeapon(ItemStack.of(pCompound.getCompound("Weapon")));
         }
-//        if (pCompound.contains("Weapon")) {
-//            inventory.setItem(1, ItemStack.of(pCompound.getCompound("Weapon")));
-//        }
         if (pCompound.contains("Ammo")) {
             setAmmo(ItemStack.of(pCompound.getCompound("Ammo")));
         }
@@ -167,14 +163,12 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
         if (!level.isClientSide) {
             if (itemStack.getItem() instanceof SnowballStorageTankItem tank && tank.getSnowball().canBeLaunchedByNormalWeapon() && !(tank instanceof PowderSnowballStorageTank) && getAmmo().isEmpty()) {
-//                inventory.setItem(0, itemStack.copy());
                 setAmmo(itemStack.copy());
                 if (!pPlayer.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
 
             } else if ((itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) && getWeapon().isEmpty()) {
-//                inventory.setItem(1, itemStack.copy());
                 setWeapon(itemStack.copy());
                 if (!pPlayer.getAbilities().instabuild) {
                     itemStack.shrink(1);
@@ -183,11 +177,9 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             } else if (itemStack.isEmpty()) {
                 if (pPlayer.isShiftKeyDown()) {
                     pPlayer.getInventory().placeItemBackInInventory(getWeapon(), true);
-//                    inventory.removeItem(1, 1);
                     setWeapon(ItemStack.EMPTY);
                 } else {
                     pPlayer.getInventory().placeItemBackInInventory(getAmmo(), true);
-//                    inventory.removeItem(0, 1);
                     setAmmo(ItemStack.EMPTY);
                 }
             } else if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get())) {
@@ -357,7 +349,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     level.addFreshEntity(snowball);
                     ammo.setDamageValue(ammo.getDamageValue() + 1);
                     if (ammo.getDamageValue() == 96) {
-//                        inventory.setItem(0, );
                         setAmmo(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));
                     }
                     if (i == 0) {
@@ -365,7 +356,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                         if (getRandom().nextFloat() <= damageChance) {
                             weapon.setDamageValue(weapon.getDamageValue() + 1);
                             if (weapon.getDamageValue() == 256) {
-//                                inventory.removeItem(1, 1);
                                 setWeapon(ItemStack.EMPTY);
                                 playSound(SoundEvents.ITEM_BREAK, 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 0.8F));
                             }

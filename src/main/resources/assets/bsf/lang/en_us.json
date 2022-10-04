@@ -76,6 +76,7 @@
   "item.bsf.repulsive_field_generator": "Repulsive Field Generator",
   "item.bsf.target_locator": "Target Locator",
   "item.bsf.snow_golem_mode_tweaker": "Snow Golem Mode Tweaker",
+  "block.bsf.smart_snow_block": "Smart Snow Block",
 
   "stone_snowball.tooltip": "This is outrageous!",
   "snowball_clamp.tooltip": "Highly efficient snowballing tool",
