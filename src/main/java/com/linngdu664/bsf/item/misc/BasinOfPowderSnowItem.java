@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BasinOfPowderSnow extends BasinOfSnow {
+public class BasinOfPowderSnowItem extends BasinOfSnowItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);

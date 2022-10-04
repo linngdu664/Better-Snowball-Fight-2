@@ -20,8 +20,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class EmptyBasin extends Item {
-    public EmptyBasin() {
+public class EmptyBasinItem extends Item {
+    public EmptyBasinItem() {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
     }
 

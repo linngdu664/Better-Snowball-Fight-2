@@ -1,10 +1,10 @@
 package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.item.snowball.normal.ExplosiveSnowballItem;
-import com.linngdu664.bsf.item.snowball.tracking.ExplosiveMonsterTrackingSnowballItem;
-import com.linngdu664.bsf.item.snowball.tracking.ExplosivePlayerTrackingSnowballItem;
 import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
+import com.linngdu664.bsf.item.tank.normal.ExplosiveSnowballStorageTank;
+import com.linngdu664.bsf.item.tank.tracking.ExplosiveMonsterTrackingSnowballStorageTank;
+import com.linngdu664.bsf.item.tank.tracking.ExplosivePlayerTrackingSnowballStorageTank;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.SoundRegister;
@@ -77,7 +77,7 @@ public class SnowballMachineGunItem extends BSFWeaponItem {
         if (!isOnCoolDown) {
             ItemStack itemStack = findAmmo(player, true, false);
             if (itemStack != null) {
-                if (itemStack.getItem() instanceof ExplosiveSnowballItem || itemStack.getItem() instanceof ExplosivePlayerTrackingSnowballItem || itemStack.getItem() instanceof ExplosiveMonsterTrackingSnowballItem) {
+                if (itemStack.getItem() instanceof ExplosiveSnowballStorageTank || itemStack.getItem() instanceof ExplosivePlayerTrackingSnowballStorageTank || itemStack.getItem() instanceof ExplosiveMonsterTrackingSnowballStorageTank) {
                     flag = true;
                 }
                 if (timer % 3 == 0 && (!flag || timer % 6 == 0)) {

@@ -26,10 +26,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -67,11 +65,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     }
 
     public static AttributeSupplier setAttributes() {
-        return TamableAnimal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 10.0)
-                .add(Attributes.FOLLOW_RANGE, 50.0)
-                .add(Attributes.MOVEMENT_SPEED, 0.3)
-                .build();
+        return TamableAnimal.createLivingAttributes().add(Attributes.MAX_HEALTH, 10.0).add(Attributes.FOLLOW_RANGE, 50.0).add(Attributes.MOVEMENT_SPEED, 0.3).build();
     }
 
     @Override
@@ -99,18 +93,10 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        if (pCompound.contains("Status")) {
-            setStatus(pCompound.getByte("Status"));
-        }
-        if (pCompound.contains("UseLocator")) {
-            setUseLocator(pCompound.getBoolean("UseLocator"));
-        }
-        if (pCompound.contains("Weapon")) {
-            setWeapon(ItemStack.of(pCompound.getCompound("Weapon")));
-        }
-        if (pCompound.contains("Ammo")) {
-            setAmmo(ItemStack.of(pCompound.getCompound("Ammo")));
-        }
+        setStatus(pCompound.getByte("Status"));
+        setUseLocator(pCompound.getBoolean("UseLocator"));
+        setWeapon(ItemStack.of(pCompound.getCompound("Weapon")));
+        setAmmo(ItemStack.of(pCompound.getCompound("Ammo")));
     }
 
     public byte getStatus() {
@@ -129,10 +115,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.set(USE_LOCATOR, useLocator);
     }
 
-//    public Container getInventory() {
-//        return inventory;
-//    }
-
     public ItemStack getWeapon() {
         return entityData.get(WEAPON);
     }
@@ -140,6 +122,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     public void setWeapon(ItemStack itemStack) {
         entityData.set(WEAPON, itemStack);
     }
+
     public ItemStack getAmmo() {
         return entityData.get(AMMO);
     }
@@ -151,9 +134,9 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
-        goalSelector.addGoal(2, new BSFGolemFollowOwnerGoal(this, 1.0D, 5.0F, 3.0F));
-        goalSelector.addGoal(3, new BSFGolemRangedAttackGoal(this, 1.25D, 30, 50.0F));
-        goalSelector.addGoal(4, new BSFGolemRandomStrollGoal(this, 1.0D, 1.0000001E-5F));
+        goalSelector.addGoal(2, new BSFGolemFollowOwnerGoal(this, 1.0, 5.0F, 3.0F));
+        goalSelector.addGoal(3, new BSFGolemRangedAttackGoal(this, 1.25, 30, 50.0F));
+        goalSelector.addGoal(4, new BSFGolemRandomStrollGoal(this, 1.0, 1.0000001E-5F));
         goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new BSFNearestAttackableTargetGoal(this, Mob.class, 20, true, false, (p_29932_) -> p_29932_ instanceof Enemy));
     }
@@ -208,7 +191,8 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 }
             } else if (itemStack.getItem() instanceof TargetLocatorItem targetLocator && getUseLocator()) {
                 LivingEntity entity = targetLocator.getLivingEntity();
-                if (entity != this) {
+                if (entity != this && getOwner() != null) {
+                    getOwner().sendMessage(new TranslatableComponent("snow_golem_locator_tip"), Util.NIL_UUID);
                     setTarget(targetLocator.getLivingEntity());
                 }
             }
@@ -379,9 +363,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         if (!itemstack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemstack)) {
             spawnAtLocation(itemstack);
         }
-
     }
-
 
     @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
@@ -396,11 +378,5 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     @Override
     public AgeableMob getBreedOffspring(@NotNull ServerLevel p_146743_, @NotNull AgeableMob p_146744_) {
         return null;
-    }
-
-    static class BSFSnowGolemContainer extends SimpleContainer {
-        private BSFSnowGolemContainer() {
-            super(2);
-        }
     }
 }

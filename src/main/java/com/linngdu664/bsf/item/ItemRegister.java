@@ -1,11 +1,11 @@
 package com.linngdu664.bsf.item;
 
-import com.linngdu664.bsf.block.BlockRegister;
 import com.linngdu664.bsf.item.block.SmartSnowBlockItem;
 import com.linngdu664.bsf.item.misc.*;
 import com.linngdu664.bsf.item.snowball.force.*;
 import com.linngdu664.bsf.item.snowball.normal.*;
 import com.linngdu664.bsf.item.snowball.tracking.*;
+import com.linngdu664.bsf.item.tank.EmptySnowballStorageTankItem;
 import com.linngdu664.bsf.item.tank.force.*;
 import com.linngdu664.bsf.item.tank.normal.*;
 import com.linngdu664.bsf.item.tank.tracking.*;
@@ -13,6 +13,7 @@ import com.linngdu664.bsf.item.tool.*;
 import com.linngdu664.bsf.item.weapon.*;
 import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -78,20 +79,21 @@ public class ItemRegister {
     public static final RegistryObject<Item> REPULSIVE_FIELD_GENERATOR = ITEMS.register("repulsive_field_generator", RepulsiveFieldGeneratorItem::new);
     public static final RegistryObject<Item> ICE_SKATES_ITEM = ITEMS.register("ice_skates", IceSkatesItem::new);
     public static final RegistryObject<Item> SNOW_BLOCK_BLENDER = ITEMS.register("snow_block_blender", SnowBlockBlenderItem::new);
-    public static final RegistryObject<Item> EMPTY_BASIN = ITEMS.register("empty_basin", EmptyBasin::new);
-    public static final RegistryObject<Item> BASIN_OF_SNOW = ITEMS.register("basin_of_snow", BasinOfSnow::new);
-    public static final RegistryObject<Item> BASIN_OF_POWDER_SNOW = ITEMS.register("basin_of_powder_snow", BasinOfPowderSnow::new);
+    public static final RegistryObject<Item> EMPTY_BASIN = ITEMS.register("empty_basin", EmptyBasinItem::new);
+    public static final RegistryObject<Item> BASIN_OF_SNOW = ITEMS.register("basin_of_snow", BasinOfSnowItem::new);
+    public static final RegistryObject<Item> BASIN_OF_POWDER_SNOW = ITEMS.register("basin_of_powder_snow", BasinOfPowderSnowItem::new);
     public static final RegistryObject<Item> POPSICLE = ITEMS.register("popsicle", PopsicleItem::new);
     public static final RegistryObject<Item> MILK_POPSICLE = ITEMS.register("milk_popsicle", MilkPopsicleItem::new);
     public static final RegistryObject<Item> VODKA = ITEMS.register("vodka", VodkaItem::new);
     public static final RegistryObject<Item> SNOW_GOLEM_MODE_TWEAKER = ITEMS.register("snow_golem_mode_tweaker", SnowGolemModeTweakerItem::new);
+
     public static final RegistryObject<Item> TARGET_LOCATOR = ITEMS.register("target_locator", TargetLocatorItem::new);
-    public static final RegistryObject<Item> SUPER_POWER_CORE = ITEMS.register("super_power_core", SuperFrozenCoreItem::new);
-    public static final RegistryObject<Item> SUPER_FROZEN_CORE = ITEMS.register("super_frozen_core", SuperPowerCoreItem::new);
-    public static final RegistryObject<Item> TRACKING_CORE = ITEMS.register("tracking_core", TrackingCoreItem::new);
+    public static final RegistryObject<Item> SUPER_POWER_CORE = ITEMS.register("super_power_core", () -> new Item(new Item.Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> SUPER_FROZEN_CORE = ITEMS.register("super_frozen_core", () -> new Item(new Item.Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> TRACKING_CORE = ITEMS.register("tracking_core", () -> new Item(new Item.Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> UNSTABLE_CORE = ITEMS.register("unstable_core", UnstableCoreItem::new);
-    public static final RegistryObject<Item> REPULSION_CORE = ITEMS.register("repulsion_core", RepulsionCoreItem::new);
-    public static final RegistryObject<Item> GRAVITY_CORE = ITEMS.register("gravity_core", GravityCoreItem::new);
+    public static final RegistryObject<Item> REPULSION_CORE = ITEMS.register("repulsion_core", () -> new Item(new Item.Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> GRAVITY_CORE = ITEMS.register("gravity_core", () -> new Item(new Item.Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> SNOWBALL_CANNON = ITEMS.register("snowball_cannon", SnowballCannonItem::new);
     public static final RegistryObject<Item> POWERFUL_SNOWBALL_CANNON = ITEMS.register("powerful_snowball_cannon", PowerfulSnowballCannonItem::new);
     public static final RegistryObject<Item> FREEZING_SNOWBALL_CANNON = ITEMS.register("freezing_snowball_cannon", FreezingSnowballCannonItem::new);
@@ -99,7 +101,7 @@ public class ItemRegister {
     public static final RegistryObject<Item> SNOWBALL_SHOTGUN = ITEMS.register("snowball_shotgun", SnowballShotgunItem::new);
     public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_storage_tank", EmptySnowballStorageTankItem::new);
 
-    public static final RegistryObject<Item> TEST_BLOCK = ITEMS.register("smart_snow_block", () -> new SmartSnowBlockItem(BlockRegister.SMART_SNOW_BLOCK.get()));
+    public static final RegistryObject<Item> SMART_SNOW_BLOCK = ITEMS.register("smart_snow_block", SmartSnowBlockItem::new);
 
-    public static final RegistryObject<Item> GPS_SNOWBALL = ITEMS.register("gps_snowball", ()->new Item(new Item.Properties()));//This item does not need to be added to the group
+    public static final RegistryObject<Item> GPS_SNOWBALL = ITEMS.register("gps_snowball", () -> new Item(new Item.Properties()));    //This item does not need to be added to the group
 }

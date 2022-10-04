@@ -30,8 +30,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BasinOfSnow extends Item {
-    public BasinOfSnow() {
+public class BasinOfSnowItem extends Item {
+    public BasinOfSnowItem() {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(1));
     }
 

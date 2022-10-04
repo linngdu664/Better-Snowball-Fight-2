@@ -134,7 +134,6 @@
   "snow_block_blender.tooltip": "Not for stirring eggs",
   "snow_block_blender1.tooltip": "Turning snow block into powder snow",
 
-
   "lunch_yes_hand.tooltip": "thrown by hand: yes",
   "lunch_yes_cannon.tooltip": "shot by cannon: yes",
   "lunch_yes_machine_gun.tooltip": "shot by machine gun: yes",
@@ -143,7 +142,6 @@
   "lunch_no_cannon.tooltip": "shot by cannon: no",
   "lunch_no_machine_gun.tooltip": "shot by machine gun: no",
   "lunch_no_shotgun.tooltip": "shot by shotgun: no",
-
 
   "advancements.bsf.root.title": "Better Snowball Fight",
   "advancements.bsf.root.description": "Enjoy and have fun",
@@ -171,5 +169,8 @@
   "snow_golem_follow.tip": "Mode: follow",
   "snow_golem_follow_and_attack.tip": "Mode: follow and attack",
   "snow_golem_attack.tip": "Mode: patrol and attack",
-  "snow_golem_turret.tip": "Mode: turret"
+  "snow_golem_turret.tip": "Mode: turret",
+  "snow_golem_locator_tip": "The target has been locked",
+
+  "block.bsf.smart_snow_block": "Smart Snow Block"
 }
