@@ -27,7 +27,7 @@ import java.util.List;
 
 public class SnowBlockBlenderItem extends BSFEnhanceableToolItem {
     public SnowBlockBlenderItem() {
-        super(Rarity.COMMON, 128);
+        super(Rarity.COMMON, 256);
     }
 
     @Override

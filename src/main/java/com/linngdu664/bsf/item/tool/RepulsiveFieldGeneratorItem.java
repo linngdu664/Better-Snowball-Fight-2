@@ -26,7 +26,7 @@ import java.util.List;
 
 public class RepulsiveFieldGeneratorItem extends BSFEnhanceableToolItem {
     public RepulsiveFieldGeneratorItem() {
-        super(Rarity.RARE, 256);
+        super(Rarity.RARE, 512);
     }
 
     @Override
