@@ -7,6 +7,8 @@ import com.linngdu664.bsf.item.snowball.normal.CompactedSnowballItem;
 import com.linngdu664.bsf.item.snowball.normal.IronSnowballItem;
 import com.linngdu664.bsf.item.tank.normal.CompactedSnowballStorageTank;
 import com.linngdu664.bsf.item.tank.normal.IronSnowballStorageTank;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -39,7 +41,7 @@ public class TargetLocatorItem extends BSFEnhanceableToolItem {
         if (i != pPlayer.getInventory().getContainerSize()) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
-                BSFSnowballEntity snowballEntity = new GPSSnowballEntity(pPlayer, pLevel, this);
+                BSFSnowballEntity snowballEntity = new GPSSnowballEntity(pPlayer, pLevel, itemStack);
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 2.0F, 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }

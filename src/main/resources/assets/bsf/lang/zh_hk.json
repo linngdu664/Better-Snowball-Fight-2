@@ -169,7 +169,9 @@
   "snow_golem_follow_and_attack.tip": "模式：跟隨並攻擊",
   "snow_golem_attack.tip": "模式：巡邏並攻擊",
   "snow_golem_turret.tip": "模式：炮塔",
-  "snow_golem_locator_tip": "目標已鎖定",
+  "snow_golem_locator_tip": "目標信息導入成功",
+  "target.tip": "鎖定目標：",
+  "targeted.tip": "你已被鎖定",
 
   "block.bsf.smart_snow_block": "智慧雪塊"
 }

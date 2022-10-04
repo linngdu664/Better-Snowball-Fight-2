@@ -17,12 +17,12 @@ import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class GPSSnowballEntity extends BSFSnowballEntity {
-    private final TargetLocatorItem targetLocator;
+    private final ItemStack targetLocator;
 
-    public GPSSnowballEntity(LivingEntity livingEntity, Level level, TargetLocatorItem targetLocator) {
+    public GPSSnowballEntity(LivingEntity livingEntity, Level level, ItemStack targetLocator) {
         super(livingEntity, level);
         this.targetLocator = targetLocator;
-        this.setPunch(2.0).setDamage(2).setLaunchFrom(LaunchFrom.HAND);
+        this.setPunch(2.0).setLaunchFrom(LaunchFrom.HAND);
         this.setItem(new ItemStack(ItemRegister.GPS_SNOWBALL.get()));
     }
 
@@ -43,10 +43,12 @@ public class GPSSnowballEntity extends BSFSnowballEntity {
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
         if (!isCaught && pResult.getEntity() instanceof LivingEntity livingEntity) {
-            targetLocator.setLivingEntity(livingEntity);
+            ((TargetLocatorItem)targetLocator.getItem()).setLivingEntity(livingEntity);
             if (getOwner() instanceof Player) {
-                getOwner().sendMessage(new TextComponent(livingEntity.toString()), Util.NIL_UUID);
+                getOwner().sendMessage(new TranslatableComponent("target.tip").append(livingEntity.getName().getString()+" ID:"+livingEntity.getId()), Util.NIL_UUID);
+                pResult.getEntity().sendMessage(new TranslatableComponent("targeted.tip"), Util.NIL_UUID);
             }
+            targetLocator.setHoverName(new TranslatableComponent("item.bsf.target_locator").append(":").append(new TranslatableComponent("target.tip")).append(livingEntity.getName().getString()+" ID:"+livingEntity.getId()));
         }
     }
 }

@@ -169,7 +169,9 @@
   "snow_golem_follow_and_attack.tip": "Mode: follow and attack",
   "snow_golem_attack.tip": "Mode: patrol and attack",
   "snow_golem_turret.tip": "Mode: turret",
-  "snow_golem_locator_tip": "The target has been locked",
+  "snow_golem_locator_tip": "Target information imported successfully",
+  "target.tip": "Target:",
+  "targeted.tip": "You have been targeted",
 
   "block.bsf.smart_snow_block": "Smart Snow Block"
 }
