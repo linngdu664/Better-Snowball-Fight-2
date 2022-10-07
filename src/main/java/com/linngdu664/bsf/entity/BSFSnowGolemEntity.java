@@ -14,9 +14,11 @@ import com.linngdu664.bsf.item.weapon.SnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.ParticleUtil;
 import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -200,16 +202,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         return InteractionResult.SUCCESS;
     }
 
-    /*
-        void printInfo() {
-            System.out.println("print info:");
-            System.out.println(this);
-            System.out.println("    inventory:" + inventory.getItem(0) + " " + inventory.getItem(1));
-            System.out.println("    target:" + getTarget());
-            System.out.println("    target mode:" + getUseLocator());
-            System.out.println("    behavior:" + getStatus());
-        }
-    */
     @Override
     public boolean isSensitiveToWater() {
         return true;
@@ -243,45 +235,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         }
     }
 
-    /*
-        public BSFSnowballEntity itemToEntity(ItemStack tank, LaunchFunc launchFunc) {
-            Item item = tank.getItem();
-            if (item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
-                return new CompactedSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get()) {
-                return new StoneSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get()) {
-                return new GlassSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get()) {
-                return new IronSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get()) {
-                return new IceSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get()) {
-                return new GoldSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get()) {
-                return new ObsidianSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get()) {
-                return new ExplosiveSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get()) {
-                return new SpectralSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get()) {
-                return new FrozenSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-                return new LightMonsterTrackingSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-                return new HeavyMonsterTrackingSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-                return new ExplosiveMonsterTrackingSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-                return new LightPlayerTrackingSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-                return new HeavyPlayerTrackingSnowballEntity(this, level, launchFunc);
-            } else if (item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get()) {
-                return new ExplosivePlayerTrackingSnowballEntity(this, level, launchFunc);
-            }
-            return null;
-        }
-    */
+
     @Override
     public void performRangedAttack(@NotNull LivingEntity pTarget, float pDistanceFactor) {
         ItemStack weapon = getWeapon();
@@ -330,7 +284,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 if (ammo.getItem() instanceof SnowballStorageTankItem tank) {
                     BSFSnowballEntity snowball = tank.getSnowball().getCorrespondingEntity(level, this, launchFunc);
                     snowball.shoot(dx, sinTheta, dz, v, accuracy);
-                    level.addFreshEntity(snowball);
+                    level.addFreshEntity(snowball);//todo add particles
                     ammo.setDamageValue(ammo.getDamageValue() + 1);
                     if (ammo.getDamageValue() == 96) {
                         setAmmo(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));

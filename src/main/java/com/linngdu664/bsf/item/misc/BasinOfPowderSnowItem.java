@@ -3,8 +3,10 @@ package com.linngdu664.bsf.item.misc;
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.BSFMthUtil;
+import com.linngdu664.bsf.util.ParticleUtil;
 import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
@@ -30,7 +32,7 @@ public class BasinOfPowderSnowItem extends BasinOfSnowItem {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         List<LivingEntity> list = TargetGetter.getTargetList(pPlayer, LivingEntity.class, 8);
         Vec3 cameraVec = Vec3.directionFromRotation(pPlayer.getXRot(), pPlayer.getYRot());
-        spawnParticles(pLevel, pPlayer, cameraVec);
+        ParticleUtil.spawnForwardParticles(pLevel, pPlayer, cameraVec, ParticleTypes.SNOWFLAKE,4.5F,30,0.5f,0.2f);
         if (!pLevel.isClientSide) {
             for (LivingEntity livingEntity : list) {
                 if (!(livingEntity instanceof BSFSnowGolemEntity) && !(livingEntity instanceof SnowGolem)) {

@@ -3,6 +3,7 @@ package com.linngdu664.bsf.item.weapon;
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.ParticleUtil;
 import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
@@ -70,10 +71,8 @@ public class SnowballCannonItem extends BSFWeaponItem {
                     //add push
                     if (pLevel.isClientSide()) {
                         player.push(-0.2 * cameraVec.x * f, -0.2 * cameraVec.y * f, -0.2 * cameraVec.z * f);
-                    } else {
                         //add particles
-                        ServerLevel serverLevel = (ServerLevel) pLevel;
-                        serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 16, 0, 0, 0, 0.32);
+                        ParticleUtil.spawnForwardParticles(pLevel, player, cameraVec, ParticleTypes.SNOWFLAKE,4.5F,90,1.5f,0);
                     }
                     pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                     consumeAmmo(itemStack, player);
@@ -83,57 +82,6 @@ public class SnowballCannonItem extends BSFWeaponItem {
         }
     }
 
-    /*
-     * This horrible method is used to return the specific snowball entity according to the item.
-     *
-     * @param itemStack      The selected itemstack.
-     * @param level          Player's level
-     * @param player         Just player
-     * @param damageDropRate This param(0~1) is associate with the charge time of the snowball cannon. The damage value will multiply this param.
-     * @return The specific snowball entity with proper characters.
-     */
-    /*public BSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player, double damageDropRate) {
-        Item item = itemStack.getItem();
-        if (item instanceof SnowballStorageTankItem tank) {
-            item = tank.getSnowball();
-        }
-        if (item == ItemRegister.COMPACTED_SNOWBALL.get()) {
-            return new CompactedSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.STONE_SNOWBALL.get()) {
-            return new StoneSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.GLASS_SNOWBALL.get()) {
-            return new GlassSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.IRON_SNOWBALL.get()) {
-            return new IronSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.ICE_SNOWBALL.get()) {
-            return new IceSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.GOLD_SNOWBALL.get()) {
-            return new GoldSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.OBSIDIAN_SNOWBALL.get()) {
-            return new ObsidianSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.EXPLOSIVE_SNOWBALL.get()) {
-            return new ExplosiveSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.SPECTRAL_SNOWBALL.get()) {
-            return new SpectralSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.FROZEN_SNOWBALL.get()) {
-            return new FrozenSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.POWDER_SNOWBALL.get()) {
-            return new PowderSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get()) {
-            return new LightMonsterTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get()) {
-            return new HeavyMonsterTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get()) {
-            return new ExplosiveMonsterTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get()) {
-            return new LightPlayerTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get()) {
-            return new HeavyPlayerTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        } else if (item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get()) {
-            return new ExplosivePlayerTrackingSnowballEntity(player, level, getLaunchFunc(damageDropRate));
-        }
-        return null;
-    }*/
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pHand) {

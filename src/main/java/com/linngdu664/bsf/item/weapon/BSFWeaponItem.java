@@ -20,31 +20,6 @@ public abstract class BSFWeaponItem extends Item {
     public BSFWeaponItem(int durability, Rarity rarity) {
         super(new Properties().tab(ItemGroup.MAIN).stacksTo(1).durability(durability).rarity(rarity));
     }
-/*
-    protected boolean isAmmoTank(Item item, boolean isNormalWeapon) {
-        return item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.GLASS_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.GOLD_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.ICE_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.IRON_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.OBSIDIAN_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.STONE_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.SPECTRAL_SNOWBALL_STORAGE_TANK.get() || (
-                item == ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.POWDER_SNOWBALL_STORAGE_TANK.get()) && isNormalWeapon ||
-                item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() ||
-                item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get();
-    }
-
-    protected boolean isAmmo(Item item) {
-        return item == ItemRegister.COMPACTED_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_SNOWBALL.get() ||
-                item == ItemRegister.GLASS_SNOWBALL.get() || item == ItemRegister.GOLD_SNOWBALL.get() ||
-                item == ItemRegister.ICE_SNOWBALL.get() || item == ItemRegister.IRON_SNOWBALL.get() ||
-                item == ItemRegister.OBSIDIAN_SNOWBALL.get() || item == ItemRegister.STONE_SNOWBALL.get() ||
-                item == ItemRegister.SPECTRAL_SNOWBALL.get() || item == ItemRegister.FROZEN_SNOWBALL.get() ||
-                item == ItemRegister.POWDER_SNOWBALL.get() ||
-                item == ItemRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get() ||
-                item == ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get() || item == ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get() ||
-                item == ItemRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get() || item == ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL.get();
-    }
-*/
 
     /**
      * Find the ammo of the weapon in player's inventory. It will search tanks first, and then it will search bulk
@@ -103,49 +78,6 @@ public abstract class BSFWeaponItem extends Item {
         return null;
     }
 
-    /*
-        protected BSFSnowballEntity ItemToEntity(Item item, Player player, Level level, LaunchFunc launchFunc) {
-            if (item instanceof SnowballStorageTankItem tank) {
-                item = tank.getSnowball();
-            }
-            if (item instanceof CompactedSnowballItem) {
-                return new CompactedSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof StoneSnowballItem) {
-                return new StoneSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof GlassSnowballItem) {
-                return new GlassSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof IceSnowballItem) {
-                return new IceSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof IronSnowballItem) {
-                return new IronSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof GoldSnowballItem) {
-                return new GoldSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof ObsidianSnowballItem) {
-                return new ObsidianSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof SpectralSnowballItem) {
-                return new SpectralSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof ExplosiveSnowballItem) {
-                return new ExplosiveSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof FrozenSnowballItem) {
-                return new FrozenSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof PowderSnowballItem) {
-                return new PowderSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof LightMonsterTrackingSnowballItem) {
-                return new LightSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof HeavyMonsterTrackingSnowballItem) {
-                return new HeavySnowballEntity(player, level, launchFunc);
-            } else if (item instanceof ExplosiveMonsterTrackingSnowballItem) {
-                return new ExplosiveSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof LightPlayerTrackingSnowballItem) {
-                return new CompactedSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof HeavyPlayerTrackingSnowballItem) {
-                return new CompactedSnowballEntity(player, level, launchFunc);
-            } else if (item instanceof ExplosivePlayerTrackingSnowballItem) {
-                return new CompactedSnowballEntity(player, level, launchFunc);
-            }
-            return null;
-        }
-    */
     @Override
     public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
         return pRepairCandidate.is(Items.IRON_INGOT);
