@@ -61,6 +61,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     private static final EntityDataAccessor<Boolean> USE_LOCATOR = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<ItemStack> WEAPON = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<ItemStack> AMMO = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.ITEM_STACK);
+    private static final EntityDataAccessor<Integer> WEAPON_ANG = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.INT);
 
     public BSFSnowGolemEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
         super(p_21803_, p_21804_);
@@ -77,6 +78,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.define(USE_LOCATOR, false);
         entityData.define(WEAPON, ItemStack.EMPTY);
         entityData.define(AMMO, ItemStack.EMPTY);
+        entityData.define(WEAPON_ANG, 0);
     }
 
     @Override
@@ -90,6 +92,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         compoundTag = new CompoundTag();
         getAmmo().save(compoundTag);
         pCompound.put("Ammo", compoundTag);
+        pCompound.putInt("WeaponAng", getWeaponAng());
     }
 
     @Override
@@ -99,6 +102,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         setUseLocator(pCompound.getBoolean("UseLocator"));
         setWeapon(ItemStack.of(pCompound.getCompound("Weapon")));
         setAmmo(ItemStack.of(pCompound.getCompound("Ammo")));
+        setWeaponAng(pCompound.getInt("WeaponAng"));
     }
 
     public byte getStatus() {
@@ -132,6 +136,16 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     public void setAmmo(ItemStack itemStack) {
         entityData.set(AMMO, itemStack);
     }
+
+    public int getWeaponAng() {
+        return entityData.get(WEAPON_ANG);
+    }
+
+    public void setWeaponAng(int ang) {
+        entityData.set(WEAPON_ANG, ang);
+    }
+
+
 
     @Override
     protected void registerGoals() {
@@ -299,10 +313,12 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                             }
                         }
                     }
+                    setWeaponAng(360);
                 } else {
                     break;
                 }
             }
+
         }
     }
 
@@ -317,8 +333,16 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         if (!itemstack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemstack)) {
             spawnAtLocation(itemstack);
         }
+        //todo snowball fail
     }
 
+    @Override
+    public void tick() {
+        if(getWeaponAng()>0){
+            setWeaponAng(getWeaponAng()-72);
+        }
+        super.tick();
+    }
     @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
         return SoundEvents.SNOW_GOLEM_HURT;
