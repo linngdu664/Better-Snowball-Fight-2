@@ -7,6 +7,7 @@ import com.linngdu664.bsf.entity.ai.goal.BSFNearestAttackableTargetGoal;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
 import com.linngdu664.bsf.item.tank.normal.PowderSnowballStorageTank;
+import com.linngdu664.bsf.item.tool.SnowGolemModeTweakerItem;
 import com.linngdu664.bsf.item.tool.TargetLocatorItem;
 import com.linngdu664.bsf.item.weapon.FreezingSnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.PowerfulSnowballCannonItem;
@@ -182,29 +183,11 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     setAmmo(ItemStack.EMPTY);
                 }
             } else if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get())) {
-                if (pPlayer.isShiftKeyDown()) {
-                    setUseLocator(!getUseLocator());
-                    if (getOwner() != null) {
-                        getOwner().sendMessage(getUseLocator() ? new TranslatableComponent("snow_golem_locator_true.tip") : new TranslatableComponent("snow_golem_locator_false.tip"), Util.NIL_UUID);
-                    }
-                    setTarget(null);
-                } else {
-                    if (getStatus() == 4) {
-                        setStatus((byte) 0);
-                    } else {
-                        setStatus((byte) (getStatus() + 1));
-                    }
-                    setOrderedToSit(getStatus() == 0);
-                    if (getOwner() != null) {
-                        getOwner().sendMessage(new TranslatableComponent(switch (getStatus()) {
-                            case 0 -> "snow_golem_standby.tip";
-                            case 1 -> "snow_golem_follow.tip";
-                            case 2 -> "snow_golem_follow_and_attack.tip";
-                            case 3 -> "snow_golem_attack.tip";
-                            default -> "snow_golem_turret.tip";
-                        }), Util.NIL_UUID);
-                    }
-                }
+                setUseLocator(((SnowGolemModeTweakerItem)itemStack.getItem()).isUseLocator());
+                setTarget(null);
+                setStatus((byte) ((SnowGolemModeTweakerItem)itemStack.getItem()).getState());
+                setOrderedToSit(getStatus() == 0);
+                pPlayer.sendMessage(new TranslatableComponent("import_state.tip"), Util.NIL_UUID);
             } else if (itemStack.getItem() instanceof TargetLocatorItem targetLocator && getUseLocator()) {
                 LivingEntity entity = targetLocator.getLivingEntity();
                 if (entity != this && getOwner() != null) {

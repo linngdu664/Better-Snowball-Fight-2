@@ -172,6 +172,7 @@
   "snow_golem_locator_tip": "Target information imported successfully",
   "target.tip": "Target:",
   "targeted.tip": "You have been targeted",
+  "import_state.tip": "Mode imported successfully",
 
   "block.bsf.smart_snow_block": "Smart Snow Block"
 }

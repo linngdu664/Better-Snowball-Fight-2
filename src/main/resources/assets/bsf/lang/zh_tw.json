@@ -173,6 +173,7 @@
   "snow_golem_locator_tip": "目標信息導入成功",
   "target.tip": "鎖定目標：",
   "targeted.tip": "你已被鎖定",
+  "import_state.tip": "模式導入成功",
 
   "block.bsf.smart_snow_block": "智慧雪塊"
 }
