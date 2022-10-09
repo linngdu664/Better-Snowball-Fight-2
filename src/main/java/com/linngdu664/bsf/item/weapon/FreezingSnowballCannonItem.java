@@ -1,8 +1,8 @@
 package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.FrozenSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.IceSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.special.FrozenSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.nomal.IceSnowballEntity;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.ChatFormatting;

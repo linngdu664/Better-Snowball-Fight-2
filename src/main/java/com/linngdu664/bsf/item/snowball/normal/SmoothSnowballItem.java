@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.snowball.normal;
 
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.SmoothSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.nomal.SmoothSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import net.minecraft.ChatFormatting;

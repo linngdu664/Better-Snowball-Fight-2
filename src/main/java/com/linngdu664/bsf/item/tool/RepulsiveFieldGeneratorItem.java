@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.tool;
 
-import com.linngdu664.bsf.entity.snowball.force_snowball.BlackHoleSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.force.BlackHoleSnowballEntity;
 import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.TargetGetter;

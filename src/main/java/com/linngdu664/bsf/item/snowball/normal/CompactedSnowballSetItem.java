@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.snowball.normal;
 
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.CompactedSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.nomal.CompactedSnowballEntity;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

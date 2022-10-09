@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item.snowball.normal;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.GlassSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.nomal.GlassSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.LaunchFunc;

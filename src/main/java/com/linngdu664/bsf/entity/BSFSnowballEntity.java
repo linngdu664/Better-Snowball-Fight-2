@@ -83,11 +83,7 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
             Vec3 vec3d = this.getDeltaMovement().multiply(0.1 * punch, 0.0, 0.1 * punch);
             entity.push(vec3d.x, 0.0, vec3d.z);
         }
-        // Spawn hit particles
-        if (!level.isClientSide) {
-            ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
-            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
-        }
+        spawnBasicParticles(level);
     }
 
     /**
@@ -98,9 +94,7 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
-        // Spawn hit particles
-        ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
-        ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
+        spawnBasicParticles(level);
     }
 
     /**
@@ -166,6 +160,13 @@ public abstract class BSFSnowballEntity extends ThrowableItemProjectile {
             level.explode(null, this.getX(), this.getY(), this.getZ(), radius, Explosion.BlockInteraction.DESTROY);
         } else {
             level.explode(null, this.getX(), this.getY(), this.getZ(), radius, Explosion.BlockInteraction.NONE);
+        }
+    }
+
+    protected void spawnBasicParticles(Level level) {
+        if (!level.isClientSide) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
+            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
         }
     }
 

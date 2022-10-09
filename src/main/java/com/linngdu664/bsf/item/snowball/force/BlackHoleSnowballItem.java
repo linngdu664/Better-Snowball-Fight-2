@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.snowball.force;
 
-import com.linngdu664.bsf.entity.snowball.force_snowball.BlackHoleSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.force.BlackHoleSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import net.minecraft.ChatFormatting;

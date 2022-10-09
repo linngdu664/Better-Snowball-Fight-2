@@ -6,7 +6,7 @@ import com.linngdu664.bsf.entity.ai.goal.BSFGolemRangedAttackGoal;
 import com.linngdu664.bsf.entity.ai.goal.BSFNearestAttackableTargetGoal;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
-import com.linngdu664.bsf.item.tank.normal.PowderSnowballStorageTank;
+import com.linngdu664.bsf.item.tank.special.PowderSnowballStorageTank;
 import com.linngdu664.bsf.item.tool.SnowGolemModeTweakerItem;
 import com.linngdu664.bsf.item.tool.TargetLocatorItem;
 import com.linngdu664.bsf.item.weapon.FreezingSnowballCannonItem;

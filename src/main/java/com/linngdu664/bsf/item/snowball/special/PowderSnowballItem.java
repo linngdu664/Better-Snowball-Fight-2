@@ -1,8 +1,7 @@
-package com.linngdu664.bsf.item.snowball.normal;
+package com.linngdu664.bsf.item.snowball.special;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.nomal.ExplosiveSnowballEntity;
-import com.linngdu664.bsf.item.ItemRegister;
+import com.linngdu664.bsf.entity.snowball.special.PowderSnowballEntity;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.ChatFormatting;
@@ -29,12 +28,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ExplosiveSnowballItem extends BSFSnowballItem {
-    public ExplosiveSnowballItem() {
-        super(Rarity.UNCOMMON);
+public class PowderSnowballItem extends BSFSnowballItem {
+    public PowderSnowballItem() {
+        super(Rarity.COMMON);
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
             protected @NotNull Projectile getProjectile(@NotNull Level p_123476_, @NotNull Position p_123477_, @NotNull ItemStack p_123478_) {
-                return Util.make(new ExplosiveSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {
+                return Util.make(new PowderSnowballEntity(p_123476_, p_123477_.x(), p_123477_.y(), p_123477_.z()), (p_123474_) -> {
                 });
             }
         });
@@ -43,15 +42,16 @@ public class ExplosiveSnowballItem extends BSFSnowballItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if (!storageInTank(pPlayer, itemStack, ItemRegister.EXPLOSIVE_SNOWBALL_STORAGE_TANK.get())) {
+        if (pUsedHand == InteractionHand.MAIN_HAND) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
-                ExplosiveSnowballEntity snowballEntity = new ExplosiveSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballDamageRate(pPlayer)));
-                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 0.9F * getSnowballSlowdownRate(pPlayer), 1.0F);
+                PowderSnowballEntity snowballEntity = new PowderSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballDamageRate(pPlayer)));
+                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.25F * getSnowballSlowdownRate(pPlayer), 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }
             if (!pPlayer.getAbilities().instabuild) {
                 itemStack.shrink(1);
+                pPlayer.getCooldowns().addCooldown(this, 20);
             }
         }
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
@@ -60,25 +60,25 @@ public class ExplosiveSnowballItem extends BSFSnowballItem {
 
     @Override
     public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
-        return new ExplosiveSnowballEntity(livingEntity, level, launchFunc);
-    }
-
-    @Override
-    public float getRecoil() {
-        return 0.12F;
+        return new PowderSnowballEntity(livingEntity, level, launchFunc);
     }
 
     @Override
     public double getPushRank() {
-        return 0.42;
+        return 0.12;
+    }
+
+    @Override
+    public boolean canBeLaunchedByMachineGun() {
+        return false;
     }
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_hand.tooltip").withStyle(ChatFormatting.DARK_GREEN));
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_cannon.tooltip").withStyle(ChatFormatting.DARK_GREEN));
-        pTooltipComponents.add(new TranslatableComponent("lunch_yes_machine_gun.tooltip").withStyle(ChatFormatting.DARK_GREEN));
+        pTooltipComponents.add(new TranslatableComponent("lunch_no_machine_gun.tooltip").withStyle(ChatFormatting.DARK_RED));
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_shotgun.tooltip").withStyle(ChatFormatting.DARK_GREEN));
-        pTooltipComponents.add(new TranslatableComponent("explosive_snowball.tooltip").withStyle(ChatFormatting.BLUE));
+        pTooltipComponents.add(new TranslatableComponent("powder_snowball.tooltip").withStyle(ChatFormatting.BLUE));
     }
 }

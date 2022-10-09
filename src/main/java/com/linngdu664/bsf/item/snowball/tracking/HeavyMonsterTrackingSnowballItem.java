@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item.snowball.tracking;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.tracking_snowball.HeavyMonsterTrackingSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.tracking.HeavyMonsterTrackingSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
 import com.linngdu664.bsf.util.LaunchFunc;

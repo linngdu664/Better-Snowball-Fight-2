@@ -53,10 +53,7 @@ public class SnowballMixin extends ThrowableItemProjectile {
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
-        if (!level.isClientSide) {
-            ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
-            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);
-        }
+        spawnBasicParticles(level);
     }
 
     // Cancel "broadcastEntityEvent" and discard directly.
@@ -97,6 +94,10 @@ public class SnowballMixin extends ThrowableItemProjectile {
             float i = entity instanceof Blaze ? 3.0F : Float.MIN_VALUE;
             entity.hurt(DamageSource.thrown(this, this.getOwner()), i);
         }
+        spawnBasicParticles(level);
+    }
+
+    private void spawnBasicParticles(Level level) {
         if (!level.isClientSide) {
             ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.04);

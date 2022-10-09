@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item.tool;
 
 import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.entity.snowball.nomal_snowball.GPSSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.special.GPSSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.normal.IronSnowballItem;
 import com.linngdu664.bsf.item.tank.normal.IronSnowballStorageTank;
