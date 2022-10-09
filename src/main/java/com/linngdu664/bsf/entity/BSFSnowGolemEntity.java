@@ -15,11 +15,9 @@ import com.linngdu664.bsf.item.weapon.SnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.LaunchFunc;
-import com.linngdu664.bsf.util.ParticleUtil;
 import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -147,7 +145,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     }
 
 
-
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
@@ -183,9 +180,9 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     setAmmo(ItemStack.EMPTY);
                 }
             } else if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get())) {
-                setUseLocator(((SnowGolemModeTweakerItem)itemStack.getItem()).isUseLocator());
+                setUseLocator(((SnowGolemModeTweakerItem) itemStack.getItem()).isUseLocator());
                 setTarget(null);
-                setStatus((byte) ((SnowGolemModeTweakerItem)itemStack.getItem()).getState());
+                setStatus((byte) ((SnowGolemModeTweakerItem) itemStack.getItem()).getState());
                 setOrderedToSit(getStatus() == 0);
                 pPlayer.sendMessage(new TranslatableComponent("import_state.tip"), Util.NIL_UUID);
             } else if (itemStack.getItem() instanceof TargetLocatorItem targetLocator && getUseLocator()) {
@@ -321,11 +318,12 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
 
     @Override
     public void tick() {
-        if(getWeaponAng()>0){
-            setWeaponAng(getWeaponAng()-72);
+        if (getWeaponAng() > 0) {
+            setWeaponAng(getWeaponAng() - 72);
         }
         super.tick();
     }
+
     @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
         return SoundEvents.SNOW_GOLEM_HURT;

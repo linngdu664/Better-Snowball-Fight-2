@@ -41,7 +41,7 @@ public class BasinOfSnowItem extends Item {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         List<LivingEntity> list = TargetGetter.getTargetList(pPlayer, LivingEntity.class, 8);
         Vec3 cameraVec = Vec3.directionFromRotation(pPlayer.getXRot(), pPlayer.getYRot());
-        ParticleUtil.spawnForwardParticles(pLevel, pPlayer, cameraVec,ParticleTypes.SNOWFLAKE,4.5F,30,0.5f,0.2f);
+        ParticleUtil.spawnForwardParticles(pLevel, pPlayer, cameraVec, ParticleTypes.SNOWFLAKE, 4.5F, 30, 0.5f, 0.2f);
         if (!pLevel.isClientSide) {
             for (LivingEntity livingEntity : list) {
                 if (!(livingEntity instanceof BSFSnowGolemEntity) && !(livingEntity instanceof SnowGolem)) {

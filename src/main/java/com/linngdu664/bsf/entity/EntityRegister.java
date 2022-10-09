@@ -15,6 +15,4 @@ public class EntityRegister {
             ENTITY_TYPES.register("bsf_snow_golem", () -> EntityType.Builder.of(BSFSnowGolemEntity::new, MobCategory.MISC)
                     .sized(0.7F, 1.9F).clientTrackingRange(8).immuneTo(Blocks.POWDER_SNOW)
                     .build(new ResourceLocation("bsf", "bsf_snow_golem").toString()));
-
-
 }

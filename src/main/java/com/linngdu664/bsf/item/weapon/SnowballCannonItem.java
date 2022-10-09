@@ -9,7 +9,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -72,7 +71,7 @@ public class SnowballCannonItem extends BSFWeaponItem {
                     if (pLevel.isClientSide()) {
                         player.push(-0.2 * cameraVec.x * f, -0.2 * cameraVec.y * f, -0.2 * cameraVec.z * f);
                         //add particles
-                        ParticleUtil.spawnForwardParticles(pLevel, player, cameraVec, ParticleTypes.SNOWFLAKE,4.5F,90,1.5f,0);
+                        ParticleUtil.spawnForwardParticles(pLevel, player, cameraVec, ParticleTypes.SNOWFLAKE, 4.5F, 90, 1.5f, 0);
                     }
                     pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                     consumeAmmo(itemStack, player);
