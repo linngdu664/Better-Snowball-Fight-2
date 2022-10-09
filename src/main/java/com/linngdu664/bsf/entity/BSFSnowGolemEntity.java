@@ -61,6 +61,8 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     private static final EntityDataAccessor<ItemStack> WEAPON = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<ItemStack> AMMO = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<Integer> WEAPON_ANG = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Byte> STYLE = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BYTE);
+
 
     public BSFSnowGolemEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
         super(p_21803_, p_21804_);
@@ -78,6 +80,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.define(WEAPON, ItemStack.EMPTY);
         entityData.define(AMMO, ItemStack.EMPTY);
         entityData.define(WEAPON_ANG, 0);
+        entityData.define(STYLE, (byte) (BSFMthUtil.randInt(1,7)));
     }
 
     @Override
@@ -92,6 +95,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         getAmmo().save(compoundTag);
         pCompound.put("Ammo", compoundTag);
         pCompound.putInt("WeaponAng", getWeaponAng());
+        pCompound.putInt("Style", getStyle());
     }
 
     @Override
@@ -102,6 +106,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         setWeapon(ItemStack.of(pCompound.getCompound("Weapon")));
         setAmmo(ItemStack.of(pCompound.getCompound("Ammo")));
         setWeaponAng(pCompound.getInt("WeaponAng"));
+        setStyle(pCompound.getByte("Style"));
     }
 
     public byte getStatus() {
@@ -142,6 +147,13 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
 
     public void setWeaponAng(int ang) {
         entityData.set(WEAPON_ANG, ang);
+    }
+    public byte getStyle() {
+        return entityData.get(STYLE);
+    }
+
+    public void setStyle(byte style) {
+        entityData.set(STYLE, style);
     }
 
 
