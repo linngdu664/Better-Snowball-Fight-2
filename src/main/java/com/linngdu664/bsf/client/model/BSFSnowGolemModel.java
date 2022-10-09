@@ -42,7 +42,8 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
 
         PartDefinition right_arm_r1 = middle.addOrReplaceChild("right_arm_r1", CubeListBuilder.create().texOffs(32, 0).addBox(-13.0F, 0.0F, 0.0F, 12.0F, 2.0F, 2.0F, new CubeDeformation(-0.5F)), PartPose.offsetAndRotation(-4.0F, -21.0F, -1.0F, 0.0F, 0.0F, -1.0472F));
 
-        PartDefinition up = partdefinition.addOrReplaceChild("up", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(-0.5F)), PartPose.offset(0.0F, -1.0F, 0.0F));
+        PartDefinition up = partdefinition.addOrReplaceChild("up", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(-0.5F))
+                .texOffs(64, 96).addBox(-8.0F, -9.5F, -8.0F, 16.0F, 16.0F, 16.0F, new CubeDeformation(-3.5F)), PartPose.offset(0.0F, -1.0F, 0.0F));
 
         PartDefinition smoke_r1 = up.addOrReplaceChild("smoke_r1", CubeListBuilder.create().texOffs(33, 9).addBox(1.75F, -1.0F, -4.0F, 1.0F, 1.0F, 3.0F, new CubeDeformation(-0.3F)), PartPose.offsetAndRotation(-2.0F, 2.0F, -2.0F, -0.1309F, -0.2182F, 0.0F));
 

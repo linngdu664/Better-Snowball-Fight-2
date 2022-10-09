@@ -23,7 +23,9 @@ public class BSFSnowGolemRenderer extends MobRenderer<BSFSnowGolemEntity, BSFSno
             case 3 -> {return new ResourceLocation("bsf:textures/models/bsf_snow_golem_3.png");}
             case 4 -> {return new ResourceLocation("bsf:textures/models/bsf_snow_golem_4.png");}
             case 5 -> {return new ResourceLocation("bsf:textures/models/bsf_snow_golem_5.png");}
-            default -> {return new ResourceLocation("bsf:textures/models/bsf_snow_golem_6.png");}
+            case 6 -> {return new ResourceLocation("bsf:textures/models/bsf_snow_golem_6.png");}
+            case 7 -> {return new ResourceLocation("bsf:textures/models/bsf_snow_golem_7.png");}
+            default -> {return new ResourceLocation("bsf:textures/models/bsf_snow_golem_8.png");}
         }
     }
 }
