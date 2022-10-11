@@ -19,7 +19,7 @@ public class BSFNearestAttackableTargetGoal extends NearestAttackableTargetGoal<
 
     @Override
     public boolean canUse() {
-        if (golem.getUseLocator()) {
+        if (golem.isUseLocator()) {
             return false;
         }
         return super.canUse();

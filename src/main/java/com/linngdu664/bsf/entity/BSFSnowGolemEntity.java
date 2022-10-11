@@ -8,6 +8,7 @@ import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
 import com.linngdu664.bsf.item.tank.special.PowderSnowballTank;
 import com.linngdu664.bsf.item.tool.SnowGolemModeTweakerItem;
+import com.linngdu664.bsf.item.tool.SnowballClampItem;
 import com.linngdu664.bsf.item.tool.TargetLocatorItem;
 import com.linngdu664.bsf.item.weapon.FreezingSnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.PowerfulSnowballCannonItem;
@@ -88,7 +89,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     public void addAdditionalSaveData(@NotNull CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putByte("Status", getStatus());
-        pCompound.putBoolean("UseLocator", getUseLocator());
+        pCompound.putBoolean("UseLocator", isUseLocator());
         CompoundTag compoundTag = new CompoundTag();
         getWeapon().save(compoundTag);
         pCompound.put("Weapon", compoundTag);
@@ -118,7 +119,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.set(STATUS_FLAG, status);
     }
 
-    public boolean getUseLocator() {
+    public boolean isUseLocator() {
         return entityData.get(USE_LOCATOR);
     }
 
@@ -170,20 +171,18 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
 
     @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
-        ItemStack itemStack = pPlayer.getItemInHand(pHand);
-        if (!level.isClientSide) {
+        if (!level.isClientSide && pPlayer.equals(getOwner())) {
+            ItemStack itemStack = pPlayer.getItemInHand(pHand);
             if (itemStack.getItem() instanceof AbstractSnowballTankItem tank && tank.getSnowball().canBeLaunchedByNormalWeapon() && !(tank instanceof PowderSnowballTank) && getAmmo().isEmpty()) {
                 setAmmo(itemStack.copy());
                 if (!pPlayer.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
-
             } else if ((itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) && getWeapon().isEmpty()) {
                 setWeapon(itemStack.copy());
                 if (!pPlayer.getAbilities().instabuild) {
                     itemStack.shrink(1);
                 }
-
             } else if (itemStack.isEmpty()) {
                 if (pPlayer.isShiftKeyDown()) {
                     pPlayer.getInventory().placeItemBackInInventory(getWeapon(), true);
@@ -192,18 +191,21 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     pPlayer.getInventory().placeItemBackInInventory(getAmmo(), true);
                     setAmmo(ItemStack.EMPTY);
                 }
-            } else if (itemStack.is(ItemRegister.SNOW_GOLEM_MODE_TWEAKER.get())) {
-                setUseLocator(((SnowGolemModeTweakerItem) itemStack.getItem()).isUseLocator());
+            } else if (itemStack.getItem() instanceof SnowGolemModeTweakerItem snowGolemModeTweaker) {
+                setUseLocator(snowGolemModeTweaker.isUseLocator());
                 setTarget(null);
-                setStatus((byte) ((SnowGolemModeTweakerItem) itemStack.getItem()).getState());
+                setStatus(snowGolemModeTweaker.getState());
                 setOrderedToSit(getStatus() == 0);
                 pPlayer.sendMessage(new TranslatableComponent("import_state.tip"), Util.NIL_UUID);
-            } else if (itemStack.getItem() instanceof TargetLocatorItem targetLocator && getUseLocator()) {
+            } else if (itemStack.getItem() instanceof TargetLocatorItem targetLocator && isUseLocator()) {
                 LivingEntity entity = targetLocator.getLivingEntity();
                 if (entity != this && getOwner() != null) {
                     getOwner().sendMessage(new TranslatableComponent("snow_golem_locator_tip"), Util.NIL_UUID);
                     setTarget(targetLocator.getLivingEntity());
                 }
+            } else if (itemStack.getItem() instanceof SnowballClampItem) {
+                pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
+                itemStack.hurtAndBreak(1, pPlayer, (e) -> e.broadcastBreakEvent(pHand));
             }
         }
         return InteractionResult.SUCCESS;
