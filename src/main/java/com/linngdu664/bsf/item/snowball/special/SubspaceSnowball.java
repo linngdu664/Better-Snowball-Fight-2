@@ -2,7 +2,10 @@ package com.linngdu664.bsf.item.snowball.special;
 
 import com.linngdu664.bsf.entity.snowball.special.SubspaceSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -11,10 +14,14 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class SubspaceSnowball extends BSFSnowballItem {
+import java.util.List;
+
+public class SubspaceSnowball extends AbstractBSFSnowballItem {
     public SubspaceSnowball() {
         super(Rarity.EPIC);
     }
@@ -22,7 +29,7 @@ public class SubspaceSnowball extends BSFSnowballItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if (!storageInTank(pPlayer, itemStack, ItemRegister.SUBSPACE_SNOWBALL_STORAGE_TANK.get())) {
+        if (!storageInTank(pPlayer, itemStack, ItemRegister.SUBSPACE_SNOWBALL_TANK.get())) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
                 SubspaceSnowballEntity snowballEntity = new SubspaceSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));
@@ -46,5 +53,14 @@ public class SubspaceSnowball extends BSFSnowballItem {
     @Override
     public boolean canBeLaunchedByNormalWeapon() {
         return false;
+    }
+
+    @Override
+    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
+        // todo: add tips
+        pTooltipComponents.add(new TranslatableComponent("lunch_yes_hand.tooltip").withStyle(ChatFormatting.DARK_GREEN));
+        pTooltipComponents.add(new TranslatableComponent("lunch_no_cannon.tooltip").withStyle(ChatFormatting.DARK_RED));
+        pTooltipComponents.add(new TranslatableComponent("lunch_no_machine_gun.tooltip").withStyle(ChatFormatting.DARK_RED));
+        pTooltipComponents.add(new TranslatableComponent("lunch_no_shotgun.tooltip").withStyle(ChatFormatting.DARK_RED));
     }
 }

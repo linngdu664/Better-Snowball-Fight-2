@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.entity.snowball.tracking;
 
-import com.linngdu664.bsf.entity.snowball.TrackingSnowballEntity;
+import com.linngdu664.bsf.entity.snowball.AbstractTrackingSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
-public class LightPlayerTrackingSnowballEntity extends TrackingSnowballEntity {
+public class LightPlayerTrackingSnowballEntity extends AbstractTrackingSnowballEntity {
     public LightPlayerTrackingSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
         this.setRange(10).setTargetClass(Player.class).setLaunchFrom(launchFunc.getLaunchForm());

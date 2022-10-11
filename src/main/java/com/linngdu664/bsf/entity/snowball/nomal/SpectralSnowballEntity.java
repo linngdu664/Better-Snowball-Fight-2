@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.entity.snowball.nomal;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,7 +16,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
-public class SpectralSnowballEntity extends BSFSnowballEntity {
+public class SpectralSnowballEntity extends AbstractBSFSnowballEntity {
     public SpectralSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
         this.setLaunchFrom(launchFunc.getLaunchForm());

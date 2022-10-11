@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.entity.snowball.nomal;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
-public class GoldSnowballEntity extends BSFSnowballEntity {
+public class GoldSnowballEntity extends AbstractBSFSnowballEntity {
     public GoldSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);
         this.setLaunchFrom(launchFunc.getLaunchForm()).setDamage(5).setBlazeDamage(7);

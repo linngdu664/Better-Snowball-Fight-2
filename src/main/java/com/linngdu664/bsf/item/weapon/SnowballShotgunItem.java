@@ -1,8 +1,8 @@
 package com.linngdu664.bsf.item.weapon;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
-import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
+import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.ParticleUtil;
@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SnowballShotgunItem extends BSFWeaponItem {
+public class SnowballShotgunItem extends AbstractBSFWeaponItem {
     private double pushRank;
 
     public SnowballShotgunItem() {
@@ -42,7 +42,7 @@ public class SnowballShotgunItem extends BSFWeaponItem {
             }
 
             @Override
-            public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
+            public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.punch = 1.51F;
             }
         };
@@ -56,7 +56,7 @@ public class SnowballShotgunItem extends BSFWeaponItem {
         for (i = 0; i < 4; i++) {
             ItemStack itemStack = findAmmo(player, false, true);
             if (itemStack != null) {
-                BSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, level, getLaunchFunc());
+                AbstractBSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, level, getLaunchFunc());
                 addPush(itemStack.getItem());
                 if (!player.isShiftKeyDown()) {
                     BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 2.0F, 10.0F);
@@ -90,10 +90,10 @@ public class SnowballShotgunItem extends BSFWeaponItem {
     }
 
     private void addPush(Item item) {
-        if (item instanceof SnowballStorageTankItem tank) {
+        if (item instanceof AbstractSnowballTankItem tank) {
             item = tank.getSnowball();
         }
-        if (item instanceof BSFSnowballItem snowball) {
+        if (item instanceof AbstractBSFSnowballItem snowball) {
             pushRank += snowball.getPushRank();
         }
     }

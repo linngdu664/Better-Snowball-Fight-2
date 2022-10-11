@@ -2,7 +2,7 @@ package com.linngdu664.bsf.item.snowball.normal;
 
 import com.linngdu664.bsf.entity.snowball.nomal.SmoothSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.Position;
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SmoothSnowballItem extends BSFSnowballItem {
+public class SmoothSnowballItem extends AbstractBSFSnowballItem {
     public SmoothSnowballItem() {
         super(Rarity.COMMON);
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {

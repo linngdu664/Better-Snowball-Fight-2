@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item.snowball.normal;
 
 import com.linngdu664.bsf.entity.snowball.nomal.CompactedSnowballEntity;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class CompactedSnowballSetItem extends BSFSnowballItem {
+public class CompactedSnowballSetItem extends AbstractBSFSnowballItem {
     public CompactedSnowballSetItem() {
         super(Rarity.COMMON);
     }

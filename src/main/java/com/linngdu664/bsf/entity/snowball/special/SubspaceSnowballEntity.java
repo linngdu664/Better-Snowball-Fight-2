@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.entity.snowball.special;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.TargetGetter;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class SubspaceSnowballEntity extends BSFSnowballEntity {
+public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
     private int timer = 0;
 
     public SubspaceSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
@@ -29,8 +29,8 @@ public class SubspaceSnowballEntity extends BSFSnowballEntity {
     public void tick() {
         super.tick();
         if (!level.isClientSide) {
-            List<BSFSnowballEntity> list = TargetGetter.getTargetList(this, BSFSnowballEntity.class, 2.5);
-            for (BSFSnowballEntity snowball : list) {
+            List<AbstractBSFSnowballEntity> list = TargetGetter.getTargetList(this, AbstractBSFSnowballEntity.class, 2.5);
+            for (AbstractBSFSnowballEntity snowball : list) {
                 // todo: adjust the particles?
                 ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
                 snowball.discard();

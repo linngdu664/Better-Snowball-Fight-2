@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GloveItem extends BSFEnhanceableToolItem {
+public class GloveItem extends AbstractBSFEnhanceableToolItem {
     public GloveItem() {
         super(Rarity.UNCOMMON, 256);
     }

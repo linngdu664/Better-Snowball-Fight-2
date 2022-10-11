@@ -2,7 +2,7 @@ package com.linngdu664.bsf.item.snowball.force;
 
 import com.linngdu664.bsf.entity.snowball.force.BlackHoleSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BlackHoleSnowballItem extends BSFSnowballItem {
+public class BlackHoleSnowballItem extends AbstractBSFSnowballItem {
     public BlackHoleSnowballItem() {
         super(Rarity.EPIC);
     }
@@ -29,7 +29,7 @@ public class BlackHoleSnowballItem extends BSFSnowballItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if (!storageInTank(pPlayer, itemStack, ItemRegister.BLACK_HOLE_SNOWBALL_STORAGE_TANK.get())) {
+        if (!storageInTank(pPlayer, itemStack, ItemRegister.BLACK_HOLE_SNOWBALL_TANK.get())) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
                 BlackHoleSnowballEntity snowballEntity = new BlackHoleSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));

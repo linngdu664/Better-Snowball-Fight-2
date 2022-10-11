@@ -2,7 +2,7 @@ package com.linngdu664.bsf.item.snowball.force;
 
 import com.linngdu664.bsf.entity.snowball.force.MonsterRepulsionSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MonsterRepulsionSnowballItem extends BSFSnowballItem {
+public class MonsterRepulsionSnowballItem extends AbstractBSFSnowballItem {
     public MonsterRepulsionSnowballItem() {
         super(Rarity.RARE);
     }
@@ -32,7 +32,7 @@ public class MonsterRepulsionSnowballItem extends BSFSnowballItem {
         if (pPlayer.isShiftKeyDown()) {
             ItemStack newStack = new ItemStack(ItemRegister.PROJECTILE_REPULSION_SNOWBALL.get(), itemStack.getCount());
             pPlayer.setItemInHand(pUsedHand, newStack);
-        } else if (!storageInTank(pPlayer, itemStack, ItemRegister.MONSTER_REPULSION_SNOWBALL_STORAGE_TANK.get())) {
+        } else if (!storageInTank(pPlayer, itemStack, ItemRegister.MONSTER_REPULSION_SNOWBALL_TANK.get())) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
                 MonsterRepulsionSnowballEntity snowballEntity = new MonsterRepulsionSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));

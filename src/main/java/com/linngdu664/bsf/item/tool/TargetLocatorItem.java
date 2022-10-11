@@ -1,10 +1,10 @@
 package com.linngdu664.bsf.item.tool;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.special.GPSSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.normal.IronSnowballItem;
-import com.linngdu664.bsf.item.tank.normal.IronSnowballStorageTank;
+import com.linngdu664.bsf.item.tank.normal.IronSnowballTank;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -17,7 +17,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class TargetLocatorItem extends BSFEnhanceableToolItem {
+public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
     private LivingEntity livingEntity;
 
     public TargetLocatorItem() {
@@ -31,14 +31,14 @@ public class TargetLocatorItem extends BSFEnhanceableToolItem {
         for (int i = 0; i < pPlayer.getInventory().getContainerSize(); i++) {
             stack = pPlayer.getInventory().getItem(i);
             if (stack.getItem() instanceof IronSnowballItem ||
-                    stack.getItem() instanceof IronSnowballStorageTank) {
+                    stack.getItem() instanceof IronSnowballTank) {
                 break;
             }
         }
         if (stack != null) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
-                BSFSnowballEntity snowballEntity = new GPSSnowballEntity(pPlayer, pLevel, itemStack);
+                AbstractBSFSnowballEntity snowballEntity = new GPSSnowballEntity(pPlayer, pLevel, itemStack);
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 2.0F, 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }

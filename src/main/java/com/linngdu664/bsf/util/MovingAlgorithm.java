@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.util;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -24,7 +24,7 @@ public class MovingAlgorithm {
      * @param boundaryR2  If the square of distance is smaller than this param, the force will be a const and will not follow an inverse-square law.
      * @param <T>         Extends entity class.
      */
-    public static <T extends Entity> void forceEffect(BSFSnowballEntity snowball, Class<T> targetClass, double range, double GM, double boundaryR2) {
+    public static <T extends Entity> void forceEffect(AbstractBSFSnowballEntity snowball, Class<T> targetClass, double range, double GM, double boundaryR2) {
         List<T> list = TargetGetter.getTargetList(snowball, targetClass, range);
         for (T entity : list) {
             Vec3 rVec = new Vec3(snowball.getX() - entity.getX(), snowball.getY() - entity.getEyeY(), snowball.getZ() - entity.getZ());
@@ -60,7 +60,7 @@ public class MovingAlgorithm {
      * @param lockFeet           If true, the snowball will track entity's feet to maximum the explosion damage.
      * @param <T>                Extends entity class.
      */
-    public static <T extends Entity> void missilesTracking(BSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin, boolean lockFeet) {
+    public static <T extends Entity> void missilesTracking(AbstractBSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin, boolean lockFeet) {
         Level level = snowball.level;
         Entity target = TargetGetter.getTarget(snowball, targetClass, angleRestriction, trackingRange);
         Vec3 velocity = snowball.getDeltaMovement();

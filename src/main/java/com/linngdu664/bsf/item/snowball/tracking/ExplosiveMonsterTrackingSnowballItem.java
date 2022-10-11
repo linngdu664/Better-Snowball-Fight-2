@@ -1,9 +1,9 @@
 package com.linngdu664.bsf.item.snowball.tracking;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.tracking.ExplosiveMonsterTrackingSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ExplosiveMonsterTrackingSnowballItem extends BSFSnowballItem {
+public class ExplosiveMonsterTrackingSnowballItem extends AbstractBSFSnowballItem {
     public ExplosiveMonsterTrackingSnowballItem() {
         super(Rarity.RARE);
     }
@@ -34,14 +34,14 @@ public class ExplosiveMonsterTrackingSnowballItem extends BSFSnowballItem {
             ItemStack newStack = new ItemStack(ItemRegister.EXPLOSIVE_PLAYER_TRACKING_SNOWBALL.get(), itemStack.getCount());
             pPlayer.setItemInHand(pUsedHand, newStack);
         } else {
-            storageInTank(pPlayer, itemStack, ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_STORAGE_TANK.get());
+            storageInTank(pPlayer, itemStack, ItemRegister.EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_TANK.get());
         }
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
     }
 
     @Override
-    public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
+    public AbstractBSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
         return new ExplosiveMonsterTrackingSnowballEntity(livingEntity, level, launchFunc);
     }
 

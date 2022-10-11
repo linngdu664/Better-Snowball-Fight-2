@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.entity.snowball.special;
 
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class FrozenSnowballEntity extends BSFSnowballEntity {
+public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
     private float frozenRange = 2.5F;
 
     public FrozenSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {

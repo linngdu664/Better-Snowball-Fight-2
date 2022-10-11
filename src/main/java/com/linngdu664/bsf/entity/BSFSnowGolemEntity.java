@@ -5,8 +5,8 @@ import com.linngdu664.bsf.entity.ai.goal.BSFGolemRandomStrollGoal;
 import com.linngdu664.bsf.entity.ai.goal.BSFGolemRangedAttackGoal;
 import com.linngdu664.bsf.entity.ai.goal.BSFNearestAttackableTargetGoal;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
-import com.linngdu664.bsf.item.tank.special.PowderSnowballStorageTank;
+import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
+import com.linngdu664.bsf.item.tank.special.PowderSnowballTank;
 import com.linngdu664.bsf.item.tool.SnowGolemModeTweakerItem;
 import com.linngdu664.bsf.item.tool.TargetLocatorItem;
 import com.linngdu664.bsf.item.weapon.FreezingSnowballCannonItem;
@@ -39,6 +39,7 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -157,7 +158,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.set(STYLE, style);
     }
 
-
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
@@ -172,7 +172,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     public @NotNull InteractionResult mobInteract(@NotNull Player pPlayer, @NotNull InteractionHand pHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
         if (!level.isClientSide) {
-            if (itemStack.getItem() instanceof SnowballStorageTankItem tank && tank.getSnowball().canBeLaunchedByNormalWeapon() && !(tank instanceof PowderSnowballStorageTank) && getAmmo().isEmpty()) {
+            if (itemStack.getItem() instanceof AbstractSnowballTankItem tank && tank.getSnowball().canBeLaunchedByNormalWeapon() && !(tank instanceof PowderSnowballTank) && getAmmo().isEmpty()) {
                 setAmmo(itemStack.copy());
                 if (!pPlayer.getAbilities().instabuild) {
                     itemStack.shrink(1);
@@ -288,8 +288,8 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             }
             int j = weapon.getItem() instanceof SnowballShotgunItem ? 4 : 1;
             for (int i = 0; i < j; i++) {
-                if (ammo.getItem() instanceof SnowballStorageTankItem tank) {
-                    BSFSnowballEntity snowball = tank.getSnowball().getCorrespondingEntity(level, this, launchFunc);
+                if (ammo.getItem() instanceof AbstractSnowballTankItem tank) {
+                    AbstractBSFSnowballEntity snowball = tank.getSnowball().getCorrespondingEntity(level, this, launchFunc);
                     snowball.shoot(dx, sinTheta, dz, v, accuracy);
                     level.addFreshEntity(snowball);//todo add particles
                     ammo.setDamageValue(ammo.getDamageValue() + 1);
@@ -318,15 +318,13 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     @Override
     public void die(@NotNull DamageSource pCause) {
         super.die(pCause);
-        ItemStack itemstack = getWeapon();
-        if (!itemstack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemstack)) {
-            spawnAtLocation(itemstack);
+        if (!getWeapon().isEmpty() && !EnchantmentHelper.hasVanishingCurse(getWeapon())) {
+            spawnAtLocation(getWeapon());
         }
-        itemstack = getAmmo();
-        if (!itemstack.isEmpty() && !EnchantmentHelper.hasVanishingCurse(itemstack)) {
-            spawnAtLocation(itemstack);
+        if (!getAmmo().isEmpty() && !EnchantmentHelper.hasVanishingCurse(getAmmo())) {
+            spawnAtLocation(getAmmo());
         }
-        //todo snowball fail
+        spawnAtLocation(new ItemStack(Items.SNOWBALL, BSFMthUtil.randInt(0, 16)));
     }
 
     @Override

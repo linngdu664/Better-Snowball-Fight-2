@@ -1,9 +1,9 @@
 package com.linngdu664.bsf.item.snowball.special;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.special.FrozenSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class FrozenSnowballItem extends BSFSnowballItem {
+public class FrozenSnowballItem extends AbstractBSFSnowballItem {
     public FrozenSnowballItem() {
         super(Rarity.UNCOMMON);
         DispenserBlock.registerBehavior(this, new AbstractProjectileDispenseBehavior() {
@@ -43,7 +43,7 @@ public class FrozenSnowballItem extends BSFSnowballItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if (!storageInTank(pPlayer, itemStack, ItemRegister.FROZEN_SNOWBALL_STORAGE_TANK.get())) {
+        if (!storageInTank(pPlayer, itemStack, ItemRegister.FROZEN_SNOWBALL_TANK.get())) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
                 FrozenSnowballEntity snowballEntity = new FrozenSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballDamageRate(pPlayer)));
@@ -60,7 +60,7 @@ public class FrozenSnowballItem extends BSFSnowballItem {
     }
 
     @Override
-    public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
+    public AbstractBSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
         return new FrozenSnowballEntity(livingEntity, level, launchFunc);
     }
 

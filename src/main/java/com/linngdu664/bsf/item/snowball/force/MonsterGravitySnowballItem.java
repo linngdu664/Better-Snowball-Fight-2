@@ -2,7 +2,7 @@ package com.linngdu664.bsf.item.snowball.force;
 
 import com.linngdu664.bsf.entity.snowball.force.MonsterGravitySnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.snowball.BSFSnowballItem;
+import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MonsterGravitySnowballItem extends BSFSnowballItem {
+public class MonsterGravitySnowballItem extends AbstractBSFSnowballItem {
     public MonsterGravitySnowballItem() {
         super(Rarity.RARE);
     }
@@ -32,7 +32,7 @@ public class MonsterGravitySnowballItem extends BSFSnowballItem {
         if (pPlayer.isShiftKeyDown()) {
             ItemStack newStack = new ItemStack(ItemRegister.PROJECTILE_GRAVITY_SNOWBALL.get(), itemStack.getCount());
             pPlayer.setItemInHand(pUsedHand, newStack);
-        } else if (!storageInTank(pPlayer, itemStack, ItemRegister.MONSTER_GRAVITY_SNOWBALL_STORAGE_TANK.get())) {
+        } else if (!storageInTank(pPlayer, itemStack, ItemRegister.MONSTER_GRAVITY_SNOWBALL_TANK.get())) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
                 MonsterGravitySnowballEntity snowballEntity = new MonsterGravitySnowballEntity(pPlayer, pLevel, getLaunchFunc(1));

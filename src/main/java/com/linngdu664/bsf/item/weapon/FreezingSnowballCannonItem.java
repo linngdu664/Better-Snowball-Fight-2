@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.weapon;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal.IceSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.special.FrozenSnowballEntity;
 import com.linngdu664.bsf.util.LaunchFrom;
@@ -25,7 +25,7 @@ public class FreezingSnowballCannonItem extends SnowballCannonItem {
             }
 
             @Override
-            public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
+            public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
                 if (bsfSnowballEntity instanceof IceSnowballEntity || bsfSnowballEntity instanceof FrozenSnowballEntity) {
                     bsfSnowballEntity.blazeDamage += 4;
                     bsfSnowballEntity.frozenTicks = 200;

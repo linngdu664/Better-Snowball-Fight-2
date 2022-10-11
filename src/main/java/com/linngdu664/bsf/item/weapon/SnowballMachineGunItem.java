@@ -1,10 +1,10 @@
 package com.linngdu664.bsf.item.weapon;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
-import com.linngdu664.bsf.item.tank.SnowballStorageTankItem;
-import com.linngdu664.bsf.item.tank.normal.ExplosiveSnowballStorageTank;
-import com.linngdu664.bsf.item.tank.tracking.ExplosiveMonsterTrackingSnowballStorageTank;
-import com.linngdu664.bsf.item.tank.tracking.ExplosivePlayerTrackingSnowballStorageTank;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
+import com.linngdu664.bsf.item.tank.normal.ExplosiveSnowballTank;
+import com.linngdu664.bsf.item.tank.tracking.ExplosiveMonsterTrackingSnowballTank;
+import com.linngdu664.bsf.item.tank.tracking.ExplosivePlayerTrackingSnowballTank;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.SoundRegister;
@@ -34,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SnowballMachineGunItem extends BSFWeaponItem {
+public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     private int timer = 0;
     private float recoil = 0;
     private float damageChance;
@@ -52,7 +52,7 @@ public class SnowballMachineGunItem extends BSFWeaponItem {
             }
 
             @Override
-            public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
+            public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.punch = 1.2;
             }
         };
@@ -77,12 +77,12 @@ public class SnowballMachineGunItem extends BSFWeaponItem {
         if (!isOnCoolDown) {
             ItemStack itemStack = findAmmo(player, true, false);
             if (itemStack != null) {
-                if (itemStack.getItem() instanceof ExplosiveSnowballStorageTank || itemStack.getItem() instanceof ExplosivePlayerTrackingSnowballStorageTank || itemStack.getItem() instanceof ExplosiveMonsterTrackingSnowballStorageTank) {
+                if (itemStack.getItem() instanceof ExplosiveSnowballTank || itemStack.getItem() instanceof ExplosivePlayerTrackingSnowballTank || itemStack.getItem() instanceof ExplosiveMonsterTrackingSnowballTank) {
                     flag = true;
                 }
                 if (timer % 3 == 0 && (!flag || timer % 6 == 0)) {
-                    BSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc());
-                    recoil = ((SnowballStorageTankItem) itemStack.getItem()).getSnowball().getRecoil();
+                    AbstractBSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc());
+                    recoil = ((AbstractSnowballTankItem) itemStack.getItem()).getSnowball().getRecoil();
                     BSFShootFromRotation(snowballEntity, pitch, yaw, 2.6F, 1.0F);
                     pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                     pLevel.addFreshEntity(snowballEntity);
@@ -134,7 +134,7 @@ public class SnowballMachineGunItem extends BSFWeaponItem {
     }
 
     /*
-        public BSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player) {
+        public AbstractBSFSnowballEntity itemToEntity(ItemStack itemStack, Level level, Player player) {
             Item item = itemStack.getItem();
             if (item == ItemRegister.COMPACTED_SNOWBALL_STORAGE_TANK.get()) {
                 recoil = 0.075F;

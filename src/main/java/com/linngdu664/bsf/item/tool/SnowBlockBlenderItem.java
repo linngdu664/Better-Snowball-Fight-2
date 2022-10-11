@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SnowBlockBlenderItem extends BSFEnhanceableToolItem {
+public class SnowBlockBlenderItem extends AbstractBSFEnhanceableToolItem {
     public SnowBlockBlenderItem() {
         super(Rarity.COMMON, 256);
     }

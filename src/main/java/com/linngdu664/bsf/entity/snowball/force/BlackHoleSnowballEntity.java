@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.entity.snowball.force;
 
-import com.linngdu664.bsf.entity.BSFSnowballEntity;
+import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.MovingAlgorithm;
@@ -15,7 +15,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public class BlackHoleSnowballEntity extends BSFSnowballEntity {
+public class BlackHoleSnowballEntity extends AbstractBSFSnowballEntity {
     public int startTime = 20;
     public int endTime = 150;
     private int timer = 0;

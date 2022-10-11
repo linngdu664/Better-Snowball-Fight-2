@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class RepulsiveFieldGeneratorItem extends BSFEnhanceableToolItem {
+public class RepulsiveFieldGeneratorItem extends AbstractBSFEnhanceableToolItem {
     public RepulsiveFieldGeneratorItem() {
         super(Rarity.RARE, 512);
     }
