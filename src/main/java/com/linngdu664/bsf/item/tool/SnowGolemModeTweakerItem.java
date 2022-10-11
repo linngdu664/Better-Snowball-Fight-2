@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class SnowGolemModeTweakerItem extends Item {
-    private int state = 0;
+    private byte state = 0;
     private boolean useLocator = false;
 
     public SnowGolemModeTweakerItem() {
@@ -26,12 +26,12 @@ public class SnowGolemModeTweakerItem extends Item {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
-        if (pLevel.isClientSide) {
+        if (!pLevel.isClientSide) {
             if (pPlayer.isShiftKeyDown()) {
                 useLocator = !useLocator;
                 pPlayer.sendMessage(useLocator ? new TranslatableComponent("snow_golem_locator_true.tip") : new TranslatableComponent("snow_golem_locator_false.tip"), Util.NIL_UUID);
             } else {
-                state = (state + 1) % 5;
+                state = (byte) ((state + 1) % 5);
                 pPlayer.sendMessage(new TranslatableComponent(switch (state) {
                     case 0 -> "snow_golem_standby.tip";
                     case 1 -> "snow_golem_follow.tip";
@@ -41,23 +41,15 @@ public class SnowGolemModeTweakerItem extends Item {
                 }), Util.NIL_UUID);
             }
         }
-        return super.use(pLevel, pPlayer, pUsedHand);
+        return InteractionResultHolder.success(pPlayer.getItemInHand(pUsedHand));
     }
 
-    public int getState() {
+    public byte getState() {
         return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
     }
 
     public boolean isUseLocator() {
         return useLocator;
-    }
-
-    public void setUseLocator(boolean useLocator) {
-        this.useLocator = useLocator;
     }
 
     @Override

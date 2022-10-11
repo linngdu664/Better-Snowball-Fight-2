@@ -50,9 +50,10 @@ public class SnowballClampItem extends TieredItem {
         if (pInteractionTarget instanceof SnowGolem && (pPlayer.getMainHandItem().isEmpty() || pPlayer.getOffhandItem().isEmpty())) {
             pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
             pStack.hurtAndBreak(1, pPlayer, (e) -> e.broadcastBreakEvent(pUsedHand));
+            pPlayer.awardStat(Stats.ITEM_USED.get(this));
+            return InteractionResult.SUCCESS;
         }
-        pPlayer.awardStat(Stats.ITEM_USED.get(this));
-        return super.interactLivingEntity(pStack, pPlayer, pInteractionTarget, pUsedHand);
+        return InteractionResult.PASS;
     }
 
     @Override
