@@ -28,14 +28,15 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         ItemStack stack = null;
-        for (int i = 0; i < pPlayer.getInventory().getContainerSize(); i++) {
+        int i;
+        for (i = 0; i < pPlayer.getInventory().getContainerSize(); i++) {
             stack = pPlayer.getInventory().getItem(i);
             if (stack.getItem() instanceof IronSnowballItem ||
                     stack.getItem() instanceof IronSnowballTank) {
                 break;
             }
         }
-        if (stack != null) {
+        if (i != pPlayer.getInventory().getContainerSize()) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
                 AbstractBSFSnowballEntity snowballEntity = new GPSSnowballEntity(pPlayer, pLevel, itemStack);
