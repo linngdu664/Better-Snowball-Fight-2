@@ -7,6 +7,7 @@ import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
@@ -35,7 +36,7 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
                 ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
                 snowball.discard();
                 if (snowball instanceof SubspaceSnowballEntity) {
-                    ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.05);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 16, 0, 0, 0, 0.05);
                     this.discard();
                 }
                 if (damage < 15.0F) {
@@ -43,7 +44,17 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
                     blazeDamage += snowball.getPower();
                 }
             }
+            List<Snowball> list2 = TargetGetter.getTargetList(this, Snowball.class, 2.5);
+            for (Snowball snowball : list2) {
+                ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
+                snowball.discard();
+                if (damage < 15.0F) {
+                    damage += 1;
+                    blazeDamage += 1;
+                }
+            }
             if (timer == 150) {
+                ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 16, 0, 0, 0, 0.05);
                 this.discard();
             }
             timer++;
