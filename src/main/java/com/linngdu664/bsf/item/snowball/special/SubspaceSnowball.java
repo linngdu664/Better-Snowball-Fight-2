@@ -62,5 +62,6 @@ public class SubspaceSnowball extends AbstractBSFSnowballItem {
         pTooltipComponents.add(new TranslatableComponent("lunch_no_cannon.tooltip").withStyle(ChatFormatting.DARK_RED));
         pTooltipComponents.add(new TranslatableComponent("lunch_no_machine_gun.tooltip").withStyle(ChatFormatting.DARK_RED));
         pTooltipComponents.add(new TranslatableComponent("lunch_no_shotgun.tooltip").withStyle(ChatFormatting.DARK_RED));
+        pTooltipComponents.add(new TranslatableComponent("subspace_snowball.tooltip").withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

@@ -32,7 +32,6 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
         if (!level.isClientSide) {
             List<AbstractBSFSnowballEntity> list = TargetGetter.getTargetList(this, AbstractBSFSnowballEntity.class, 2.5);
             for (AbstractBSFSnowballEntity snowball : list) {
-                // todo: adjust the particles?
                 ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
                 snowball.discard();
                 if (snowball instanceof SubspaceSnowballEntity) {
@@ -65,9 +64,8 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
         if (!level.isClientSide) {
-            // todo: adjust the particles?
-            ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), (int) damage * 2, 0, 0, 0, 0);
-            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), (int) damage * 2, 0, 0, 0, 0.04);
+            ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), (int) damage * 4, 0, 0, 0, 0);
+            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), (int) damage * 4, 0, 0, 0, 0.04);
             this.discard();
         }
     }
