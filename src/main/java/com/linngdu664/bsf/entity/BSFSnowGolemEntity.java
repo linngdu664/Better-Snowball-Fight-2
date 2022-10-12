@@ -65,7 +65,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     private static final EntityDataAccessor<Integer> WEAPON_ANG = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Byte> STYLE = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BYTE);
 
-
     public BSFSnowGolemEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
         super(p_21803_, p_21804_);
     }
@@ -244,7 +243,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         }
     }
 
-
     @Override
     public void performRangedAttack(@NotNull LivingEntity pTarget, float pDistanceFactor) {
         ItemStack weapon = getWeapon();
@@ -293,7 +291,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 if (ammo.getItem() instanceof AbstractSnowballTankItem tank) {
                     AbstractBSFSnowballEntity snowball = tank.getSnowball().getCorrespondingEntity(level, this, launchFunc);
                     snowball.shoot(dx, sinTheta, dz, v, accuracy);
-                    level.addFreshEntity(snowball);//todo add particles
+                    level.addFreshEntity(snowball); // todo: add particles
                     ammo.setDamageValue(ammo.getDamageValue() + 1);
                     if (ammo.getDamageValue() == 96) {
                         setAmmo(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));
@@ -313,7 +311,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     break;
                 }
             }
-
         }
     }
 
