@@ -31,4 +31,7 @@ public class ProjectileRepulsionSnowballEntity extends AbstractForceSnowballEnti
             this.discard();
         }
     }
+    public float getPower(){
+        return 3f;
+    }
 }

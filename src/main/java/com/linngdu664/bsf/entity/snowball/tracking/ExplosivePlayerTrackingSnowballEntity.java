@@ -34,4 +34,7 @@ public class ExplosivePlayerTrackingSnowballEntity extends AbstractTrackingSnowb
             this.discard();
         }
     }
+    public float getPower(){
+        return 3.25f;
+    }
 }

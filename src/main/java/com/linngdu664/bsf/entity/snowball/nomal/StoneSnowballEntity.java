@@ -37,4 +37,7 @@ public class StoneSnowballEntity extends AbstractBSFSnowballEntity {
             this.discard();
         }
     }
+    public float getPower(){
+        return 1.1f;
+    }
 }

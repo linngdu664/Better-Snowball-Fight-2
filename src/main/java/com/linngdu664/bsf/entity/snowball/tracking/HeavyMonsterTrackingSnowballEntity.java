@@ -31,4 +31,7 @@ public class HeavyMonsterTrackingSnowballEntity extends AbstractTrackingSnowball
             this.discard();
         }
     }
+    public float getPower(){
+        return 1.5f;
+    }
 }

@@ -39,8 +39,8 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
                     this.discard();
                 }
                 if (damage < 15.0F) {
-                    damage += 1.0F;
-                    blazeDamage += 1.0F;
+                    damage += snowball.getPower();
+                    blazeDamage += snowball.getPower();
                 }
             }
             if (timer == 150) {

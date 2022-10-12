@@ -41,4 +41,7 @@ public class ExplosiveSnowballEntity extends AbstractBSFSnowballEntity {
             this.discard();
         }
     }
+    public float getPower(){
+        return 3;
+    }
 }
