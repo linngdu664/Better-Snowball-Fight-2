@@ -47,7 +47,6 @@ public class RepulsiveFieldGeneratorItem extends AbstractBSFEnhanceableToolItem 
                         if (!(projectile instanceof BlackHoleSnowballEntity)) {
                             Vec3 dvVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot()).scale(2);
                             projectile.push(dvVec.x, dvVec.y, dvVec.z);
-                            projectile.setNoGravity(false);
                             ((ServerLevel) pLevel).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 10, 0, 0, 0, 0.04);
                         }
                     }
@@ -95,7 +94,6 @@ public class RepulsiveFieldGeneratorItem extends AbstractBSFEnhanceableToolItem 
                                 projectileVector.add(projectile);
                                 Vec3 dvVec = projectile.getDeltaMovement().scale(-0.8);
                                 projectile.push(dvVec.x, dvVec.y, dvVec.z);
-                                projectile.setNoGravity(true);
                                 ((ServerLevel) pLevel).sendParticles(ParticleTypes.ELECTRIC_SPARK, projectile.getX(), projectile.getY(), projectile.getZ(), 3, 0, 0, 0, 0.04);
                             }
                         }
