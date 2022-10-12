@@ -23,5 +23,25 @@
     "sounds": [
       "bsf:black_hole_start"
     ]
+  },
+  "powder_snowball": {
+    "sounds": [
+      "bsf:powder_snowball"
+    ]
+  },
+  "field_push": {
+    "sounds": [
+      "bsf:field_push"
+    ]
+  },
+  "field_snowball_stop": {
+    "sounds": [
+      "bsf:field_snowball_stop"
+    ]
+  },
+  "field_start": {
+    "sounds": [
+      "bsf:field_start"
+    ]
   }
 }
