@@ -197,7 +197,8 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
         this.frozenTicks = frozenTicks;
         return this;
     }
-    public float getPower(){
+
+    public float getPower() {
         return 1;
     }
 }

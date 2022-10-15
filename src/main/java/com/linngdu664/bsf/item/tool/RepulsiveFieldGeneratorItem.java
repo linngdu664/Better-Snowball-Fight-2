@@ -74,28 +74,25 @@ public class RepulsiveFieldGeneratorItem extends AbstractBSFEnhanceableToolItem 
     public void onUseTick(@NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, @NotNull ItemStack pStack, int pRemainingUseDuration) {
         if (pRemainingUseDuration == 1) {
             this.releaseUsing(pStack, pLevel, pLivingEntity, pRemainingUseDuration);
-        } else {
-
-            if (pLivingEntity instanceof Player player) {
-                if (pRemainingUseDuration == 60) {
-                    pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.FIELD_START.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                }
-                if (!pLevel.isClientSide) {
-                    Vec3 vec3 = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
-                    List<Projectile> list = TargetGetter.getTargetList(player, Projectile.class, 3);
-                    for (Projectile projectile : list) {
-                        Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
-                        if (BSFMthUtil.vec3AngleCos(rVec, vec3) > 0.86602540F) {
-                            if (!(projectile instanceof BlackHoleSnowballEntity)) {
-                                if (!projectileVector.contains(projectile)) {
-                                    pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.FIELD_SNOWBALL_STOP.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                                    ((ServerLevel) pLevel).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 10, 0, 0, 0, 0.04);
-                                }
-                                projectileVector.add(projectile);
-                                Vec3 dvVec = projectile.getDeltaMovement().scale(-0.8);
-                                projectile.push(dvVec.x, dvVec.y, dvVec.z);
-                                ((ServerLevel) pLevel).sendParticles(ParticleTypes.ELECTRIC_SPARK, projectile.getX(), projectile.getY(), projectile.getZ(), 3, 0, 0, 0, 0.04);
+        } else if (pLivingEntity instanceof Player player) {
+            if (pRemainingUseDuration == 60) {
+                pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.FIELD_START.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+            }
+            if (!pLevel.isClientSide) {
+                Vec3 vec3 = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
+                List<Projectile> list = TargetGetter.getTargetList(player, Projectile.class, 3);
+                for (Projectile projectile : list) {
+                    Vec3 rVec = new Vec3(projectile.getX() - player.getX(), projectile.getY() - player.getEyeY(), projectile.getZ() - player.getZ());
+                    if (BSFMthUtil.vec3AngleCos(rVec, vec3) > 0.86602540F) {
+                        if (!(projectile instanceof BlackHoleSnowballEntity)) {
+                            if (!projectileVector.contains(projectile)) {
+                                pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.FIELD_SNOWBALL_STOP.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                                ((ServerLevel) pLevel).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), projectile.getX(), projectile.getY(), projectile.getZ(), 10, 0, 0, 0, 0.04);
                             }
+                            projectileVector.add(projectile);
+                            Vec3 dvVec = projectile.getDeltaMovement().scale(-0.8);
+                            projectile.push(dvVec.x, dvVec.y, dvVec.z);
+                            ((ServerLevel) pLevel).sendParticles(ParticleTypes.ELECTRIC_SPARK, projectile.getX(), projectile.getY(), projectile.getZ(), 3, 0, 0, 0, 0.04);
                         }
                     }
                 }
