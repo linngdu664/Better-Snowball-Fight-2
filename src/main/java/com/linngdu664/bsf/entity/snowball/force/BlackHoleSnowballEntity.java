@@ -60,7 +60,8 @@ public class BlackHoleSnowballEntity extends AbstractBSFSnowballEntity {
         }
         timer++;
     }
-    public float getPower(){
+
+    public float getPower() {
         return 8;
     }
 }

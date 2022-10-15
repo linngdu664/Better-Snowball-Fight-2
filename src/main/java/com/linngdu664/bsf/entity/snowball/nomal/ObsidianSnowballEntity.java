@@ -38,7 +38,8 @@ public class ObsidianSnowballEntity extends AbstractBSFSnowballEntity {
             this.discard();
         }
     }
-    public float getPower(){
+
+    public float getPower() {
         return 2.25f;
     }
 }

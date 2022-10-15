@@ -21,7 +21,6 @@ public class BSFSnowGolemHoldItemLayer extends RenderLayer<BSFSnowGolemEntity, B
 
     @Override
     public void render(@NotNull PoseStack pMatrixStack, @NotNull MultiBufferSource pBuffer, int pPackedLight, BSFSnowGolemEntity pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-//        ItemStack itemstack = pLivingEntity.getInventory().getItem(1);
         ItemStack itemstack = pLivingEntity.getWeapon();
         if (itemstack != ItemStack.EMPTY) {
             pMatrixStack.pushPose();

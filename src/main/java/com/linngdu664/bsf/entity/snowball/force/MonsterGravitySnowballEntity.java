@@ -31,7 +31,8 @@ public class MonsterGravitySnowballEntity extends AbstractForceSnowballEntity {
             this.discard();
         }
     }
-    public float getPower(){
+
+    public float getPower() {
         return 3f;
     }
 }

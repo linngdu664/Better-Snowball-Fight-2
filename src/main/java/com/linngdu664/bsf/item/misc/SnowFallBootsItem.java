@@ -25,12 +25,12 @@ public class SnowFallBootsItem extends ArmorItem {
     public SnowFallBootsItem() {
         super(new ArmorMaterial() {
             @Override
-            public int getDurabilityForSlot(EquipmentSlot pSlot) {
+            public int getDurabilityForSlot(@NotNull EquipmentSlot pSlot) {
                 return 256;
             }
 
             @Override
-            public int getDefenseForSlot(EquipmentSlot pSlot) {
+            public int getDefenseForSlot(@NotNull EquipmentSlot pSlot) {
                 return 1;
             }
 
@@ -40,17 +40,17 @@ public class SnowFallBootsItem extends ArmorItem {
             }
 
             @Override
-            public SoundEvent getEquipSound() {
+            public @NotNull SoundEvent getEquipSound() {
                 return SoundEvents.ARMOR_EQUIP_LEATHER;
             }
 
             @Override
-            public Ingredient getRepairIngredient() {
+            public @NotNull Ingredient getRepairIngredient() {
                 return Ingredient.EMPTY;
             }
 
             @Override
-            public String getName() {
+            public @NotNull String getName() {
                 return "snow_fall_boots";
             }
 
@@ -65,10 +65,12 @@ public class SnowFallBootsItem extends ArmorItem {
             }
         }, EquipmentSlot.FEET, new Properties().tab(ItemGroup.MAIN).stacksTo(1));
     }
+
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         return "bsf:textures/models/armor/snow_fall_boots.png";
     }
+
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
         consumer.accept(new IItemRenderProperties() {
             @SuppressWarnings("rawtypes")

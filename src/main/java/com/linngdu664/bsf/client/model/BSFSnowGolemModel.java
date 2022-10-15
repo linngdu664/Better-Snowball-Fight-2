@@ -32,6 +32,7 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
         this.down = root.getChild("down");
     }
 
+    @SuppressWarnings("unused")
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
@@ -91,8 +92,6 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
             this.right_arm_r1.yRot = 0;
             this.right_arm_r1.zRot = Mth.DEG_TO_RAD * -60;
         }
-
-//		System.out.println(entity.toString()+" "+limbSwing+" "+limbSwingAmount+" "+ageInTicks);
     }
 
     @Override

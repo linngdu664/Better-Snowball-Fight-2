@@ -107,7 +107,8 @@ public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
         }
         level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.PLAYER_HURT_FREEZE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
     }
-    public float getPower(){
+
+    public float getPower() {
         return 1.6f;
     }
 }
