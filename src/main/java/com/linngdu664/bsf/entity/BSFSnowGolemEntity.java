@@ -216,6 +216,11 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     }
 
     @Override
+    protected int calculateFallDamage(float pDistance, float pDamageMultiplier) {
+        return 0;
+    }
+
+    @Override
     public void aiStep() {
         super.aiStep();
         if (!level.isClientSide) {
