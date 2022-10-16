@@ -11,6 +11,8 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,7 +48,7 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
                     ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 16, 0, 0, 0, 0.05);
                     this.discard();
                 }
-                if (damage < 15.0F) {
+                if (!release && damage < 15.0F) {
                     damage += snowball.getPower();
                     blazeDamage += snowball.getPower();
                 }
@@ -58,7 +60,7 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
                 }
                 ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
                 snowball.discard();
-                if (damage < 15.0F) {
+                if (!release && damage < 15.0F) {
                     damage += 1;
                     blazeDamage += 1;
                 }
@@ -75,10 +77,9 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
             timer++;
         }
     }
-
     @Override
-    protected void onHit(@NotNull HitResult pResult) {
-        super.onHit(pResult);
+    protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
+        super.onHitBlock(p_37258_);
         if (!level.isClientSide) {
             for (ItemStack itemStack : ItemStackVector) {
                 ItemEntity itemEntity = new ItemEntity(level, getX(), getY(), getZ(), itemStack);
@@ -88,6 +89,18 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
             ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), (int) damage * 4, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), (int) damage * 4, 0, 0, 0, 0.04);
             this.discard();
+        }
+    }
+
+    @Override
+    protected void onHitEntity(EntityHitResult pResult) {
+        super.onHitEntity(pResult);
+        if(!release){
+            if (!level.isClientSide) {
+                ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), (int) damage * 4, 0, 0, 0, 0);
+                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), (int) damage * 4, 0, 0, 0, 0.04);
+                this.discard();
+            }
         }
     }
 }
