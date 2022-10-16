@@ -32,8 +32,8 @@ public class SubspaceSnowball extends AbstractBSFSnowballItem {
         if (!storageInTank(pPlayer, itemStack, ItemRegister.SUBSPACE_SNOWBALL_TANK.get())) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
-                SubspaceSnowballEntity snowballEntity = new SubspaceSnowballEntity(pPlayer, pLevel, getLaunchFunc(1));
-                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F * getSnowballSlowdownRate(pPlayer), 1.0F);
+                SubspaceSnowballEntity snowballEntity = new SubspaceSnowballEntity(pPlayer, pLevel, getLaunchFunc(1), pPlayer.isShiftKeyDown());
+                snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F * getSnowballSlowdownRate(pPlayer), 1.0F); // testing, original 1.5
                 pLevel.addFreshEntity(snowballEntity);
             }
             if (!pPlayer.getAbilities().instabuild) {

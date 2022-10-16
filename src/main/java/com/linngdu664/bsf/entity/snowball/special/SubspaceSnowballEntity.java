@@ -7,6 +7,7 @@ import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -14,16 +15,20 @@ import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Vector;
 
 public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
     private int timer = 0;
+    private final boolean release;
+    private final Vector<ItemStack> ItemStackVector = new Vector<>();
 
-    public SubspaceSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
+    public SubspaceSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc, boolean canRelease) {
         super(livingEntity, level);
         this.setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.SUBSPACE_SNOWBALL.get()));
         this.setNoGravity(true);
+        this.release = canRelease;
     }
 
     @Override
@@ -32,6 +37,9 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
         if (!level.isClientSide) {
             List<AbstractBSFSnowballEntity> list = TargetGetter.getTargetList(this, AbstractBSFSnowballEntity.class, 2.5);
             for (AbstractBSFSnowballEntity snowball : list) {
+                if (release) {
+                    ItemStackVector.add(snowball.getItem());
+                }
                 ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
                 snowball.discard();
                 if (snowball instanceof SubspaceSnowballEntity) {
@@ -45,6 +53,9 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
             }
             List<Snowball> list2 = TargetGetter.getTargetList(this, Snowball.class, 2.5);
             for (Snowball snowball : list2) {
+                if (release) {
+                    ItemStackVector.add(snowball.getItem());
+                }
                 ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
                 snowball.discard();
                 if (damage < 15.0F) {
@@ -53,6 +64,11 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
                 }
             }
             if (timer == 150) {
+                for (ItemStack itemStack : ItemStackVector) {
+                    ItemEntity itemEntity = new ItemEntity(level, getX(), getY(), getZ(), itemStack);
+                    itemEntity.setDefaultPickUpDelay();
+                    level.addFreshEntity(itemEntity);
+                }
                 ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 16, 0, 0, 0, 0.05);
                 this.discard();
             }
@@ -64,6 +80,11 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
         if (!level.isClientSide) {
+            for (ItemStack itemStack : ItemStackVector) {
+                ItemEntity itemEntity = new ItemEntity(level, getX(), getY(), getZ(), itemStack);
+                itemEntity.setDefaultPickUpDelay();
+                level.addFreshEntity(itemEntity);
+            }
             ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), (int) damage * 4, 0, 0, 0, 0);
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), (int) damage * 4, 0, 0, 0, 0.04);
             this.discard();
