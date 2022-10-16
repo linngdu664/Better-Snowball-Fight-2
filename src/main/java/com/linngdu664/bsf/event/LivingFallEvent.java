@@ -14,17 +14,13 @@ public class LivingFallEvent {
     @SubscribeEvent
     public void LivingFall(net.minecraftforge.event.entity.living.LivingFallEvent event) {
         if (event.getEntity() instanceof Player player) {
-            System.out.println(event.getDistance());
             ItemStack shoes = player.getItemBySlot(EquipmentSlot.FEET);
             Level level = player.getLevel();
             Block block1 = level.getBlockState(new BlockPos(player.getX(), player.getY(), player.getZ())).getBlock();
             Block block2 = level.getBlockState(new BlockPos(player.getX(), player.getY() - 1, player.getZ())).getBlock();
             if (!level.isClientSide && shoes.getItem() instanceof SnowFallBootsItem && (block1.equals(Blocks.SNOW) || block2.equals(Blocks.SNOW_BLOCK))) {
                 event.setDamageMultiplier(0);
-                float h = event.getDistance();
-                if (h > 3) {
-                    shoes.hurtAndBreak((int) Math.ceil((h - 3) * 0.25), player, (p) -> p.broadcastBreakEvent(EquipmentSlot.FEET));
-                }
+                shoes.hurtAndBreak((int) Math.ceil((event.getDistance() - 3) * 0.25), player, (p) -> p.broadcastBreakEvent(EquipmentSlot.FEET));
             }
         }
     }
