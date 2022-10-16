@@ -78,6 +78,8 @@
   "item.bsf.repulsive_field_generator": "便攜式斥力場發生器",
   "item.bsf.target_locator": "目標定位器",
   "item.bsf.snow_golem_mode_tweaker": "雪傀儡模式調整器",
+  "item.bsf.snow_fall_boots": "落雪靴",
+
 
   "stone_snowball.tooltip": "甚也！",
   "snowball_clamp.tooltip": "高效善雪團之具",
@@ -135,6 +137,7 @@
   "snow_block_blender.tooltip": "不是用來攪雞蛋的",
   "snow_block_blender1.tooltip": "把雪塊變成細雪",
   "subspace_snowball.tooltip": "掉出了這個世界",
+  "snow_fall_boots.tooltip": "非常合理",
 
   "lunch_yes_hand.tooltip": "用手扔之：可",
   "lunch_yes_cannon.tooltip": "用炮射之：可",

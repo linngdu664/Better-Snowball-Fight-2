@@ -78,6 +78,8 @@
   "item.bsf.unstable_core": "不穩核心",
   "item.bsf.repulsion_core": "斥力核心",
   "item.bsf.gravity_core": "引力核心",
+  "item.bsf.snow_fall_boots": "落雪靴",
+
 
   "stone_snowball.tooltip": "真過分！",
   "snowball_clamp.tooltip": "高效率的搓雪球工具",
@@ -135,6 +137,7 @@
   "snow_block_blender.tooltip": "不是用來攪雞蛋的",
   "snow_block_blender1.tooltip": "把雪塊變成細雪",
   "subspace_snowball.tooltip": "掉出了這個世界",
+  "snow_fall_boots.tooltip": "非常合理",
 
   "lunch_yes_hand.tooltip": "用手扔：可以",
   "lunch_yes_cannon.tooltip": "雪球炮：可以",

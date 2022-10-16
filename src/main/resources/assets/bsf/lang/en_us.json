@@ -78,6 +78,7 @@
   "item.bsf.unstable_core": "Unstable Core",
   "item.bsf.repulsion_core": "Repulsion Core",
   "item.bsf.gravity_core": "Gravity Core",
+  "item.bsf.snow_fall_boots": "Snow Fall Boots",
 
   "stone_snowball.tooltip": "This is outrageous!",
   "snowball_clamp.tooltip": "Highly efficient snowballing tool",
@@ -135,6 +136,7 @@
   "snow_block_blender.tooltip": "Not for stirring eggs",
   "snow_block_blender1.tooltip": "Turning snow block into powder snow",
   "subspace_snowball.tooltip": "Fell out of the world",
+  "snow_fall_boots.tooltip": "reasonable",
 
   "lunch_yes_hand.tooltip": "thrown by hand: yes",
   "lunch_yes_cannon.tooltip": "shot by cannon: yes",

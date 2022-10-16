@@ -78,6 +78,8 @@
   "item.bsf.unstable_core": "不稳核心",
   "item.bsf.repulsion_core": "斥力核心",
   "item.bsf.gravity_core": "引力核心",
+  "item.bsf.snow_fall_boots": "落雪靴",
+  "snow_fall_boots.tooltip": "非常合理",
 
   "stone_snowball.tooltip": "真过分！",
   "snowball_clamp.tooltip": "高效率的搓雪球工具",
