@@ -3,10 +3,10 @@
   "group": "monster_tracking_snowball",
   "ingredients": [
     {
-      "item": "bsf:monster_tracking_snowball"
+      "item": "bsf:light_monster_tracking_snowball"
     }
   ],
   "result": {
-    "item": "bsf:player_tracking_snowball"
+    "item": "bsf:light_player_tracking_snowball"
   }
 }
