@@ -41,6 +41,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SnowballItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -50,6 +51,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob {
+    private static final int styleNum=8;
     /*
      status flag:
      0: standby
@@ -81,7 +83,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.define(WEAPON, ItemStack.EMPTY);
         entityData.define(AMMO, ItemStack.EMPTY);
         entityData.define(WEAPON_ANG, 0);
-        entityData.define(STYLE, (byte) (BSFMthUtil.randInt(1, 9)));
+        entityData.define(STYLE, (byte) (BSFMthUtil.randInt(0, styleNum)));
     }
 
     @Override
@@ -205,6 +207,8 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             } else if (itemStack.getItem() instanceof SnowballClampItem) {
                 pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
                 itemStack.hurtAndBreak(1, pPlayer, (e) -> e.broadcastBreakEvent(pHand));
+            } else if (itemStack.getItem() instanceof SnowballItem) {
+                setStyle((byte) (((int)getStyle()+1)%styleNum));
             }
         }
         return InteractionResult.SUCCESS;
