@@ -86,6 +86,7 @@ public class ItemRegister {
     public static final RegistryObject<Item> GLOVE = ITEMS.register("glove", GloveItem::new);
     public static final RegistryObject<Item> REPULSIVE_FIELD_GENERATOR = ITEMS.register("repulsive_field_generator", RepulsiveFieldGeneratorItem::new);
     public static final RegistryObject<Item> ICE_SKATES_ITEM = ITEMS.register("ice_skates", IceSkatesItem::new);
+    public static final RegistryObject<Item> SNOW_FALL_BOOTS = ITEMS.register("snow_fall_boots", SnowFallBootsItem::new);
     public static final RegistryObject<Item> SNOW_BLOCK_BLENDER = ITEMS.register("snow_block_blender", SnowBlockBlenderItem::new);
     public static final RegistryObject<Item> EMPTY_BASIN = ITEMS.register("empty_basin", EmptyBasinItem::new);
     public static final RegistryObject<Item> BASIN_OF_SNOW = ITEMS.register("basin_of_snow", BasinOfSnowItem::new);
@@ -110,7 +111,6 @@ public class ItemRegister {
     public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_tank", EmptySnowballTankItem::new);
 
     public static final RegistryObject<Item> SMART_SNOW_BLOCK = ITEMS.register("smart_snow_block", SmartSnowBlockItem::new);
-    public static final RegistryObject<Item> SNOW_FALL_BOOTS = ITEMS.register("snow_fall_boots", SnowFallBootsItem::new);
 
     public static final RegistryObject<Item> GPS_SNOWBALL = ITEMS.register("gps_snowball", () -> new Item(new Item.Properties()));    //This item does not need to be added to the group
 }
