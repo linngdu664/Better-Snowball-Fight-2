@@ -137,7 +137,23 @@
   "snow_block_blender1.tooltip": "把雪塊變成細雪",
   "subspace_snowball.tooltip": "掉出了這個世界",
   "snow_fall_boots.tooltip": "非常合理",
-
+  "snow_fall_boots1.tooltip": "掉雪上不會有摔落傷害",
+  "subspace_snowball1.tooltip": "shift按下時丟出啟動傷害轉換模式",
+  "repulsive_field_generator.tooltip": "偵測到敵方泰坦",
+  "repulsive_field_generator1.tooltip": "長按產生力場，松開斥力爆發",
+  "unstable_core.tooltip": "可在磁石上分裂開",
+  "snow_golem_mode_tweaker.tooltip": "右鍵調整行為模式",
+  "snow_golem_mode_tweaker1.tooltip": "shift按下時右鍵調整目標模式",
+  "snow_golem_mode_tweaker2.tooltip": "右鍵高級雪傀儡錄入設定",
+  "target_locator.tooltip": "以鐵雪球為彈藥發射定位雪球",
+  "target_locator1.tooltip": "定位雪球擊中目標後會把目標信息返回給定位器",
+  "target_locator2.tooltip": "右鍵高級雪傀儡錄入目標設定",
+  "smart_snow_block.tooltip": "冰雪聰明",
+  "smart_snow_block0.tooltip": "在兩個普通雪塊上放上智慧雪塊生成高級雪傀儡",
+  "smart_snow_block1.tooltip": "拿著槍或雪球儲罐右鍵高級雪傀儡裝備",
+  "smart_snow_block2.tooltip": "高級雪傀儡不能拿機槍，不能直接用手丟雪球",
+  "smart_snow_block3.tooltip": "空手右鍵卸下儲罐，空手下蹲右鍵卸下武器",
+  "smart_snow_block4.tooltip": "用目標定位器和模式調整器修改雪人模式",
 
   "lunch_yes_hand.tooltip": "用手扔：可以",
   "lunch_yes_cannon.tooltip": "雪球炮：可以",
@@ -179,6 +195,7 @@
   "target.tip": "鎖定目標：",
   "targeted.tip": "你已被鎖定",
   "import_state.tip": "模式導入成功",
+  "targeted_clear.tip": "目標信息已清除",
 
   "block.bsf.smart_snow_block": "智慧雪塊"
 }

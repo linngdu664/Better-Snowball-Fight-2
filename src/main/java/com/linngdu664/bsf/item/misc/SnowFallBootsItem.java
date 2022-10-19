@@ -101,6 +101,7 @@ public class SnowFallBootsItem extends ArmorItem {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
+        pTooltipComponents.add(new TranslatableComponent("snow_fall_boots1.tooltip").withStyle(ChatFormatting.BLUE));
         pTooltipComponents.add(new TranslatableComponent("snow_fall_boots.tooltip").withStyle(ChatFormatting.DARK_AQUA));
     }
 }

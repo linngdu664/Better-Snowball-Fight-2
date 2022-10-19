@@ -137,6 +137,23 @@
   "snow_block_blender1.tooltip": "Turning snow block into powder snow",
   "subspace_snowball.tooltip": "Fell out of the world",
   "snow_fall_boots.tooltip": "reasonable",
+  "snow_fall_boots1.tooltip": "There is no fall damage when you fall on snow",
+  "subspace_snowball1.tooltip": "Throw to start damage conversion mode when shift is pressed",
+  "repulsive_field_generator.tooltip": "Enemy Titan Detected",
+  "repulsive_field_generator1.tooltip": "Long press to generate force field, release to explode repulsion",
+  "unstable_core.tooltip": "Splittable on magnets",
+  "snow_golem_mode_tweaker.tooltip": "Right click to adjust behavior mode",
+  "snow_golem_mode_tweaker1.tooltip": "Right click when shift is pressed to adjust the target mode",
+  "snow_golem_mode_tweaker2.tooltip": "Right click Advanced Snow Golem to entry settings",
+  "target_locator.tooltip": "Use iron snowball as ammunition to launch positioning snowball",
+  "target_locator1.tooltip": "Positioning snowball will return the target information to the locator when it hits the target",
+  "target_locator2.tooltip": "Right click Advanced Snow Golem to enter target settings",
+  "smart_snow_block.tooltip": "Ice-Smart",
+  "smart_snow_block0.tooltip": "Place a smart snow block on top of two normal snow blocks to create an Advanced Snow Golem",
+  "smart_snow_block1.tooltip": "Take the gun or snowball storage tank right click Advanced Snow Golem equipment",
+  "smart_snow_block2.tooltip": "Advanced Snow Golem can`t take machine guns, can`t throw snowballs without weapon",
+  "smart_snow_block3.tooltip": "Unload the storage tank with empty hand right click, unload the weapon with empty hand right click when shift is pressed",
+  "smart_snow_block4.tooltip": "Modify Advanced Snow Golem mode with target locator and mode tweaker",
 
   "lunch_yes_hand.tooltip": "thrown by hand: yes",
   "lunch_yes_cannon.tooltip": "shot by cannon: yes",
@@ -178,6 +195,7 @@
   "target.tip": "Target:",
   "targeted.tip": "You have been targeted",
   "import_state.tip": "Mode imported successfully",
+  "targeted_clear.tip": "Target information is cleared",
 
   "block.bsf.smart_snow_block": "Smart Snow Block"
 }

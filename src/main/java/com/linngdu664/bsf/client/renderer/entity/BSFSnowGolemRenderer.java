@@ -18,25 +18,25 @@ public class BSFSnowGolemRenderer extends MobRenderer<BSFSnowGolemEntity, BSFSno
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull BSFSnowGolemEntity pEntity) {
         switch (pEntity.getStyle()) {
-            case 1 -> {
+            case 0 -> {
                 return new ResourceLocation("bsf:textures/models/bsf_snow_golem_1.png");
             }
-            case 2 -> {
+            case 1 -> {
                 return new ResourceLocation("bsf:textures/models/bsf_snow_golem_2.png");
             }
-            case 3 -> {
+            case 2 -> {
                 return new ResourceLocation("bsf:textures/models/bsf_snow_golem_3.png");
             }
-            case 4 -> {
+            case 3 -> {
                 return new ResourceLocation("bsf:textures/models/bsf_snow_golem_4.png");
             }
-            case 5 -> {
+            case 4 -> {
                 return new ResourceLocation("bsf:textures/models/bsf_snow_golem_5.png");
             }
-            case 6 -> {
+            case 5 -> {
                 return new ResourceLocation("bsf:textures/models/bsf_snow_golem_6.png");
             }
-            case 7 -> {
+            case 6 -> {
                 return new ResourceLocation("bsf:textures/models/bsf_snow_golem_7.png");
             }
             default -> {

@@ -79,7 +79,7 @@
   "item.bsf.repulsion_core": "斥力核心",
   "item.bsf.gravity_core": "引力核心",
   "item.bsf.snow_fall_boots": "落雪靴",
-  "snow_fall_boots.tooltip": "非常合理",
+
 
   "stone_snowball.tooltip": "真过分！",
   "snowball_clamp.tooltip": "高效率的搓雪球工具",
@@ -111,7 +111,7 @@
   "snowball_storage_tank.tooltip": "雪球宝宝太空人",
   "ice_skates.tooltip": "转起来了",
   "black_hole_snowball.tooltip": "雪球？什么雪球？",
-  "black_hole_snowball1.tooltip": "shift按下时发射启动更快",
+  "black_hole_snowball1.tooltip": "shift按下时丢出启动更快",
   "monster_gravity_snowball.tooltip": "小黑洞",
   "monster_repulsion_snowball.tooltip": "恶灵退散",
   "projectile_gravity_snowball.tooltip": "重力星",
@@ -137,6 +137,24 @@
   "snow_block_blender.tooltip": "不是用来搅鸡蛋的",
   "snow_block_blender1.tooltip": "把雪块变成细雪",
   "subspace_snowball.tooltip": "掉出了这个世界",
+  "snow_fall_boots.tooltip": "非常合理",
+  "snow_fall_boots1.tooltip": "掉雪上不会有摔落伤害",
+  "subspace_snowball1.tooltip": "shift按下时丢出启动伤害转换模式",
+  "repulsive_field_generator.tooltip": "侦测到敌方泰坦",
+  "repulsive_field_generator1.tooltip": "长按产生力场，松开斥力爆发",
+  "unstable_core.tooltip": "可在磁石上分裂开",
+  "snow_golem_mode_tweaker.tooltip": "右键调整行为模式",
+  "snow_golem_mode_tweaker1.tooltip": "shift按下时右键调整目标模式",
+  "snow_golem_mode_tweaker2.tooltip": "右键高级雪傀儡录入设定",
+  "target_locator.tooltip": "以铁雪球为弹药发射定位雪球",
+  "target_locator1.tooltip": "定位雪球击中目标后会把目标信息返回给定位器",
+  "target_locator2.tooltip": "右键高级雪傀儡录入目标设定",
+  "smart_snow_block.tooltip": "冰雪聪明",
+  "smart_snow_block0.tooltip": "在两个普通雪块上放上智慧雪块生成高级雪傀儡",
+  "smart_snow_block1.tooltip": "拿着枪或雪球储罐右键高级雪傀儡装备",
+  "smart_snow_block2.tooltip": "高级雪傀儡不能拿机枪，不能直接用手丢雪球",
+  "smart_snow_block3.tooltip": "空手右键卸下储罐，空手下蹲右键卸下武器",
+  "smart_snow_block4.tooltip": "用目标定位器和模式调整器修改雪人模式",
 
   "lunch_yes_hand.tooltip": "用手扔：可以",
   "lunch_yes_cannon.tooltip": "雪球炮：可以",
@@ -178,6 +196,7 @@
   "target.tip": "锁定目标：",
   "targeted.tip": "你已被锁定",
   "import_state.tip": "模式导入成功",
+  "targeted_clear.tip": "目标信息已清除",
 
   "block.bsf.smart_snow_block": "智慧雪块"
 }
