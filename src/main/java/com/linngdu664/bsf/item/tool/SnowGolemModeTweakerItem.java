@@ -10,6 +10,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +23,7 @@ public class SnowGolemModeTweakerItem extends Item {
     private boolean useLocator = false;
 
     public SnowGolemModeTweakerItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(1));
+        super(new Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON).stacksTo(1));
     }
 
     @Override

@@ -33,7 +33,7 @@ public class RepulsiveFieldGeneratorItem extends AbstractBSFEnhanceableToolItem 
     private final Vector<Projectile> projectileVector = new Vector<>();
 
     public RepulsiveFieldGeneratorItem() {
-        super(Rarity.RARE, 512);
+        super(Rarity.UNCOMMON, 512);
     }
 
     @Override

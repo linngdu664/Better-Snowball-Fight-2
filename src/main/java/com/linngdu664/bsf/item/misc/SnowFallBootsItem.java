@@ -13,10 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
@@ -70,7 +67,7 @@ public class SnowFallBootsItem extends ArmorItem {
             public float getKnockbackResistance() {
                 return 0;
             }
-        }, EquipmentSlot.FEET, new Properties().tab(ItemGroup.MAIN).stacksTo(1));
+        }, EquipmentSlot.FEET, new Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON).stacksTo(1));
     }
 
     @Override
