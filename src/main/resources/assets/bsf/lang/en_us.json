@@ -79,6 +79,7 @@
   "item.bsf.repulsion_core": "Repulsion Core",
   "item.bsf.gravity_core": "Gravity Core",
   "item.bsf.snow_fall_boots": "Snow Fall Boots",
+  "item.bsf.creative_snow_golem_tool": "Creative Snow Golem Tool",
 
   "stone_snowball.tooltip": "This is outrageous!",
   "snowball_clamp.tooltip": "Highly efficient snowballing tool",
@@ -154,6 +155,7 @@
   "smart_snow_block2.tooltip": "Advanced Snow Golem can`t take machine guns, can`t throw snowballs without weapon",
   "smart_snow_block3.tooltip": "Unload the storage tank with empty hand right click, unload the weapon with empty hand right click when shift is pressed",
   "smart_snow_block4.tooltip": "Modify Advanced Snow Golem mode with target locator and mode tweaker",
+  "creative_snow_golem_tool.tooltip": "Snow Golem does not consume ammunition and weapon durability when it is in enhanced mode",
 
   "lunch_yes_hand.tooltip": "thrown by hand: yes",
   "lunch_yes_cannon.tooltip": "shot by cannon: yes",
@@ -196,6 +198,7 @@
   "targeted.tip": "You have been targeted",
   "import_state.tip": "Mode imported successfully",
   "targeted_clear.tip": "Target information is cleared",
+  "golem_enhance.tip": "Enhance mode:",
 
   "block.bsf.smart_snow_block": "Smart Snow Block"
 }

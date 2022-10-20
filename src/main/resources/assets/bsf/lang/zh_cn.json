@@ -79,6 +79,7 @@
   "item.bsf.repulsion_core": "斥力核心",
   "item.bsf.gravity_core": "引力核心",
   "item.bsf.snow_fall_boots": "落雪靴",
+  "item.bsf.creative_snow_golem_tool": "创造模式雪傀儡调整器",
 
 
   "stone_snowball.tooltip": "真过分！",
@@ -155,6 +156,7 @@
   "smart_snow_block2.tooltip": "高级雪傀儡不能拿机枪，不能直接用手丢雪球",
   "smart_snow_block3.tooltip": "空手右键卸下储罐，空手下蹲右键卸下武器",
   "smart_snow_block4.tooltip": "用目标定位器和模式调整器修改雪人模式",
+  "creative_snow_golem_tool.tooltip": "雪傀儡开启增强模式后不会消耗弹药和武器耐久",
 
   "lunch_yes_hand.tooltip": "用手扔：可以",
   "lunch_yes_cannon.tooltip": "雪球炮：可以",
@@ -197,6 +199,7 @@
   "targeted.tip": "你已被锁定",
   "import_state.tip": "模式导入成功",
   "targeted_clear.tip": "目标信息已清除",
+  "golem_enhance.tip": "增强模式:",
 
   "block.bsf.smart_snow_block": "智慧雪块"
 }

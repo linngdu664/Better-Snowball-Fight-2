@@ -7,6 +7,7 @@ import com.linngdu664.bsf.entity.ai.goal.BSFNearestAttackableTargetGoal;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
 import com.linngdu664.bsf.item.tank.special.PowderSnowballTank;
+import com.linngdu664.bsf.item.tool.CreativeSnowGolemToolItem;
 import com.linngdu664.bsf.item.tool.SnowGolemModeTweakerItem;
 import com.linngdu664.bsf.item.tool.SnowballClampItem;
 import com.linngdu664.bsf.item.tool.TargetLocatorItem;
@@ -66,6 +67,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     private static final EntityDataAccessor<ItemStack> AMMO = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<Integer> WEAPON_ANG = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Byte> STYLE = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Boolean> ENHANCE = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BOOLEAN);
 
     public BSFSnowGolemEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
         super(p_21803_, p_21804_);
@@ -84,6 +86,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.define(AMMO, ItemStack.EMPTY);
         entityData.define(WEAPON_ANG, 0);
         entityData.define(STYLE, (byte) (BSFMthUtil.randInt(0, styleNum)));
+        entityData.define(ENHANCE,false);
     }
 
     @Override
@@ -99,6 +102,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         pCompound.put("Ammo", compoundTag);
         pCompound.putInt("WeaponAng", getWeaponAng());
         pCompound.putInt("Style", getStyle());
+        pCompound.putBoolean("Enhance", getEnhance());
     }
 
     @Override
@@ -110,6 +114,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         setAmmo(ItemStack.of(pCompound.getCompound("Ammo")));
         setWeaponAng(pCompound.getInt("WeaponAng"));
         setStyle(pCompound.getByte("Style"));
+        setEnhance(pCompound.getBoolean("Enhance"));
     }
 
     public byte getStatus() {
@@ -158,6 +163,13 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
 
     public void setStyle(byte style) {
         entityData.set(STYLE, style);
+    }
+    public boolean getEnhance() {
+        return entityData.get(ENHANCE);
+    }
+
+    public void setEnhance(boolean enhance) {
+        entityData.set(ENHANCE, enhance);
     }
 
     @Override
@@ -209,6 +221,9 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 itemStack.hurtAndBreak(1, pPlayer, (e) -> e.broadcastBreakEvent(pHand));
             } else if (itemStack.getItem() instanceof SnowballItem) {
                 setStyle((byte) (((int)getStyle()+1)%styleNum));
+            } else if (itemStack.getItem() instanceof CreativeSnowGolemToolItem) {
+                setEnhance(!getEnhance());
+                getOwner().sendMessage(new TranslatableComponent("golem_enhance.tip").append(String.valueOf(getEnhance())), Util.NIL_UUID);
             }
         }
         return InteractionResult.SUCCESS;
@@ -301,13 +316,15 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     AbstractBSFSnowballEntity snowball = tank.getSnowball().getCorrespondingEntity(level, this, launchFunc);
                     snowball.shoot(dx, sinTheta, dz, v, accuracy);
                     level.addFreshEntity(snowball); // todo: add particles
-                    ammo.setDamageValue(ammo.getDamageValue() + 1);
-                    if (ammo.getDamageValue() == 96) {
-                        setAmmo(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));
+                    if(!getEnhance()){
+                        ammo.setDamageValue(ammo.getDamageValue() + 1);
+                        if (ammo.getDamageValue() == 96) {
+                            setAmmo(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));
+                        }
                     }
                     if (i == 0) {
                         playSound(weapon.getItem() instanceof SnowballShotgunItem ? SoundRegister.SHOTGUN_FIRE_2.get() : SoundRegister.SNOWBALL_CANNON_SHOOT.get(), 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                        if (getRandom().nextFloat() <= damageChance) {
+                        if (getRandom().nextFloat() <= damageChance && !getEnhance()) {
                             weapon.setDamageValue(weapon.getDamageValue() + 1);
                             if (weapon.getDamageValue() == 256) {
                                 setWeapon(ItemStack.EMPTY);
