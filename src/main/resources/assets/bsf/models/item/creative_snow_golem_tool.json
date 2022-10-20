@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "bsf:item/create_snow_golem_tool"
+    "layer0": "bsf:item/creative_snow_golem_tool"
   }
 }
