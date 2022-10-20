@@ -43,5 +43,15 @@
     "sounds": [
       "bsf:field_start"
     ]
+  },
+  "subspace_snowball_cut": {
+    "sounds": [
+      "bsf:subspace_snowball_cut"
+    ]
+  },
+  "unstable_core_break": {
+    "sounds": [
+      "bsf:unstable_core_break"
+    ]
   }
 }

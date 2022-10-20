@@ -1,10 +1,14 @@
 package com.linngdu664.bsf.item.tool;
 
 import com.linngdu664.bsf.util.ItemGroup;
+import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +46,7 @@ public class SnowGolemModeTweakerItem extends Item {
                     default -> "snow_golem_turret.tip";
                 }), Util.NIL_UUID);
             }
+            pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.DISPENSER_DISPENSE, SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
         }
         return InteractionResultHolder.success(pPlayer.getItemInHand(pUsedHand));
     }

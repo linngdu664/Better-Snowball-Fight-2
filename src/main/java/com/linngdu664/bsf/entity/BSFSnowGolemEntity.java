@@ -28,6 +28,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -210,12 +211,14 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 setStatus(snowGolemModeTweaker.getState());
                 setOrderedToSit(getStatus() == 0);
                 pPlayer.sendMessage(new TranslatableComponent("import_state.tip"), Util.NIL_UUID);
+                level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.DISPENSER_DISPENSE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             } else if (itemStack.getItem() instanceof TargetLocatorItem targetLocator && isUseLocator()) {
                 LivingEntity entity = targetLocator.getLivingEntity();
                 if (entity != this && getOwner() != null) {
                     getOwner().sendMessage(new TranslatableComponent("snow_golem_locator_tip"), Util.NIL_UUID);
                     setTarget(targetLocator.getLivingEntity());
                 }
+                level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.DISPENSER_DISPENSE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             } else if (itemStack.getItem() instanceof SnowballClampItem) {
                 pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
                 itemStack.hurtAndBreak(1, pPlayer, (e) -> e.broadcastBreakEvent(pHand));

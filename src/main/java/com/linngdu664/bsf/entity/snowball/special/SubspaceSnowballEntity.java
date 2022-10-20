@@ -3,9 +3,12 @@ package com.linngdu664.bsf.entity.snowball.special;
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.SoundRegister;
 import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.Snowball;
@@ -52,6 +55,7 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
                     damage += snowball.getPower();
                     blazeDamage += snowball.getPower();
                 }
+                level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundRegister.SUBSPACE_SNOWBALL_CUT.get(), SoundSource.PLAYERS, 0.7F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             }
             List<Snowball> list2 = TargetGetter.getTargetList(this, Snowball.class, 2.5);
             for (Snowball snowball : list2) {
