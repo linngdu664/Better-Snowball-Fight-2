@@ -2,13 +2,20 @@ package com.linngdu664.bsf.entity.snowball.force;
 
 import com.linngdu664.bsf.entity.snowball.AbstractForceSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
+import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.SoundRegister;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class MonsterGravitySnowballEntity extends AbstractForceSnowballEntity {
@@ -24,13 +31,14 @@ public class MonsterGravitySnowballEntity extends AbstractForceSnowballEntity {
         return ItemRegister.MONSTER_GRAVITY_SNOWBALL.get();
     }
 
-    @Override
-    protected void onHit(@NotNull HitResult pResult) {
-        super.onHit(pResult);
-        if (!level.isClientSide) {
-            this.discard();
-        }
-    }
+//    @Override
+//    protected void onHit(@NotNull HitResult pResult) {
+//        super.onHit(pResult);
+//        if (!level.isClientSide) {
+//            this.discard();
+//        }
+//    }
+
 
     public float getPower() {
         return 3f;

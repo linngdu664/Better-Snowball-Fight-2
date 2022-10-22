@@ -48,6 +48,8 @@ public class PowderSnowballEntity extends AbstractBSFSnowballEntity {
     public void tick() {
         super.tick();
         if (isStart) {
+            Vec3 vec3 = this.getDeltaMovement();
+            this.push(-vec3.x, -vec3.y, -vec3.z);
             ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.2);
             if (++timer > 200) {
                 this.discard();

@@ -24,13 +24,13 @@ public class ProjectileGravitySnowballEntity extends AbstractForceSnowballEntity
         return ItemRegister.PROJECTILE_GRAVITY_SNOWBALL.get();
     }
 
-    @Override
-    protected void onHit(@NotNull HitResult pResult) {
-        super.onHit(pResult);
-        if (!level.isClientSide) {
-            this.discard();
-        }
-    }
+//    @Override
+//    protected void onHit(@NotNull HitResult pResult) {
+//        super.onHit(pResult);
+//        if (!level.isClientSide) {
+//            this.discard();
+//        }
+//    }
 
     public float getPower() {
         return 3f;
