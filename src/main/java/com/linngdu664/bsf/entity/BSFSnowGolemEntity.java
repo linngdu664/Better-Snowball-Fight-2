@@ -55,7 +55,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob {
-    private static final int styleNum=8;
+    private static final int styleNum = 8;
     /*
      status flag:
      0: standby
@@ -89,7 +89,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.define(AMMO, ItemStack.EMPTY);
         entityData.define(WEAPON_ANG, 0);
         entityData.define(STYLE, (byte) (BSFMthUtil.randInt(0, styleNum)));
-        entityData.define(ENHANCE,false);
+        entityData.define(ENHANCE, false);
     }
 
     @Override
@@ -167,6 +167,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     public void setStyle(byte style) {
         entityData.set(STYLE, style);
     }
+
     public boolean getEnhance() {
         return entityData.get(ENHANCE);
     }
@@ -225,7 +226,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
                 itemStack.hurtAndBreak(1, pPlayer, (e) -> e.broadcastBreakEvent(pHand));
             } else if (itemStack.getItem() instanceof SnowballItem) {
-                setStyle((byte) (((int)getStyle()+1)%styleNum));
+                setStyle((byte) (((int) getStyle() + 1) % styleNum));
             } else if (itemStack.getItem() instanceof CreativeSnowGolemToolItem) {
                 setEnhance(!getEnhance());
                 getOwner().sendMessage(new TranslatableComponent("golem_enhance.tip").append(String.valueOf(getEnhance())), Util.NIL_UUID);
@@ -262,9 +263,9 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             }
             BlockState blockstate = Blocks.SNOW.defaultBlockState();
             for (int l = 0; l < 4; ++l) {
-                i = Mth.floor(getX() + (double) ((float) (l % 2 * 2 - 1) * 0.25F));
+                i = Mth.floor(getX() + ((l % 2 * 2 - 1) * 0.25F));
                 j = Mth.floor(getY());
-                k = Mth.floor(getZ() + (double) ((float) (l / 2 % 2 * 2 - 1) * 0.25F));
+                k = Mth.floor(getZ() + ((l / 2 % 2 * 2 - 1) * 0.25F));
                 BlockPos blockPos1 = new BlockPos(i, j, k);
                 if (level.isEmptyBlock(blockpos) && blockstate.canSurvive(level, blockpos)) {
                     level.setBlockAndUpdate(blockPos1, blockstate);
@@ -324,16 +325,16 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     level.addFreshEntity(snowball);
                     if (level instanceof ServerLevel serverLevel) {
                         Vec3 vec3 = Vec3.directionFromRotation(this.getXRot(), this.getYRot());
-                        serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, this.getX()+vec3.x, this.getEyeY()+vec3.y, this.getZ()+vec3.z, 8, 0, 0, 0, 0.04);
+                        serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, this.getX() + vec3.x, this.getEyeY() + vec3.y, this.getZ() + vec3.z, 8, 0, 0, 0, 0.04);
                     }
-                    if(!getEnhance()){
+                    if (!getEnhance()) {
                         ammo.setDamageValue(ammo.getDamageValue() + 1);
                         if (ammo.getDamageValue() == 96) {
                             setAmmo(new ItemStack(ItemRegister.EMPTY_SNOWBALL_STORAGE_TANK.get()));
                         }
                     }
                     if (i == 0) {
-                        playSound(weapon.getItem() instanceof SnowballShotgunItem ? SoundRegister.SHOTGUN_FIRE_2.get() : SoundRegister.SNOWBALL_CANNON_SHOOT.get(), 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+                        playSound(j == 4 ? SoundRegister.SHOTGUN_FIRE_2.get() : SoundRegister.SNOWBALL_CANNON_SHOOT.get(), 1.0F, 1.0F / (getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                         if (getRandom().nextFloat() <= damageChance && !getEnhance()) {
                             weapon.setDamageValue(weapon.getDamageValue() + 1);
                             if (weapon.getDamageValue() == 256) {
@@ -364,7 +365,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
 
     @Override
     public void tick() {
-        if(getEnhance()){
+        if (getEnhance()) {
             this.heal(1);
         }
         if (getWeaponAng() > 0) {
