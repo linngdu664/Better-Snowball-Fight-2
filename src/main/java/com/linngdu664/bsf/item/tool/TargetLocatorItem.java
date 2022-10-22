@@ -39,8 +39,7 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
         if(pPlayer.isShiftKeyDown()){
             livingEntity=null;
             pPlayer.sendMessage(new TranslatableComponent("targeted_clear.tip"), Util.NIL_UUID);
-            this.getDefaultInstance().setHoverName(new TranslatableComponent("item.bsf.target_locator"));
-//            setHoverName(new TranslatableComponent("item.bsf.target_locator").append(":").append(new TranslatableComponent("target.tip")).append(livingEntity.getName().getString() + " ID:" + livingEntity.getId()));
+            pPlayer.getItemInHand(InteractionHand.MAIN_HAND).setHoverName(new TranslatableComponent("item.bsf.target_locator"));
         }else {
             ItemStack stack = null;
             int i;
@@ -51,7 +50,7 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
                     break;
                 }
             }
-            if (i != pPlayer.getInventory().getContainerSize()) {
+            if (i != pPlayer.getInventory().getContainerSize() || pPlayer.getAbilities().instabuild) {
                 pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
                 if (!pLevel.isClientSide) {
                     AbstractBSFSnowballEntity snowballEntity = new GPSSnowballEntity(pPlayer, pLevel, itemStack);

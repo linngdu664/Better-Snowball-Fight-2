@@ -3,6 +3,7 @@ package com.linngdu664.bsf.client.model;// Made with Blockbench 4.4.1
 // Paste this class into your mod and generate all required imports
 
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
+import com.linngdu664.bsf.util.ParticleUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
@@ -10,9 +11,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel<T> {
@@ -73,7 +76,7 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
     }
 
     @Override
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(BSFSnowGolemEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.up.yRot = netHeadYaw * Mth.DEG_TO_RAD;
         this.up.xRot = headPitch * Mth.DEG_TO_RAD;
         this.middle.yRot = netHeadYaw * Mth.DEG_TO_RAD * 0.25F;
@@ -92,6 +95,10 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
             this.right_arm_r1.yRot = 0;
             this.right_arm_r1.zRot = Mth.DEG_TO_RAD * -60;
         }
+//        if(entity.getWeaponAng()>=288){
+//            System.out.println(entity.getEyePosition());
+//            ParticleUtil.spawnForwardParticles(entity.getLevel(), entity, entity.getEyePosition(), ParticleTypes.SNOWFLAKE, 4.5F, 45, 0.5f, 0);
+//        }
     }
 
     @Override

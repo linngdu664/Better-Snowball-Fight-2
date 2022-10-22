@@ -20,6 +20,7 @@ import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -50,6 +51,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob {
@@ -227,6 +229,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             } else if (itemStack.getItem() instanceof CreativeSnowGolemToolItem) {
                 setEnhance(!getEnhance());
                 getOwner().sendMessage(new TranslatableComponent("golem_enhance.tip").append(String.valueOf(getEnhance())), Util.NIL_UUID);
+                level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.DISPENSER_DISPENSE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             }
         }
         return InteractionResult.SUCCESS;
@@ -318,7 +321,11 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 if (ammo.getItem() instanceof AbstractSnowballTankItem tank) {
                     AbstractBSFSnowballEntity snowball = tank.getSnowball().getCorrespondingEntity(level, this, launchFunc);
                     snowball.shoot(dx, sinTheta, dz, v, accuracy);
-                    level.addFreshEntity(snowball); // todo: add particles
+                    level.addFreshEntity(snowball);
+                    if (level instanceof ServerLevel serverLevel) {
+                        Vec3 vec3 = Vec3.directionFromRotation(this.getXRot(), this.getYRot());
+                        serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, this.getX()+vec3.x, this.getEyeY()+vec3.y, this.getZ()+vec3.z, 8, 0, 0, 0, 0.04);
+                    }
                     if(!getEnhance()){
                         ammo.setDamageValue(ammo.getDamageValue() + 1);
                         if (ammo.getDamageValue() == 96) {
@@ -357,6 +364,9 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
 
     @Override
     public void tick() {
+        if(getEnhance()){
+            this.heal(1);
+        }
         if (getWeaponAng() > 0) {
             setWeaponAng(getWeaponAng() - 72);
         }
