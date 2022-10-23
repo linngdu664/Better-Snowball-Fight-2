@@ -58,7 +58,7 @@ public class EmptyBasinItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(new TranslatableComponent("empty_basin.tooltip1").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(new TranslatableComponent("empty_basin.tooltip1").withStyle(ChatFormatting.BLUE));
         pTooltipComponents.add(new TranslatableComponent("empty_basin.tooltip").withStyle(ChatFormatting.DARK_AQUA));
     }
 }
