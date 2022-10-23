@@ -26,7 +26,7 @@ public class CompactedSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.COMPACTED_SNOWBALL.get();
     }
 

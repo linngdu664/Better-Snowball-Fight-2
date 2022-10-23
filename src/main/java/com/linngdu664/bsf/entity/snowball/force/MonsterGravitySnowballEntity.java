@@ -18,7 +18,7 @@ public class MonsterGravitySnowballEntity extends AbstractForceSnowballEntity {
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.MONSTER_GRAVITY_SNOWBALL.get();
     }
 

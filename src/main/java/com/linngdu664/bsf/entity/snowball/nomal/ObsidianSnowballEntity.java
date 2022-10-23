@@ -27,7 +27,7 @@ public class ObsidianSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.OBSIDIAN_SNOWBALL.get();
     }
 

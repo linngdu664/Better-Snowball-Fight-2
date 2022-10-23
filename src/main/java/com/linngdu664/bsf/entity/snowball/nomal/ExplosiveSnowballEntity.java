@@ -27,7 +27,7 @@ public class ExplosiveSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.EXPLOSIVE_SNOWBALL.get();
     }
 

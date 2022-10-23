@@ -26,7 +26,7 @@ public class IronSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.IRON_SNOWBALL.get();
     }
 

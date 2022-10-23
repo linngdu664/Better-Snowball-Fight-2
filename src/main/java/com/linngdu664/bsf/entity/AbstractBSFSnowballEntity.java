@@ -122,7 +122,7 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
      *
      * @return The corresponding item.
      */
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return null;
     }
 

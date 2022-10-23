@@ -20,7 +20,7 @@ public class LightMonsterTrackingSnowballEntity extends AbstractTrackingSnowball
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get();
     }
 

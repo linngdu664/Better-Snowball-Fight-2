@@ -31,7 +31,7 @@ public class SpectralSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.SPECTRAL_SNOWBALL.get();
     }
 

@@ -49,7 +49,7 @@ public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.FROZEN_SNOWBALL.get();
     }
 

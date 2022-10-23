@@ -18,7 +18,7 @@ public class ProjectileRepulsionSnowballEntity extends AbstractForceSnowballEnti
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.PROJECTILE_REPULSION_SNOWBALL.get();
     }
 

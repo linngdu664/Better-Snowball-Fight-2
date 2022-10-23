@@ -26,7 +26,7 @@ public class GoldSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.GOLD_SNOWBALL.get();
     }
 

@@ -66,7 +66,7 @@ public class PowderSnowballEntity extends AbstractBSFSnowballEntity {
     }
 
     @Override
-    protected Item getCorrespondingItem() {
+    public Item getCorrespondingItem() {
         return ItemRegister.POWDER_SNOWBALL.get();
     }
 
