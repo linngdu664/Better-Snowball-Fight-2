@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class VodkaItem extends Item {
     public VodkaItem() {
-        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16));
+        super(new Properties().tab(ItemGroup.MAIN).stacksTo(16).rarity(Rarity.UNCOMMON));
     }
 
     @Override
@@ -72,6 +72,6 @@ public class VodkaItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(new TranslatableComponent("vodka.tooltip").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(new TranslatableComponent("vodka.tooltip").withStyle(ChatFormatting.DARK_AQUA));
     }
 }
