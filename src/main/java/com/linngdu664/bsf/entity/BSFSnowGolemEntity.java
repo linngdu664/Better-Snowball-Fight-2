@@ -55,6 +55,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
+
 public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob {
     private static final int styleNum = 8;
     /*
@@ -408,7 +410,10 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         }
         super.tick();
     }
-
+    @Nullable
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.SNOW_GOLEM_AMBIENT;
+    }
     @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
         return SoundEvents.SNOW_GOLEM_HURT;
