@@ -223,5 +223,7 @@
   "targeted_clear.tip": "Target information is cleared",
   "golem_enhance.tip": "Enhance mode:",
 
-  "block.bsf.smart_snow_block": "Smart Snow Block"
+  "block.bsf.smart_snow_block": "Smart Snow Block",
+
+  "key.testmod.cycle_move_ammo_right": "Cycle Move Ammo Right"
 }

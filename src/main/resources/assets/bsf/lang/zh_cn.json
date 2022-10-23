@@ -224,5 +224,7 @@
   "targeted_clear.tip": "目标信息已清除",
   "golem_enhance.tip": "增强模式:",
 
-  "block.bsf.smart_snow_block": "智慧雪块"
+  "block.bsf.smart_snow_block": "智慧雪块",
+
+  "key.testmod.cycle_move_ammo_right": "循环右移弹药"
 }
