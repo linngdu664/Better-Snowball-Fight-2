@@ -16,10 +16,10 @@
     "hidden": false
   },
   "criteria": {
-    "obtain_vodka": {
-      "trigger": "minecraft:inventory_changed",
+    "vodka_drink": {
+      "trigger": "minecraft:consume_item",
       "conditions": {
-        "items": [
+        "item": [
           {
             "items": [
               "bsf:vodka"
@@ -29,5 +29,5 @@
       }
     }
   },
-  "requirements": [["obtain_vodka"]]
+  "requirements": [["vodka_drink"]]
 }

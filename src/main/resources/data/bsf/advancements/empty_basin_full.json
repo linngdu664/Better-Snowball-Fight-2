@@ -17,22 +17,16 @@
   },
   "criteria": {
     "empty_basin_full": {
-      "trigger": "minecraft:item_used_on_block",
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "location": {
-          "block": {
-            "blocks": [
-              "minecraft:snow_block",
-              "minecraft:powder_snow",
-              "minecraft:snow"
+        "items": [
+          {
+            "items": [
+              "bsf:basin_of_snow",
+              "bsf:basin_of_powder_snow"
             ]
           }
-        },
-        "item": {
-          "items": [
-            "bsf:empty_basin"
-          ]
-        }
+        ]
       }
     }
   },
