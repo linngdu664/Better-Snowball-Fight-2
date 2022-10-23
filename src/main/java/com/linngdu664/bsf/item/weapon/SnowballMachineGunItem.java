@@ -119,7 +119,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
             }
 
             // add and check cd time.
-            if (!pLevel.isClientSide && itemStack != null) {
+            if (itemStack != null) {
                 timer += 3;
                 if (flag && timer >= 60) {
                     player.getCooldowns().addCooldown(this, 60);
@@ -134,13 +134,13 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     }
     @Override
     public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pSlotId, boolean pIsSelected) {
-        if (!pLevel.isClientSide) {
+     //   if (!pLevel.isClientSide) {
             if (timer > 0) {
                 timer -= 2;
             } else {
                 isOnCoolDown = false;
             }
-        }
+    //    }
     }
 
     @Override
