@@ -16,7 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
-import net.minecraft.world.entity.animal.Panda;
 
 public class GPSSnowballEntity extends AbstractBSFSnowballEntity {
     private final ItemStack targetLocator;
