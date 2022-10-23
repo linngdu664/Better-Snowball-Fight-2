@@ -49,6 +49,7 @@ public class UnstableCoreItem extends Item {
         }
         return InteractionResult.PASS;
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("unstable_core.tooltip").withStyle(ChatFormatting.BLUE));

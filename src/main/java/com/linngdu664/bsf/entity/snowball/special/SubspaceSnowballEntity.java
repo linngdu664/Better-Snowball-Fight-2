@@ -7,7 +7,6 @@ import com.linngdu664.bsf.util.SoundRegister;
 import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -16,16 +15,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Vector;
 
 public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
-    private int timer = 0;
     private final boolean release;
     private final Vector<ItemStack> ItemStackVector = new Vector<>();
+    private int timer = 0;
 
     public SubspaceSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc, boolean canRelease) {
         super(livingEntity, level);
@@ -81,6 +79,7 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
             timer++;
         }
     }
+
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
@@ -99,7 +98,7 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
-        if(!release){
+        if (!release) {
             if (!level.isClientSide) {
                 ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), (int) damage * 4, 0, 0, 0, 0);
                 ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), (int) damage * 4, 0, 0, 0, 0.04);

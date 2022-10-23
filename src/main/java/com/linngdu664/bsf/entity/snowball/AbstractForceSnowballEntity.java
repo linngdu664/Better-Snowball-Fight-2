@@ -12,13 +12,12 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractForceSnowballEntity extends AbstractBSFSnowballEntity {
+    public boolean isStart = false;
+    public int timer = 0;
     private Class<? extends Entity> targetClass;
     private double range;
     private double GM;
     private double boundaryR2;
-
-    public boolean isStart = false;
-    public int timer = 0;
 
     public AbstractForceSnowballEntity(LivingEntity livingEntity, Level level) {
         super(livingEntity, level);
@@ -37,6 +36,7 @@ public abstract class AbstractForceSnowballEntity extends AbstractBSFSnowballEnt
         }
         MovingAlgorithm.forceEffect(this, targetClass, range, GM, boundaryR2);
     }
+
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
@@ -65,12 +65,12 @@ public abstract class AbstractForceSnowballEntity extends AbstractBSFSnowballEnt
         this.boundaryR2 = boundaryR2;
         return this;
     }
-
+/*
     public void setStart(boolean start) {
         isStart = start;
     }
 
     public void setTimer(int timer) {
         this.timer = timer;
-    }
+    }*/
 }

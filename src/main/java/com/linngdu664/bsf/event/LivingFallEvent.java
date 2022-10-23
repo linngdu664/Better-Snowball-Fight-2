@@ -23,11 +23,11 @@ public class LivingFallEvent {
             if (!level.isClientSide && shoes.getItem() instanceof SnowFallBootsItem) {
                 Block block1 = level.getBlockState(new BlockPos(player.getX(), player.getY(), player.getZ())).getBlock();
                 Block block2 = level.getBlockState(new BlockPos(player.getX(), player.getY() - 1, player.getZ())).getBlock();
-                if(block1.equals(Blocks.SNOW) || block2.equals(Blocks.SNOW_BLOCK) || snowAroundPlayer(level,player,block1)){
+                if (block1.equals(Blocks.SNOW) || block2.equals(Blocks.SNOW_BLOCK) || snowAroundPlayer(level, player, block1)) {
                     event.setDamageMultiplier(0);
                     float h = event.getDistance();
                     if (level instanceof ServerLevel serverLevel) {
-                        serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX(), player.getY(), player.getZ(), (int)h*8, 0, 0, 0, h*0.01);
+                        serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, player.getX(), player.getY(), player.getZ(), (int) h * 8, 0, 0, 0, h * 0.01);
                     }
                     shoes.hurtAndBreak((int) Math.ceil((h - 3) * 0.25), player, (p) -> p.broadcastBreakEvent(EquipmentSlot.FEET));
                     level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
@@ -35,20 +35,21 @@ public class LivingFallEvent {
             }
         }
     }
-    private boolean snowAroundPlayer(Level level,Player player,Block block1){
-        if(block1.equals(Blocks.AIR)){
-            boolean b=false;
+
+    private boolean snowAroundPlayer(Level level, Player player, Block block1) {
+        if (block1.equals(Blocks.AIR)) {
+            boolean b = false;
             ok:
-            for (int i = -1; i <=1; i++) {
+            for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
-                    if(level.getBlockState(new BlockPos(player.getX()+i, player.getY(), player.getZ()+j)).getBlock().equals(Blocks.SNOW)||level.getBlockState(new BlockPos(player.getX()+i, player.getY()-1, player.getZ()+j)).getBlock().equals(Blocks.SNOW_BLOCK)){
-                        b=true;
+                    if (level.getBlockState(new BlockPos(player.getX() + i, player.getY(), player.getZ() + j)).getBlock().equals(Blocks.SNOW) || level.getBlockState(new BlockPos(player.getX() + i, player.getY() - 1, player.getZ() + j)).getBlock().equals(Blocks.SNOW_BLOCK)) {
+                        b = true;
                         break ok;
                     }
                 }
             }
             return b;
-        }else {
+        } else {
             return false;
         }
     }

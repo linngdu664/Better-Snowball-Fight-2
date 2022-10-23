@@ -8,8 +8,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.HitResult;
-import org.jetbrains.annotations.NotNull;
 
 public class MonsterRepulsionSnowballEntity extends AbstractForceSnowballEntity {
     public MonsterRepulsionSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {

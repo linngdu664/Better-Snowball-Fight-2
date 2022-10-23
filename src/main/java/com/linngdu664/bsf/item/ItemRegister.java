@@ -31,58 +31,53 @@ public class ItemRegister {
 
     public static final RegistryObject<Item> SMOOTH_SNOWBALL = ITEMS.register("smooth_snowball", SmoothSnowballItem::new);
     public static final RegistryObject<Item> COMPACTED_SNOWBALL = ITEMS.register("compacted_snowball", CompactedSnowballItem::new);
+    public static final RegistryObject<Item> COMPACTED_SNOWBALL_TANK = ITEMS.register("compacted_snowball_tank", CompactedSnowballTank::new);
     public static final RegistryObject<Item> COMPACTED_SNOWBALL_SET = ITEMS.register("compacted_snowball_set", CompactedSnowballSetItem::new);
     public static final RegistryObject<Item> STONE_SNOWBALL = ITEMS.register("stone_snowball", StoneSnowballItem::new);
-    public static final RegistryObject<Item> GLASS_SNOWBALL = ITEMS.register("glass_snowball", GlassSnowballItem::new);
-    public static final RegistryObject<Item> ICE_SNOWBALL = ITEMS.register("ice_snowball", IceSnowballItem::new);
-    public static final RegistryObject<Item> IRON_SNOWBALL = ITEMS.register("iron_snowball", IronSnowballItem::new);
-    public static final RegistryObject<Item> GOLD_SNOWBALL = ITEMS.register("gold_snowball", GoldSnowballItem::new);
-    public static final RegistryObject<Item> OBSIDIAN_SNOWBALL = ITEMS.register("obsidian_snowball", ObsidianSnowballItem::new);
-    public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL = ITEMS.register("explosive_snowball", ExplosiveSnowballItem::new);
-    public static final RegistryObject<Item> SPECTRAL_SNOWBALL = ITEMS.register("spectral_snowball", SpectralSnowballItem::new);
-    public static final RegistryObject<Item> FROZEN_SNOWBALL = ITEMS.register("frozen_snowball", FrozenSnowballItem::new);
-    public static final RegistryObject<Item> POWDER_SNOWBALL = ITEMS.register("powder_snowball", PowderSnowballItem::new);
-    public static final RegistryObject<Item> LIGHT_MONSTER_TRACKING_SNOWBALL = ITEMS.register("light_monster_tracking_snowball", LightMonsterTrackingSnowballItem::new);
-    public static final RegistryObject<Item> HEAVY_MONSTER_TRACKING_SNOWBALL = ITEMS.register("heavy_monster_tracking_snowball", HeavyMonsterTrackingSnowballItem::new);
-    public static final RegistryObject<Item> EXPLOSIVE_MONSTER_TRACKING_SNOWBALL = ITEMS.register("explosive_monster_tracking_snowball", ExplosiveMonsterTrackingSnowballItem::new);
-    public static final RegistryObject<Item> LIGHT_PLAYER_TRACKING_SNOWBALL = ITEMS.register("light_player_tracking_snowball", LightPlayerTrackingSnowballItem::new);
-    public static final RegistryObject<Item> HEAVY_PLAYER_TRACKING_SNOWBALL = ITEMS.register("heavy_player_tracking_snowball", HeavyPlayerTrackingSnowballItem::new);
-    public static final RegistryObject<Item> EXPLOSIVE_PLAYER_TRACKING_SNOWBALL = ITEMS.register("explosive_player_tracking_snowball", ExplosivePlayerTrackingSnowballItem::new);
-    public static final RegistryObject<Item> MONSTER_GRAVITY_SNOWBALL = ITEMS.register("gravity_snowball_to_monster", MonsterGravitySnowballItem::new);
-    public static final RegistryObject<Item> PROJECTILE_GRAVITY_SNOWBALL = ITEMS.register("gravity_snowball_to_projectile", ProjectileGravitySnowballItem::new);
-    public static final RegistryObject<Item> MONSTER_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_monster", MonsterRepulsionSnowballItem::new);
-    public static final RegistryObject<Item> PROJECTILE_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_projectile", ProjectileRepulsionSnowballItem::new);
-    public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL = ITEMS.register("black_hole_snowball", BlackHoleSnowballItem::new);
-    public static final RegistryObject<Item> SUBSPACE_SNOWBALL = ITEMS.register("subspace_snowball", SubspaceSnowball::new);
-
-
-
-
-    public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_tank", EmptySnowballTankItem::new);
-    public static final RegistryObject<Item> COMPACTED_SNOWBALL_TANK = ITEMS.register("compacted_snowball_tank", CompactedSnowballTank::new);
     public static final RegistryObject<Item> STONE_SNOWBALL_TANK = ITEMS.register("stone_snowball_tank", StoneSnowballTank::new);
+    public static final RegistryObject<Item> GLASS_SNOWBALL = ITEMS.register("glass_snowball", GlassSnowballItem::new);
     public static final RegistryObject<Item> GLASS_SNOWBALL_TANK = ITEMS.register("glass_snowball_tank", GlassSnowballTank::new);
+    public static final RegistryObject<Item> ICE_SNOWBALL = ITEMS.register("ice_snowball", IceSnowballItem::new);
     public static final RegistryObject<Item> ICE_SNOWBALL_TANK = ITEMS.register("ice_snowball_tank", IceSnowballTank::new);
+    public static final RegistryObject<Item> IRON_SNOWBALL = ITEMS.register("iron_snowball", IronSnowballItem::new);
     public static final RegistryObject<Item> IRON_SNOWBALL_TANK = ITEMS.register("iron_snowball_tank", IronSnowballTank::new);
+    public static final RegistryObject<Item> GOLD_SNOWBALL = ITEMS.register("gold_snowball", GoldSnowballItem::new);
     public static final RegistryObject<Item> GOLD_SNOWBALL_TANK = ITEMS.register("gold_snowball_tank", GoldSnowballTank::new);
+    public static final RegistryObject<Item> OBSIDIAN_SNOWBALL = ITEMS.register("obsidian_snowball", ObsidianSnowballItem::new);
     public static final RegistryObject<Item> OBSIDIAN_SNOWBALL_TANK = ITEMS.register("obsidian_snowball_tank", ObsidianSnowballTank::new);
+    public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL = ITEMS.register("explosive_snowball", ExplosiveSnowballItem::new);
     public static final RegistryObject<Item> EXPLOSIVE_SNOWBALL_TANK = ITEMS.register("explosive_snowball_tank", ExplosiveSnowballTank::new);
+    public static final RegistryObject<Item> SPECTRAL_SNOWBALL = ITEMS.register("spectral_snowball", SpectralSnowballItem::new);
     public static final RegistryObject<Item> SPECTRAL_SNOWBALL_TANK = ITEMS.register("spectral_snowball_tank", SpectralSnowballTank::new);
+    public static final RegistryObject<Item> FROZEN_SNOWBALL = ITEMS.register("frozen_snowball", FrozenSnowballItem::new);
     public static final RegistryObject<Item> FROZEN_SNOWBALL_TANK = ITEMS.register("frozen_snowball_tank", FrozenSnowballTank::new);
+    public static final RegistryObject<Item> POWDER_SNOWBALL = ITEMS.register("powder_snowball", PowderSnowballItem::new);
     public static final RegistryObject<Item> POWDER_SNOWBALL_TANK = ITEMS.register("powder_snowball_tank", PowderSnowballTank::new);
+    public static final RegistryObject<Item> LIGHT_MONSTER_TRACKING_SNOWBALL = ITEMS.register("light_monster_tracking_snowball", LightMonsterTrackingSnowballItem::new);
     public static final RegistryObject<Item> LIGHT_MONSTER_TRACKING_SNOWBALL_TANK = ITEMS.register("light_monster_tracking_snowball_tank", LightMonsterTrackingSnowballTank::new);
+    public static final RegistryObject<Item> HEAVY_MONSTER_TRACKING_SNOWBALL = ITEMS.register("heavy_monster_tracking_snowball", HeavyMonsterTrackingSnowballItem::new);
     public static final RegistryObject<Item> HEAVY_MONSTER_TRACKING_SNOWBALL_TANK = ITEMS.register("heavy_monster_tracking_snowball_tank", HeavyMonsterTrackingSnowballTank::new);
+    public static final RegistryObject<Item> EXPLOSIVE_MONSTER_TRACKING_SNOWBALL = ITEMS.register("explosive_monster_tracking_snowball", ExplosiveMonsterTrackingSnowballItem::new);
     public static final RegistryObject<Item> EXPLOSIVE_MONSTER_TRACKING_SNOWBALL_TANK = ITEMS.register("explosive_monster_tracking_snowball_tank", ExplosiveMonsterTrackingSnowballTank::new);
+    public static final RegistryObject<Item> LIGHT_PLAYER_TRACKING_SNOWBALL = ITEMS.register("light_player_tracking_snowball", LightPlayerTrackingSnowballItem::new);
     public static final RegistryObject<Item> LIGHT_PLAYER_TRACKING_SNOWBALL_TANK = ITEMS.register("light_player_tracking_snowball_tank", LightPlayerTrackingSnowballTank::new);
+    public static final RegistryObject<Item> HEAVY_PLAYER_TRACKING_SNOWBALL = ITEMS.register("heavy_player_tracking_snowball", HeavyPlayerTrackingSnowballItem::new);
     public static final RegistryObject<Item> HEAVY_PLAYER_TRACKING_SNOWBALL_TANK = ITEMS.register("heavy_player_tracking_snowball_tank", HeavyPlayerTrackingSnowballTank::new);
+    public static final RegistryObject<Item> EXPLOSIVE_PLAYER_TRACKING_SNOWBALL = ITEMS.register("explosive_player_tracking_snowball", ExplosivePlayerTrackingSnowballItem::new);
     public static final RegistryObject<Item> EXPLOSIVE_PLAYER_TRACKING_SNOWBALL_TANK = ITEMS.register("explosive_player_tracking_snowball_tank", ExplosivePlayerTrackingSnowballTank::new);
+    public static final RegistryObject<Item> MONSTER_GRAVITY_SNOWBALL = ITEMS.register("gravity_snowball_to_monster", MonsterGravitySnowballItem::new);
     public static final RegistryObject<Item> MONSTER_GRAVITY_SNOWBALL_TANK = ITEMS.register("gravity_snowball_to_monster_tank", MonsterGravitySnowballTank::new);
+    public static final RegistryObject<Item> PROJECTILE_GRAVITY_SNOWBALL = ITEMS.register("gravity_snowball_to_projectile", ProjectileGravitySnowballItem::new);
     public static final RegistryObject<Item> PROJECTILE_GRAVITY_SNOWBALL_TANK = ITEMS.register("gravity_snowball_to_projectile_tank", ProjectileGravitySnowballTank::new);
+    public static final RegistryObject<Item> MONSTER_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_monster", MonsterRepulsionSnowballItem::new);
     public static final RegistryObject<Item> MONSTER_REPULSION_SNOWBALL_TANK = ITEMS.register("repulsion_snowball_to_monster_tank", MonsterRepulsionSnowballTank::new);
+    public static final RegistryObject<Item> PROJECTILE_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_projectile", ProjectileRepulsionSnowballItem::new);
     public static final RegistryObject<Item> PROJECTILE_REPULSION_SNOWBALL_TANK = ITEMS.register("repulsion_snowball_to_projectile_tank", ProjectileRepulsionSnowballTank::new);
+    public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL = ITEMS.register("black_hole_snowball", BlackHoleSnowballItem::new);
     public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL_TANK = ITEMS.register("black_hole_snowball_tank", BlackHoleSnowballTank::new);
+    public static final RegistryObject<Item> SUBSPACE_SNOWBALL = ITEMS.register("subspace_snowball", SubspaceSnowball::new);
     public static final RegistryObject<Item> SUBSPACE_SNOWBALL_TANK = ITEMS.register("subspace_snowball_tank", SubspaceSnowballTank::new);
-
+    public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_tank", EmptySnowballTankItem::new);
     public static final RegistryObject<Item> WOOD_SNOWBALL_CLAMP = ITEMS.register("wood_snowball_clamp", () -> new SnowballClampItem(Tiers.WOOD));
     public static final RegistryObject<Item> STONE_SNOWBALL_CLAMP = ITEMS.register("stone_snowball_clamp", () -> new SnowballClampItem(Tiers.STONE));
     public static final RegistryObject<Item> IRON_SNOWBALL_CLAMP = ITEMS.register("iron_snowball_clamp", () -> new SnowballClampItem(Tiers.IRON));
@@ -117,7 +112,6 @@ public class ItemRegister {
     public static final RegistryObject<Item> UNSTABLE_CORE = ITEMS.register("unstable_core", UnstableCoreItem::new);
     public static final RegistryObject<Item> REPULSION_CORE = ITEMS.register("repulsion_core", () -> new Item(new Item.Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> GRAVITY_CORE = ITEMS.register("gravity_core", () -> new Item(new Item.Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON)));
-
 
 
     public static final RegistryObject<Item> GPS_SNOWBALL = ITEMS.register("gps_snowball", () -> new Item(new Item.Properties()));    //This item does not need to be added to the group

@@ -10,7 +10,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -36,13 +35,13 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
-        if(pPlayer.isShiftKeyDown()){
-            if (!pLevel.isClientSide){
-                livingEntity=null;
+        if (pPlayer.isShiftKeyDown()) {
+            if (!pLevel.isClientSide) {
+                livingEntity = null;
                 pPlayer.sendMessage(new TranslatableComponent("targeted_clear.tip"), Util.NIL_UUID);
                 pPlayer.getItemInHand(pUsedHand).setHoverName(new TranslatableComponent("item.bsf.target_locator"));
             }
-        }else {
+        } else {
             ItemStack stack = null;
             int i;
             for (i = 0; i < pPlayer.getInventory().getContainerSize(); i++) {
@@ -84,6 +83,7 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
     public void setLivingEntity(LivingEntity livingEntity) {
         this.livingEntity = livingEntity;
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("target_locator.tooltip").withStyle(ChatFormatting.BLUE));
