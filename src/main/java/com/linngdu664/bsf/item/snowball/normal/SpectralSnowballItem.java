@@ -69,6 +69,6 @@ public class SpectralSnowballItem extends AbstractBSFSnowballItem {
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_cannon.tooltip").withStyle(ChatFormatting.DARK_GREEN));
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_machine_gun.tooltip").withStyle(ChatFormatting.DARK_GREEN));
         pTooltipComponents.add(new TranslatableComponent("lunch_yes_shotgun.tooltip").withStyle(ChatFormatting.DARK_GREEN));
-        pTooltipComponents.add(new TranslatableComponent("spectral_snowball.tooltip").withStyle(ChatFormatting.BLUE));
+        pTooltipComponents.add(new TranslatableComponent("spectral_snowball.tooltip").withStyle(ChatFormatting.DARK_AQUA));
     }
 }

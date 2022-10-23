@@ -58,7 +58,7 @@ public class MilkPopsicleItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(new TranslatableComponent("milk_popsicle1.tooltip").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(new TranslatableComponent("milk_popsicle1.tooltip").withStyle(ChatFormatting.BLUE));
         pTooltipComponents.add(new TranslatableComponent("milk_popsicle.tooltip").withStyle(ChatFormatting.DARK_AQUA));
     }
 }

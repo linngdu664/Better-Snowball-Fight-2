@@ -63,6 +63,6 @@ public class CompactedSnowballSetItem extends AbstractBSFSnowballItem {
         pTooltipComponents.add(new TranslatableComponent("lunch_no_cannon.tooltip").withStyle(ChatFormatting.DARK_RED));
         pTooltipComponents.add(new TranslatableComponent("lunch_no_machine_gun.tooltip").withStyle(ChatFormatting.DARK_RED));
         pTooltipComponents.add(new TranslatableComponent("lunch_no_shotgun.tooltip").withStyle(ChatFormatting.DARK_RED));
-        pTooltipComponents.add(new TranslatableComponent("compacted_snowball_set.tooltip").withStyle(ChatFormatting.BLUE));
+        pTooltipComponents.add(new TranslatableComponent("compacted_snowball_set.tooltip").withStyle(ChatFormatting.DARK_AQUA));
     }
 }

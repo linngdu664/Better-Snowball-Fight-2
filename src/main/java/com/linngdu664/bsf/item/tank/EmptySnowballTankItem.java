@@ -21,6 +21,9 @@ public class EmptySnowballTankItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
+        pTooltipComponents.add(new TranslatableComponent("snowball_storage_tank1.tooltip").withStyle(ChatFormatting.BLUE));
+        pTooltipComponents.add(new TranslatableComponent("snowball_storage_tank2.tooltip").withStyle(ChatFormatting.BLUE));
+        pTooltipComponents.add(new TranslatableComponent("snowball_storage_tank3.tooltip").withStyle(ChatFormatting.BLUE));
         pTooltipComponents.add(new TranslatableComponent("snowball_storage_tank.tooltip").withStyle(ChatFormatting.GRAY));
     }
 }

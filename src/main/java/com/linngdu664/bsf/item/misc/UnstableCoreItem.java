@@ -51,6 +51,6 @@ public class UnstableCoreItem extends Item {
     }
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(new TranslatableComponent("unstable_core.tooltip").withStyle(ChatFormatting.DARK_AQUA));
+        pTooltipComponents.add(new TranslatableComponent("unstable_core.tooltip").withStyle(ChatFormatting.BLUE));
     }
 }

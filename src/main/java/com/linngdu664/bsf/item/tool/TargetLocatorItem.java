@@ -40,7 +40,7 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
             if (!pLevel.isClientSide){
                 livingEntity=null;
                 pPlayer.sendMessage(new TranslatableComponent("targeted_clear.tip"), Util.NIL_UUID);
-                pPlayer.getItemInHand(InteractionHand.MAIN_HAND).setHoverName(new TranslatableComponent("item.bsf.target_locator"));
+                pPlayer.getItemInHand(pUsedHand).setHoverName(new TranslatableComponent("item.bsf.target_locator"));
             }
         }else {
             ItemStack stack = null;

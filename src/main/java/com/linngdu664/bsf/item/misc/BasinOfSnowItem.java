@@ -137,7 +137,7 @@ public class BasinOfSnowItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(new TranslatableComponent("basin_of_snow.tooltip1").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(new TranslatableComponent("basin_of_snow.tooltip1").withStyle(ChatFormatting.BLUE));
         pTooltipComponents.add(new TranslatableComponent("basin_of_snow.tooltip").withStyle(ChatFormatting.DARK_AQUA));
     }
 }
