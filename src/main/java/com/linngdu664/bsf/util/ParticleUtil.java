@@ -21,22 +21,20 @@ public class ParticleUtil {
      * @param loweredVision   The y offset of the spawning point.
      */
     public static void spawnForwardParticles(Level pLevel, Entity entity, Vec3 sightVec, ParticleOptions particleOptions, float r, float deg, float d, float loweredVision) {//particleOptions=ParticleTypes.SNOWFLAKE r=4.5 deg=30 d=0.5f
-        if (pLevel.isClientSide) {
-            Vec3 vecA = sightVec.cross(new Vec3(0, 1, 0)).normalize();
-            if (vecA == Vec3.ZERO) {
-                vecA = sightVec.cross(new Vec3(1, 0, 0)).normalize();
-            }
-            Vec3 vecB = sightVec.cross(vecA).normalize();
-            for (float ri = 0.5F; ri <= r; ri += d) {
-                float rand = pLevel.getRandom().nextFloat() * Mth.DEG_TO_RAD * deg;
-                for (float theta = rand; theta < Mth.TWO_PI + rand; theta += Mth.DEG_TO_RAD * deg) {
-                    double x = 8.0F * sightVec.x + ri * (Mth.cos(theta) * vecA.x + Mth.sin(theta) * vecB.x);
-                    double y = 8.0F * sightVec.y + ri * (Mth.cos(theta) * vecA.y + Mth.sin(theta) * vecB.y);
-                    double z = 8.0F * sightVec.z + ri * (Mth.cos(theta) * vecA.z + Mth.sin(theta) * vecB.z);
-                    double inverseL = Mth.fastInvSqrt(BSFMthUtil.modSqr(x, y, z));
-                    double rand1 = Math.sqrt(pLevel.getRandom().nextDouble() * 0.9 + 0.1);
-                    pLevel.addParticle(particleOptions, entity.getX(), entity.getEyeY() - loweredVision, entity.getZ(), x * inverseL * rand1, y * inverseL * rand1, z * inverseL * rand1);
-                }
+        Vec3 vecA = sightVec.cross(new Vec3(0, 1, 0)).normalize();
+        if (vecA == Vec3.ZERO) {
+            vecA = sightVec.cross(new Vec3(1, 0, 0)).normalize();
+        }
+        Vec3 vecB = sightVec.cross(vecA).normalize();
+        for (float ri = 0.5F; ri <= r; ri += d) {
+            float rand = pLevel.getRandom().nextFloat() * Mth.DEG_TO_RAD * deg;
+            for (float theta = rand; theta < Mth.TWO_PI + rand; theta += Mth.DEG_TO_RAD * deg) {
+                double x = 8.0F * sightVec.x + ri * (Mth.cos(theta) * vecA.x + Mth.sin(theta) * vecB.x);
+                double y = 8.0F * sightVec.y + ri * (Mth.cos(theta) * vecA.y + Mth.sin(theta) * vecB.y);
+                double z = 8.0F * sightVec.z + ri * (Mth.cos(theta) * vecA.z + Mth.sin(theta) * vecB.z);
+                double inverseL = Mth.fastInvSqrt(BSFMthUtil.modSqr(x, y, z));
+                double rand1 = Math.sqrt(pLevel.getRandom().nextDouble() * 0.9 + 0.1);
+                pLevel.addParticle(particleOptions, entity.getX(), entity.getEyeY() - loweredVision, entity.getZ(), x * inverseL * rand1, y * inverseL * rand1, z * inverseL * rand1);
             }
         }
     }
