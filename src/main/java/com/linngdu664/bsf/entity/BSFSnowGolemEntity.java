@@ -17,6 +17,7 @@ import com.linngdu664.bsf.item.weapon.SnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.ParticleUtil;
 import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -71,6 +72,10 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     private static final EntityDataAccessor<Integer> WEAPON_ANG = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Byte> STYLE = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> ENHANCE = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Float> REAL_SIGHT_X = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> REAL_SIGHT_Y = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> REAL_SIGHT_Z = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.FLOAT);
+
 
     public BSFSnowGolemEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
         super(p_21803_, p_21804_);
@@ -90,6 +95,9 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.define(WEAPON_ANG, 0);
         entityData.define(STYLE, (byte) (BSFMthUtil.randInt(0, styleNum)));
         entityData.define(ENHANCE, false);
+        entityData.define(REAL_SIGHT_X, 1F);
+        entityData.define(REAL_SIGHT_Y, 0F);
+        entityData.define(REAL_SIGHT_Z, 0F);
     }
 
     @Override
@@ -174,6 +182,30 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
 
     public void setEnhance(boolean enhance) {
         entityData.set(ENHANCE, enhance);
+    }
+
+    float getRealSightX() {
+        return entityData.get(REAL_SIGHT_X);
+    }
+
+    public void setRealSightX(float x) {
+        entityData.set(REAL_SIGHT_X, x);
+    }
+
+    float getRealSightY() {
+        return entityData.get(REAL_SIGHT_Y);
+    }
+
+    public void setRealSightY(float y) {
+        entityData.set(REAL_SIGHT_Y, y);
+    }
+
+    float getRealSightZ() {
+        return entityData.get(REAL_SIGHT_Z);
+    }
+
+    public void setRealSightZ(float z) {
+        entityData.set(REAL_SIGHT_Z, z);
     }
 
     @Override
@@ -317,16 +349,15 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     sinTheta = -sinTheta;
                 }
             }
+            setRealSightX((float) dx);
+            setRealSightY((float) sinTheta);
+            setRealSightZ((float) dz);
             int j = weapon.getItem() instanceof SnowballShotgunItem ? 4 : 1;
             for (int i = 0; i < j; i++) {
                 if (ammo.getItem() instanceof AbstractSnowballTankItem tank) {
                     AbstractBSFSnowballEntity snowball = tank.getSnowball().getCorrespondingEntity(level, this, launchFunc);
                     snowball.shoot(dx, sinTheta, dz, v, accuracy);
                     level.addFreshEntity(snowball);
-                    if (level instanceof ServerLevel serverLevel) {
-                        Vec3 vec3 = Vec3.directionFromRotation(this.getXRot(), this.getYRot());
-                        serverLevel.sendParticles(ParticleTypes.SNOWFLAKE, this.getX() + vec3.x, this.getEyeY() + vec3.y, this.getZ() + vec3.z, 8, 0, 0, 0, 0.04);
-                    }
                     if (!getEnhance()) {
                         ammo.setDamageValue(ammo.getDamageValue() + 1);
                         if (ammo.getDamageValue() == 96) {
@@ -365,10 +396,14 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
 
     @Override
     public void tick() {
+        // System.out.println(realSight);
         if (getEnhance()) {
             this.heal(1);
         }
         if (getWeaponAng() > 0) {
+            if (getWeaponAng() == 360) {
+                ParticleUtil.spawnForwardParticles(level, this, new Vec3(getRealSightX(), getRealSightY(), getRealSightZ()), ParticleTypes.SNOWFLAKE, 4.5F, 30, 0.5F, 0.1F);
+            }
             setWeaponAng(getWeaponAng() - 72);
         }
         super.tick();
