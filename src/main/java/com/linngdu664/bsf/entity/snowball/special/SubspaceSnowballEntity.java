@@ -41,7 +41,7 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
             List<AbstractBSFSnowballEntity> list = TargetGetter.getTargetList(this, AbstractBSFSnowballEntity.class, 2.5);
             for (AbstractBSFSnowballEntity snowball : list) {
                 if (release) {
-                    ItemStackVector.add(snowball.getItem());
+                    ItemStackVector.add(new ItemStack(snowball.getCorrespondingItem()));
                 }
                 ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, snowball.getX(), snowball.getY(), snowball.getZ(), 8, 0, 0, 0, 0.05);
                 snowball.discard();
