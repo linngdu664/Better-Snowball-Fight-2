@@ -404,16 +404,18 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         }
         if (getWeaponAng() > 0) {
             if (getWeaponAng() == 360) {
-                ParticleUtil.spawnForwardParticles(level, this, new Vec3(getRealSightX(), getRealSightY(), getRealSightZ()), ParticleTypes.SNOWFLAKE, 4.5F, 30, 0.5F, 0.1F);
+                ParticleUtil.spawnForwardParticles(level, this, new Vec3(getRealSightX(), getRealSightY(), getRealSightZ()), ParticleTypes.SNOWFLAKE, 4.5F, 30, 0.5F, 0.1F, false);
             }
             setWeaponAng(getWeaponAng() - 72);
         }
         super.tick();
     }
+
     @Nullable
     protected SoundEvent getAmbientSound() {
         return SoundEvents.SNOW_GOLEM_AMBIENT;
     }
+
     @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource pDamageSource) {
         return SoundEvents.SNOW_GOLEM_HURT;

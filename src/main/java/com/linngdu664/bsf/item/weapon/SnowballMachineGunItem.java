@@ -132,15 +132,16 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
             }
         }
     }
+
     @Override
     public void inventoryTick(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull Entity pEntity, int pSlotId, boolean pIsSelected) {
-     //   if (!pLevel.isClientSide) {
-            if (timer > 0) {
-                timer -= 2;
-            } else {
-                isOnCoolDown = false;
-            }
-    //    }
+        //   if (!pLevel.isClientSide) {
+        if (timer > 0) {
+            timer -= 2;
+        } else {
+            isOnCoolDown = false;
+        }
+        //    }
     }
 
     @Override

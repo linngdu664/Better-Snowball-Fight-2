@@ -1,10 +1,13 @@
 package com.linngdu664.bsf.util;
 
+import com.linngdu664.bsf.Main;
+import com.linngdu664.bsf.network.ParticleHandler;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.PacketDistributor;
 
 public class ParticleUtil {
     /**
@@ -20,7 +23,7 @@ public class ParticleUtil {
      * @param d               Radius step length.
      * @param loweredVision   The y offset of the spawning point.
      */
-    public static void spawnForwardParticles(Level pLevel, Entity entity, Vec3 sightVec, ParticleOptions particleOptions, float r, float deg, float d, float loweredVision) {//particleOptions=ParticleTypes.SNOWFLAKE r=4.5 deg=30 d=0.5f
+    public static void spawnForwardParticles(Level pLevel, Entity entity, Vec3 sightVec, ParticleOptions particleOptions, float r, float deg, float d, float loweredVision, boolean useNetwork) {//particleOptions=ParticleTypes.SNOWFLAKE r=4.5 deg=30 d=0.5f
         Vec3 vecA = sightVec.cross(new Vec3(0, 1, 0)).normalize();
         if (vecA == Vec3.ZERO) {
             vecA = sightVec.cross(new Vec3(1, 0, 0)).normalize();
@@ -34,7 +37,11 @@ public class ParticleUtil {
                 double z = 8.0F * sightVec.z + ri * (Mth.cos(theta) * vecA.z + Mth.sin(theta) * vecB.z);
                 double inverseL = Mth.fastInvSqrt(BSFMthUtil.modSqr(x, y, z));
                 double rand1 = Math.sqrt(pLevel.getRandom().nextDouble() * 0.9 + 0.1);
-                pLevel.addParticle(particleOptions, entity.getX(), entity.getEyeY() - loweredVision, entity.getZ(), x * inverseL * rand1, y * inverseL * rand1, z * inverseL * rand1);
+                if (useNetwork) {
+                    Main.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), new ParticleHandler(entity.getX(), entity.getEyeY() - loweredVision, entity.getZ(), x * inverseL * rand1, y * inverseL * rand1, z * inverseL * rand1));
+                } else {
+                    pLevel.addParticle(particleOptions, entity.getX(), entity.getEyeY() - loweredVision, entity.getZ(), x * inverseL * rand1, y * inverseL * rand1, z * inverseL * rand1);
+                }
             }
         }
     }

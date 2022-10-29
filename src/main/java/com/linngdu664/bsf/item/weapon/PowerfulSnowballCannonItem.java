@@ -56,10 +56,10 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
                     if (pLevel.isClientSide()) {
                         player.push(-0.26666667 * cameraVec.x * f, -0.26666667 * cameraVec.y * f, -0.26666667 * cameraVec.z * f);
                         //add particles
-                        ParticleUtil.spawnForwardParticles(pLevel, player, cameraVec, ParticleTypes.SNOWFLAKE, 4.5F, 45, 1.5f, 0);
+                    } else {
+                        ParticleUtil.spawnForwardParticles(pLevel, player, cameraVec, ParticleTypes.SNOWFLAKE, 4.5F, 45, 1.5f, 0, true);
+                        pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                     }
-
-                    pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                     consumeAmmo(itemStack, player);
                     player.awardStat(Stats.ITEM_USED.get(this));
                 }

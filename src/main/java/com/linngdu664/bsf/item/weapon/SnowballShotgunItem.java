@@ -72,15 +72,17 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
             if (!player.isShiftKeyDown()) {
                 if (level.isClientSide()) {
                     player.push(-0.24 * cameraVec.x, -0.24 * cameraVec.y, -0.24 * cameraVec.z);
-                    ParticleUtil.spawnForwardParticles(level, player, cameraVec, ParticleTypes.SNOWFLAKE, 4.5F, 45, 1.5f, 0);
+                } else {
+                    ParticleUtil.spawnForwardParticles(level, player, cameraVec, ParticleTypes.SNOWFLAKE, 4.5F, 45, 1.5f, 0, true);
+                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SHOTGUN_FIRE_2.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                 }
-                level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SHOTGUN_FIRE_2.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             } else {
                 if (level.isClientSide()) {
                     player.push(-pushRank * cameraVec.x, -pushRank * cameraVec.y, -pushRank * cameraVec.z);
-                    ParticleUtil.spawnForwardParticles(level, player, cameraVec, ParticleTypes.SNOWFLAKE, 4.5F, 45, 0.5f, 0);
+                } else {
+                    ParticleUtil.spawnForwardParticles(level, player, cameraVec, ParticleTypes.SNOWFLAKE, 4.5F, 45, 0.5f, 0, true);
+                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SHOTGUN_FIRE_1.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
                 }
-                level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SHOTGUN_FIRE_1.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             }
             stack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
             player.getCooldowns().addCooldown(this, 20);
