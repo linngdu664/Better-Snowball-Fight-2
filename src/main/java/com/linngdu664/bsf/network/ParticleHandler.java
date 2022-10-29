@@ -7,6 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -49,8 +50,10 @@ public class ParticleHandler {
     public static void handler(ParticleHandler message, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> DistExecutor.unsafeCallWhenOn(Dist.CLIENT, () -> () -> handlePacket(message.x, message.y, message.z, message.xSpeed, message.ySpeed, message.zSpeed)));
+        contextSupplier.get().setPacketHandled(true);
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static boolean handlePacket(double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
         Player player = Minecraft.getInstance().player;
         Level level = player.getLevel();
