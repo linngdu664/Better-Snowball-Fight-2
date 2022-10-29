@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.event;
 
 import com.linngdu664.bsf.Main;
-import com.linngdu664.bsf.network.CycleMoveAmmoRight;
+import com.linngdu664.bsf.network.AmmoRotateRight;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -14,7 +14,7 @@ import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
 public class BSFKeyMappings {
-    public static final KeyMapping CYCLE_MOVE_AMMO_RIGHT = new KeyMapping("key.testmod.cycle_move_ammo_right", GLFW.GLFW_KEY_G, "key.categories.misc");
+    public static final KeyMapping CYCLE_MOVE_AMMO_RIGHT = new KeyMapping("key.bsf.ammo_rotate_right", GLFW.GLFW_KEY_G, "key.categories.misc");
 
 
     @SubscribeEvent
@@ -29,8 +29,8 @@ public class BSFKeyMappings {
             if (Minecraft.getInstance().screen == null) {
                 if (event.getKey() == CYCLE_MOVE_AMMO_RIGHT.getKey().getValue()) {
                     if (event.getAction() == GLFW.GLFW_PRESS) {
-                        Main.PACKET_HANDLER.sendToServer(new CycleMoveAmmoRight(0, 0));
-                        CycleMoveAmmoRight.pressAction(Minecraft.getInstance().player, 0, 0);
+                        Main.PACKET_HANDLER.sendToServer(new AmmoRotateRight(0, 0));
+                        AmmoRotateRight.pressAction(Minecraft.getInstance().player, 0, 0);
                     }
                 }
             }
