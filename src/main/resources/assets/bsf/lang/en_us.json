@@ -225,5 +225,5 @@
 
   "block.bsf.smart_snow_block": "Smart Snow Block",
 
-  "key.testmod.cycle_move_ammo_right": "Cycle Move Ammo Right"
+  "key.bsf.ammo_rotate_right": "Ammo Rotate Right"
 }
