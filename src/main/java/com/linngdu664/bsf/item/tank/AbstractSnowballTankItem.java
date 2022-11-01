@@ -52,4 +52,8 @@ public abstract class AbstractSnowballTankItem extends Item {
         return false;
     }
 
+    @Override
+    public boolean isRepairable(@NotNull ItemStack stack) {
+        return false;
+    }
 }
