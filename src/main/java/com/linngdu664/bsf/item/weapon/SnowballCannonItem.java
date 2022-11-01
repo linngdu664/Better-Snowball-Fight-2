@@ -1,12 +1,12 @@
 package com.linngdu664.bsf.item.weapon;
 
+import com.linngdu664.bsf.Main;
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.network.ForwardConeParticlesSender;
 import com.linngdu664.bsf.util.LaunchFrom;
 import com.linngdu664.bsf.util.LaunchFunc;
-import com.linngdu664.bsf.util.ParticleUtil;
 import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
@@ -21,6 +21,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -72,7 +73,7 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
                         player.push(-0.2 * cameraVec.x * f, -0.2 * cameraVec.y * f, -0.2 * cameraVec.z * f);
                         //add particles
                     } else {
-                        ParticleUtil.spawnForwardParticles(pLevel, player, cameraVec, ParticleTypes.SNOWFLAKE, 4.5F, 90, 1.5f, 0, true);
+                        Main.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new ForwardConeParticlesSender(player, cameraVec, 4.5F, 90, 1.5F, 0.1));
                         pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_CANNON_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                     }
                     consumeAmmo(itemStack, player);

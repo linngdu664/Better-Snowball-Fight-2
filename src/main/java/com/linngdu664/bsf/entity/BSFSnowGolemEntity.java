@@ -398,13 +398,16 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
 
     @Override
     public void tick() {
-        // System.out.println(realSight);
         if (getEnhance()) {
             this.heal(1);
         }
         if (getWeaponAng() > 0) {
             if (getWeaponAng() == 360) {
-                ParticleUtil.spawnForwardParticles(level, this, new Vec3(getRealSightX(), getRealSightY(), getRealSightZ()), ParticleTypes.SNOWFLAKE, 4.5F, 30, 0.5F, 0.1F, false);
+                if (getWeapon().getItem() instanceof SnowballCannonItem || getWeapon().getItem() instanceof FreezingSnowballCannonItem) {
+                    ParticleUtil.spawnForwardConeParticles(level, this, new Vec3(getRealSightX(), getRealSightY(), getRealSightZ()), ParticleTypes.SNOWFLAKE, 4.5F, 90, 1.5F, 0.1F);
+                } else if (getWeapon().getItem() instanceof SnowballShotgunItem || getWeapon().getItem() instanceof PowerfulSnowballCannonItem) {
+                    ParticleUtil.spawnForwardConeParticles(level, this, new Vec3(getRealSightX(), getRealSightY(), getRealSightZ()), ParticleTypes.SNOWFLAKE, 4.5F, 45, 1.5F, 0.1F);
+                }
             }
             setWeaponAng(getWeaponAng() - 72);
         }
