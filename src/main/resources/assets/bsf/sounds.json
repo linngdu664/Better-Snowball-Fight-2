@@ -53,5 +53,10 @@
     "sounds": [
       "bsf:unstable_core_break"
     ]
+  },
+  "machine_gun_cooling": {
+    "sounds": [
+      "bsf:machine_gun_cooling"
+    ]
   }
 }
