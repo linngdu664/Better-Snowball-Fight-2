@@ -19,6 +19,7 @@ public class SoundRegister {
     public static final RegistryObject<SoundEvent> FIELD_START = build("field_start");
     public static final RegistryObject<SoundEvent> SUBSPACE_SNOWBALL_CUT = build("subspace_snowball_cut");
     public static final RegistryObject<SoundEvent> UNSTABLE_CORE_BREAK = build("unstable_core_break");
+    public static final RegistryObject<SoundEvent> MACHINE_GUN_COLLING = build("machine_gun_cooling");
 
     private static RegistryObject<SoundEvent> build(String id) {
         return SOUNDS.register(id, () -> new SoundEvent(new ResourceLocation("bsf", id)));

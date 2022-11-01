@@ -39,7 +39,7 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
 
         PartDefinition middle = partdefinition.addOrReplaceChild("middle", CubeListBuilder.create().texOffs(0, 16).addBox(-5.0F, -22.0F, -5.0F, 10.0F, 10.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition left_arm_r1 = middle.addOrReplaceChild("left_arm_r1", CubeListBuilder.create().texOffs(32, 0).addBox(-2.0F, 0.0F, 0.0F, 12.0F, 2.0F, 2.0F, new CubeDeformation(-0.5F)), PartPose.offsetAndRotation(4.0F, -21.0F, -1.0F, 0.0F, 0.0F, 1.0472F));
+        PartDefinition left_arm_r1 = middle.addOrReplaceChild("left_arm_r1", CubeListBuilder.create().texOffs(32, 0).addBox(1.0F, 0.0F, 0.0F, 12.0F, 2.0F, 2.0F, new CubeDeformation(-0.5F)), PartPose.offsetAndRotation(4.0F, -21.0F, -1.0F, 0.0F, 0.0F, 1.0472F));
 
         PartDefinition right_arm_r1 = middle.addOrReplaceChild("right_arm_r1", CubeListBuilder.create().texOffs(32, 0).addBox(-13.0F, 0.0F, 0.0F, 12.0F, 2.0F, 2.0F, new CubeDeformation(-0.5F)), PartPose.offsetAndRotation(-4.0F, -21.0F, -1.0F, 0.0F, 0.0F, -1.0472F));
 
@@ -68,6 +68,11 @@ public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel
                 .texOffs(0, 62).mirror().addBox(-6.0F, -3.0F, -8.0F, 3.0F, 2.0F, 16.0F, new CubeDeformation(0.0F)).mirror(false)
                 .texOffs(0, 36).addBox(-7.0F, -3.0F, -9.0F, 5.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 36).addBox(-7.0F, -3.0F, 8.0F, 5.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.1F, 0.1F, 0.0F));
+        PartDefinition crown = up.addOrReplaceChild("crown", CubeListBuilder.create().texOffs(108, 26).addBox(-2.5F, -7.5F, -2.5F, 5.0F, 5.0F, 5.0F, new CubeDeformation(-0.7F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition nose = up.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(120, 0).addBox(-1.0F, -0.8F, -5.1F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.3F))
+                .texOffs(118, 0).addBox(-1.0F, -0.8F, -6.5F, 2.0F, 2.0F, 3.0F, new CubeDeformation(-0.5F))
+                .texOffs(118, 0).addBox(-1.0F, -0.8F, -7.7F, 2.0F, 2.0F, 3.0F, new CubeDeformation(-0.7F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
