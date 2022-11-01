@@ -214,7 +214,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     protected void registerGoals() {
         goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(2, new BSFGolemFollowOwnerGoal(this, 1.0, 5.0F, 3.0F));
-        goalSelector.addGoal(3, new BSFGolemRangedAttackGoal(this, 1.25, 30, 50.0F));
+        goalSelector.addGoal(3, new BSFGolemRangedAttackGoal(this, 1.0, 30, 50.0F));
         goalSelector.addGoal(4, new BSFGolemRandomStrollGoal(this, 1.0, 1.0000001E-5F));
         goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new BSFNearestAttackableTargetGoal(this, Mob.class, 20, true, false, (p_29932_) -> p_29932_ instanceof Enemy));
@@ -253,7 +253,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 LivingEntity entity = targetLocator.getLivingEntity();
                 if (entity != this && getOwner() != null) {
                     getOwner().sendMessage(new TranslatableComponent("snow_golem_locator_tip"), Util.NIL_UUID);
-                    setTarget(targetLocator.getLivingEntity());
+                    setTarget(entity);
                 }
                 level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.DISPENSER_DISPENSE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             } else if (itemStack.getItem() instanceof SnowballClampItem) {
@@ -261,9 +261,19 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 itemStack.hurtAndBreak(1, pPlayer, (e) -> e.broadcastBreakEvent(pHand));
             } else if (itemStack.getItem() instanceof SnowballItem) {
                 setStyle((byte) (((int) getStyle() + 1) % styleNum));
-            } else if (itemStack.getItem() instanceof CreativeSnowGolemToolItem) {
-                setEnhance(!getEnhance());
-                getOwner().sendMessage(new TranslatableComponent("golem_enhance.tip").append(String.valueOf(getEnhance())), Util.NIL_UUID);
+            } else if (itemStack.getItem() instanceof CreativeSnowGolemToolItem creativeTool) {
+                if (pPlayer.isShiftKeyDown()) {
+                    creativeTool.setEnchance(getEnhance());
+                    creativeTool.setStatusFlag(getStatus());
+                    creativeTool.setWeapon(getWeapon().copy());
+                    creativeTool.setAmmo(getAmmo().copy());
+                    creativeTool.setUseLocator(isUseLocator());
+                    creativeTool.setStyle(getStyle());
+                    creativeTool.setTarget(getTarget());
+                } else {
+                    setEnhance(!getEnhance());
+                    getOwner().sendMessage(new TranslatableComponent("golem_enhance.tip").append(String.valueOf(getEnhance())), Util.NIL_UUID);
+                }
                 level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.DISPENSER_DISPENSE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             }
         }
