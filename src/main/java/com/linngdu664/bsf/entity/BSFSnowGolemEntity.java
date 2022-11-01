@@ -58,7 +58,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 
 public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob {
-    private static final int styleNum = 8;
+    private static final int styleNum = 9;
     /*
      status flag:
      0: standby
