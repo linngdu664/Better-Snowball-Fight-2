@@ -3,7 +3,9 @@ package com.linngdu664.bsf.network;
 import com.linngdu664.bsf.Main;
 import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
+import net.minecraft.Util;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
@@ -86,6 +88,7 @@ public class AmmoRotateRight {
             list.set(i, list.get(i + 1));
             list.set(i + 1, c);
         }
+        player.sendMessage(new TranslatableComponent("current_ammunition.tip").append(new TranslatableComponent("item.bsf."+inventory.getItem(list.get(list.size() - 1)).getItem())), Util.NIL_UUID);
     }
 
     private static void exchangeItem(Inventory inventory, int a, int b) {

@@ -222,6 +222,7 @@
   "import_state.tip": "Mode imported successfully",
   "targeted_clear.tip": "Target information is cleared",
   "golem_enhance.tip": "Enhance mode:",
+  "current_ammunition.tip": "Ammo in use:",
 
   "block.bsf.smart_snow_block": "Smart Snow Block",
 
