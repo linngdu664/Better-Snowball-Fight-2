@@ -30,8 +30,9 @@ public abstract class AbstractBSFSnowballItem extends Item {
 
             @Override
             public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
-                bsfSnowballEntity.damage *= playerBadEffectRate;
-                bsfSnowballEntity.blazeDamage *= playerBadEffectRate;
+                //bsfSnowballEntity.damage *= playerBadEffectRate;
+                //bsfSnowballEntity.blazeDamage *= playerBadEffectRate;
+                bsfSnowballEntity.setBlazeDamage(bsfSnowballEntity.getBlazeDamage() * playerBadEffectRate).setDamage(bsfSnowballEntity.getDamage() * playerBadEffectRate);
             }
         };
     }

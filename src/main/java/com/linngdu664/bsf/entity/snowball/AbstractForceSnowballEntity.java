@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractForceSnowballEntity extends AbstractBSFSnowballEntity {
     public boolean isStart = false;
-    public int timer = 0;
+    private int timer = 0;
     private Class<? extends Entity> targetClass;
     private double range;
     private double GM;

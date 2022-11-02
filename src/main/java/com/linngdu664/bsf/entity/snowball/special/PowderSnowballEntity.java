@@ -17,8 +17,8 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class PowderSnowballEntity extends AbstractBSFSnowballEntity {
-    public boolean isStart = false;
-    public int timer = 0;
+    private boolean isStart = false;
+    private int timer = 0;
 
     public PowderSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
         super(livingEntity, level);

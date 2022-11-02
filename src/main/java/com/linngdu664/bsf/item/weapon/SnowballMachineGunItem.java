@@ -37,9 +37,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     //private int timer = 0;
     private float recoil;
     private float damageChance;
-
     private ItemStack ammo;
-
     private boolean isExplosive;
     //private boolean isOnCoolDown = false;
 
@@ -56,7 +54,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
 
             @Override
             public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
-                bsfSnowballEntity.punch = 1.2;
+                bsfSnowballEntity.setPunch(1.2);
             }
         };
     }

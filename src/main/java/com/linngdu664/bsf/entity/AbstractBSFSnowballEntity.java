@@ -30,17 +30,18 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile {
-    public boolean isCaught = false;
-    public double punch = 0.0;
-    public float damage = Float.MIN_NORMAL;
-    public float blazeDamage = 3.0F;
-    public LaunchFrom launchFrom;
-    public int frozenTicks = 0;
-    public int weaknessTicks = 0;
+    protected boolean isCaught = false;
+    protected double punch = 0.0;
+    protected float damage = Float.MIN_NORMAL;
+    protected float blazeDamage = 3.0F;
+    protected LaunchFrom launchFrom;
+    protected int frozenTicks = 0;
+    protected int weaknessTicks = 0;
     // You need to distinguish between LaunchFrom and LaunchFunc
     // LaunchFrom is an Enum, LaunchFunc is an Interface
 
     // EntityType should not be SNOWBALL, because if we do so, it will call snowball mixin and make a mess.
+    // But I didn't want to register a new entity type, so I passed the fucking egg to super.
     public AbstractBSFSnowballEntity(LivingEntity livingEntity, Level level) {
         super(EntityType.EGG, livingEntity, level);
     }
@@ -110,7 +111,7 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
     /**
      * Do not touch/override this magical fucking method, or the texture of the snowball will become egg!
      *
-     * @return I don't understand.
+     * @return Who knows.
      */
     @Override
     protected @NotNull Item getDefaultItem() {
@@ -196,6 +197,19 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
     public AbstractBSFSnowballEntity setFrozenTicks(int frozenTicks) {
         this.frozenTicks = frozenTicks;
         return this;
+    }
+
+    public AbstractBSFSnowballEntity setWeaknessTicks(int weaknessTicks) {
+        this.weaknessTicks = weaknessTicks;
+        return this;
+    }
+
+    public float getBlazeDamage() {
+        return blazeDamage;
+    }
+
+    public float getDamage() {
+        return damage;
     }
 
     public float getPower() {

@@ -50,7 +50,7 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
 
             @Override
             public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
-                bsfSnowballEntity.punch = damageDropRate * 1.51F;
+                bsfSnowballEntity.setPunch(damageDropRate * 1.51);
             }
         };
     }

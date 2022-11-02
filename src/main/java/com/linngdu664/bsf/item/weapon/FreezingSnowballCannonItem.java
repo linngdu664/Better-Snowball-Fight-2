@@ -27,14 +27,11 @@ public class FreezingSnowballCannonItem extends SnowballCannonItem {
             @Override
             public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
                 if (bsfSnowballEntity instanceof IceSnowballEntity || bsfSnowballEntity instanceof FrozenSnowballEntity) {
-                    bsfSnowballEntity.blazeDamage += 4;
-                    bsfSnowballEntity.frozenTicks = 200;
+                    bsfSnowballEntity.setFrozenTicks(200).setBlazeDamage(bsfSnowballEntity.getBlazeDamage() + 4);
                 } else {
-                    bsfSnowballEntity.blazeDamage += 1;
-                    bsfSnowballEntity.frozenTicks = 140;
+                    bsfSnowballEntity.setFrozenTicks(140).setBlazeDamage(bsfSnowballEntity.getBlazeDamage() + 1);
                 }
-                bsfSnowballEntity.blazeDamage *= damageDropRate;
-                bsfSnowballEntity.punch = damageDropRate * 1.51F;
+                bsfSnowballEntity.setBlazeDamage(bsfSnowballEntity.getBlazeDamage() * (float) damageDropRate).setPunch(damageDropRate * 1.51);
             }
         };
     }
