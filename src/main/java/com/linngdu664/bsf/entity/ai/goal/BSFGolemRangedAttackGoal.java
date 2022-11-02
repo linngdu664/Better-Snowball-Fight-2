@@ -130,9 +130,9 @@ public class BSFGolemRangedAttackGoal extends Goal {
                 strafingTime = 0;
             }
             if (strafingTime > -1 && golem.getStatus() != 4) {
-                if (d0 > (double)(this.attackRadiusSqr * 0.75F)) {
+                if (d0 > (double) (this.attackRadiusSqr * 0.75F)) {
                     strafingBackwards = false;
-                } else if (d0 < (double)(this.attackRadiusSqr * 0.25F)) {
+                } else if (d0 < (double) (this.attackRadiusSqr * 0.25F)) {
                     strafingBackwards = true;
                 }
                 golem.getMoveControl().strafe(strafingBackwards ? -0.5F : 0.5F, strafingClockwise ? 0.5F : -0.5F);

@@ -179,16 +179,6 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
         return this;
     }
 
-    public AbstractBSFSnowballEntity setDamage(float damage) {
-        this.damage = damage;
-        return this;
-    }
-
-    public AbstractBSFSnowballEntity setBlazeDamage(float blazeDamage) {
-        this.blazeDamage = blazeDamage;
-        return this;
-    }
-
     public AbstractBSFSnowballEntity setLaunchFrom(LaunchFrom launchFrom) {
         this.launchFrom = launchFrom;
         return this;
@@ -208,8 +198,18 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
         return blazeDamage;
     }
 
+    public AbstractBSFSnowballEntity setBlazeDamage(float blazeDamage) {
+        this.blazeDamage = blazeDamage;
+        return this;
+    }
+
     public float getDamage() {
         return damage;
+    }
+
+    public AbstractBSFSnowballEntity setDamage(float damage) {
+        this.damage = damage;
+        return this;
     }
 
     public float getPower() {
