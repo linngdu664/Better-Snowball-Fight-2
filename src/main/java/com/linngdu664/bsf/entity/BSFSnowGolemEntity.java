@@ -1,9 +1,6 @@
 package com.linngdu664.bsf.entity;
 
-import com.linngdu664.bsf.entity.ai.goal.BSFGolemFollowOwnerGoal;
-import com.linngdu664.bsf.entity.ai.goal.BSFGolemRandomStrollGoal;
-import com.linngdu664.bsf.entity.ai.goal.BSFGolemRangedAttackGoal;
-import com.linngdu664.bsf.entity.ai.goal.BSFNearestAttackableTargetGoal;
+import com.linngdu664.bsf.entity.ai.goal.*;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
 import com.linngdu664.bsf.item.tank.special.PowderSnowballTank;
@@ -38,9 +35,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -215,13 +212,14 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(2, new BSFGolemFollowOwnerGoal(this, 1.0, 5.0F, 3.0F));
         goalSelector.addGoal(3, new BSFGolemRangedAttackGoal(this, 1.0, 30, 50.0F));
-        goalSelector.addGoal(4, new BSFGolemRandomStrollGoal(this, 1.0, 1.0000001E-5F));
+        goalSelector.addGoal(4, new BSFGolemRandomStrollGoal(this, 0.8, 1E-5F));
         goalSelector.addGoal(5, new RandomLookAroundGoal(this));
-        targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        targetSelector.addGoal(2, new BSFNearestAttackableTargetGoal(this, Monster.class, 20, true, false, (p) -> true));
-        targetSelector.addGoal(2, new BSFNearestAttackableTargetGoal(this, Slime.class, 20, true, false, (p) -> true));
-        targetSelector.addGoal(2, new BSFNearestAttackableTargetGoal(this, FlyingMob.class, 20, true, false, (p) -> true));
-        targetSelector.addGoal(2, new BSFNearestAttackableTargetGoal(this, Shulker.class, 20, true, false, (p) -> true));
+        goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 5.0F));
+        targetSelector.addGoal(1, new BSFGolemHurtByTargetGoal(this));
+        targetSelector.addGoal(2, new BSFGolemNearestAttackableTargetGoal(this, Monster.class, 20, true, false, (p) -> true));
+        targetSelector.addGoal(3, new BSFGolemNearestAttackableTargetGoal(this, Slime.class, 20, true, false, (p) -> true));
+        targetSelector.addGoal(4, new BSFGolemNearestAttackableTargetGoal(this, FlyingMob.class, 20, true, false, (p) -> true));
+        targetSelector.addGoal(5, new BSFGolemNearestAttackableTargetGoal(this, Shulker.class, 20, true, false, (p) -> true));
     }
 
     @Override
@@ -285,16 +283,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     }
 
     @Override
-    public boolean isSensitiveToWater() {
-        return true;
-    }
-
-    @Override
-    protected int calculateFallDamage(float pDistance, float pDamageMultiplier) {
-        return 0;
-    }
-
-    @Override
     public void aiStep() {
         super.aiStep();
         if (!level.isClientSide) {
@@ -320,6 +308,24 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 }
             }
         }
+    }
+
+    @Override
+    public void tick() {
+        if (getEnhance()) {
+            this.heal(1);
+        }
+        if (getWeaponAng() > 0) {
+            if (getWeaponAng() == 360) {
+                if (getWeapon().getItem() instanceof SnowballCannonItem || getWeapon().getItem() instanceof FreezingSnowballCannonItem) {
+                    ParticleUtil.spawnForwardConeParticles(level, this, new Vec3(getRealSightX(), getRealSightY(), getRealSightZ()), ParticleTypes.SNOWFLAKE, 4.5F, 90, 1.5F, 0.1F);
+                } else if (getWeapon().getItem() instanceof SnowballShotgunItem || getWeapon().getItem() instanceof PowerfulSnowballCannonItem) {
+                    ParticleUtil.spawnForwardConeParticles(level, this, new Vec3(getRealSightX(), getRealSightY(), getRealSightZ()), ParticleTypes.SNOWFLAKE, 4.5F, 45, 1.5F, 0.1F);
+                }
+            }
+            setWeaponAng(getWeaponAng() - 72);
+        }
+        super.tick();
     }
 
     @Override
@@ -411,21 +417,13 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     }
 
     @Override
-    public void tick() {
-        if (getEnhance()) {
-            this.heal(1);
-        }
-        if (getWeaponAng() > 0) {
-            if (getWeaponAng() == 360) {
-                if (getWeapon().getItem() instanceof SnowballCannonItem || getWeapon().getItem() instanceof FreezingSnowballCannonItem) {
-                    ParticleUtil.spawnForwardConeParticles(level, this, new Vec3(getRealSightX(), getRealSightY(), getRealSightZ()), ParticleTypes.SNOWFLAKE, 4.5F, 90, 1.5F, 0.1F);
-                } else if (getWeapon().getItem() instanceof SnowballShotgunItem || getWeapon().getItem() instanceof PowerfulSnowballCannonItem) {
-                    ParticleUtil.spawnForwardConeParticles(level, this, new Vec3(getRealSightX(), getRealSightY(), getRealSightZ()), ParticleTypes.SNOWFLAKE, 4.5F, 45, 1.5F, 0.1F);
-                }
-            }
-            setWeaponAng(getWeaponAng() - 72);
-        }
-        super.tick();
+    public boolean isSensitiveToWater() {
+        return true;
+    }
+
+    @Override
+    protected int calculateFallDamage(float pDistance, float pDamageMultiplier) {
+        return 0;
     }
 
     @Nullable
