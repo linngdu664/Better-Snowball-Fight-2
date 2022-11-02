@@ -50,6 +50,7 @@ public class BSFGolemRangedAttackGoal extends Goal {
         //target = null;
         seeTime = 0;
         attackTime = -1;
+        strafingTime = 0;
     }
 
     @Override
