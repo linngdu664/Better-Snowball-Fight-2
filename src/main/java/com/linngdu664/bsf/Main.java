@@ -48,7 +48,6 @@ public class Main {
 
     public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder,
                                              BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
-        PACKET_HANDLER.registerMessage(messageID, messageType, encoder, decoder, messageConsumer);
-        messageID++;
+        PACKET_HANDLER.registerMessage(messageID++, messageType, encoder, decoder, messageConsumer);
     }
 }
