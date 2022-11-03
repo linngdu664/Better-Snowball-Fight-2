@@ -46,15 +46,15 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.Shulker;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Snowball;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SnowballItem;
+import net.minecraft.world.item.SolidBucketItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SnowLayerBlock;
-import net.minecraft.world.level.block.SnowyDirtBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -217,6 +217,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     public void setRealSightZ(float z) {
         entityData.set(REAL_SIGHT_Z, z);
     }
+
     int getPotionSickness() {
         return entityData.get(POTION_SICKNESS);
     }
@@ -262,48 +263,48 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     pPlayer.getInventory().placeItemBackInInventory(getAmmo(), true);
                     setAmmo(ItemStack.EMPTY);
                 }
-            }else if(itemStack.getItem() instanceof SmoothSnowballItem){
-                if(getPotionSickness()==0){
+            } else if (itemStack.getItem() instanceof SmoothSnowballItem) {
+                if (getPotionSickness() == 0) {
                     this.heal(2);
                     setPotionSickness(20);
                     itemStack.shrink(1);
-                    ((ServerLevel)level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getEyeY(), this.getZ(), 8, 0, 0, 0, 0.04);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getEyeY(), this.getZ(), 8, 0, 0, 0, 0.04);
                     level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOW_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                }else{
-                    pPlayer.sendMessage(new TranslatableComponent("potionSickness.tip").append(""+getPotionSickness()), Util.NIL_UUID);
+                } else {
+                    pPlayer.sendMessage(new TranslatableComponent("potionSickness.tip").append("" + getPotionSickness()), Util.NIL_UUID);
                 }
-            }else if(itemStack.getItem().equals(Items.SNOW_BLOCK)){
-                if(getPotionSickness()==0){
+            } else if (itemStack.getItem().equals(Items.SNOW_BLOCK)) {
+                if (getPotionSickness() == 0) {
                     this.heal(5);
                     setPotionSickness(60);
                     itemStack.shrink(1);
-                    ((ServerLevel)level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getEyeY(), this.getZ(), 16, 0, 0, 0, 0.04);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getEyeY(), this.getZ(), 16, 0, 0, 0, 0.04);
                     level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOW_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                }else{
-                    pPlayer.sendMessage(new TranslatableComponent("potionSickness.tip").append(""+getPotionSickness()), Util.NIL_UUID);
+                } else {
+                    pPlayer.sendMessage(new TranslatableComponent("potionSickness.tip").append("" + getPotionSickness()), Util.NIL_UUID);
                 }
-            }else if(itemStack.getItem() instanceof SolidBucketItem){
-                if(getPotionSickness()==0){
+            } else if (itemStack.getItem() instanceof SolidBucketItem) {
+                if (getPotionSickness() == 0) {
                     this.heal(8);
                     setPotionSickness(100);
                     itemStack.shrink(1);
                     pPlayer.getInventory().placeItemBackInInventory(new ItemStack(Items.BUCKET, 1), true);
-                    ((ServerLevel)level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getEyeY(), this.getZ(), 24, 0, 0, 0, 0.04);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getEyeY(), this.getZ(), 24, 0, 0, 0, 0.04);
                     level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOW_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                }else{
-                    pPlayer.sendMessage(new TranslatableComponent("potionSickness.tip").append(""+getPotionSickness()), Util.NIL_UUID);
+                } else {
+                    pPlayer.sendMessage(new TranslatableComponent("potionSickness.tip").append("" + getPotionSickness()), Util.NIL_UUID);
                 }
-            }else if(itemStack.getItem().equals(Items.ICE)){
-                if(getPotionSickness()==0){
+            } else if (itemStack.getItem().equals(Items.ICE)) {
+                if (getPotionSickness() == 0) {
                     this.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 600, 1));
                     setPotionSickness(60);
                     itemStack.shrink(1);
-                    ((ServerLevel)level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getEyeY(), this.getZ(), 16, 0, 0, 0, 0.04);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getEyeY(), this.getZ(), 16, 0, 0, 0, 0.04);
                     level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                }else{
-                    pPlayer.sendMessage(new TranslatableComponent("potionSickness.tip").append(""+getPotionSickness()), Util.NIL_UUID);
+                } else {
+                    pPlayer.sendMessage(new TranslatableComponent("potionSickness.tip").append("" + getPotionSickness()), Util.NIL_UUID);
                 }
-            }else if (itemStack.getItem() instanceof SnowGolemModeTweakerItem snowGolemModeTweaker) {
+            } else if (itemStack.getItem() instanceof SnowGolemModeTweakerItem snowGolemModeTweaker) {
                 setUseLocator(snowGolemModeTweaker.isUseLocator());
                 setTarget(null);
                 setStatus(snowGolemModeTweaker.getState());
@@ -374,8 +375,8 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         if (getEnhance()) {
             this.heal(1);
         }
-        if(getPotionSickness()>0){
-            setPotionSickness(getPotionSickness()-1);
+        if (getPotionSickness() > 0) {
+            setPotionSickness(getPotionSickness() - 1);
         }
         if (getWeaponAng() > 0) {
             if (getWeaponAng() == 360) {
