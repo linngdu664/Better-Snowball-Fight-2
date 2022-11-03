@@ -68,10 +68,9 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
             recoil = ((AbstractSnowballTankItem) ammo.getItem()).getSnowball().getRecoil();
             isExplosive = ammo.getItem() instanceof ExplosiveSnowballTank || ammo.getItem() instanceof ExplosivePlayerTrackingSnowballTank || ammo.getItem() instanceof ExplosiveMonsterTrackingSnowballTank;
             pPlayer.startUsingItem(pUsedHand);
-            pPlayer.awardStat(Stats.ITEM_USED.get(this));
             return InteractionResultHolder.consume(stack);
         }
-        return InteractionResultHolder.pass(stack);
+        return InteractionResultHolder.fail(stack);
     }
 
 /*
@@ -142,7 +141,6 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     @SuppressWarnings("deprecation")
     @Override
     public void onUseTick(@NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, @NotNull ItemStack pStack, int pRemainingUseDuration) {
-        // boolean flag = false;
         if (pRemainingUseDuration == 1 || ammo.isEmpty()) {
             this.releaseUsing(pStack, pLevel, pLivingEntity, pRemainingUseDuration);
             return;
@@ -150,13 +148,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
         Player player = (Player) pLivingEntity;
         float pitch = player.getXRot();
         float yaw = player.getYRot();
-        //ammo = findAmmo(player, true, false);
-        //if (ammo != null) {
-        //    if (ammo.getItem() instanceof ExplosiveSnowballTank || ammo.getItem() instanceof ExplosivePlayerTrackingSnowballTank || ammo.getItem() instanceof ExplosiveMonsterTrackingSnowballTank) {
-        //        flag = true;
-        //    }
         if (pRemainingUseDuration % 3 == 2 && (!isExplosive || pRemainingUseDuration % 6 == 5)) {
-            //recoil = ((AbstractSnowballTankItem) ammo.getItem()).getSnowball().getRecoil();
             Vec3 cameraVec = Vec3.directionFromRotation(pitch, yaw);
             if (pLevel.isClientSide()) {
                 // add push
@@ -180,14 +172,10 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
                 }
             }
         }
-        // } else {
-        //        recoil = 0;
-        //   }
         // set pitch according to recoil.
         if (pitch > -90.0F && pLevel.isClientSide() && (!isExplosive || pRemainingUseDuration % 6 < 3)) {
             player.setXRot(pitch - recoil);
         }
-        //System.out.println(pRemainingUseDuration);
     }
 /*
     @Override
@@ -210,6 +198,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, int pTimeCharged) {
         pLivingEntity.playSound(SoundRegister.MACHINE_GUN_COOLING.get(), 3.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
         if (pLivingEntity instanceof Player player) {
+            player.stopUsingItem();
             if (isExplosive) {
                 player.getCooldowns().addCooldown(this, getUseDuration(pStack) - pTimeCharged);
             } else {
@@ -226,6 +215,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
 
     @Override
     public int getUseDuration(@NotNull ItemStack pStack) {
+        super.getUseDuration(pStack);
         if (isExplosive) {
             return 60;
         }
