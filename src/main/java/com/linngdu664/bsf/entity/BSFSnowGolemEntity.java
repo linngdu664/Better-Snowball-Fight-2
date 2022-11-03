@@ -322,7 +322,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 setStyle((byte) (((int) getStyle() + 1) % styleNum));
             } else if (itemStack.getItem() instanceof CreativeSnowGolemToolItem creativeTool) {
                 if (pPlayer.isShiftKeyDown()) {
-                    creativeTool.setEnchance(getEnhance());
+                    creativeTool.setEnhance(getEnhance());
                     creativeTool.setStatusFlag(getStatus());
                     creativeTool.setWeapon(getWeapon().copy());
                     creativeTool.setAmmo(getAmmo().copy());

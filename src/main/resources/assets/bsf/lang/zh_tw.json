@@ -158,7 +158,11 @@
   "smart_snow_block2.tooltip": "高級雪傀儡不能拿機槍，不能直接用手丟雪球",
   "smart_snow_block3.tooltip": "空手右鍵卸下儲罐，空手下蹲右鍵卸下武器",
   "smart_snow_block4.tooltip": "用目標定位器和模式調整器修改雪人模式",
-  "creative_snow_golem_tool.tooltip": "雪傀儡開啟增強模式後不會消耗彈藥和武器耐久",
+  "smart_snow_block5.tooltip": "給高級雪傀儡餵光滑雪球、雪塊、細雪恢復生命",
+  "smart_snow_block6.tooltip": "給高級雪傀儡餵冰賦予再生效果",
+  "smart_snow_block7.tooltip": "用原版雪球可以切換高級雪傀儡皮膚",
+  "creative_snow_golem_tool.tooltip": "右鍵高級雪傀儡開啟增強模式",
+  "creative_snow_golem_tool1.tooltip": "shift按下時右鍵高級雪傀儡復製，右鍵方塊生成",
 
   "lunch_yes_hand.tooltip": "用手扔：可以",
   "lunch_yes_cannon.tooltip": "雪球炮：可以",

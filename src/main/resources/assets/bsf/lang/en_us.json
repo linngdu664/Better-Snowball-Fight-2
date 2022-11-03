@@ -158,7 +158,11 @@
   "smart_snow_block2.tooltip": "Advanced Snow Golem can`t take machine guns, can`t throw snowballs without weapon",
   "smart_snow_block3.tooltip": "Unload the storage tank with empty hand right click, unload the weapon with empty hand right click when shift is pressed",
   "smart_snow_block4.tooltip": "Modify Advanced Snow Golem mode with target locator and mode tweaker",
-  "creative_snow_golem_tool.tooltip": "Snow Golem does not consume ammunition and weapon durability when it is in enhanced mode",
+  "smart_snow_block5.tooltip": "Feed the advanced snow golem smooth snow balls, snow blocks, and powder snow to restore life",
+  "smart_snow_block6.tooltip": "Feed advanced snow golem ice to give regeneration effect",
+  "smart_snow_block7.tooltip": "With the snowball can switch the advanced snow golem style",
+  "creative_snow_golem_tool.tooltip": "Right click advanced snow golem to open enhanced mode",
+  "creative_snow_golem_tool1.tooltip": "Right click advanced snow golem copy when shift is pressed, right click cube generation",
 
   "lunch_yes_hand.tooltip": "thrown by hand: yes",
   "lunch_yes_cannon.tooltip": "shot by cannon: yes",
