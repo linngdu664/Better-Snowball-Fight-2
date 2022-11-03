@@ -1,5 +1,6 @@
 package com.linngdu664.bsf.event;
 
+import com.linngdu664.bsf.Main;
 import com.linngdu664.bsf.client.model.BSFSnowGolemModel;
 import com.linngdu664.bsf.client.model.IceSkatesModel;
 import com.linngdu664.bsf.client.model.SnowFallBootsModel;
@@ -14,7 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@Mod.EventBusSubscriber(modid = "bsf", bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Main.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {

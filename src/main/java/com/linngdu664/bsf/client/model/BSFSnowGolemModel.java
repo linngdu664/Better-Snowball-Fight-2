@@ -2,6 +2,7 @@ package com.linngdu664.bsf.client.model;// Made with Blockbench 4.4.1
 // Exported for Minecraft version 1.17 - 1.18 with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
+import com.linngdu664.bsf.Main;
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -17,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BSFSnowGolemModel<T extends BSFSnowGolemEntity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("bsf", "bsf_snow_golem"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Main.MODID, "bsf_snow_golem"), "main");
     private final ModelPart middle;
     private final ModelPart up;
     private final ModelPart down;

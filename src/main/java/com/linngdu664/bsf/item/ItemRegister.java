@@ -1,5 +1,6 @@
 package com.linngdu664.bsf.item;
 
+import com.linngdu664.bsf.Main;
 import com.linngdu664.bsf.item.block.SmartSnowBlockItem;
 import com.linngdu664.bsf.item.misc.*;
 import com.linngdu664.bsf.item.snowball.force.*;
@@ -27,7 +28,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 @SuppressWarnings("unused")
 public class ItemRegister {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, "bsf");
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
 
     public static final RegistryObject<Item> SMOOTH_SNOWBALL = ITEMS.register("smooth_snowball", SmoothSnowballItem::new);
     public static final RegistryObject<Item> COMPACTED_SNOWBALL = ITEMS.register("compacted_snowball", CompactedSnowballItem::new);
