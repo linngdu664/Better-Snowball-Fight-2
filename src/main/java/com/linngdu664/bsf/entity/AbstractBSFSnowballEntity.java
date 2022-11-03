@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.entity;
 
 import com.linngdu664.bsf.item.ItemRegister;
+import com.linngdu664.bsf.item.tool.GloveItem;
 import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.LaunchFrom;
 import net.minecraft.core.particles.ParticleTypes;
@@ -136,10 +137,13 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
                 player.getUsedItemHand() == InteractionHand.OFF_HAND || player.getMainHandItem().is(ItemRegister.GLOVE.get()) &&
                 player.getUsedItemHand() == InteractionHand.MAIN_HAND) && player.isUsingItem() && isHeadingToSnowball(player)) {
             player.getInventory().placeItemBackInInventory(new ItemStack(getCorrespondingItem()));
-            if (player.getMainHandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {
+            if (player.getMainHandItem().getItem() instanceof GloveItem glove) {
                 player.getMainHandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.MAINHAND));
-            } else if (player.getOffhandItem().sameItemStackIgnoreDurability(new ItemStack(ItemRegister.GLOVE.get()))) {
+                glove.releaseUsing(player.getMainHandItem(), player.getLevel(), player, 1);
+            } else if (player.getOffhandItem().getItem() instanceof GloveItem glove) {
                 player.getOffhandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.OFFHAND));
+                glove.releaseUsing(player.getOffhandItem(), player.getLevel(), player, 1);
+
             }
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL, 3F, 0.4F / level.getRandom().nextFloat() * 0.4F + 0.8F);
             ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);

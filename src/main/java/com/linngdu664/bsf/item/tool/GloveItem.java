@@ -3,9 +3,11 @@ package com.linngdu664.bsf.item.tool;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -37,6 +39,15 @@ public class GloveItem extends AbstractBSFEnhanceableToolItem {
     @Override
     public int getUseDuration(@NotNull ItemStack pStack) {
         return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, int pTimeCharged) {
+        if (pLivingEntity instanceof Player player) {
+            player.stopUsingItem();
+            player.getCooldowns().addCooldown(this, 6);
+            player.awardStat(Stats.ITEM_USED.get(this));
+        }
     }
 
     @Override
