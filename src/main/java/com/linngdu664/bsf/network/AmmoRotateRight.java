@@ -44,6 +44,7 @@ public class AmmoRotateRight {
         context.setPacketHandled(true);
     }
 
+    @SuppressWarnings("deprecation")
     public static void pressAction(Player player, int type, int pressedMs) {
         Level level = player.level;
         if (!level.hasChunkAt(player.blockPosition()))
