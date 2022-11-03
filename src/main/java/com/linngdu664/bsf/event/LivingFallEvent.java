@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.event;
 
-import com.linngdu664.bsf.enchantment.BSFEnchantments;
+import com.linngdu664.bsf.enchantment.EnchantmentRegister;
 import com.linngdu664.bsf.item.misc.SnowFallBootsItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -35,8 +35,8 @@ public class LivingFallEvent {
                     }
                     shoes.hurtAndBreak((int) Math.ceil((h - 3) * 0.25), player, (p) -> p.broadcastBreakEvent(EquipmentSlot.FEET));
                     level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
-                    if(EnchantmentHelper.getItemEnchantmentLevel(BSFEnchantments.KINETIC_ENERGY_STORAGE.get(),shoes)>0 && h>5){
-                        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, (int)h*6, EnchantmentHelper.getItemEnchantmentLevel(BSFEnchantments.KINETIC_ENERGY_STORAGE.get(),shoes)-1));
+                    if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.KINETIC_ENERGY_STORAGE.get(), shoes) > 0 && h > 5) {
+                        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, (int) h * 6, EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.KINETIC_ENERGY_STORAGE.get(), shoes) - 1));
                     }
                 }
             }
