@@ -41,10 +41,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.monster.Shulker;
-import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -229,10 +227,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 5.0F));
         targetSelector.addGoal(1, new BSFGolemHurtByTargetGoal(this));
-        targetSelector.addGoal(2, new BSFGolemNearestAttackableTargetGoal(this, Monster.class, 20, true, false, (p) -> true));
-        targetSelector.addGoal(3, new BSFGolemNearestAttackableTargetGoal(this, Slime.class, 20, true, false, (p) -> true));
-        targetSelector.addGoal(4, new BSFGolemNearestAttackableTargetGoal(this, FlyingMob.class, 20, true, false, (p) -> true));
-        targetSelector.addGoal(5, new BSFGolemNearestAttackableTargetGoal(this, Shulker.class, 20, true, false, (p) -> true));
+        targetSelector.addGoal(2, new BSFGolemNearestAttackableTargetGoal(this, Mob.class, 20, true, false, (p) -> p instanceof Enemy));
     }
 
     @Override
