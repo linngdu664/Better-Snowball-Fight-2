@@ -73,7 +73,7 @@ public class BSFGolemFollowOwnerGoal extends Goal {
         if (--timeToRecalcPath <= 0) {
             timeToRecalcPath = adjustedTickDelay(10);
             if (!golem.isLeashed() && !golem.isPassenger()) {
-                if (golem.distanceToSqr(owner) >= 144.0D) {
+                if (golem.distanceToSqr(owner) >= 1024.0D) {
                     teleportToOwner();
                 } else {
                     navigation.moveTo(owner, speedModifier);

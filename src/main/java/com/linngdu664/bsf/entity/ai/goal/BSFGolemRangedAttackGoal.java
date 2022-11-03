@@ -12,12 +12,11 @@ import java.util.EnumSet;
 public class BSFGolemRangedAttackGoal extends Goal {
     private final BSFSnowGolemEntity golem;
     private final double speedModifier;
-    private final int attackIntervalMin;
-    private final int attackIntervalMax;
+    private final int attackInterval;
     private final float attackRadius;
     private final float attackRadiusSqr;
     //private LivingEntity target;
-    private int attackTime = -1;
+    private int attackTime;
     private int seeTime;
     private int strafingTime;
     private boolean strafingClockwise;
@@ -26,8 +25,7 @@ public class BSFGolemRangedAttackGoal extends Goal {
     public BSFGolemRangedAttackGoal(BSFSnowGolemEntity golem, double pSpeedModifier, int pAttackInterval, float pAttackRadius) {
         this.golem = golem;
         this.speedModifier = pSpeedModifier;
-        this.attackIntervalMin = pAttackInterval;
-        this.attackIntervalMax = pAttackInterval;
+        this.attackInterval = pAttackInterval;
         this.attackRadius = pAttackRadius;
         this.attackRadiusSqr = pAttackRadius * pAttackRadius;
         golem.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
@@ -49,8 +47,8 @@ public class BSFGolemRangedAttackGoal extends Goal {
     public void stop() {
         //target = null;
         seeTime = 0;
-        attackTime = -1;
-        strafingTime = 0;
+        attackTime = 0;
+        golem.getMoveControl().strafe(strafingBackwards ? 0.5F : -0.5F, strafingClockwise ? -0.5F : 0.5F);
     }
 
     @Override
@@ -130,9 +128,9 @@ public class BSFGolemRangedAttackGoal extends Goal {
                 strafingTime = 0;
             }
             if (strafingTime > -1 && golem.getStatus() != 4) {
-                if (d0 > (double) (this.attackRadiusSqr * 0.75F)) {
+                if (d0 > attackRadiusSqr * 0.64F) {
                     strafingBackwards = false;
-                } else if (d0 < (double) (this.attackRadiusSqr * 0.25F)) {
+                } else if (d0 < attackRadiusSqr * 0.09F) {
                     strafingBackwards = true;
                 }
                 golem.getMoveControl().strafe(strafingBackwards ? -0.5F : 0.5F, strafingClockwise ? 0.5F : -0.5F);
@@ -140,16 +138,16 @@ public class BSFGolemRangedAttackGoal extends Goal {
             } else {
                 golem.getLookControl().setLookAt(target, 30.0F, 30.0F);
             }
-            if (--attackTime == 0) {
-                if (!flag) {
-                    return;
+            if (--attackTime <= 0) {
+                if (attackTime == 0) {
+                    if (!flag) {
+                        return;
+                    }
+                    float f = (float) Math.sqrt(d0) / attackRadius;
+                    float f1 = Mth.clamp(f, 0.1F, 1.0F);
+                    golem.performRangedAttack(target, f1);
                 }
-                float f = (float) Math.sqrt(d0) / attackRadius;
-                float f1 = Mth.clamp(f, 0.1F, 1.0F);
-                golem.performRangedAttack(target, f1);
-                attackTime = Mth.floor(f * (float) (attackIntervalMax - attackIntervalMin) + (float) attackIntervalMin);
-            } else if (attackTime < 0) {
-                attackTime = Mth.floor(Mth.lerp(Math.sqrt(d0) / attackRadius, attackIntervalMin, attackIntervalMax));
+                attackTime = attackInterval;
             }
         }
     }

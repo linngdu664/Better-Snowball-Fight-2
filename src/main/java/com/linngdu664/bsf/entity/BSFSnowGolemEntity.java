@@ -59,8 +59,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
-
 public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob {
     private static final int styleNum = 9;
     /*
@@ -82,7 +80,6 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     private static final EntityDataAccessor<Float> REAL_SIGHT_Y = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Float> REAL_SIGHT_Z = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Integer> POTION_SICKNESS = SynchedEntityData.defineId(BSFSnowGolemEntity.class, EntityDataSerializers.INT);
-
 
     public BSFSnowGolemEntity(EntityType<? extends TamableAnimal> p_21803_, Level p_21804_) {
         super(p_21803_, p_21804_);
@@ -229,8 +226,8 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new SitWhenOrderedToGoal(this));
-        goalSelector.addGoal(2, new BSFGolemFollowOwnerGoal(this, 1.0, 5.0F, 3.0F));
-        goalSelector.addGoal(3, new BSFGolemRangedAttackGoal(this, 1.0, 30, 50.0F));
+        goalSelector.addGoal(2, new BSFGolemRangedAttackGoal(this, 1.0, 30, 50.0F));
+        goalSelector.addGoal(3, new BSFGolemFollowOwnerGoal(this, 1.0, 6.0F, 3.0F));
         goalSelector.addGoal(4, new BSFGolemRandomStrollGoal(this, 0.8, 1E-5F));
         goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 5.0F));
@@ -489,7 +486,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         return 0;
     }
 
-    @Nullable
+    @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.SNOW_GOLEM_AMBIENT;
     }
