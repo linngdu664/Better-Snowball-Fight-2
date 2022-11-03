@@ -85,6 +85,6 @@ public abstract class AbstractBSFWeaponItem extends Item {
 
     @Override
     public int getItemEnchantability(ItemStack stack) {
-        return 1;
+        return 25;
     }
 }

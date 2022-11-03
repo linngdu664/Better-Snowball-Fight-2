@@ -227,5 +227,6 @@
 
   "block.bsf.smart_snow_block": "Smart Snow Block",
 
-  "key.bsf.ammo_rotate_right": "Ammo Rotate Right"
+  "key.bsf.ammo_rotate_right": "Ammo Rotate Right",
+  "enchantment.bsf.kinetic_energy_storage": "Kinetic Energy Storage"
 }

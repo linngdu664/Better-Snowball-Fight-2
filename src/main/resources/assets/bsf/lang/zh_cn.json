@@ -228,5 +228,6 @@
 
   "block.bsf.smart_snow_block": "智慧雪块",
 
-  "key.bsf.ammo_rotate_right": "循环右移弹药"
+  "key.bsf.ammo_rotate_right": "循环右移弹药",
+  "enchantment.bsf.kinetic_energy_storage": "动能储存"
 }

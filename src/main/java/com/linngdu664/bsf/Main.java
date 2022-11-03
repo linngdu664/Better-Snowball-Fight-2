@@ -45,7 +45,7 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new AttackEntityEvent());
         MinecraftForge.EVENT_BUS.register(new OnPlayerTickEvent());
         MinecraftForge.EVENT_BUS.register(new LivingFallEvent());
-//        BSFEnchantments.REGISTRY.register(bus);
+        BSFEnchantments.REGISTRY.register(bus);
     }
 
     public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder,

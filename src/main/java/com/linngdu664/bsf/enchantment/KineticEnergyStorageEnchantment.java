@@ -9,12 +9,22 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class KineticEnergyStorageEnchantment extends Enchantment {
     public KineticEnergyStorageEnchantment(EquipmentSlot... slots) {
-        super(Enchantment.Rarity.UNCOMMON, EnchantmentCategory.ARMOR_FEET, slots);
+        super(Rarity.COMMON, EnchantmentCategory.ARMOR_FEET, slots);
     }
 
     @Override
     public int getMaxLevel() {
-        return 2;
+        return 3;
+    }
+
+    @Override
+    public int getMinCost(int pLevel) {
+        return (pLevel-1)*10+5;
+    }
+
+    @Override
+    public int getMaxCost(int pLevel) {
+        return getMinCost(pLevel)+10;
     }
 
     @Override
