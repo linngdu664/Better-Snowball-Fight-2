@@ -141,7 +141,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     @SuppressWarnings("deprecation")
     @Override
     public void onUseTick(@NotNull Level pLevel, @NotNull LivingEntity pLivingEntity, @NotNull ItemStack pStack, int pRemainingUseDuration) {
-        if (pRemainingUseDuration == 1 || ammo.isEmpty()) {
+        if (pRemainingUseDuration == 1 || ammo == null || ammo.isEmpty()) {
             this.releaseUsing(pStack, pLevel, pLivingEntity, pRemainingUseDuration);
             return;
         }
