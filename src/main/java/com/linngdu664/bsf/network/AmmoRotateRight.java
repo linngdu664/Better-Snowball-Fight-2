@@ -1,6 +1,5 @@
 package com.linngdu664.bsf.network;
 
-import com.linngdu664.bsf.Main;
 import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
 import net.minecraft.Util;
@@ -59,7 +58,7 @@ public class AmmoRotateRight {
 
     @SubscribeEvent
     public static void registerMessage(FMLCommonSetupEvent event) {
-        Main.addNetworkMessage(AmmoRotateRight.class, AmmoRotateRight::buffer, AmmoRotateRight::new, AmmoRotateRight::handler);
+        Network.addNetworkMessage(AmmoRotateRight.class, AmmoRotateRight::buffer, AmmoRotateRight::new, AmmoRotateRight::handler);
     }
 
     private static void execute(Player player) {

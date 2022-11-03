@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.event;
 
-import com.linngdu664.bsf.Main;
 import com.linngdu664.bsf.network.AmmoRotateRight;
+import com.linngdu664.bsf.network.Network;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -29,7 +29,7 @@ public class BSFKeyMappings {
             if (Minecraft.getInstance().screen == null) {
                 if (event.getKey() == CYCLE_MOVE_AMMO_RIGHT.getKey().getValue()) {
                     if (event.getAction() == GLFW.GLFW_PRESS) {
-                        Main.PACKET_HANDLER.sendToServer(new AmmoRotateRight(0, 0));
+                        Network.PACKET_HANDLER.sendToServer(new AmmoRotateRight(0, 0));
                         AmmoRotateRight.pressAction(Minecraft.getInstance().player, 0, 0);
                     }
                 }

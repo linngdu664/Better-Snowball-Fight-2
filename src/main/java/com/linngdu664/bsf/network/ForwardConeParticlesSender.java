@@ -1,6 +1,5 @@
 package com.linngdu664.bsf.network;
 
-import com.linngdu664.bsf.Main;
 import com.linngdu664.bsf.util.ParticleUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
@@ -75,6 +74,6 @@ public class ForwardConeParticlesSender {
 
     @SubscribeEvent
     public static void registerMessage(FMLCommonSetupEvent event) {
-        Main.addNetworkMessage(ForwardConeParticlesSender.class, ForwardConeParticlesSender::buffer, ForwardConeParticlesSender::new, ForwardConeParticlesSender::handler);
+        Network.addNetworkMessage(ForwardConeParticlesSender.class, ForwardConeParticlesSender::buffer, ForwardConeParticlesSender::new, ForwardConeParticlesSender::handler);
     }
 }
