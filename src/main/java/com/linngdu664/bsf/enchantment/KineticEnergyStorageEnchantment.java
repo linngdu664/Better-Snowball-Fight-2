@@ -19,12 +19,12 @@ public class KineticEnergyStorageEnchantment extends Enchantment {
 
     @Override
     public int getMinCost(int pLevel) {
-        return (pLevel-1)*10+5;
+        return pLevel * 10 - 5;
     }
 
     @Override
     public int getMaxCost(int pLevel) {
-        return getMinCost(pLevel)+10;
+        return getMinCost(pLevel) + 10;
     }
 
     @Override
