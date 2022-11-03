@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class CreativeSnowGolemToolItem extends Item {
-    private boolean enchance;
+    private boolean enhance;
     private boolean useLocator;
     private byte statusFlag;
     private byte style;
@@ -45,7 +45,7 @@ public class CreativeSnowGolemToolItem extends Item {
             snowGolem.setUseLocator(useLocator);
             snowGolem.setAmmo(ammo);
             snowGolem.setWeapon(weapon);
-            snowGolem.setEnhance(enchance);
+            snowGolem.setEnhance(enhance);
             snowGolem.setStyle(style);
             snowGolem.setTarget(target);
             BlockPos blockPos = pContext.getClickedPos();
@@ -58,10 +58,11 @@ public class CreativeSnowGolemToolItem extends Item {
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("creative_snow_golem_tool.tooltip").withStyle(ChatFormatting.BLUE));
+        pTooltipComponents.add(new TranslatableComponent("creative_snow_golem_tool1.tooltip").withStyle(ChatFormatting.BLUE));
     }
 
-    public void setEnchance(boolean enchance) {
-        this.enchance = enchance;
+    public void setEnhance(boolean enhance) {
+        this.enhance = enhance;
     }
 
     public void setUseLocator(boolean useLocator) {

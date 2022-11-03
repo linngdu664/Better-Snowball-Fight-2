@@ -27,6 +27,9 @@ public class SmartSnowBlockItem extends BlockItem {
         pTooltip.add(new TranslatableComponent("smart_snow_block2.tooltip").withStyle(ChatFormatting.BLUE));
         pTooltip.add(new TranslatableComponent("smart_snow_block3.tooltip").withStyle(ChatFormatting.BLUE));
         pTooltip.add(new TranslatableComponent("smart_snow_block4.tooltip").withStyle(ChatFormatting.BLUE));
+        pTooltip.add(new TranslatableComponent("smart_snow_block5.tooltip").withStyle(ChatFormatting.BLUE));
+        pTooltip.add(new TranslatableComponent("smart_snow_block6.tooltip").withStyle(ChatFormatting.BLUE));
+        pTooltip.add(new TranslatableComponent("smart_snow_block7.tooltip").withStyle(ChatFormatting.BLUE));
         pTooltip.add(new TranslatableComponent("smart_snow_block.tooltip").withStyle(ChatFormatting.DARK_AQUA));
     }
 }
