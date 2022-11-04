@@ -25,6 +25,7 @@
   "item.bsf.repulsion_snowball_to_projectile": "斥彈雪團",
   "item.bsf.black_hole_snowball": "饕餮雪團",
   "item.bsf.subspace_snowball": "亞空雪團",
+  "item.bsf.propulsion_snowball": "推力雪團",
   "item.bsf.empty_snowball_tank": "空雪團儲罐",
   "item.bsf.compacted_snowball_tank": "固實雪團甕",
   "item.bsf.stone_snowball_tank": "石雪團甕",
@@ -49,6 +50,7 @@
   "item.bsf.repulsion_snowball_to_projectile_tank": "斥彈雪團甕",
   "item.bsf.black_hole_snowball_tank": "饕餮雪團甕",
   "item.bsf.subspace_snowball_tank": "亞空雪團甕",
+  "item.bsf.propulsion_snowball_tank": "推力雪團甕",
   "item.bsf.diamond_snowball_clamp": "金剛石雪團夾",
   "item.bsf.gold_snowball_clamp": "金雪團夾",
   "item.bsf.iron_snowball_clamp": "鐵雪團夾",
@@ -80,6 +82,7 @@
   "item.bsf.snow_golem_mode_tweaker": "雪傀儡模式調整器",
   "item.bsf.snow_fall_boots": "落雪靴",
   "item.bsf.creative_snow_golem_tool": "創造模式雪傀儡調整器",
+
 
 
   "stone_snowball.tooltip": "甚也！",
@@ -164,6 +167,9 @@
   "smart_snow_block7.tooltip": "用原版雪球可以切換高級雪傀儡皮膚",
   "creative_snow_golem_tool.tooltip": "右鍵高級雪傀儡開啟增強模式",
   "creative_snow_golem_tool1.tooltip": "shift按下時右鍵高級雪傀儡復製，右鍵方塊生成",
+  "propulsion_snowball1.tooltip": "不可發射，只供雪球散彈槍產生推力",
+  "propulsion_snowball2.tooltip": "雪球散彈槍推進反沖的時候會優先消耗推力雪球",
+  "propulsion_snowball.tooltip": "端羥基聚醚預聚物",
 
   "lunch_yes_hand.tooltip": "用手扔之：可",
   "lunch_yes_cannon.tooltip": "用炮射之：可",
