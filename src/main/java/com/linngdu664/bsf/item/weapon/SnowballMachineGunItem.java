@@ -42,7 +42,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     //private boolean isOnCoolDown = false;
 
     public SnowballMachineGunItem() {
-        super(512, Rarity.EPIC);
+        super(768, Rarity.EPIC);
     }
 
     public LaunchFunc getLaunchFunc() {
