@@ -309,6 +309,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     creativeTool.setUseLocator(isUseLocator());
                     creativeTool.setStyle(getStyle());
                     creativeTool.setTarget(getTarget());
+                    getOwner().sendMessage(new TranslatableComponent("copy.tip"), Util.NIL_UUID);
                 } else {
                     setEnhance(!getEnhance());
                     getOwner().sendMessage(new TranslatableComponent("golem_enhance.tip").append(String.valueOf(getEnhance())), Util.NIL_UUID);
