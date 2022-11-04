@@ -95,6 +95,10 @@ public class SnowFallBootsItem extends ArmorItem {
             }
         });
     }
+    @Override
+    public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
+        return pRepairCandidate.is(Items.LEATHER_BOOTS);
+    }
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
