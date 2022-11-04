@@ -98,7 +98,8 @@ public class BSFGolemRangedAttackGoal extends Goal {
         list.remove(target);
         for (LivingEntity entity : list) {
             Vec3 rVec = new Vec3(entity.getX() - golem.getX(), entity.getEyeY() - golem.getEyeY(), entity.getZ() - golem.getZ());
-            if (rVec.dot(sightVec) * rVec.dot(sightVec) / (rVec.lengthSqr() * sightVec.lengthSqr()) > 1 - 0.25 / rVec.lengthSqr()) {
+            double tmp = rVec.dot(sightVec);
+            if (tmp > 0 && tmp * tmp / (rVec.lengthSqr() * sightVec.lengthSqr()) > 1 - 1 / rVec.lengthSqr()) {
                 return true;
             }
         }
