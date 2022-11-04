@@ -15,7 +15,6 @@ public class BSFGolemRangedAttackGoal extends Goal {
     private final int attackInterval;
     private final float attackRadius;
     private final float attackRadiusSqr;
-    //private LivingEntity target;
     private int attackTime;
     private int seeTime;
     private int strafingTime;
@@ -45,10 +44,8 @@ public class BSFGolemRangedAttackGoal extends Goal {
 
     @Override
     public void stop() {
-        //target = null;
         seeTime = 0;
         attackTime = 0;
-        golem.getMoveControl().strafe(strafingBackwards ? 0.5F : -0.5F, strafingClockwise ? -0.5F : 0.5F);
     }
 
     @Override
