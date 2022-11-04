@@ -81,7 +81,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     }
 
     public static AttributeSupplier setAttributes() {
-        return TamableAnimal.createLivingAttributes().add(Attributes.MAX_HEALTH, 10.0).add(Attributes.FOLLOW_RANGE, 50.0).add(Attributes.MOVEMENT_SPEED, 0.3).build();
+        return TamableAnimal.createLivingAttributes().add(Attributes.MAX_HEALTH, 20.0).add(Attributes.FOLLOW_RANGE, 50.0).add(Attributes.MOVEMENT_SPEED, 0.3).build();
     }
 
     @Override
