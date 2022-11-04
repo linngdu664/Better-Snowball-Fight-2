@@ -13,10 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
@@ -98,6 +95,10 @@ public class IceSkatesItem extends ArmorItem {
                 return armorModel;
             }
         });
+    }
+    @Override
+    public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
+        return pRepairCandidate.is(Items.LEATHER_BOOTS);
     }
 
     @Override
