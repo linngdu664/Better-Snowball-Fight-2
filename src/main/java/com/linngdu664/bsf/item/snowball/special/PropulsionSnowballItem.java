@@ -9,8 +9,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 
-public class PropulsionSnowball extends AbstractBSFSnowballItem {
-    public PropulsionSnowball() {
+public class PropulsionSnowballItem extends AbstractBSFSnowballItem {
+    public PropulsionSnowballItem() {
         super(Rarity.COMMON);
     }
 
@@ -19,5 +19,18 @@ public class PropulsionSnowball extends AbstractBSFSnowballItem {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         storageInTank(pPlayer, itemStack, ItemRegister.PROPULSION_SNOWBALL_TANK.get());
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
+    }
+    @Override
+    public boolean canBeLaunchedByMachineGun() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeLaunchedByNormalWeapon() {
+        return false;
+    }
+    @Override
+    public double getPushRank() {
+        return 0.38;
     }
 }

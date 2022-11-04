@@ -8,8 +8,8 @@ import com.linngdu664.bsf.item.snowball.force.*;
 import com.linngdu664.bsf.item.snowball.normal.*;
 import com.linngdu664.bsf.item.snowball.special.FrozenSnowballItem;
 import com.linngdu664.bsf.item.snowball.special.PowderSnowballItem;
-import com.linngdu664.bsf.item.snowball.special.PropulsionSnowball;
-import com.linngdu664.bsf.item.snowball.special.SubspaceSnowball;
+import com.linngdu664.bsf.item.snowball.special.PropulsionSnowballItem;
+import com.linngdu664.bsf.item.snowball.special.SubspaceSnowballItem;
 import com.linngdu664.bsf.item.snowball.tracking.*;
 import com.linngdu664.bsf.item.tank.EmptySnowballTankItem;
 import com.linngdu664.bsf.item.tank.force.*;
@@ -57,8 +57,8 @@ public class ItemRegister {
     public static final RegistryObject<Item> MONSTER_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_monster", MonsterRepulsionSnowballItem::new);
     public static final RegistryObject<Item> PROJECTILE_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_projectile", ProjectileRepulsionSnowballItem::new);
     public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL = ITEMS.register("black_hole_snowball", BlackHoleSnowballItem::new);
-    public static final RegistryObject<Item> SUBSPACE_SNOWBALL = ITEMS.register("subspace_snowball", SubspaceSnowball::new);
-    public static final RegistryObject<Item> PROPULSION_SNOWBALL = ITEMS.register("propulsion_snowball", PropulsionSnowball::new);
+    public static final RegistryObject<Item> SUBSPACE_SNOWBALL = ITEMS.register("subspace_snowball", SubspaceSnowballItem::new);
+    public static final RegistryObject<Item> PROPULSION_SNOWBALL = ITEMS.register("propulsion_snowball", PropulsionSnowballItem::new);
 
 
     public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_tank", EmptySnowballTankItem::new);

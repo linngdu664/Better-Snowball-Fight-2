@@ -2,7 +2,9 @@ package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
+import com.linngdu664.bsf.item.snowball.special.PropulsionSnowballItem;
 import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
+import com.linngdu664.bsf.item.tank.special.PropulsionSnowballTank;
 import com.linngdu664.bsf.network.ForwardConeParticlesSender;
 import com.linngdu664.bsf.network.Network;
 import com.linngdu664.bsf.util.LaunchFrom;
@@ -55,7 +57,15 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
         pushRank = 0.24;
         int i;
         for (i = 0; i < 4; i++) {
-            ItemStack itemStack = findAmmo(player, false, true);
+            ItemStack itemStack;
+            if(player.isShiftKeyDown()){
+                itemStack=findPropulsionSnowballAmmo(player);
+                if(itemStack==null){
+                    itemStack=findAmmo(player, false, true);
+                }
+            }else{
+                itemStack=findAmmo(player, false, true);
+            }
             if (itemStack != null) {
                 AbstractBSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, level, getLaunchFunc());
                 addPush(itemStack.getItem());
@@ -99,6 +109,22 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
         if (item instanceof AbstractBSFSnowballItem snowball) {
             pushRank += snowball.getPushRank();
         }
+    }
+    private ItemStack findPropulsionSnowballAmmo(Player player){
+        int k = player.getInventory().getContainerSize();
+        for (int j = 0; j < k; j++) {
+            ItemStack itemStack = player.getInventory().getItem(j);
+            if (itemStack.getItem() instanceof PropulsionSnowballTank) {
+                return itemStack;
+            }
+        }
+        for (int j = 0; j < k; j++) {
+            ItemStack itemStack = player.getInventory().getItem(j);
+            if (itemStack.getItem() instanceof PropulsionSnowballItem) {
+                return itemStack;
+            }
+        }
+        return null;
     }
 
     @Override

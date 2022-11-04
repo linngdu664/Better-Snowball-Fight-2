@@ -21,8 +21,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class SubspaceSnowball extends AbstractBSFSnowballItem {
-    public SubspaceSnowball() {
+public class SubspaceSnowballItem extends AbstractBSFSnowballItem {
+    public SubspaceSnowballItem() {
         super(Rarity.EPIC);
     }
 
