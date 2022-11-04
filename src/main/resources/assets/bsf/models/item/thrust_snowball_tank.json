@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "bsf:item/propulsion_snowball"
+    "layer0": "bsf:item/thrust_snowball_tank"
   }
 }

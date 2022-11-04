@@ -8,7 +8,7 @@ import com.linngdu664.bsf.item.snowball.force.*;
 import com.linngdu664.bsf.item.snowball.normal.*;
 import com.linngdu664.bsf.item.snowball.special.FrozenSnowballItem;
 import com.linngdu664.bsf.item.snowball.special.PowderSnowballItem;
-import com.linngdu664.bsf.item.snowball.special.PropulsionSnowballItem;
+import com.linngdu664.bsf.item.snowball.special.ThrustSnowballItem;
 import com.linngdu664.bsf.item.snowball.special.SubspaceSnowballItem;
 import com.linngdu664.bsf.item.snowball.tracking.*;
 import com.linngdu664.bsf.item.tank.EmptySnowballTankItem;
@@ -16,7 +16,7 @@ import com.linngdu664.bsf.item.tank.force.*;
 import com.linngdu664.bsf.item.tank.normal.*;
 import com.linngdu664.bsf.item.tank.special.FrozenSnowballTank;
 import com.linngdu664.bsf.item.tank.special.PowderSnowballTank;
-import com.linngdu664.bsf.item.tank.special.PropulsionSnowballTank;
+import com.linngdu664.bsf.item.tank.special.ThrustSnowballTank;
 import com.linngdu664.bsf.item.tank.special.SubspaceSnowballTank;
 import com.linngdu664.bsf.item.tank.tracking.*;
 import com.linngdu664.bsf.item.tool.*;
@@ -58,7 +58,7 @@ public class ItemRegister {
     public static final RegistryObject<Item> PROJECTILE_REPULSION_SNOWBALL = ITEMS.register("repulsion_snowball_to_projectile", ProjectileRepulsionSnowballItem::new);
     public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL = ITEMS.register("black_hole_snowball", BlackHoleSnowballItem::new);
     public static final RegistryObject<Item> SUBSPACE_SNOWBALL = ITEMS.register("subspace_snowball", SubspaceSnowballItem::new);
-    public static final RegistryObject<Item> PROPULSION_SNOWBALL = ITEMS.register("propulsion_snowball", PropulsionSnowballItem::new);
+    public static final RegistryObject<Item> THRUST_SNOWBALL = ITEMS.register("thrust_snowball", ThrustSnowballItem::new);
 
 
     public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_tank", EmptySnowballTankItem::new);
@@ -85,7 +85,7 @@ public class ItemRegister {
     public static final RegistryObject<Item> PROJECTILE_REPULSION_SNOWBALL_TANK = ITEMS.register("repulsion_snowball_to_projectile_tank", ProjectileRepulsionSnowballTank::new);
     public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL_TANK = ITEMS.register("black_hole_snowball_tank", BlackHoleSnowballTank::new);
     public static final RegistryObject<Item> SUBSPACE_SNOWBALL_TANK = ITEMS.register("subspace_snowball_tank", SubspaceSnowballTank::new);
-    public static final RegistryObject<Item> PROPULSION_SNOWBALL_TANK = ITEMS.register("propulsion_snowball_tank", PropulsionSnowballTank::new);
+    public static final RegistryObject<Item> THRUST_SNOWBALL_TANK = ITEMS.register("thrust_snowball_tank", ThrustSnowballTank::new);
 
 
 

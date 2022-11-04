@@ -2,9 +2,9 @@ package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
-import com.linngdu664.bsf.item.snowball.special.PropulsionSnowballItem;
+import com.linngdu664.bsf.item.snowball.special.ThrustSnowballItem;
 import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
-import com.linngdu664.bsf.item.tank.special.PropulsionSnowballTank;
+import com.linngdu664.bsf.item.tank.special.ThrustSnowballTank;
 import com.linngdu664.bsf.network.ForwardConeParticlesSender;
 import com.linngdu664.bsf.network.Network;
 import com.linngdu664.bsf.util.LaunchFrom;
@@ -114,13 +114,13 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
         int k = player.getInventory().getContainerSize();
         for (int j = 0; j < k; j++) {
             ItemStack itemStack = player.getInventory().getItem(j);
-            if (itemStack.getItem() instanceof PropulsionSnowballTank) {
+            if (itemStack.getItem() instanceof ThrustSnowballTank) {
                 return itemStack;
             }
         }
         for (int j = 0; j < k; j++) {
             ItemStack itemStack = player.getInventory().getItem(j);
-            if (itemStack.getItem() instanceof PropulsionSnowballItem) {
+            if (itemStack.getItem() instanceof ThrustSnowballItem) {
                 return itemStack;
             }
         }
