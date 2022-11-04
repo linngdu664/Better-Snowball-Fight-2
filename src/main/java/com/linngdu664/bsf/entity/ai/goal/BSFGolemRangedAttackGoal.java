@@ -2,12 +2,15 @@ package com.linngdu664.bsf.entity.ai.goal;
 
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
 import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;
+import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
+import java.util.List;
 
 public class BSFGolemRangedAttackGoal extends Goal {
     private final BSFSnowGolemEntity golem;
@@ -88,6 +91,20 @@ public class BSFGolemRangedAttackGoal extends Goal {
         }
     }*/
 
+    private boolean isBlockedByOthers(double d2, LivingEntity target) {
+        double d = Math.sqrt(d2);
+        Vec3 sightVec = new Vec3(target.getX() - golem.getX(), target.getEyeY() - golem.getEyeY(), target.getZ() - golem.getZ());
+        List<LivingEntity> list = TargetGetter.getTargetList(golem, LivingEntity.class, d);
+        list.remove(target);
+        for (LivingEntity entity : list) {
+            Vec3 rVec = new Vec3(entity.getX() - golem.getX(), entity.getEyeY() - golem.getEyeY(), entity.getZ() - golem.getZ());
+            if (rVec.dot(sightVec) * rVec.dot(sightVec) / (rVec.lengthSqr() * sightVec.lengthSqr()) > 1 - 0.25 / rVec.lengthSqr()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void tick() {
         LivingEntity target = golem.getTarget();
         float attackRadiusSqr = this.attackRadiusSqr;
@@ -137,7 +154,7 @@ public class BSFGolemRangedAttackGoal extends Goal {
             }
             if (--attackTime <= 0) {
                 if (attackTime == 0) {
-                    if (!flag) {
+                    if (!flag || isBlockedByOthers(d0, target)) {
                         return;
                     }
                     float f = (float) Math.sqrt(d0) / attackRadius;

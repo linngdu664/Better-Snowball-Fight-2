@@ -186,7 +186,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.set(ENHANCE, enhance);
     }
 
-    float getRealSightX() {
+    public float getRealSightX() {
         return entityData.get(REAL_SIGHT_X);
     }
 
@@ -194,7 +194,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.set(REAL_SIGHT_X, x);
     }
 
-    float getRealSightY() {
+    public float getRealSightY() {
         return entityData.get(REAL_SIGHT_Y);
     }
 
@@ -202,7 +202,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.set(REAL_SIGHT_Y, y);
     }
 
-    float getRealSightZ() {
+    public float getRealSightZ() {
         return entityData.get(REAL_SIGHT_Z);
     }
 
@@ -210,7 +210,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
         entityData.set(REAL_SIGHT_Z, z);
     }
 
-    int getPotionSickness() {
+    public int getPotionSickness() {
         return entityData.get(POTION_SICKNESS);
     }
 
