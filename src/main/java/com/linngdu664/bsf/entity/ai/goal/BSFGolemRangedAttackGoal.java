@@ -106,6 +106,7 @@ public class BSFGolemRangedAttackGoal extends Goal {
                 if (!golem.isUseLocator()) {
                     golem.setTarget(null);
                 }
+                attackTime = 1;
                 return true;
             }
             x += sightVec.x;
