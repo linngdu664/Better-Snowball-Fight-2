@@ -15,7 +15,7 @@ public class BSFGolemHurtByTargetGoal extends HurtByTargetGoal {
     @Override
     public boolean canUse() {
         LivingEntity livingEntity = snowGolem.getLastHurtByMob();
-        if (livingEntity instanceof BSFSnowGolemEntity snowGolem1 && snowGolem1.getOwnerUUID() == snowGolem.getOwnerUUID()) {
+        if (livingEntity instanceof BSFSnowGolemEntity snowGolem1 && snowGolem1.getOwner() == snowGolem.getOwner()) {
             return false;
         }
         return super.canUse();
