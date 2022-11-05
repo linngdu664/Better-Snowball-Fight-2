@@ -96,6 +96,7 @@ public class IceSkatesItem extends ArmorItem {
             }
         });
     }
+
     @Override
     public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
         return pRepairCandidate.is(Items.LEATHER_BOOTS);

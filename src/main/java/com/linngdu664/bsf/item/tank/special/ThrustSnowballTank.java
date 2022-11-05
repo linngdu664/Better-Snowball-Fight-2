@@ -17,6 +17,7 @@ public class ThrustSnowballTank extends AbstractSnowballTankItem {
     public ThrustSnowballTank() {
         super(ItemRegister.THRUST_SNOWBALL.get());
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("lunch_no_hand.tooltip").withStyle(ChatFormatting.DARK_RED));

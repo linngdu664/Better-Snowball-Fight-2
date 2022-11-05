@@ -98,6 +98,7 @@ public class SnowBlockBlenderItem extends AbstractBSFEnhanceableToolItem {
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack pStack) {
         return UseAnim.BOW;
     }
+
     @Override
     public boolean isValidRepairItem(@NotNull ItemStack pStack, ItemStack pRepairCandidate) {
         return pRepairCandidate.is(Items.IRON_INGOT);

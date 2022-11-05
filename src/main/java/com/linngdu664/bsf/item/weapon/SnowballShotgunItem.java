@@ -58,13 +58,13 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
         int i;
         for (i = 0; i < 4; i++) {
             ItemStack itemStack;
-            if(player.isShiftKeyDown()){
-                itemStack=findPropulsionSnowballAmmo(player);
-                if(itemStack==null){
-                    itemStack=findAmmo(player, false, true);
+            if (player.isShiftKeyDown()) {
+                itemStack = findPropulsionSnowballAmmo(player);
+                if (itemStack == null) {
+                    itemStack = findAmmo(player, false, true);
                 }
-            }else{
-                itemStack=findAmmo(player, false, true);
+            } else {
+                itemStack = findAmmo(player, false, true);
             }
             if (itemStack != null) {
                 AbstractBSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, level, getLaunchFunc());
@@ -110,7 +110,8 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
             pushRank += snowball.getPushRank();
         }
     }
-    private ItemStack findPropulsionSnowballAmmo(Player player){
+
+    private ItemStack findPropulsionSnowballAmmo(Player player) {
         int k = player.getInventory().getContainerSize();
         for (int j = 0; j < k; j++) {
             ItemStack itemStack = player.getInventory().getItem(j);

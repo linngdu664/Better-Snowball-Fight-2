@@ -23,11 +23,12 @@ public class ThrustSnowballItem extends AbstractBSFSnowballItem {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         storageInTank(pPlayer, itemStack, ItemRegister.THRUST_SNOWBALL_TANK.get());
         return InteractionResultHolder.sidedSuccess(itemStack, pLevel.isClientSide());
     }
+
     @Override
     public boolean canBeLaunchedByMachineGun() {
         return false;
@@ -37,10 +38,12 @@ public class ThrustSnowballItem extends AbstractBSFSnowballItem {
     public boolean canBeLaunchedByNormalWeapon() {
         return false;
     }
+
     @Override
     public double getPushRank() {
         return 0.38;
     }
+
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         pTooltipComponents.add(new TranslatableComponent("lunch_no_hand.tooltip").withStyle(ChatFormatting.DARK_RED));
