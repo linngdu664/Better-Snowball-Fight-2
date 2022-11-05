@@ -2,11 +2,11 @@ package com.linngdu664.bsf.entity.ai.goal;
 
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
 import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;
-import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
@@ -92,16 +92,25 @@ public class BSFGolemRangedAttackGoal extends Goal {
     }*/
 
     private boolean isBlockedByOthers(double d2, LivingEntity target) {
-        double d = Math.sqrt(d2);
-        Vec3 sightVec = new Vec3(target.getX() - golem.getX(), target.getEyeY() - golem.getEyeY(), target.getZ() - golem.getZ());
-        List<LivingEntity> list = TargetGetter.getTargetList(golem, LivingEntity.class, d);
-        list.remove(target);
-        for (LivingEntity entity : list) {
-            Vec3 rVec = new Vec3(entity.getX() - golem.getX(), entity.getEyeY() - golem.getEyeY(), entity.getZ() - golem.getZ());
-            double tmp = rVec.dot(sightVec);
-            if (tmp > 0 && tmp * tmp / (rVec.lengthSqr() * sightVec.lengthSqr()) > 1 - 1 / rVec.lengthSqr()) {
+        int d = (int) Math.sqrt(d2);
+        Vec3 sightVec = new Vec3(target.getX() - golem.getX(), target.getEyeY() - golem.getEyeY(), target.getZ() - golem.getZ()).normalize();
+        double x = golem.getX();
+        double y = golem.getEyeY();
+        double z = golem.getZ();
+        for (int i = 0; i <= d; i++) {
+            AABB aabb = new AABB(Mth.floor(x), Mth.floor(y), Mth.floor(z), Mth.ceil(x), Mth.ceil(y), Mth.ceil(z));
+            List<LivingEntity> list = golem.getLevel().getEntitiesOfClass(LivingEntity.class, aabb);
+            list.remove(target);
+            list.remove(golem);
+            if (!list.isEmpty()) {
+                if (!golem.isUseLocator()) {
+                    golem.setTarget(null);
+                }
                 return true;
             }
+            x += sightVec.x;
+            y += sightVec.y;
+            z += sightVec.z;
         }
         return false;
     }
