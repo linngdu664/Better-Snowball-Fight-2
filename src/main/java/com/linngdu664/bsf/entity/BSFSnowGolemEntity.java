@@ -278,10 +278,14 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 } else {
                     pPlayer.sendMessage(new TranslatableComponent("potionSickness.tip").append("" + getPotionSickness()), Util.NIL_UUID);
                 }
-            } else if (itemStack.getItem() instanceof SnowGolemModeTweakerItem snowGolemModeTweaker) {
-                setUseLocator(snowGolemModeTweaker.isUseLocator());
-                setTarget(null);
-                setStatus(snowGolemModeTweaker.getState());
+            } else if (itemStack.getItem() instanceof SnowGolemModeTweakerItem) {
+                //setUseLocator(snowGolemModeTweaker.isUseLocator());
+                if (itemStack.getOrCreateTag().getBoolean("useLocator") != isUseLocator()) {
+                    setTarget(null);
+                }
+                setUseLocator(itemStack.getOrCreateTag().getBoolean("useLocator"));
+                setStatus(itemStack.getTag().getByte("status"));
+                //setStatus(snowGolemModeTweaker.getState());
                 setOrderedToSit(getStatus() == 0);
                 pPlayer.sendMessage(new TranslatableComponent("import_state.tip"), Util.NIL_UUID);
                 level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.DISPENSER_DISPENSE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);

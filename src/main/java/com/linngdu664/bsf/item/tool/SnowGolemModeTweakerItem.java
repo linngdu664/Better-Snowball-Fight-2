@@ -3,6 +3,7 @@ package com.linngdu664.bsf.item.tool;
 import com.linngdu664.bsf.util.ItemGroup;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
@@ -21,8 +22,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class SnowGolemModeTweakerItem extends Item {
-    private byte state = 0;
-    private boolean useLocator = false;
+    //private byte state = 0;
+   // private boolean useLocator = false;
 
     public SnowGolemModeTweakerItem() {
         super(new Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON).stacksTo(1));
@@ -30,13 +31,19 @@ public class SnowGolemModeTweakerItem extends Item {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
+        ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide) {
+            CompoundTag tag = itemStack.getOrCreateTag();
             if (pPlayer.isShiftKeyDown()) {
-                useLocator = !useLocator;
+                boolean useLocator = !tag.getBoolean("useLocator");
+                tag.putBoolean("useLocator", useLocator);
+               // useLocator = !useLocator;
                 pPlayer.sendMessage(useLocator ? new TranslatableComponent("snow_golem_locator_true.tip") : new TranslatableComponent("snow_golem_locator_false.tip"), Util.NIL_UUID);
             } else {
-                state = (byte) ((state + 1) % 5);
-                pPlayer.sendMessage(new TranslatableComponent(switch (state) {
+                byte status = (byte) ((tag.getByte("status") + 1) % 5);
+                tag.putByte("status", status);
+                //state = (byte) ((state + 1) % 5);
+                pPlayer.sendMessage(new TranslatableComponent(switch (status) {
                     case 0 -> "snow_golem_standby.tip";
                     case 1 -> "snow_golem_follow.tip";
                     case 2 -> "snow_golem_follow_and_attack.tip";
@@ -49,13 +56,20 @@ public class SnowGolemModeTweakerItem extends Item {
         return InteractionResultHolder.success(pPlayer.getItemInHand(pUsedHand));
     }
 
+    @Override
+    public void onCraftedBy(ItemStack pStack, @NotNull Level pLevel, @NotNull Player pPlayer) {
+        pStack.getOrCreateTag().putByte("status", (byte) 0);
+        pStack.getOrCreateTag().putBoolean("useLocator", false);
+    }
+
+    /*
     public byte getState() {
         return state;
     }
 
     public boolean isUseLocator() {
         return useLocator;
-    }
+    }*/
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
