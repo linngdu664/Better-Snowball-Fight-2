@@ -2,10 +2,8 @@ package com.linngdu664.bsf.entity.snowball.special;
 
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
-import com.linngdu664.bsf.item.tool.TargetLocatorItem;
 import com.linngdu664.bsf.util.LaunchFrom;
 import net.minecraft.Util;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
