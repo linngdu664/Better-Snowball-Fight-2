@@ -8,6 +8,7 @@ import com.linngdu664.bsf.item.tank.normal.IronSnowballTank;
 import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
-    private LivingEntity livingEntity;
+ //   private LivingEntity livingEntity;
 
     public TargetLocatorItem() {
         super(Rarity.UNCOMMON, 512);
@@ -37,7 +38,10 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         if (pPlayer.isShiftKeyDown()) {
             if (!pLevel.isClientSide) {
-                livingEntity = null;
+                CompoundTag compoundTag = itemStack.getTag();
+                compoundTag.remove("uuid");
+                itemStack.setTag(compoundTag);
+  //              livingEntity = null;
                 pPlayer.sendMessage(new TranslatableComponent("targeted_clear.tip"), Util.NIL_UUID);
                 pPlayer.getItemInHand(pUsedHand).setHoverName(new TranslatableComponent("item.bsf.target_locator"));
             }
@@ -46,8 +50,7 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
             int i;
             for (i = 0; i < pPlayer.getInventory().getContainerSize(); i++) {
                 stack = pPlayer.getInventory().getItem(i);
-                if (stack.getItem() instanceof IronSnowballItem ||
-                        stack.getItem() instanceof IronSnowballTank) {
+                if (stack.getItem() instanceof IronSnowballItem || stack.getItem() instanceof IronSnowballTank) {
                     break;
                 }
             }
@@ -71,18 +74,17 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
                 }
             }
         }
-
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.pass(itemStack);
     }
 
-    public LivingEntity getLivingEntity() {
-        return livingEntity;
-    }
+    //public LivingEntity getLivingEntity() {
+    //    return livingEntity;
+   // }
 
-    public void setLivingEntity(LivingEntity livingEntity) {
-        this.livingEntity = livingEntity;
-    }
+    //public void setLivingEntity(LivingEntity livingEntity) {
+   //     this.livingEntity = livingEntity;
+    //}
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {

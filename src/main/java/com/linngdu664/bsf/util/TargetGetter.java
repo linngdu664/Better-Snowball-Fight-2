@@ -2,10 +2,12 @@ package com.linngdu664.bsf.util;
 
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.UUID;
 
 // I wonder why IDEA warns list.remove.
 @SuppressWarnings("all")
@@ -57,5 +59,15 @@ public class TargetGetter {
         List<T> list = level.getEntitiesOfClass(t, entity.getBoundingBox().inflate(range, range, range), (p_186450_) -> true);
         list.remove(entity);
         return list;
+    }
+
+    public static LivingEntity getLivingEntityByUUID(Entity entity, UUID uuid, double range) {
+        List<LivingEntity> list = getTargetList(entity, LivingEntity.class, range);
+        for (LivingEntity livingEntity : list) {
+            if (livingEntity.getUUID().equals(uuid)) {
+                return livingEntity;
+            }
+        }
+        return null;
     }
 }

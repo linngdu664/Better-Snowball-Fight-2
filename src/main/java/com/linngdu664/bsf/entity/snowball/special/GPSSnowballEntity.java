@@ -5,6 +5,7 @@ import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.tool.TargetLocatorItem;
 import com.linngdu664.bsf.util.LaunchFrom;
 import net.minecraft.Util;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -44,7 +45,8 @@ public class GPSSnowballEntity extends AbstractBSFSnowballEntity {
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
         if (!isCaught && pResult.getEntity() instanceof LivingEntity livingEntity) {
-            ((TargetLocatorItem) targetLocator.getItem()).setLivingEntity(livingEntity);
+            //((TargetLocatorItem) targetLocator.getItem()).setLivingEntity(livingEntity);
+            targetLocator.getTag().putUUID("uuid", livingEntity.getUUID());
             if (getOwner() instanceof Player player) {
                 player.sendMessage(new TranslatableComponent("target.tip").append(livingEntity.getName().getString() + " ID:" + livingEntity.getId()), Util.NIL_UUID);
                 pResult.getEntity().sendMessage(new TranslatableComponent("targeted.tip"), Util.NIL_UUID);
