@@ -6,18 +6,12 @@ import com.linngdu664.bsf.item.block.SmartSnowBlockItem;
 import com.linngdu664.bsf.item.misc.*;
 import com.linngdu664.bsf.item.snowball.force.*;
 import com.linngdu664.bsf.item.snowball.normal.*;
-import com.linngdu664.bsf.item.snowball.special.FrozenSnowballItem;
-import com.linngdu664.bsf.item.snowball.special.PowderSnowballItem;
-import com.linngdu664.bsf.item.snowball.special.ThrustSnowballItem;
-import com.linngdu664.bsf.item.snowball.special.SubspaceSnowballItem;
+import com.linngdu664.bsf.item.snowball.special.*;
 import com.linngdu664.bsf.item.snowball.tracking.*;
 import com.linngdu664.bsf.item.tank.EmptySnowballTankItem;
 import com.linngdu664.bsf.item.tank.force.*;
 import com.linngdu664.bsf.item.tank.normal.*;
-import com.linngdu664.bsf.item.tank.special.FrozenSnowballTank;
-import com.linngdu664.bsf.item.tank.special.PowderSnowballTank;
-import com.linngdu664.bsf.item.tank.special.ThrustSnowballTank;
-import com.linngdu664.bsf.item.tank.special.SubspaceSnowballTank;
+import com.linngdu664.bsf.item.tank.special.*;
 import com.linngdu664.bsf.item.tank.tracking.*;
 import com.linngdu664.bsf.item.tool.*;
 import com.linngdu664.bsf.item.weapon.*;
@@ -59,6 +53,7 @@ public class ItemRegister {
     public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL = ITEMS.register("black_hole_snowball", BlackHoleSnowballItem::new);
     public static final RegistryObject<Item> SUBSPACE_SNOWBALL = ITEMS.register("subspace_snowball", SubspaceSnowballItem::new);
     public static final RegistryObject<Item> THRUST_SNOWBALL = ITEMS.register("thrust_snowball", ThrustSnowballItem::new);
+    public static final RegistryObject<Item> ENDER_SNOWBALL = ITEMS.register("ender_snowball", EnderSnowballItem::new);
 
 
     public static final RegistryObject<Item> EMPTY_SNOWBALL_STORAGE_TANK = ITEMS.register("empty_snowball_tank", EmptySnowballTankItem::new);
@@ -86,6 +81,7 @@ public class ItemRegister {
     public static final RegistryObject<Item> BLACK_HOLE_SNOWBALL_TANK = ITEMS.register("black_hole_snowball_tank", BlackHoleSnowballTank::new);
     public static final RegistryObject<Item> SUBSPACE_SNOWBALL_TANK = ITEMS.register("subspace_snowball_tank", SubspaceSnowballTank::new);
     public static final RegistryObject<Item> THRUST_SNOWBALL_TANK = ITEMS.register("thrust_snowball_tank", ThrustSnowballTank::new);
+    public static final RegistryObject<Item> ENDER_SNOWBALL_TANK = ITEMS.register("ender_snowball_tank", EnderSnowballTank::new);
 
 
 

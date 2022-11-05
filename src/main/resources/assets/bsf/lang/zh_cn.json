@@ -26,6 +26,7 @@
   "item.bsf.black_hole_snowball": "黑洞雪球",
   "item.bsf.subspace_snowball": "亚空雪球",
   "item.bsf.thrust_snowball": "推力雪球",
+  "item.bsf.ender_snowball": "末影雪球",
   "item.bsf.empty_snowball_tank": "空雪球储罐",
   "item.bsf.compacted_snowball_tank": "固实雪球储罐",
   "item.bsf.stone_snowball_tank": "石头雪球储罐",
@@ -51,6 +52,7 @@
   "item.bsf.black_hole_snowball_tank": "黑洞雪球储罐",
   "item.bsf.subspace_snowball_tank": "亚空雪球储罐",
   "item.bsf.thrust_snowball_tank": "推力雪球储罐",
+  "item.bsf.ender_snowball_tank": "末影雪球储罐",
   "item.bsf.diamond_snowball_clamp": "钻石雪球夹",
   "item.bsf.gold_snowball_clamp": "金雪球夹",
   "item.bsf.iron_snowball_clamp": "铁雪球夹",
@@ -170,6 +172,7 @@
   "thrust_snowball1.tooltip": "不可发射，只供雪球散弹枪产生推力",
   "thrust_snowball2.tooltip": "雪球散弹枪推进反冲的时候会优先消耗推力雪球",
   "thrust_snowball.tooltip": "端羟基聚醚预聚物",
+  "ender_snowball.tooltip": "高级咒术",
 
 
   "lunch_yes_hand.tooltip": "用手扔：可以",

@@ -26,6 +26,7 @@
   "item.bsf.black_hole_snowball": "Black Hole Snowball",
   "item.bsf.subspace_snowball": "Subspace Snowball",
   "item.bsf.thrust_snowball": "Thrust Snowball",
+  "item.bsf.ender_snowball": "Ender Snowball",
   "item.bsf.empty_snowball_tank": "Empty Snowball Storage Tank",
   "item.bsf.compacted_snowball_tank": "Compacted Snowball Storage Tank",
   "item.bsf.stone_snowball_tank": "Stone Snowball Storage Tank",
@@ -51,6 +52,7 @@
   "item.bsf.black_hole_snowball_tank": "Black Hole Snowball Storage Tank",
   "item.bsf.subspace_snowball_tank": "Subspace Snowball Storage Tank",
   "item.bsf.thrust_snowball_tank": "Thrust Snowball Storage Tank",
+  "item.bsf.ender_snowball_tank": "Ender Snowball Tank",
   "item.bsf.diamond_snowball_clamp": "Diamond Snowball Clamp",
   "item.bsf.gold_snowball_clamp": "Gold Snowball Clamp",
   "item.bsf.iron_snowball_clamp": "Iron Snowball Clamp",
@@ -168,6 +170,7 @@
   "thrust_snowball1.tooltip": "Non-firing, only snowball shotgun generates thrust",
   "thrust_snowball2.tooltip": "Snowball shotgun recoil will be the priority consumption of thrust snowball",
   "thrust_snowball.tooltip": "Hydroxyl terminated polyether prepolymer",
+  "ender_snowball.tooltip": "Advanced Spells",
 
   "lunch_yes_hand.tooltip": "thrown by hand: yes",
   "lunch_yes_cannon.tooltip": "shot by cannon: yes",
