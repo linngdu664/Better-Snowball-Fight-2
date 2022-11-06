@@ -287,17 +287,18 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 }
             } else if (itemStack.getItem() instanceof SnowGolemModeTweakerItem) {
                 //setUseLocator(snowGolemModeTweaker.isUseLocator());
-                if (itemStack.getOrCreateTag().getBoolean("useLocator") != isUseLocator()) {
+                CompoundTag tag = itemStack.getOrCreateTag();
+                if (tag.getBoolean("UseLocator") != isUseLocator()) {
                     setTarget(null);
                 }
-                setUseLocator(itemStack.getOrCreateTag().getBoolean("useLocator"));
-                setStatus(itemStack.getTag().getByte("status"));
+                setUseLocator(tag.getBoolean("UseLocator"));
+                setStatus(tag.getByte("Status"));
                 //setStatus(snowGolemModeTweaker.getState());
                 setOrderedToSit(getStatus() == 0);
                 pPlayer.sendMessage(new TranslatableComponent("import_state.tip"), Util.NIL_UUID);
                 level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.DISPENSER_DISPENSE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             } else if (itemStack.getItem() instanceof TargetLocatorItem && isUseLocator()) {
-                LivingEntity entity = TargetGetter.getLivingEntityByUUID(this, itemStack.getTag().getUUID("uuid"), 50);
+                LivingEntity entity = TargetGetter.getLivingEntityByUUID(this, itemStack.getOrCreateTag().getUUID("UUID"), 50);
                 //LivingEntity entity = targetLocator.getLivingEntity();
                 if (entity != null && entity != this && getOwner() != null) {
                     getOwner().sendMessage(new TranslatableComponent("snow_golem_locator_tip"), Util.NIL_UUID);
@@ -309,15 +310,31 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 itemStack.hurtAndBreak(1, pPlayer, (e) -> e.broadcastBreakEvent(pHand));
             } else if (itemStack.getItem() instanceof SnowballItem) {
                 setStyle((byte) (((int) getStyle() + 1) % styleNum));
-            } else if (itemStack.getItem() instanceof CreativeSnowGolemToolItem creativeTool) {
+            } else if (itemStack.getItem() instanceof CreativeSnowGolemToolItem) {
                 if (pPlayer.isShiftKeyDown()) {
-                    creativeTool.setEnhance(getEnhance());
-                    creativeTool.setStatusFlag(getStatus());
-                    creativeTool.setWeapon(getWeapon().copy());
-                    creativeTool.setAmmo(getAmmo().copy());
-                    creativeTool.setUseLocator(isUseLocator());
-                    creativeTool.setStyle(getStyle());
-                    creativeTool.setTarget(getTarget());
+                    CompoundTag tag = itemStack.getOrCreateTag();
+                    CompoundTag tag1 = new CompoundTag();
+                    getAmmo().save(tag1);
+                    tag.put("Ammo", tag1);
+                    tag1 = new CompoundTag();
+                    getWeapon().save(tag1);
+                    tag.put("Weapon", tag1);
+                    tag.putBoolean("Enhance", getEnhance());
+                    tag.putBoolean("UseLocator", isUseLocator());
+                    tag.putByte("Status", getStatus());
+                    tag.putByte("Style", getStyle());
+                    if (getTarget() != null) {
+                        tag.putUUID("UUID", getTarget().getUUID());
+                    } else {
+                        tag.remove("UUID");
+                    }
+                    //creativeTool.setEnhance(getEnhance());
+                    //creativeTool.setStatusFlag(getStatus());
+                    //creativeTool.setWeapon(getWeapon().copy());
+                    //creativeTool.setAmmo(getAmmo().copy());
+                    //creativeTool.setUseLocator(isUseLocator());
+                    //creativeTool.setStyle(getStyle());
+                    //creativeTool.setTarget(getTarget());
                     getOwner().sendMessage(new TranslatableComponent("copy.tip"), Util.NIL_UUID);
                 } else {
                     setEnhance(!getEnhance());
