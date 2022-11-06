@@ -64,7 +64,7 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
                 ItemStack itemStack = findAmmo(player, false, true);
                 if (itemStack != null) {
                     AbstractBSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc(f));
-                    BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 3.0F, 1.0F);
+                    BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 3.0F, 0.5F);
                     pLevel.addFreshEntity(snowballEntity);
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
                     Vec3 cameraVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot());

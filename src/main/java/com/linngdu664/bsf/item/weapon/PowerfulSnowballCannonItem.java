@@ -48,7 +48,7 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
                 if (itemStack != null) {
                     AbstractBSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc(f));
                     //v is changed
-                    BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 4.0F, 1.0F);
+                    BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 4.0F, 0.1F);
                     pLevel.addFreshEntity(snowballEntity);
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
                     Vec3 cameraVec = Vec3.directionFromRotation(player.getXRot(), player.getYRot());
