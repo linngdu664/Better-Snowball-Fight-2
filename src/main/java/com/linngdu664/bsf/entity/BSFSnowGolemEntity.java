@@ -1,5 +1,6 @@
 package com.linngdu664.bsf.entity;
 
+import com.linngdu664.bsf.enchantment.EnchantmentRegister;
 import com.linngdu664.bsf.entity.ai.goal.*;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.normal.SmoothSnowballItem;
@@ -239,11 +240,17 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             } else if ((itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) && getWeapon().isEmpty()) {
                 setWeapon(itemStack.copy());
                 if (!pPlayer.getAbilities().instabuild) {
-                    itemStack.shrink(1);
+                    if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(),itemStack)>0){
+                        itemStack.hurtAndBreak(10, pPlayer, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
+                    }else {
+                        itemStack.shrink(1);
+                    }
                 }
             } else if (itemStack.isEmpty()) {
                 if (pPlayer.isShiftKeyDown()) {
-                    pPlayer.getInventory().placeItemBackInInventory(getWeapon(), true);
+                    if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(),getWeapon())<=0){
+                        pPlayer.getInventory().placeItemBackInInventory(getWeapon(), true);
+                    }
                     setWeapon(ItemStack.EMPTY);
                 } else {
                     pPlayer.getInventory().placeItemBackInInventory(getAmmo(), true);
@@ -450,7 +457,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     @Override
     public void die(@NotNull DamageSource pCause) {
         super.die(pCause);
-        if (!getWeapon().isEmpty() && !EnchantmentHelper.hasVanishingCurse(getWeapon())) {
+        if (!getWeapon().isEmpty() && !EnchantmentHelper.hasVanishingCurse(getWeapon()) && EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(),getWeapon())<=0) {
             spawnAtLocation(getWeapon());
         }
         if (!getAmmo().isEmpty() && !EnchantmentHelper.hasVanishingCurse(getAmmo())) {
