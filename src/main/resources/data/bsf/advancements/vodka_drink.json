@@ -19,15 +19,17 @@
     "vodka_drink": {
       "trigger": "minecraft:consume_item",
       "conditions": {
-        "item": [
-          {
-            "items": [
-              "bsf:vodka"
-            ]
-          }
-        ]
+        "item": {
+          "items": [
+            "bsf:vodka"
+          ]
+        }
       }
     }
   },
-  "requirements": [["vodka_drink"]]
+  "requirements": [
+    [
+      "vodka_drink"
+    ]
+  ]
 }
