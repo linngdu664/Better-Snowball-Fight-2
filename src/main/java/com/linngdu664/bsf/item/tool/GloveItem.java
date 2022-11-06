@@ -21,7 +21,7 @@ import java.util.List;
 
 public class GloveItem extends AbstractBSFEnhanceableToolItem {
     public GloveItem() {
-        super(Rarity.UNCOMMON, 256);
+        super(Rarity.UNCOMMON, 114);
     }
 
     @Override

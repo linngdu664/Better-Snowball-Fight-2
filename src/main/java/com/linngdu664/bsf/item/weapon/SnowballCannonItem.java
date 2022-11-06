@@ -33,7 +33,7 @@ import java.util.List;
 
 public class SnowballCannonItem extends AbstractBSFWeaponItem {
     public SnowballCannonItem() {
-        super(256, Rarity.RARE);
+        super(514, Rarity.RARE);
     }
 
     public static float getPowerForTime(int pCharge) {

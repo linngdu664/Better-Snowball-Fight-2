@@ -36,7 +36,7 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
     private double pushRank;
 
     public SnowballShotgunItem() {
-        super(256, Rarity.EPIC);
+        super(1145, Rarity.EPIC);
     }
 
     public static LaunchFunc getLaunchFunc() {

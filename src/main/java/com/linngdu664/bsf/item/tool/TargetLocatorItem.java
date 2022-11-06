@@ -29,7 +29,7 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
  //   private LivingEntity livingEntity;
 
     public TargetLocatorItem() {
-        super(Rarity.UNCOMMON, 512);
+        super(Rarity.UNCOMMON, 514);
     }
 
     @Override

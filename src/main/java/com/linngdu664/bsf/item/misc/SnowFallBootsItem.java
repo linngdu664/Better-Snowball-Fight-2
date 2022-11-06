@@ -30,7 +30,7 @@ public class SnowFallBootsItem extends ArmorItem {
         super(new ArmorMaterial() {
             @Override
             public int getDurabilityForSlot(@NotNull EquipmentSlot pSlot) {
-                return 256;
+                return 810;
             }
 
             @Override
