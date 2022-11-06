@@ -3,6 +3,7 @@ package com.linngdu664.bsf.util;
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -55,19 +56,19 @@ public class TargetGetter {
      * @return The target list.
      */
     public static <T extends Entity> List<T> getTargetList(Entity entity, Class<T> t, double range) {
-        Level level = entity.level;
+        Level level = entity.getLevel();
         List<T> list = level.getEntitiesOfClass(t, entity.getBoundingBox().inflate(range, range, range), (p_186450_) -> true);
         list.remove(entity);
         return list;
     }
 
     public static LivingEntity getLivingEntityByUUID(Entity entity, UUID uuid, double range) {
-        List<LivingEntity> list = getTargetList(entity, LivingEntity.class, range);
-        for (LivingEntity livingEntity : list) {
-            if (livingEntity.getUUID().equals(uuid)) {
-                return livingEntity;
+        List<Mob> list = getTargetList(entity, Mob.class, range);
+        for (Mob mob : list) {
+            if (mob.getUUID().equals(uuid)) {
+                return mob;
             }
         }
-        return null;
+        return entity.getLevel().getPlayerByUUID(uuid);
     }
 }

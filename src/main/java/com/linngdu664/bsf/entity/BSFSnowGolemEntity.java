@@ -299,7 +299,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             } else if (itemStack.getItem() instanceof TargetLocatorItem && isUseLocator()) {
                 LivingEntity entity = TargetGetter.getLivingEntityByUUID(this, itemStack.getTag().getUUID("uuid"), 50);
                 //LivingEntity entity = targetLocator.getLivingEntity();
-                if (entity != this && getOwner() != null) {
+                if (entity != null && entity != this && getOwner() != null) {
                     getOwner().sendMessage(new TranslatableComponent("snow_golem_locator_tip"), Util.NIL_UUID);
                     setTarget(entity);
                 }
