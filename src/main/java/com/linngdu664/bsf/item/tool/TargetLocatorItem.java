@@ -37,8 +37,8 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
         ItemStack itemStack = pPlayer.getItemInHand(pUsedHand);
         if (pPlayer.isShiftKeyDown()) {
             if (!pLevel.isClientSide) {
-                CompoundTag compoundTag = itemStack.getTag();
-                compoundTag.remove("uuid");
+                CompoundTag compoundTag = itemStack.getOrCreateTag();
+                compoundTag.remove("UUID");
                 itemStack.setTag(compoundTag);
   //              livingEntity = null;
                 pPlayer.sendMessage(new TranslatableComponent("targeted_clear.tip"), Util.NIL_UUID);

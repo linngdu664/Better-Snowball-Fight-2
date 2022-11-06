@@ -35,13 +35,13 @@ public class SnowGolemModeTweakerItem extends Item {
         if (!pLevel.isClientSide) {
             CompoundTag tag = itemStack.getOrCreateTag();
             if (pPlayer.isShiftKeyDown()) {
-                boolean useLocator = !tag.getBoolean("useLocator");
-                tag.putBoolean("useLocator", useLocator);
+                boolean useLocator = !tag.getBoolean("UseLocator");
+                tag.putBoolean("UseLocator", useLocator);
                // useLocator = !useLocator;
                 pPlayer.sendMessage(useLocator ? new TranslatableComponent("snow_golem_locator_true.tip") : new TranslatableComponent("snow_golem_locator_false.tip"), Util.NIL_UUID);
             } else {
-                byte status = (byte) ((tag.getByte("status") + 1) % 5);
-                tag.putByte("status", status);
+                byte status = (byte) ((tag.getByte("Status") + 1) % 5);
+                tag.putByte("Status", status);
                 //state = (byte) ((state + 1) % 5);
                 pPlayer.sendMessage(new TranslatableComponent(switch (status) {
                     case 0 -> "snow_golem_standby.tip";
@@ -58,8 +58,8 @@ public class SnowGolemModeTweakerItem extends Item {
 
     @Override
     public void onCraftedBy(ItemStack pStack, @NotNull Level pLevel, @NotNull Player pPlayer) {
-        pStack.getOrCreateTag().putByte("status", (byte) 0);
-        pStack.getOrCreateTag().putBoolean("useLocator", false);
+        pStack.getOrCreateTag().putByte("Status", (byte) 0);
+        pStack.getOrCreateTag().putBoolean("UseLocator", false);
     }
 
     /*
