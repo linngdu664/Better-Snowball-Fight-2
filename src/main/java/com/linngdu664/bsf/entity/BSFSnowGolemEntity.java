@@ -240,15 +240,15 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             } else if ((itemStack.getItem() instanceof SnowballCannonItem || itemStack.getItem() instanceof SnowballShotgunItem) && getWeapon().isEmpty()) {
                 setWeapon(itemStack.copy());
                 if (!pPlayer.getAbilities().instabuild) {
-                    if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(),itemStack)>0){
+                    if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(), itemStack) > 0) {
                         itemStack.hurtAndBreak(10, pPlayer, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));
-                    }else {
+                    } else {
                         itemStack.shrink(1);
                     }
                 }
             } else if (itemStack.isEmpty()) {
                 if (pPlayer.isShiftKeyDown()) {
-                    if(EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(),getWeapon())<=0){
+                    if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(), getWeapon()) <= 0) {
                         pPlayer.getInventory().placeItemBackInInventory(getWeapon(), true);
                     }
                     setWeapon(ItemStack.EMPTY);
@@ -474,7 +474,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
     @Override
     public void die(@NotNull DamageSource pCause) {
         super.die(pCause);
-        if (!getWeapon().isEmpty() && !EnchantmentHelper.hasVanishingCurse(getWeapon()) && EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(),getWeapon())<=0) {
+        if (!getWeapon().isEmpty() && !EnchantmentHelper.hasVanishingCurse(getWeapon()) && EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(), getWeapon()) <= 0) {
             spawnAtLocation(getWeapon());
         }
         if (!getAmmo().isEmpty() && !EnchantmentHelper.hasVanishingCurse(getAmmo())) {

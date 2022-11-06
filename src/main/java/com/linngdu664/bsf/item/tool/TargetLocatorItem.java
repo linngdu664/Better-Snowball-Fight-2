@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
- //   private LivingEntity livingEntity;
+    //   private LivingEntity livingEntity;
 
     public TargetLocatorItem() {
         super(Rarity.UNCOMMON, 514);
@@ -40,7 +40,7 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
                 CompoundTag compoundTag = itemStack.getOrCreateTag();
                 compoundTag.remove("UUID");
                 itemStack.setTag(compoundTag);
-  //              livingEntity = null;
+                //              livingEntity = null;
                 pPlayer.sendMessage(new TranslatableComponent("targeted_clear.tip"), Util.NIL_UUID);
                 pPlayer.getItemInHand(pUsedHand).setHoverName(new TranslatableComponent("item.bsf.target_locator"));
             }
@@ -79,10 +79,10 @@ public class TargetLocatorItem extends AbstractBSFEnhanceableToolItem {
 
     //public LivingEntity getLivingEntity() {
     //    return livingEntity;
-   // }
+    // }
 
     //public void setLivingEntity(LivingEntity livingEntity) {
-   //     this.livingEntity = livingEntity;
+    //     this.livingEntity = livingEntity;
     //}
 
     @Override

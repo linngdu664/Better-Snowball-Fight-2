@@ -14,8 +14,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -91,7 +89,7 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
-        if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(),itemStack)<=0){
+        if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(), itemStack) <= 0) {
             pPlayer.startUsingItem(pHand);
             return InteractionResultHolder.pass(pPlayer.getItemInHand(pHand));
         }

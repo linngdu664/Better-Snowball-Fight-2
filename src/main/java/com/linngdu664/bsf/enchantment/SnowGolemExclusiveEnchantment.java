@@ -11,6 +11,7 @@ public class SnowGolemExclusiveEnchantment extends Enchantment {
     public SnowGolemExclusiveEnchantment(EquipmentSlot... slots) {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.WEAPON, slots);
     }
+
     @Override
     public int getMinCost(int pLevel) {
         return 1;
@@ -20,6 +21,7 @@ public class SnowGolemExclusiveEnchantment extends Enchantment {
     public int getMaxCost(int pLevel) {
         return 6;
     }
+
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
         Item item = stack.getItem();

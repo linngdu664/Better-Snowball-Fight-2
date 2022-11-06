@@ -23,7 +23,7 @@ import java.util.List;
 
 public class SnowGolemModeTweakerItem extends Item {
     //private byte state = 0;
-   // private boolean useLocator = false;
+    // private boolean useLocator = false;
 
     public SnowGolemModeTweakerItem() {
         super(new Properties().tab(ItemGroup.MAIN).rarity(Rarity.UNCOMMON).stacksTo(1));
@@ -37,7 +37,7 @@ public class SnowGolemModeTweakerItem extends Item {
             if (pPlayer.isShiftKeyDown()) {
                 boolean useLocator = !tag.getBoolean("UseLocator");
                 tag.putBoolean("UseLocator", useLocator);
-               // useLocator = !useLocator;
+                // useLocator = !useLocator;
                 pPlayer.sendMessage(useLocator ? new TranslatableComponent("snow_golem_locator_true.tip") : new TranslatableComponent("snow_golem_locator_false.tip"), Util.NIL_UUID);
             } else {
                 byte status = (byte) ((tag.getByte("Status") + 1) % 5);
