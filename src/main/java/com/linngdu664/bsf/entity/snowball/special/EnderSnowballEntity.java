@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -28,24 +30,28 @@ public class EnderSnowballEntity extends AbstractBSFSnowballEntity {
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
-        if (!isCaught && !level.isClientSide) {
+        if (!isCaught) {
             Entity entity = pResult.getEntity();
-            Entity owner = getOwner();
-            double x = owner.getX(), y = owner.getY(), z = owner.getZ();
-            Vec3 v1 = owner.getDeltaMovement();
-            Vec3 v2 = entity.getDeltaMovement();
-            owner.moveTo(entity.getX(), entity.getY(), entity.getZ());
-            owner.setDeltaMovement(v2);
-            if (owner instanceof ServerPlayer serverPlayer) {
-                serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(owner));
+            if (entity instanceof Player || entity instanceof Mob) {
+                Entity owner = getOwner();
+                double x = owner.getX(), y = owner.getY(), z = owner.getZ();
+                Vec3 v1 = owner.getDeltaMovement();
+                Vec3 v2 = entity.getDeltaMovement();
+                if (!level.isClientSide) {
+                    owner.moveTo(entity.getX(), entity.getY(), entity.getZ());
+                    owner.setDeltaMovement(v2);
+                    if (owner instanceof ServerPlayer serverPlayer) {
+                        serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(owner));
+                    }
+                    //owner.push(v2.x,v2.y,v2.z);
+                    //entity.push(v1.x,v1.y,v1.z);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.PORTAL, entity.getX(), entity.getEyeY(), entity.getZ(), 32, 1, 1, 1, 0.1);
+                    ((ServerLevel) level).sendParticles(ParticleTypes.PORTAL, owner.getX(), owner.getEyeY(), owner.getZ(), 32, 1, 1, 1, 0.1);
+                    this.discard();
+                }
+                entity.moveTo(x, y, z);
+                entity.setDeltaMovement(v1);
             }
-            //owner.push(v2.x,v2.y,v2.z);
-            entity.moveTo(x, y, z);
-            entity.setDeltaMovement(v1);
-            //entity.push(v1.x,v1.y,v1.z);
-            ((ServerLevel) level).sendParticles(ParticleTypes.PORTAL, entity.getX(), entity.getEyeY(), entity.getZ(), 32, 1, 1, 1, 0.1);
-            ((ServerLevel) level).sendParticles(ParticleTypes.PORTAL, owner.getX(), owner.getEyeY(), owner.getZ(), 32, 1, 1, 1, 0.1);
-            this.discard();
         }
     }
 
