@@ -1,10 +1,12 @@
 package com.linngdu664.bsf.util;
 
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -63,6 +65,9 @@ public class MovingAlgorithm {
     public static <T extends Entity> void missilesTracking(AbstractBSFSnowballEntity snowball, Class<T> targetClass, double trackingRange, boolean angleRestriction, double maxTurningAngleCos, double maxTurningAngleSin, boolean lockFeet) {
         Level level = snowball.level;
         Entity target = TargetGetter.getTarget(snowball, targetClass, angleRestriction, trackingRange);
+        if (target == null && targetClass == Player.class) {
+            target = TargetGetter.getTarget(snowball, BSFSnowGolemEntity.class, true, trackingRange);
+        }
         Vec3 velocity = snowball.getDeltaMovement();
         if (target == null || !target.isAlive() || velocity.lengthSqr() < 0.25) {
             snowball.setNoGravity(false);

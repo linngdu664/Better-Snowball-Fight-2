@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.util;
 
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -26,6 +27,13 @@ public class TargetGetter {
     public static <T extends Entity> Entity getTarget(AbstractBSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
         Level level = snowball.level;
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
+        if (t == BSFSnowGolemEntity.class) {
+            for (T entity : list) {
+                if (((BSFSnowGolemEntity) entity).getOwner().equals(snowball.getOwner())) {
+                    list.remove(entity);
+                }
+            }
+        }
         list.remove(snowball);
         if (list.isEmpty()) {
             return null;
