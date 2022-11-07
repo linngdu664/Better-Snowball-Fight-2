@@ -10,9 +10,9 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Vector;
 
 // I wonder why IDEA warns list.remove.
-@SuppressWarnings("all")
 public class TargetGetter {
     /**
      * Get the nearest available target.
@@ -28,13 +28,31 @@ public class TargetGetter {
         Level level = snowball.level;
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
         if (t == BSFSnowGolemEntity.class) {
+            Vector<Entity> vector = new Vector<>();
             for (T entity : list) {
                 if (((BSFSnowGolemEntity) entity).getOwner().equals(snowball.getOwner())) {
-                    list.remove(entity);
+                    vector.add(entity);
                 }
+            }
+            for (Entity entity : vector) {
+                list.remove(entity);
             }
         }
         list.remove(snowball);
+        list.remove(snowball.getOwner());
+        if (angleRestriction) {
+            Vector<Entity> vector = new Vector<>();
+            Vec3 velocity = snowball.getDeltaMovement();
+            for (T entity : list) {
+                Vec3 vec3 = new Vec3(entity.getX() - snowball.getX(), entity.getY() - snowball.getY(), entity.getZ() - snowball.getZ());
+                if (BSFMthUtil.vec3AngleCos(vec3, velocity) < 0.5) {
+                    vector.add(entity);
+                }
+            }
+            for (Entity entity : vector) {
+                list.remove(entity);
+            }
+        }
         if (list.isEmpty()) {
             return null;
         }
@@ -44,6 +62,8 @@ public class TargetGetter {
                 entity1 = entity;
             }
         }
+        return entity1;
+        /*
         if (angleRestriction) {
             Vec3 vec3 = new Vec3(entity1.getX() - snowball.getX(), entity1.getY() - snowball.getY(), entity1.getZ() - snowball.getZ());
             Vec3 velocity = snowball.getDeltaMovement();
@@ -51,7 +71,7 @@ public class TargetGetter {
                 return null;
             }
         }
-        return entity1;
+        return entity1;*/
     }
 
     /**
