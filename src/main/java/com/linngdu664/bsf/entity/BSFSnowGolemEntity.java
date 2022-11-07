@@ -309,7 +309,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 pPlayer.getInventory().placeItemBackInInventory(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get(), 1), true);
                 itemStack.hurtAndBreak(1, pPlayer, (e) -> e.broadcastBreakEvent(pHand));
             } else if (itemStack.getItem() instanceof SnowballItem) {
-                setStyle((byte) (((int) getStyle() + 1) % styleNum));
+                setStyle((byte) ((getStyle() + 1) % styleNum));
             } else if (itemStack.getItem() instanceof CreativeSnowGolemToolItem) {
                 if (pPlayer.isShiftKeyDown()) {
                     CompoundTag tag = itemStack.getOrCreateTag();

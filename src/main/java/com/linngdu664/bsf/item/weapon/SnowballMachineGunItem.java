@@ -13,7 +13,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -24,8 +23,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -36,14 +33,14 @@ import java.util.List;
 public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     //private int timer = 0;
     private float recoil;
-    private float damageChance;
+    //private float damageChance;
     private ItemStack ammo;
     private boolean isExplosive;
     //private boolean isOnCoolDown = false;
 
     public SnowballMachineGunItem() {
         super(1919, Rarity.EPIC);
-    }
+    }//1919
 
     public LaunchFunc getLaunchFunc() {
         return new LaunchFunc() {
@@ -62,7 +59,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player pPlayer, @NotNull InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
-        damageChance = 1.0F / (1.0F + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, stack));
+        //damageChance = 1.0F / (1.0F + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, stack));
         ammo = findAmmo(pPlayer, true, false);
         if (ammo != null) {
             recoil = ((AbstractSnowballTankItem) ammo.getItem()).getSnowball().getRecoil();
@@ -162,14 +159,15 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
                 ((ServerLevel) pLevel).sendParticles(ParticleTypes.SNOWFLAKE, player.getX() + cameraVec.x, player.getEyeY() + cameraVec.y, player.getZ() + cameraVec.z, 4, 0, 0, 0, 0.32);
                 // handle ammo consume and damage weapon.
                 consumeAmmo(ammo, player);
-                if (pLevel.getRandom().nextFloat() <= damageChance && !player.getAbilities().instabuild) {
+                pStack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
+             /*   if (pLevel.getRandom().nextFloat() <= damageChance && !player.getAbilities().instabuild) {
                     pStack.setDamageValue(pStack.getDamageValue() + 1);
                     if (pStack.getDamageValue() == 512) {
                         player.awardStat(Stats.ITEM_BROKEN.get(pStack.getItem()));
                         pStack.shrink(1);
                         pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_BREAK, SoundSource.NEUTRAL, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
                     }
-                }
+                }*/
             }
         }
         // set pitch according to recoil.

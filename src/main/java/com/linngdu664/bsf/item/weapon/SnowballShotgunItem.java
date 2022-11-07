@@ -57,7 +57,7 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
         ItemStack stack = player.getItemInHand(usedHand);
         if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(), stack) > 0) {
-            return InteractionResultHolder.pass(stack);
+            return InteractionResultHolder.fail(stack);
         }
         pushRank = 0.24;
         int i;

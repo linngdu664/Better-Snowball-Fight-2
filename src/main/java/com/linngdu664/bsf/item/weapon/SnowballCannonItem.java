@@ -91,9 +91,9 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
         if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentRegister.SNOW_GOLEM_EXCLUSIVE.get(), itemStack) <= 0) {
             pPlayer.startUsingItem(pHand);
-            return InteractionResultHolder.pass(pPlayer.getItemInHand(pHand));
+            return InteractionResultHolder.consume(itemStack);
         }
-        return InteractionResultHolder.consume(itemStack);
+        return InteractionResultHolder.fail(itemStack);
     }
 
     @Override
