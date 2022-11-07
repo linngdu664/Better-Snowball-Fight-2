@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -60,8 +61,9 @@ public class CreativeSnowGolemToolItem extends Item {
             BlockPos blockPos = pContext.getClickedPos();
             snowGolem.moveTo(blockPos.getX() + 0.5D, blockPos.getY() + 1, blockPos.getZ() + 0.5D, 0.0F, 0.0F);
             level.addFreshEntity(snowGolem);
-            if (tag.contains("UUID")) {
-                snowGolem.setTarget(TargetGetter.getLivingEntityByUUID(snowGolem, tag.getUUID("UUID"), 50));
+            if (tag.contains("ID")) {
+                snowGolem.setTarget((LivingEntity) level.getEntity(tag.getInt("ID")));
+                //snowGolem.setTarget(TargetGetter.getLivingEntityByUUID(snowGolem, tag.getUUID("UUID"), 50));
             }
             //    }
         }

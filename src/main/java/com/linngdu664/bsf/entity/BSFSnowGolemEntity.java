@@ -298,7 +298,8 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                 pPlayer.sendMessage(new TranslatableComponent("import_state.tip"), Util.NIL_UUID);
                 level.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.DISPENSER_DISPENSE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             } else if (itemStack.getItem() instanceof TargetLocatorItem && isUseLocator()) {
-                LivingEntity entity = TargetGetter.getLivingEntityByUUID(this, itemStack.getOrCreateTag().getUUID("UUID"), 50);
+                LivingEntity entity = (LivingEntity) level.getEntity(itemStack.getTag().getInt("ID"));
+                //LivingEntity entity = TargetGetter.getLivingEntityByUUID(this, itemStack.getOrCreateTag().getUUID("UUID"), 50);
                 //LivingEntity entity = targetLocator.getLivingEntity();
                 if (entity != null && entity != this && getOwner() != null) {
                     getOwner().sendMessage(new TranslatableComponent("snow_golem_locator_tip"), Util.NIL_UUID);
@@ -324,9 +325,11 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
                     tag.putByte("Status", getStatus());
                     tag.putByte("Style", getStyle());
                     if (getTarget() != null) {
-                        tag.putUUID("UUID", getTarget().getUUID());
+                        tag.putInt("ID", getTarget().getId());
+                        //tag.putUUID("UUID", getTarget().getUUID());
                     } else {
-                        tag.remove("UUID");
+                        tag.remove("ID");
+                        //tag.remove("UUID");
                     }
                     //creativeTool.setEnhance(getEnhance());
                     //creativeTool.setStatusFlag(getStatus());

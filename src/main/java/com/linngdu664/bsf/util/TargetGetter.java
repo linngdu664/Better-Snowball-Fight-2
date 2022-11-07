@@ -89,7 +89,7 @@ public class TargetGetter {
         list.remove(entity);
         return list;
     }
-
+/*
     public static LivingEntity getLivingEntityByUUID(Entity entity, UUID uuid, double range) {
         List<Mob> list = getTargetList(entity, Mob.class, range);
         for (Mob mob : list) {
@@ -98,5 +98,5 @@ public class TargetGetter {
             }
         }
         return entity.getLevel().getPlayerByUUID(uuid);
-    }
+    }*/
 }
