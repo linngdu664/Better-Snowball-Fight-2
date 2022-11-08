@@ -25,21 +25,30 @@ public class TargetGetter {
      * @return The target.
      */
     public static <T extends Entity> Entity getTarget(AbstractBSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
-        Level level = snowball.level;
+        Level level = snowball.getLevel();
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
+        list.remove(snowball);
+        list.remove(snowball.getOwner());
         if (t == BSFSnowGolemEntity.class) {
             Vector<Entity> vector = new Vector<>();
-            for (T entity : list) {
-                if (((BSFSnowGolemEntity) entity).getOwner().equals(snowball.getOwner())) {
-                    vector.add(entity);
+            Entity owner = snowball.getOwner();
+            if (owner instanceof BSFSnowGolemEntity golem) {
+                for (T entity : list) {
+                    if (((BSFSnowGolemEntity) entity).getOwner().equals(golem.getOwner())) {
+                        vector.add(entity);
+                    }
+                }
+            } else {
+                for (T entity : list) {
+                    if (((BSFSnowGolemEntity) entity).getOwner().equals(owner)) {
+                        vector.add(entity);
+                    }
                 }
             }
             for (Entity entity : vector) {
                 list.remove(entity);
             }
         }
-        list.remove(snowball);
-        list.remove(snowball.getOwner());
         if (angleRestriction) {
             Vector<Entity> vector = new Vector<>();
             Vec3 velocity = snowball.getDeltaMovement();
