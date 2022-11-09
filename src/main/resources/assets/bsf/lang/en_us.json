@@ -220,6 +220,8 @@
 
   "effect.bsf.cold_resistance": "Cold Resistance",
 
+  "entity.bsf.frozen_snowball": "急冻雪球",
+
   "entity.bsf.bsf_snow_golem": "Advanced Snow Golem",
   "snow_golem_locator_false.tip": "Targets: monsters nearby",
   "snow_golem_locator_true.tip": "Target: the entity in the target locator",

@@ -223,6 +223,8 @@
 
   "effect.bsf.cold_resistance": "抗寒",
 
+  "entity.bsf.frozen_snowball": "急冻雪球",
+
   "entity.bsf.bsf_snow_golem": "高级雪傀儡",
   "snow_golem_locator_false.tip": "目标：附近怪物",
   "snow_golem_locator_true.tip": "目标：目标定位器指定的实体",
