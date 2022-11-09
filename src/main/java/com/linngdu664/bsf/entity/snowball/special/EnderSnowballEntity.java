@@ -4,6 +4,7 @@ import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundSetCameraPacket;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,11 +42,20 @@ public class EnderSnowballEntity extends BSFSnowballEntity {
                 double x = owner.getX(), y = owner.getY(), z = owner.getZ();
                 Vec3 v1 = owner.getDeltaMovement();
                 Vec3 v2 = entity.getDeltaMovement();
+                float xRot1 = owner.getXRot();
+                float yRot1 = owner.getYRot();
+                float xRot2 = entity.getXRot();
+                float yRot2 = entity.getYRot();
+                owner.setXRot(xRot2);
+                owner.setYRot(yRot2);
+                entity.setXRot(xRot1);
+                entity.setYRot(yRot1);
                 if (!level.isClientSide) {
                     owner.moveTo(entity.getX(), entity.getY(), entity.getZ());
                     owner.setDeltaMovement(v2);
                     if (owner instanceof ServerPlayer serverPlayer) {
                         serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(owner));
+                        serverPlayer.connection.send(new ClientboundSetCameraPacket(owner));
                     }
                     //owner.push(v2.x,v2.y,v2.z);
                     //entity.push(v1.x,v1.y,v1.z);
