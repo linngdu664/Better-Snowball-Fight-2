@@ -24,11 +24,14 @@ public class TargetGetter {
     public static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
         Level level = snowball.getLevel();
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
+        Entity owner = snowball.getOwner();
         list.remove(snowball);
-        list.remove(snowball.getOwner());
+        list.remove(owner);
+        if (owner instanceof BSFSnowGolemEntity golem) {
+            list.remove(golem.getOwner());
+        }
         if (t == BSFSnowGolemEntity.class) {
             Vector<Entity> vector = new Vector<>();
-            Entity owner = snowball.getOwner();
             if (owner instanceof BSFSnowGolemEntity golem) {
                 for (T entity : list) {
                     if (((BSFSnowGolemEntity) entity).getTarget() == null || !((BSFSnowGolemEntity) entity).getTarget().equals(golem.getOwner())) {
