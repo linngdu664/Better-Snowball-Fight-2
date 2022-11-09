@@ -31,13 +31,13 @@ public class TargetGetter {
             Entity owner = snowball.getOwner();
             if (owner instanceof BSFSnowGolemEntity golem) {
                 for (T entity : list) {
-                    if (((BSFSnowGolemEntity) entity).getOwner().equals(golem.getOwner())) {
+                    if (!((BSFSnowGolemEntity) entity).getTarget().equals(golem.getOwner())) {
                         vector.add(entity);
                     }
                 }
             } else {
                 for (T entity : list) {
-                    if (((BSFSnowGolemEntity) entity).getOwner().equals(owner)) {
+                    if (!((BSFSnowGolemEntity) entity).getTarget().equals(owner)) {
                         vector.add(entity);
                     }
                 }
