@@ -1,10 +1,8 @@
 package com.linngdu664.bsf.entity.snowball.nomal;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
-import com.linngdu664.bsf.entity.EntityRegister;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -12,9 +10,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
-public class GoldSnowballEntity extends AbstractBSFSnowballEntity {
+public class GoldSnowballEntity extends BSFSnowballEntity {
     public GoldSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(EntityRegister.GOLD_SNOWBALL.get(), livingEntity, level);
+        super(livingEntity, level);
         this.setLaunchFrom(launchFunc.getLaunchForm()).setDamage(5).setBlazeDamage(7);
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.GOLD_SNOWBALL.get()));
@@ -22,14 +20,14 @@ public class GoldSnowballEntity extends AbstractBSFSnowballEntity {
 
     //This is only used for dispenser
     public GoldSnowballEntity(Level level, double x, double y, double z) {
-        super(EntityRegister.GOLD_SNOWBALL.get(), level, x, y, z);
+        super(level, x, y, z);
         this.setDamage(5).setBlazeDamage(7);
         this.setItem(new ItemStack(ItemRegister.GOLD_SNOWBALL.get()));
     }
 
-    public GoldSnowballEntity(EntityType<GoldSnowballEntity> entityType, Level level) {
-        super(entityType, level);
-    }
+//    public GoldSnowballEntity(EntityType<GoldSnowballEntity> entityType, Level level) {
+//        super(entityType, level);
+//    }
 
     @Override
     public Item getCorrespondingItem() {

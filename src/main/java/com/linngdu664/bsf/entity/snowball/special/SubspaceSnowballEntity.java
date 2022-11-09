@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.entity.snowball.special;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
-import com.linngdu664.bsf.entity.EntityRegister;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.SoundRegister;
@@ -9,7 +8,6 @@ import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.Snowball;
@@ -22,13 +20,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Vector;
 
-public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
+public class SubspaceSnowballEntity extends BSFSnowballEntity {
     private final boolean release;
     private final Vector<ItemStack> ItemStackVector = new Vector<>();
     private int timer = 0;
 
     public SubspaceSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc, boolean canRelease) {
-        super(EntityRegister.SUBSPACE_SNOWBALL.get(), livingEntity, level);
+        super(livingEntity, level);
         this.setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.SUBSPACE_SNOWBALL.get()));
@@ -36,17 +34,17 @@ public class SubspaceSnowballEntity extends AbstractBSFSnowballEntity {
         this.release = canRelease;
     }
 
-    public SubspaceSnowballEntity(EntityType<SubspaceSnowballEntity> entityType, Level level) {
-        super(entityType, level);
-        this.release = true;
-    }
+   // public SubspaceSnowballEntity(EntityType<SubspaceSnowballEntity> entityType, Level level) {
+   //     super(entityType, level);
+   //     this.release = true;
+   // }
 
     @Override
     public void tick() {
         super.tick();
         if (!level.isClientSide) {
-            List<AbstractBSFSnowballEntity> list = TargetGetter.getTargetList(this, AbstractBSFSnowballEntity.class, 2.5);
-            for (AbstractBSFSnowballEntity snowball : list) {
+            List<BSFSnowballEntity> list = TargetGetter.getTargetList(this, BSFSnowballEntity.class, 2.5);
+            for (BSFSnowballEntity snowball : list) {
                 if (release) {
                     ItemStackVector.add(new ItemStack(snowball instanceof GPSSnowballEntity ? null : snowball.getItem().getItem()));
                 }

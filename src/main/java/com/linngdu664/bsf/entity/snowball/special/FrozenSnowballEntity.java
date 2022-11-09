@@ -1,8 +1,7 @@
 package com.linngdu664.bsf.entity.snowball.special;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
-import com.linngdu664.bsf.entity.EntityRegister;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
@@ -16,7 +15,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.SnowGolem;
 import net.minecraft.world.item.Item;
@@ -30,11 +28,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
+public class FrozenSnowballEntity extends BSFSnowballEntity {
     private float frozenRange = 2.5F;
 
     public FrozenSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(EntityRegister.FROZEN_SNOWBALL.get(), livingEntity, level);
+        super(livingEntity, level);
         this.setFrozenTicks(60).setLaunchFrom(launchFunc.getLaunchForm()).setDamage(3).setBlazeDamage(8);
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.FROZEN_SNOWBALL.get()));
@@ -45,14 +43,14 @@ public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
 
     //This is only used for dispenser
     public FrozenSnowballEntity(Level level, double x, double y, double z) {
-        super(EntityRegister.FROZEN_SNOWBALL.get(), level, x, y, z);
+        super(level, x, y, z);
         this.setDamage(3).setBlazeDamage(8).setFrozenTicks(60);
         this.setItem(new ItemStack(ItemRegister.FROZEN_SNOWBALL.get()));
     }
 
-    public FrozenSnowballEntity(EntityType<FrozenSnowballEntity> entityType, Level level) {
-        super(entityType, level);
-    }
+   // public FrozenSnowballEntity(EntityType<FrozenSnowballEntity> entityType, Level level) {
+   //     super(entityType, level);
+   // }
 
     @Override
     public Item getCorrespondingItem() {

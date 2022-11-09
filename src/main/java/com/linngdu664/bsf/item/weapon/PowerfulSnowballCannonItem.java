@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.weapon;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.network.ForwardConeParticlesSender;
 import com.linngdu664.bsf.network.Network;
 import com.linngdu664.bsf.util.LaunchFrom;
@@ -32,7 +32,7 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
             }
 
             @Override
-            public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
+            public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.setWeaknessTicks(180).setPunch(damageDropRate * 2.5);
             }
         };
@@ -46,7 +46,7 @@ public class PowerfulSnowballCannonItem extends SnowballCannonItem {
             if (f >= 0.1F) {
                 ItemStack itemStack = findAmmo(player, false, true);
                 if (itemStack != null) {
-                    AbstractBSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc(f));
+                    BSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc(f));
                     //v is changed
                     BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 4.0F, 0.1F);
                     pLevel.addFreshEntity(snowballEntity);

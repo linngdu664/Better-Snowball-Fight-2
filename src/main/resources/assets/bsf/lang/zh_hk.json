@@ -221,7 +221,7 @@
   "advancements.bsf.vodka.description": "飲用伏特加",
 
   "effect.bsf.cold_resistance": "抗寒",
-
+  "entity.bsf.bsf_snowball": "雪球",
   "entity.bsf.bsf_snow_golem": "高級雪傀儡",
   "snow_golem_locator_false.tip": "目標：附近怪物",
   "snow_golem_locator_true.tip": "目標：目標定位器指定的實體",

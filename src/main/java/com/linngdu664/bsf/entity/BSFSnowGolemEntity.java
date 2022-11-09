@@ -14,7 +14,10 @@ import com.linngdu664.bsf.item.weapon.FreezingSnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.PowerfulSnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.SnowballCannonItem;
 import com.linngdu664.bsf.item.weapon.SnowballShotgunItem;
-import com.linngdu664.bsf.util.*;
+import com.linngdu664.bsf.util.BSFMthUtil;
+import com.linngdu664.bsf.util.LaunchFunc;
+import com.linngdu664.bsf.util.ParticleUtil;
+import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -447,7 +450,7 @@ public class BSFSnowGolemEntity extends TamableAnimal implements RangedAttackMob
             int j = weapon.getItem() instanceof SnowballShotgunItem ? 4 : 1;
             for (int i = 0; i < j; i++) {
                 if (ammo.getItem() instanceof AbstractSnowballTankItem tank) {
-                    AbstractBSFSnowballEntity snowball = tank.getSnowball().getCorrespondingEntity(level, this, launchFunc);
+                    BSFSnowballEntity snowball = tank.getSnowball().getCorrespondingEntity(level, this, launchFunc);
                     snowball.shoot(dx, sinTheta, dz, v, accuracy);
                     level.addFreshEntity(snowball);
                     if (!getEnhance()) {

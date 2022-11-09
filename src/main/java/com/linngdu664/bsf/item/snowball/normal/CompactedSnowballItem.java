@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.snowball.normal;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal.CompactedSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
@@ -46,7 +46,7 @@ public class CompactedSnowballItem extends AbstractBSFSnowballItem {
         if (!storageInTank(pPlayer, itemStack, ItemRegister.COMPACTED_SNOWBALL_TANK.get())) {
             pLevel.playSound(null, pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!pLevel.isClientSide) {
-                AbstractBSFSnowballEntity snowballEntity = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballDamageRate(pPlayer)));
+                BSFSnowballEntity snowballEntity = new CompactedSnowballEntity(pPlayer, pLevel, getLaunchFunc(getSnowballDamageRate(pPlayer)));
                 snowballEntity.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F * getSnowballSlowdownRate(pPlayer), 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
             }
@@ -59,7 +59,7 @@ public class CompactedSnowballItem extends AbstractBSFSnowballItem {
     }
 
     @Override
-    public AbstractBSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
+    public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
         return new CompactedSnowballEntity(livingEntity, level, launchFunc);
     }
 

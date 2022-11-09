@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.weapon;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
@@ -68,7 +68,7 @@ public abstract class AbstractBSFWeaponItem extends Item {
         }
     }
 
-    protected AbstractBSFSnowballEntity ItemToEntity(Item item, Player player, Level level, LaunchFunc launchFunc) {
+    protected BSFSnowballEntity ItemToEntity(Item item, Player player, Level level, LaunchFunc launchFunc) {
         if (item instanceof AbstractSnowballTankItem tank) {
             item = tank.getSnowball();
         }

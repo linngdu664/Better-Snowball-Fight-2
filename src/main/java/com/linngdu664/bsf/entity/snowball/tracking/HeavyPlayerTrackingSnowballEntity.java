@@ -1,10 +1,8 @@
 package com.linngdu664.bsf.entity.snowball.tracking;
 
-import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.entity.snowball.AbstractTrackingSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -15,15 +13,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class HeavyPlayerTrackingSnowballEntity extends AbstractTrackingSnowballEntity {
     public HeavyPlayerTrackingSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(EntityRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get(), livingEntity, level);
+        super(livingEntity, level);
         this.setRange(10).setTargetClass(Player.class).setDamage(4).setBlazeDamage(6).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get()));
     }
 
-    public HeavyPlayerTrackingSnowballEntity(EntityType<HeavyPlayerTrackingSnowballEntity> entityType, Level level) {
-        super(entityType, level);
-    }
+    //public HeavyPlayerTrackingSnowballEntity(EntityType<HeavyPlayerTrackingSnowballEntity> entityType, Level level) {
+    //    super(entityType, level);
+    //}
 
     @Override
     public Item getCorrespondingItem() {

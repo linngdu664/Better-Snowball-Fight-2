@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.util;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -21,7 +21,7 @@ public class TargetGetter {
      * @param angleRestriction Whether only return the target within 60 degrees.
      * @return The target.
      */
-    public static <T extends Entity> Entity getTarget(AbstractBSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
+    public static <T extends Entity> Entity getTarget(BSFSnowballEntity snowball, Class<T> t, boolean angleRestriction, double trackingRange) {
         Level level = snowball.getLevel();
         List<T> list = level.getEntitiesOfClass(t, snowball.getBoundingBox().inflate(trackingRange, trackingRange, trackingRange), (p_186450_) -> true);
         list.remove(snowball);

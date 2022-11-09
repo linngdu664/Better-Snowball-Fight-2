@@ -3,7 +3,6 @@ package com.linngdu664.bsf.item.tool;
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
 import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.util.ItemGroup;
-import com.linngdu664.bsf.util.TargetGetter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

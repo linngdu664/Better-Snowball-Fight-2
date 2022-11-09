@@ -1,10 +1,8 @@
 package com.linngdu664.bsf.entity.snowball.tracking;
 
-import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.entity.snowball.AbstractTrackingSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.Item;
@@ -15,15 +13,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class LightMonsterTrackingSnowballEntity extends AbstractTrackingSnowballEntity {
     public LightMonsterTrackingSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(EntityRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get(), livingEntity, level);
+        super(livingEntity, level);
         this.setRange(10).setTargetClass(Monster.class).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get()));
     }
 
-    public LightMonsterTrackingSnowballEntity(EntityType<LightMonsterTrackingSnowballEntity> entityType, Level level) {
-        super(entityType, level);
-    }
+   // public LightMonsterTrackingSnowballEntity(EntityType<LightMonsterTrackingSnowballEntity> entityType, Level level) {
+    //    super(entityType, level);
+    //}
 
     @Override
     public Item getCorrespondingItem() {

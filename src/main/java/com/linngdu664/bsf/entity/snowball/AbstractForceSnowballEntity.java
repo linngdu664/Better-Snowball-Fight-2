@@ -1,18 +1,17 @@
 package com.linngdu664.bsf.entity.snowball;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.util.MovingAlgorithm;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractForceSnowballEntity extends AbstractBSFSnowballEntity {
+public abstract class AbstractForceSnowballEntity extends BSFSnowballEntity {
     public boolean isStart = false;
     private int timer = 0;
     private Class<? extends Entity> targetClass;
@@ -20,12 +19,12 @@ public abstract class AbstractForceSnowballEntity extends AbstractBSFSnowballEnt
     private double GM;
     private double boundaryR2;
 
-    public AbstractForceSnowballEntity(EntityType entityType, LivingEntity livingEntity, Level level) {
-        super(entityType, livingEntity, level);
+    public AbstractForceSnowballEntity(LivingEntity livingEntity, Level level) {
+        super(livingEntity, level);
     }
-    public AbstractForceSnowballEntity(EntityType entityType, Level level) {
-        super(entityType, level);
-    }
+    //public AbstractForceSnowballEntity(EntityType entityType, Level level) {
+    //    super(entityType, level);
+   // }
 
     @Override
     public void tick() {

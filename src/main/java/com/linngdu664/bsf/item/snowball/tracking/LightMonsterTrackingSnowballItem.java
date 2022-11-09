@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.snowball.tracking;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.tracking.LightMonsterTrackingSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
@@ -43,7 +43,7 @@ public class LightMonsterTrackingSnowballItem extends AbstractBSFSnowballItem {
     }
 
     @Override
-    public AbstractBSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
+    public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
         return new LightMonsterTrackingSnowballEntity(livingEntity, level, launchFunc);
     }
 

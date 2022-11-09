@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.entity.snowball.special;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
-import com.linngdu664.bsf.entity.EntityRegister;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.core.particles.ParticleTypes;
@@ -9,7 +8,6 @@ import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -21,17 +19,17 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public class EnderSnowballEntity extends AbstractBSFSnowballEntity {
+public class EnderSnowballEntity extends BSFSnowballEntity {
     public EnderSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(EntityRegister.ENDER_SNOWBALL.get(), livingEntity, level);
+        super(livingEntity, level);
         this.setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.ENDER_SNOWBALL.get()));
     }
 
-    public EnderSnowballEntity(EntityType<EnderSnowballEntity> entityType, Level level) {
-        super(entityType, level);
-    }
+    //public EnderSnowballEntity(EntityType<EnderSnowballEntity> entityType, Level level) {
+    //    super(entityType, level);
+    //}
 
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
@@ -79,6 +77,8 @@ public class EnderSnowballEntity extends AbstractBSFSnowballEntity {
     @Override
     public void tick() {
         super.tick();
-        ((ServerLevel) level).sendParticles(ParticleTypes.PORTAL, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+        if (!level.isClientSide) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.PORTAL, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+        }
     }
 }

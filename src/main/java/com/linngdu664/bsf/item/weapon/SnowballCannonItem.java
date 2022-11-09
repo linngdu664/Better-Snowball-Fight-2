@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.enchantment.EnchantmentRegister;
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.network.ForwardConeParticlesSender;
 import com.linngdu664.bsf.network.Network;
 import com.linngdu664.bsf.util.LaunchFrom;
@@ -51,7 +51,7 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
             }
 
             @Override
-            public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
+            public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.setPunch(damageDropRate * 1.51);
             }
         };
@@ -65,7 +65,7 @@ public class SnowballCannonItem extends AbstractBSFWeaponItem {
             if (f >= 0.1F) {
                 ItemStack itemStack = findAmmo(player, false, true);
                 if (itemStack != null) {
-                    AbstractBSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc(f));
+                    BSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc(f));
                     BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), f * 3.0F, 0.5F);
                     pLevel.addFreshEntity(snowballEntity);
                     pStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(p.getUsedItemHand()));

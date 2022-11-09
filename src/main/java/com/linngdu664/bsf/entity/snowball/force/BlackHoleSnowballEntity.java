@@ -1,7 +1,6 @@
 package com.linngdu664.bsf.entity.snowball.force;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
-import com.linngdu664.bsf.entity.EntityRegister;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.MovingAlgorithm;
@@ -9,7 +8,6 @@ import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -17,22 +15,22 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public class BlackHoleSnowballEntity extends AbstractBSFSnowballEntity {
+public class BlackHoleSnowballEntity extends BSFSnowballEntity {
     public int startTime = 20;
     public int endTime = 150;
     private int timer = 0;
 
     public BlackHoleSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(EntityRegister.BLACK_HOLE_SNOWBALL.get(), livingEntity, level);
+        super(livingEntity, level);
         this.setDamage(4).setBlazeDamage(6).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.BLACK_HOLE_SNOWBALL.get()));
         this.setNoGravity(true);
     }
 
-    public BlackHoleSnowballEntity(EntityType<BlackHoleSnowballEntity> entityType, Level level) {
-        super(entityType, level);
-    }
+    //public BlackHoleSnowballEntity(EntityType<BlackHoleSnowballEntity> entityType, Level level) {
+    //    super(entityType, level);
+    //}
 
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {

@@ -1,10 +1,6 @@
 package com.linngdu664.bsf.entity;
 
 import com.linngdu664.bsf.Main;
-import com.linngdu664.bsf.entity.snowball.force.*;
-import com.linngdu664.bsf.entity.snowball.nomal.*;
-import com.linngdu664.bsf.entity.snowball.special.*;
-import com.linngdu664.bsf.entity.snowball.tracking.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -20,6 +16,7 @@ public class EntityRegister {
             ENTITY_TYPES.register("bsf_snow_golem", () -> EntityType.Builder.of(BSFSnowGolemEntity::new, MobCategory.MISC)
                     .sized(0.7F, 1.9F).clientTrackingRange(8).immuneTo(Blocks.POWDER_SNOW)
                     .build(new ResourceLocation(Main.MODID, "bsf_snow_golem").toString()));
+    /*
     public static final RegistryObject<EntityType<SmoothSnowballEntity>> SMOOTH_SNOWBALL =
             ENTITY_TYPES.register("smooth_snowball", () -> EntityType.Builder.<SmoothSnowballEntity>of(SmoothSnowballEntity::new, MobCategory.MISC)
                     .sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10)
@@ -119,5 +116,9 @@ public class EntityRegister {
     public static final RegistryObject<EntityType<ProjectileRepulsionSnowballEntity>> PROJECTILE_REPULSION_SNOWBALL =
             ENTITY_TYPES.register("projectile_repulsion_snowball", () -> EntityType.Builder.<ProjectileRepulsionSnowballEntity>of(ProjectileRepulsionSnowballEntity::new, MobCategory.MISC)
                     .sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10)
-                    .build(new ResourceLocation(Main.MODID, "projectile_repulsion_snowball").toString()));
+                    .build(new ResourceLocation(Main.MODID, "projectile_repulsion_snowball").toString()));*/
+    public static final RegistryObject<EntityType<BSFSnowballEntity>> BSF_SNOWBALL =
+            ENTITY_TYPES.register("bsf_snowball", () -> EntityType.Builder.<BSFSnowballEntity>of(BSFSnowballEntity::new, MobCategory.MISC)
+                    .sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(10)
+                    .build(new ResourceLocation(Main.MODID, "bsf_snowball").toString()));
 }

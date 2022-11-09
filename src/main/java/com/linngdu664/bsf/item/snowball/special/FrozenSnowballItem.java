@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.snowball.special;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.special.FrozenSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
@@ -60,7 +60,7 @@ public class FrozenSnowballItem extends AbstractBSFSnowballItem {
     }
 
     @Override
-    public AbstractBSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
+    public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
         return new FrozenSnowballEntity(livingEntity, level, launchFunc);
     }
 

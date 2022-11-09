@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.snowball.normal;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.entity.snowball.nomal.SpectralSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
@@ -59,7 +59,7 @@ public class SpectralSnowballItem extends AbstractBSFSnowballItem {
     }
 
     @Override
-    public AbstractBSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
+    public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
         return new SpectralSnowballEntity(livingEntity, level, launchFunc);
     }
 

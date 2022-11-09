@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.snowball;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.ItemGroup;
 import com.linngdu664.bsf.util.LaunchFrom;
@@ -29,7 +29,7 @@ public abstract class AbstractBSFSnowballItem extends Item {
             }
 
             @Override
-            public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
+            public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
                 //bsfSnowballEntity.damage *= playerBadEffectRate;
                 //bsfSnowballEntity.blazeDamage *= playerBadEffectRate;
                 bsfSnowballEntity.setBlazeDamage(bsfSnowballEntity.getBlazeDamage() * playerBadEffectRate).setDamage(bsfSnowballEntity.getDamage() * playerBadEffectRate);
@@ -103,7 +103,7 @@ public abstract class AbstractBSFSnowballItem extends Item {
      * @param launchFunc   The launch func.
      * @return The corresponding entity.
      */
-    public AbstractBSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
+    public BSFSnowballEntity getCorrespondingEntity(Level level, LivingEntity livingEntity, LaunchFunc launchFunc) {
         return null;
     }
 

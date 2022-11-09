@@ -1,6 +1,6 @@
 package com.linngdu664.bsf.item.weapon;
 
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
 import com.linngdu664.bsf.item.tank.normal.ExplosiveSnowballTank;
 import com.linngdu664.bsf.item.tank.tracking.ExplosiveMonsterTrackingSnowballTank;
@@ -50,7 +50,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
             }
 
             @Override
-            public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
+            public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.setPunch(1.2);
             }
         };
@@ -85,7 +85,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
                     flag = true;
                 }
                 if (timer % 3 == 0 && (!flag || timer % 6 == 0)) {
-                    AbstractBSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc());
+                    BSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, pLevel, getLaunchFunc());
                     recoil = ((AbstractSnowballTankItem) itemStack.getItem()).getSnowball().getRecoil();
                     BSFShootFromRotation(snowballEntity, pitch, yaw, 2.6F, 1.0F);
                     pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
@@ -151,7 +151,7 @@ public class SnowballMachineGunItem extends AbstractBSFWeaponItem {
                 // add push
                 player.push(-cameraVec.x * recoil * 0.25, -cameraVec.y * recoil * 0.25, -cameraVec.z * recoil * 0.25);
             } else {
-                AbstractBSFSnowballEntity snowballEntity = ItemToEntity(ammo.getItem(), player, pLevel, getLaunchFunc());
+                BSFSnowballEntity snowballEntity = ItemToEntity(ammo.getItem(), player, pLevel, getLaunchFunc());
                 BSFShootFromRotation(snowballEntity, pitch, yaw, 2.6F, 1.0F);
                 pLevel.addFreshEntity(snowballEntity);
                 pLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundRegister.SNOWBALL_MACHINE_GUN_SHOOT.get(), SoundSource.PLAYERS, 1.0F, 1.0F / (pLevel.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);

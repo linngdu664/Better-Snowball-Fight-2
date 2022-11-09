@@ -59,7 +59,8 @@ public class ClientModEvents {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityRegister.BSF_SNOW_GOLEM.get(), BSFSnowGolemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.SMOOTH_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegister.BSF_SNOWBALL.get(), ThrownItemRenderer::new);
+        /*event.registerEntityRenderer(EntityRegister.SMOOTH_SNOWBALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityRegister.COMPACTED_SNOWBALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityRegister.STONE_SNOWBALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityRegister.ICE_SNOWBALL.get(), ThrownItemRenderer::new);
@@ -83,7 +84,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(EntityRegister.HEAVY_MONSTER_TRACKING_SNOWBALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityRegister.HEAVY_PLAYER_TRACKING_SNOWBALL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityRegister.LIGHT_MONSTER_TRACKING_SNOWBALL.get(), ThrownItemRenderer::new);
-        event.registerEntityRenderer(EntityRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(EntityRegister.LIGHT_PLAYER_TRACKING_SNOWBALL.get(), ThrownItemRenderer::new);*/
     }
 
     @SubscribeEvent

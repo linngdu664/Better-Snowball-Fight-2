@@ -30,7 +30,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile {
+public class BSFSnowballEntity extends ThrowableItemProjectile {
     protected boolean isCaught = false;
     protected double punch = 0.0;
     protected float damage = Float.MIN_NORMAL;
@@ -43,16 +43,24 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
 
     // EntityType should not be SNOWBALL, because if we do so, it will call snowball mixin and make a mess.
     // But I didn't want to register a new entity type, so I passed the fucking egg to super.
-    public AbstractBSFSnowballEntity(EntityType p_37473_, Level p_37474_) {
+    public BSFSnowballEntity(EntityType<? extends BSFSnowballEntity> p_37473_, Level p_37474_) {
         super(p_37473_, p_37474_);
     }
 
-    public AbstractBSFSnowballEntity(EntityType entityType, LivingEntity livingEntity, Level level) {
+    /*public BSFSnowballEntity(EntityType entityType, LivingEntity livingEntity, Level level) {
         super(entityType, livingEntity, level);
     }
 
-    public AbstractBSFSnowballEntity(EntityType entityType, Level level, double x, double y, double z) {
+    public BSFSnowballEntity(EntityType entityType, Level level, double x, double y, double z) {
         super(entityType, x, y, z, level);
+    }*/
+
+    public BSFSnowballEntity(LivingEntity livingEntity, Level level) {
+        super(EntityRegister.BSF_SNOWBALL.get(), livingEntity, level);
+    }
+
+    public BSFSnowballEntity(Level level, double x, double y, double z) {
+        super(EntityRegister.BSF_SNOWBALL.get(), x, y, z, level);
     }
 
     /**
@@ -152,8 +160,8 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
                 player.getOffhandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.OFFHAND));
                 glove.releaseUsing(player.getOffhandItem(), player.getLevel(), player, 1);
             }
-            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL, 3F, 0.4F / level.getRandom().nextFloat() * 0.4F + 0.8F);
             if (!level.isClientSide) {
+                level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL, 3F, 0.4F / level.getRandom().nextFloat() * 0.4F + 0.8F);
                 ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);
             }
             return true;
@@ -187,22 +195,22 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
     // Setters with builder style
     // Like this:  snowballEntity.setPunch(2.0).setDamage(2.5f)
     // If necessary, add setWeaknessTime.
-    public AbstractBSFSnowballEntity setPunch(double punch) {
+    public BSFSnowballEntity setPunch(double punch) {
         this.punch = punch;
         return this;
     }
 
-    public AbstractBSFSnowballEntity setLaunchFrom(LaunchFrom launchFrom) {
+    public BSFSnowballEntity setLaunchFrom(LaunchFrom launchFrom) {
         this.launchFrom = launchFrom;
         return this;
     }
 
-    public AbstractBSFSnowballEntity setFrozenTicks(int frozenTicks) {
+    public BSFSnowballEntity setFrozenTicks(int frozenTicks) {
         this.frozenTicks = frozenTicks;
         return this;
     }
 
-    public AbstractBSFSnowballEntity setWeaknessTicks(int weaknessTicks) {
+    public BSFSnowballEntity setWeaknessTicks(int weaknessTicks) {
         this.weaknessTicks = weaknessTicks;
         return this;
     }
@@ -211,7 +219,7 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
         return blazeDamage;
     }
 
-    public AbstractBSFSnowballEntity setBlazeDamage(float blazeDamage) {
+    public BSFSnowballEntity setBlazeDamage(float blazeDamage) {
         this.blazeDamage = blazeDamage;
         return this;
     }
@@ -220,7 +228,7 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
         return damage;
     }
 
-    public AbstractBSFSnowballEntity setDamage(float damage) {
+    public BSFSnowballEntity setDamage(float damage) {
         this.damage = damage;
         return this;
     }

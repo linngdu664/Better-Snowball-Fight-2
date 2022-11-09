@@ -1,7 +1,7 @@
 package com.linngdu664.bsf.item.weapon;
 
 import com.linngdu664.bsf.enchantment.EnchantmentRegister;
-import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.BSFSnowballEntity;
 import com.linngdu664.bsf.item.snowball.AbstractBSFSnowballItem;
 import com.linngdu664.bsf.item.snowball.special.ThrustSnowballItem;
 import com.linngdu664.bsf.item.tank.AbstractSnowballTankItem;
@@ -47,7 +47,7 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
             }
 
             @Override
-            public void launchProperties(AbstractBSFSnowballEntity bsfSnowballEntity) {
+            public void launchProperties(BSFSnowballEntity bsfSnowballEntity) {
                 bsfSnowballEntity.setPunch(1.51);
             }
         };
@@ -72,7 +72,7 @@ public class SnowballShotgunItem extends AbstractBSFWeaponItem {
                 itemStack = findAmmo(player, false, true);
             }
             if (itemStack != null) {
-                AbstractBSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, level, getLaunchFunc());
+                BSFSnowballEntity snowballEntity = ItemToEntity(itemStack.getItem(), player, level, getLaunchFunc());
                 addPush(itemStack.getItem());
                 if (!player.isShiftKeyDown()) {
                     BSFShootFromRotation(snowballEntity, player.getXRot(), player.getYRot(), 2.0F, 10.0F);
