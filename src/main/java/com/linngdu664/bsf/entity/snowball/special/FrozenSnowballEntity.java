@@ -2,6 +2,7 @@ package com.linngdu664.bsf.entity.snowball.special;
 
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.entity.BSFSnowGolemEntity;
+import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.BSFMthUtil;
 import com.linngdu664.bsf.util.LaunchFrom;
@@ -15,6 +16,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.SnowGolem;
 import net.minecraft.world.item.Item;
@@ -32,7 +34,7 @@ public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
     private float frozenRange = 2.5F;
 
     public FrozenSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(livingEntity, level);
+        super(EntityRegister.FROZEN_SNOWBALL.get(), livingEntity, level);
         this.setFrozenTicks(60).setLaunchFrom(launchFunc.getLaunchForm()).setDamage(3).setBlazeDamage(8);
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.FROZEN_SNOWBALL.get()));
@@ -43,9 +45,13 @@ public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
 
     //This is only used for dispenser
     public FrozenSnowballEntity(Level level, double x, double y, double z) {
-        super(level, x, y, z);
-        this.setDamage(3).setBlazeDamage(8);
+        super(EntityRegister.FROZEN_SNOWBALL.get(), level, x, y, z);
+        this.setDamage(3).setBlazeDamage(8).setFrozenTicks(60);
         this.setItem(new ItemStack(ItemRegister.FROZEN_SNOWBALL.get()));
+    }
+
+    public FrozenSnowballEntity(EntityType<FrozenSnowballEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     @Override
@@ -56,56 +62,56 @@ public class FrozenSnowballEntity extends AbstractBSFSnowballEntity {
     @Override
     protected void onHit(@NotNull HitResult pResult) {
         super.onHit(pResult);
-        if (!isCaught) {
-            BlockPos blockPos = new BlockPos(pResult.getLocation());
-            BlockState ice = Blocks.ICE.defaultBlockState();
-            BlockState basalt = Blocks.BASALT.defaultBlockState();
-            BlockState air = Blocks.AIR.defaultBlockState();
-            BlockState snow = Blocks.SNOW.defaultBlockState();
-            for (int i = (int) (blockPos.getX() - frozenRange); i <= (int) (blockPos.getX() + frozenRange); i++) {
-                for (int j = (int) (blockPos.getY() - frozenRange); j <= (int) (blockPos.getY() + frozenRange); j++) {
-                    for (int k = (int) (blockPos.getZ() - frozenRange); k <= (int) (blockPos.getZ() + frozenRange); k++) {
-                        if (BSFMthUtil.modSqr(i - blockPos.getX(), j - blockPos.getY(), k - blockPos.getZ()) <= frozenRange * frozenRange) {
-                            BlockPos blockPos1 = new BlockPos(i, j, k);
-                            BlockState blockState = level.getBlockState(blockPos1);
-                            if (blockState.getBlock() == Blocks.WATER && blockState.getValue(LiquidBlock.LEVEL) == 0) {
-                                level.setBlockAndUpdate(blockPos1, ice);
-                            } else if (blockState.getBlock() == Blocks.LAVA && blockState.getValue(LiquidBlock.LEVEL) == 0) {
-                                level.setBlockAndUpdate(blockPos1, basalt);
-                            } else if (blockState.getBlock() == Blocks.FIRE) {
-                                level.setBlockAndUpdate(blockPos1, air);
-                            } else if (blockState.getBlock() == Blocks.AIR && snow.canSurvive(level, blockPos1)) {
-                                level.setBlockAndUpdate(blockPos1, snow);
+        if (!level.isClientSide) {
+            if (!isCaught) {
+                BlockPos blockPos = new BlockPos(pResult.getLocation());
+                BlockState ice = Blocks.ICE.defaultBlockState();
+                BlockState basalt = Blocks.BASALT.defaultBlockState();
+                BlockState air = Blocks.AIR.defaultBlockState();
+                BlockState snow = Blocks.SNOW.defaultBlockState();
+                for (int i = (int) (blockPos.getX() - frozenRange); i <= (int) (blockPos.getX() + frozenRange); i++) {
+                    for (int j = (int) (blockPos.getY() - frozenRange); j <= (int) (blockPos.getY() + frozenRange); j++) {
+                        for (int k = (int) (blockPos.getZ() - frozenRange); k <= (int) (blockPos.getZ() + frozenRange); k++) {
+                            if (BSFMthUtil.modSqr(i - blockPos.getX(), j - blockPos.getY(), k - blockPos.getZ()) <= frozenRange * frozenRange) {
+                                BlockPos blockPos1 = new BlockPos(i, j, k);
+                                BlockState blockState = level.getBlockState(blockPos1);
+                                if (blockState.getBlock() == Blocks.WATER && blockState.getValue(LiquidBlock.LEVEL) == 0) {
+                                    level.setBlockAndUpdate(blockPos1, ice);
+                                } else if (blockState.getBlock() == Blocks.LAVA && blockState.getValue(LiquidBlock.LEVEL) == 0) {
+                                    level.setBlockAndUpdate(blockPos1, basalt);
+                                } else if (blockState.getBlock() == Blocks.FIRE) {
+                                    level.setBlockAndUpdate(blockPos1, air);
+                                } else if (blockState.getBlock() == Blocks.AIR && snow.canSurvive(level, blockPos1)) {
+                                    level.setBlockAndUpdate(blockPos1, snow);
+                                }
                             }
                         }
                     }
                 }
-            }
-            List<LivingEntity> list = TargetGetter.getTargetList(this, LivingEntity.class, 2.5F);
-            for (LivingEntity entity : list) {
-                if (distanceToSqr(entity) < frozenRange * frozenRange && !(entity instanceof BSFSnowGolemEntity) && !(entity instanceof SnowGolem)) {
-                    if (frozenTicks > 0) {
-                        if (entity.getTicksFrozen() < frozenTicks) {
-                            entity.setTicksFrozen(frozenTicks);
+                List<LivingEntity> list = TargetGetter.getTargetList(this, LivingEntity.class, 2.5F);
+                for (LivingEntity entity : list) {
+                    if (distanceToSqr(entity) < frozenRange * frozenRange && !(entity instanceof BSFSnowGolemEntity) && !(entity instanceof SnowGolem)) {
+                        if (frozenTicks > 0) {
+                            if (entity.getTicksFrozen() < frozenTicks) {
+                                entity.setTicksFrozen(frozenTicks);
+                            }
+                            entity.hurt(DamageSource.thrown(this, this.getOwner()), Float.MIN_NORMAL);
+                            if (launchFrom == LaunchFrom.FREEZING_CANNON) {
+                                entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 4));
+                            }
+                            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 2));
                         }
-                        entity.hurt(DamageSource.thrown(this, this.getOwner()), Float.MIN_NORMAL);
-                        if (launchFrom == LaunchFrom.FREEZING_CANNON) {
-                            entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 4));
-                        }
-                        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 2));
                     }
                 }
+                if (launchFrom == LaunchFrom.FREEZING_CANNON) {
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 400, 0, 0, 0, 0.32);
+                } else {
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 200, 0, 0, 0, 0.32);
+                }
+                level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.PLAYER_HURT_FREEZE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
             }
-            if (launchFrom == LaunchFrom.FREEZING_CANNON) {
-                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 400, 0, 0, 0, 0.32);
-            } else {
-                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 200, 0, 0, 0, 0.32);
-            }
-        }
-        if (!level.isClientSide) {
             this.discard();
         }
-        level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.PLAYER_HURT_FREEZE, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
     }
 
     public float getPower() {

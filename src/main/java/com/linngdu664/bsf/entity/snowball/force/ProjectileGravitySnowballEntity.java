@@ -1,8 +1,10 @@
 package com.linngdu664.bsf.entity.snowball.force;
 
+import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.entity.snowball.AbstractForceSnowballEntity;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -11,10 +13,14 @@ import net.minecraft.world.level.Level;
 
 public class ProjectileGravitySnowballEntity extends AbstractForceSnowballEntity {
     public ProjectileGravitySnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(livingEntity, level);
+        super(EntityRegister.PROJECTILE_GRAVITY_SNOWBALL.get(), livingEntity, level);
         this.setRange(15).setTargetClass(Projectile.class).setGM(2).setBoundaryR2(2).setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.PROJECTILE_GRAVITY_SNOWBALL.get()));
+    }
+
+    public ProjectileGravitySnowballEntity(EntityType<ProjectileGravitySnowballEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     @Override

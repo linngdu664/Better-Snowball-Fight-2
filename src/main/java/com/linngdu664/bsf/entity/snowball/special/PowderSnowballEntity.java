@@ -1,12 +1,14 @@
 package com.linngdu664.bsf.entity.snowball.special;
 
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.particle.ParticleRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import com.linngdu664.bsf.util.SoundRegister;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +23,7 @@ public class PowderSnowballEntity extends AbstractBSFSnowballEntity {
     private int timer = 0;
 
     public PowderSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(livingEntity, level);
+        super(EntityRegister.POWDER_SNOWBALL.get(), livingEntity, level);
         this.setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.POWDER_SNOWBALL.get()));
@@ -29,32 +31,41 @@ public class PowderSnowballEntity extends AbstractBSFSnowballEntity {
 
     //This is only used for dispenser
     public PowderSnowballEntity(Level level, double x, double y, double z) {
-        super(level, x, y, z);
+        super(EntityRegister.POWDER_SNOWBALL.get(), level, x, y, z);
         this.setItem(new ItemStack(ItemRegister.SMOOTH_SNOWBALL.get()));
+    }
+
+    public PowderSnowballEntity(EntityType<PowderSnowballEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     @Override
     protected void onHitBlock(@NotNull BlockHitResult p_37258_) {
         super.onHitBlock(p_37258_);
         isStart = true;
-        Vec3 vec3 = this.getDeltaMovement();
-        this.push(-vec3.x, -vec3.y, -vec3.z);
-        this.setNoGravity(true);
-        ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 25, 0, 0, 0, 0.4);
-        level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundRegister.POWDER_SNOWBALL.get(), SoundSource.PLAYERS, 0.3F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+        if (!level.isClientSide) {
+            Vec3 vec3 = this.getDeltaMovement();
+            this.push(-vec3.x, -vec3.y, -vec3.z);
+            this.setNoGravity(true);
+            ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 25, 0, 0, 0, 0.4);
+            level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundRegister.POWDER_SNOWBALL.get(), SoundSource.PLAYERS, 0.3F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + 0.5F);
+        }
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (isStart) {
-            Vec3 vec3 = this.getDeltaMovement();
-            this.push(-vec3.x, -vec3.y, -vec3.z);
-            ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.2);
-            if (++timer > 200) {
-                this.discard();
+        if (!level.isClientSide) {
+            if (isStart) {
+                Vec3 vec3 = this.getDeltaMovement();
+                this.push(-vec3.x, -vec3.y, -vec3.z);
+                ((ServerLevel) level).sendParticles(ParticleRegister.BIG_LONG_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 8, 0, 0, 0, 0.2);
+                if (timer > 200) {
+                    this.discard();
+                }
             }
         }
+        timer++;
     }
 
     @Override
@@ -69,5 +80,4 @@ public class PowderSnowballEntity extends AbstractBSFSnowballEntity {
     public Item getCorrespondingItem() {
         return ItemRegister.POWDER_SNOWBALL.get();
     }
-
 }

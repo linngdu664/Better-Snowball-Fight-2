@@ -4,6 +4,7 @@ import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
 import com.linngdu664.bsf.util.MovingAlgorithm;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -16,8 +17,12 @@ public abstract class AbstractTrackingSnowballEntity extends AbstractBSFSnowball
     private boolean lockFeet;
     private boolean init;
 
-    public AbstractTrackingSnowballEntity(LivingEntity livingEntity, Level level) {
-        super(livingEntity, level);
+    public AbstractTrackingSnowballEntity(EntityType entityType, LivingEntity livingEntity, Level level) {
+        super(entityType, livingEntity, level);
+    }
+
+    public AbstractTrackingSnowballEntity(EntityType entityType, Level level) {
+        super(entityType, level);
     }
 
     @Override
@@ -30,7 +35,9 @@ public abstract class AbstractTrackingSnowballEntity extends AbstractBSFSnowball
             maxTurningAngleSin = Mth.sin(7.1619724F * v0 * Mth.DEG_TO_RAD);
             init = true;
         }
-        MovingAlgorithm.missilesTracking(this, targetClass, range, true, maxTurningAngleCos, maxTurningAngleSin, lockFeet);
+        if (!level.isClientSide) {
+            MovingAlgorithm.missilesTracking(this, targetClass, range, true, maxTurningAngleCos, maxTurningAngleSin, lockFeet);
+        }
     }
 
     public AbstractTrackingSnowballEntity setRange(double range) {

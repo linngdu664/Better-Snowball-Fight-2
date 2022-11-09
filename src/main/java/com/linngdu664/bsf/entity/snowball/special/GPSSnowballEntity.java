@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.entity.snowball.special;
 
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFrom;
 import net.minecraft.Util;
@@ -20,7 +21,7 @@ public class GPSSnowballEntity extends AbstractBSFSnowballEntity {
     private final ItemStack targetLocator;
 
     public GPSSnowballEntity(LivingEntity livingEntity, Level level, ItemStack targetLocator) {
-        super(livingEntity, level);
+        super(EntityRegister.IRON_SNOWBALL.get(), livingEntity, level);
         this.targetLocator = targetLocator;
         this.setPunch(2.0).setLaunchFrom(LaunchFrom.HAND);
         this.setItem(new ItemStack(ItemRegister.GPS_SNOWBALL.get()));

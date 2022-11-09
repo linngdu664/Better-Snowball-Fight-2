@@ -1,6 +1,7 @@
 package com.linngdu664.bsf.entity.snowball.nomal;
 
 import com.linngdu664.bsf.entity.AbstractBSFSnowballEntity;
+import com.linngdu664.bsf.entity.EntityRegister;
 import com.linngdu664.bsf.item.ItemRegister;
 import com.linngdu664.bsf.util.LaunchFunc;
 import net.minecraft.core.particles.ParticleTypes;
@@ -8,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SpectralSnowballEntity extends AbstractBSFSnowballEntity {
     public SpectralSnowballEntity(LivingEntity livingEntity, Level level, LaunchFunc launchFunc) {
-        super(livingEntity, level);
+        super(EntityRegister.SPECTRAL_SNOWBALL.get(), livingEntity, level);
         this.setLaunchFrom(launchFunc.getLaunchForm());
         launchFunc.launchProperties(this);
         this.setItem(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get()));
@@ -26,8 +28,12 @@ public class SpectralSnowballEntity extends AbstractBSFSnowballEntity {
 
     //This is only used for dispenser
     public SpectralSnowballEntity(Level level, double x, double y, double z) {
-        super(level, x, y, z);
+        super(EntityRegister.SPECTRAL_SNOWBALL.get(), level, x, y, z);
         this.setItem(new ItemStack(ItemRegister.SPECTRAL_SNOWBALL.get()));
+    }
+
+    public SpectralSnowballEntity(EntityType<SpectralSnowballEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     @Override
@@ -55,6 +61,8 @@ public class SpectralSnowballEntity extends AbstractBSFSnowballEntity {
     @Override
     public void tick() {
         super.tick();
-        ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+        if (!level.isClientSide) {
+            ((ServerLevel) level).sendParticles(ParticleTypes.INSTANT_EFFECT, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+        }
     }
 }

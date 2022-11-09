@@ -5,6 +5,7 @@ import com.linngdu664.bsf.util.MovingAlgorithm;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -19,22 +20,28 @@ public abstract class AbstractForceSnowballEntity extends AbstractBSFSnowballEnt
     private double GM;
     private double boundaryR2;
 
-    public AbstractForceSnowballEntity(LivingEntity livingEntity, Level level) {
-        super(livingEntity, level);
+    public AbstractForceSnowballEntity(EntityType entityType, LivingEntity livingEntity, Level level) {
+        super(entityType, livingEntity, level);
+    }
+    public AbstractForceSnowballEntity(EntityType entityType, Level level) {
+        super(entityType, level);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (isStart) {
-            Vec3 vec3 = this.getDeltaMovement();
-            this.push(-vec3.x, -vec3.y, -vec3.z);
-            ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0.06);
-            if (++timer > 200) {
-                this.discard();
+        if (!level.isClientSide) {
+            if (isStart) {
+                Vec3 vec3 = this.getDeltaMovement();
+                this.push(-vec3.x, -vec3.y, -vec3.z);
+                ((ServerLevel) level).sendParticles(ParticleTypes.DRAGON_BREATH, this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0.06);
+                if (timer > 200) {
+                    this.discard();
+                }
             }
+            MovingAlgorithm.forceEffect(this, targetClass, range, GM, boundaryR2);
         }
-        MovingAlgorithm.forceEffect(this, targetClass, range, GM, boundaryR2);
+        timer++;
     }
 
     @Override

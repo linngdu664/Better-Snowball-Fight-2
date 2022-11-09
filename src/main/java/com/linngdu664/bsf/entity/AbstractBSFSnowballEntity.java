@@ -43,12 +43,16 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
 
     // EntityType should not be SNOWBALL, because if we do so, it will call snowball mixin and make a mess.
     // But I didn't want to register a new entity type, so I passed the fucking egg to super.
-    public AbstractBSFSnowballEntity(LivingEntity livingEntity, Level level) {
-        super(EntityType.EGG, livingEntity, level);
+    public AbstractBSFSnowballEntity(EntityType p_37473_, Level p_37474_) {
+        super(p_37473_, p_37474_);
     }
 
-    public AbstractBSFSnowballEntity(Level level, double x, double y, double z) {
-        super(EntityType.EGG, x, y, z, level);
+    public AbstractBSFSnowballEntity(EntityType entityType, LivingEntity livingEntity, Level level) {
+        super(entityType, livingEntity, level);
+    }
+
+    public AbstractBSFSnowballEntity(EntityType entityType, Level level, double x, double y, double z) {
+        super(entityType, x, y, z, level);
     }
 
     /**
@@ -61,7 +65,9 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
         if (pResult.getEntity() instanceof LivingEntity entity) {
             // Handling the catch
             if (catchOnGlove(entity)) {
-                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);
+                if (!level.isClientSide) {
+                    ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);
+                }
                 isCaught = true;
                 return;
             }
@@ -105,7 +111,9 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
     @Override
     public void tick() {
         // Spawn trace particles
-        ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+        if (!level.isClientSide) {
+            ((ServerLevel) level).sendParticles(ParticleRegister.SHORT_TIME_SNOWFLAKE.get(), this.getX(), this.getY(), this.getZ(), 1, 0, 0, 0, 0);
+        }
         super.tick();
     }
 
@@ -143,10 +151,11 @@ public abstract class AbstractBSFSnowballEntity extends ThrowableItemProjectile 
             } else if (player.getOffhandItem().getItem() instanceof GloveItem glove) {
                 player.getOffhandItem().hurtAndBreak(1, player, (e) -> e.broadcastBreakEvent(EquipmentSlot.OFFHAND));
                 glove.releaseUsing(player.getOffhandItem(), player.getLevel(), player, 1);
-
             }
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SNOW_BREAK, SoundSource.NEUTRAL, 3F, 0.4F / level.getRandom().nextFloat() * 0.4F + 0.8F);
-            ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);
+            if (!level.isClientSide) {
+                ((ServerLevel) level).sendParticles(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 3, 0, 0, 0, 0.04);
+            }
             return true;
         }
         return false;
