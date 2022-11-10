@@ -19,7 +19,7 @@ Better Snowball Fight Ⅱ
 ==
 ---
 * mod version: 2.0.0
-* minecraft version: 1.18.x
+* minecraft version: 1.18.2
 * forge version: ≥38
 * compatibility level: JAVA_17
   
